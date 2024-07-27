@@ -5,7 +5,7 @@ export function Footer() {
     <>
     Foossssster
     <h1 className="text-6xl font-bold underline">
-      <Ak></Ak>
+      ak 
     </h1>
     </>
   )
