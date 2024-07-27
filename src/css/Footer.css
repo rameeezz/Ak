@@ -4,7 +4,7 @@
     cursor: pointer;
 }
 .moveOfPInFooter:hover{
-    padding-left: 3%;
+    padding-left: 5%;
 }
 .bgForInstaIcon {
     background: linear-gradient(45deg, #f9ce34 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
@@ -25,7 +25,7 @@
     transition: padding-left 0.3s ease;
 }
 .moveForIcons:hover{
-    padding-left: 3%;
+    padding-left: 5%;
 }
 @media screen and (max-device-width: 480px) 
     and (orientation: portrait) {
@@ -38,9 +38,9 @@
 }
 @media screen and (max-device-width: 640px) 
     and (orientation: landscape) {
-    .forSmallScreen {
-        width: 100%;
-    }
+        .full-width-on-small {
+            grid-column: span 10 / span 10;
+          }
 }
 @media screen
     and (max-device-width: 640px) {
