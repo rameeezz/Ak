@@ -1,0 +1,53 @@
+.moveOfPInFooter{
+    padding-left: 0%;
+    transition: padding-left 0.3s ease;
+    cursor: pointer;
+}
+.moveOfPInFooter:hover{
+    padding-left: 3%;
+}
+.bgForInstaIcon {
+    background: linear-gradient(45deg, #f9ce34 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 15%;
+    color: white;
+    -webkit-border-radius: 15%;
+    -moz-border-radius: 15%;
+    -ms-border-radius: 15%;
+    -o-border-radius: 15%;
+}
+.moveForIcons{
+    padding-left: 0%;
+    transition: padding-left 0.3s ease;
+}
+.moveForIcons:hover{
+    padding-left: 3%;
+}
+@media screen and (max-device-width: 480px) 
+    and (orientation: portrait) {
+    /* .gfg-div {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+        color: #fff;
+    } */
+}
+@media screen and (max-device-width: 640px) 
+    and (orientation: landscape) {
+    .forSmallScreen {
+        width: 100%;
+    }
+}
+@media screen
+    and (max-device-width: 640px) {
+    /* .gfg-div {
+        width: 400px;
+        height: 200px;
+        background-color: chartreuse;
+        color: black;
+    } */
+}
