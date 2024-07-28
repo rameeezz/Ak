@@ -63,7 +63,7 @@ export function Footer() {
       <footer className="bg-[#ecd9e8]">
         <div className="container-sm">
           <div className="row py-4 ">
-            <div className="col-md-4">
+            <div className="col-md-4 col-sm-1">
               <h3 className="md:fs-6">Navigation</h3>
               <p className="moveOfPInFooter">Categories</p>
             </div>
