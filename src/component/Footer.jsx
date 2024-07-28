@@ -67,11 +67,11 @@ export function Footer() {
               <h3 className="md:fs-6">Navigation</h3>
               <p className="moveOfPInFooter">Categories</p>
             </div>
-            <div className="col-md-4">
+            <div className="col-md-4 col-sm-1">
               <h3>Navigation</h3>
               <p className="moveOfPInFooter">Categories</p>
             </div>
-            <div className="col-md-4 ">
+            <div className="col-md-4 col-sm-1">
             <div className=" ">
             <h3 className="text-[#323232] font-medium text-lg  mb-1">
               Follow Us
@@ -103,6 +103,11 @@ export function Footer() {
           </div>
             </div>
           </div>
+        </div>
+        <div className="bg-[#323232] py-2 mt-6">
+          <p className="text-center text-white">
+            &copy; 2024 MyWebsite. All rights reserved.
+          </p>
         </div>
       </footer>
     </>
