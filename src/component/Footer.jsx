@@ -64,7 +64,7 @@ export function Footer() {
         <div className="container-sm text-center">
           <div className="row py-4 ">
             <div className="col-md-4 col-sm-1">
-              <h3 className="md:fs-6">Navigation</h3>
+              <h3 className="responsive-font-size ">Navigation</h3>
               <p className="moveOfPInFooter">Categories</p>
             </div>
             <div className="col-md-4 col-sm-1">

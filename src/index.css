@@ -4,3 +4,11 @@
 *{
     font-family : Montserrat, sans-serif;
 }
+.responsive-font-size {
+    font-size: 2.5rem; /* Bootstrap fs-1 size */
+  }
+@media (max-width: 576px) { /* Small screens (sm) and below */
+    .responsive-font-size {
+      font-size: 1rem; /* Bootstrap fs-6 size */
+    }
+  }
