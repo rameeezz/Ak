@@ -4,7 +4,7 @@ import Visa from "../assets/png payment/visa.png";
 export function Footer() {
   return (
     <>
-      <footer className="bg-[#ecd9e8]">
+      {/* <footer className="bg-[#ecd9e8]">
         <div className="container   px-10 py-4 mx-auto flex flex-col items-center md:flex-row md:justify-between">
           <div className="w-1/5 text-center md:text-left pt-1">
             <h3 className="text-[#323232] font-medium leading-none text-lg">
@@ -58,6 +58,16 @@ export function Footer() {
           <p className="text-center text-white">
             &copy; 2024 MyWebsite. All rights reserved.
           </p>
+        </div>
+      </footer> */}
+      <footer className="bg-[#ecd9e8]">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-3">
+              <h3>Navigation</h3>
+              <p className="moveOfPInFooter">Categories</p>
+            </div>
+          </div>
         </div>
       </footer>
     </>
