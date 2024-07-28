@@ -61,7 +61,7 @@ export function Footer() {
         </div>
       </footer> */}
       <footer className="bg-[#ecd9e8]">
-        <div className="container-sm">
+        <div className="container-sm text-center">
           <div className="row py-4 ">
             <div className="col-md-4 col-sm-1">
               <h3 className="md:fs-6">Navigation</h3>
@@ -71,12 +71,12 @@ export function Footer() {
               <h3>Navigation</h3>
               <p className="moveOfPInFooter">Categories</p>
             </div>
-            <div className="col-md-4">
+            <div className="col-md-4 ">
             <div className=" ">
             <h3 className="text-[#323232] font-medium text-lg  mb-1">
               Follow Us
             </h3>
-              <div className="d-flex">
+              <div className="d-flex justify-content-center">
                 <a
                   className="moveForIcons"
                   href="https://www.facebook.com/ByAseelKamal"
