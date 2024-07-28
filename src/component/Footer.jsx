@@ -63,15 +63,15 @@ export function Footer() {
       <footer className="bg-[#ecd9e8]">
         <div className="container-sm text-center">
           <div className="row py-4 ">
-            <div className="col-md-4 col-sm-1">
+            <div className="col-md-4 col-sm-2">
               <h3 className="responsive-font-size ">Navigation</h3>
               <p className="moveOfPInFooter">Categories</p>
             </div>
-            <div className="col-md-4 col-sm-1">
+            <div className="col-md-4 col-sm-2">
               <h3>Navigation</h3>
               <p className="moveOfPInFooter">Categories</p>
             </div>
-            <div className="col-md-4 col-sm-1">
+            <div className="col-md-4 col-sm-2">
             <div className=" ">
             <h3 className="text-[#323232] font-medium text-lg  mb-1">
               Follow Us
