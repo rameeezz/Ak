@@ -61,11 +61,46 @@ export function Footer() {
         </div>
       </footer> */}
       <footer className="bg-[#ecd9e8]">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-3">
+        <div className="container-sm">
+          <div className="row py-4">
+            <div className="col-md-4">
               <h3>Navigation</h3>
               <p className="moveOfPInFooter">Categories</p>
+            </div>
+            <div className="col-md-4">
+              <h3>Navigation</h3>
+              <p className="moveOfPInFooter">Categories</p>
+            </div>
+            <div className="col-md-4">
+            <div className=" ">
+            <h3 className="text-[#323232] font-medium text-lg  mb-1">
+              Follow Us
+            </h3>
+              <div className="d-flex">
+                <a
+                  className="moveForIcons"
+                  href="https://www.facebook.com/ByAseelKamal"
+                  target="_blank"
+                >
+                  <i className="fa-brands fa-facebook-f text-xl text-blue-900"></i>
+                </a>
+                <a
+                  className="moveForIcons"
+                  href="https://www.instagram.com/ak_byaseelkamal?igshid=YmMyMTA2M2Y%3D&fbclid=IwY2xjawER8KxleHRuA2FlbQIxMAABHamKXnEIEwbf3nVKRaTcPFzOGqPnhmc9Tem5Q4TUlQm4-Vqi6Hh0DWD5og_aem_KXlJIj7Z09I5LtkE7onq8Q"
+                  target="_blank"
+                >
+                  <i className="fa-brands fa-instagram text-xl mx-4 bgForInstaIcon"></i>
+                </a>
+                <a
+                  href="https://www.tiktok.com/@akflorist2020?_t=8oNJ3QDHDAj&_r=1"
+                  target="_blank"
+                  className="moveForIcons"
+                >
+                  <i className="fa-brands fa-tiktok text-black text-xl"></i>
+                </a>
+              </div>
+            
+          </div>
             </div>
           </div>
         </div>
