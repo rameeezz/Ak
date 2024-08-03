@@ -36,12 +36,14 @@
       font-size: 1rem; /* Bootstrap fs-6 size */
     }
     .textSizeForSpan{
-      font-size: 1rem;
+      font-size: 0.88rem;
     }
     .textSizeForLabel{
       font-size: 1rem;
     }
-
+.sizeOfFontNav{
+  font-size: 0.88rem;
+}
     .checkbox-box {
       width: 1rem; /* Smaller size for smaller screens */
       height: 1rem;

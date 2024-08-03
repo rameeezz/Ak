@@ -3,16 +3,11 @@ import BgForLogin from "../assets/bg/bgLogin.jpg";
 import "../css/LogIn.css";
 import { NavLink } from "react-router-dom";
 export default function LogIn() {
-    const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(false);
 
   const handleCheckboxClick = () => {
     setChecked(!checked);
   };
-//   const [rememberMe, setRememberMe] = useState(false);
-//   console.log(rememberMe);
-//   const handleCheckboxChange = () => {
-//     setRememberMe(!rememberMe);
-//   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,16 +21,6 @@ export default function LogIn() {
           <form>
             <input type="text" placeholder="Username" required />
             <input type="password" placeholder="Password" required />
-            {/* <div className="d-flex justify-content-start align-items-center">
-              <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={handleCheckboxChange}
-                className="StyleForCheackBox bg-primary mt-1"
-              />
-
-              <label className="textSizeForLabel">Remember Me</label>
-            </div> */}
             <div className="checkbox-container" onClick={handleCheckboxClick}>
               <div className={`checkbox-box ${checked ? "checked" : ""}`}>
                 {checked && <div className="checkmark">&#10003;</div>}
