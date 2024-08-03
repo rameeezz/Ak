@@ -6,6 +6,12 @@
   margin: 0%;
   box-sizing: border-box;
 }
+.hiegt{
+  height: 400px;
+}
+.height{
+  height: 100vh;
+}
 .sizeOfI {
   font-weight: 300;
   font-size: 1.6rem;
