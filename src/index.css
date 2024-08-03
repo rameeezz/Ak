@@ -3,12 +3,55 @@
 @tailwind utilities;
 *{
     font-family : Montserrat, sans-serif;
+    margin: 0%;
+    box-sizing: border-box;
 }
-.responsive-font-size {
+.sizeOfFontNav{
+  font-size: 13px;
+}
+.textSizeForLabel{
+  font-size: 1rem;
+}
+.textSizeForSpan{
+  font-size: 13px;
+  line-height: 19px;
+}
+.responsive-font-size-p {
+    font-size: 2.5rem; /* Bootstrap fs-1 size */
+  }
+.responsive-font-size-h1 {
+    font-size: 2.5rem; /* Bootstrap fs-1 size */
+  }
+.responsive-font-size-h3 {
     font-size: 2.5rem; /* Bootstrap fs-1 size */
   }
 @media (max-width: 576px) { /* Small screens (sm) and below */
-    .responsive-font-size {
+    .responsive-font-size-p {
       font-size: 1rem; /* Bootstrap fs-6 size */
+    }
+    .responsive-font-size-h1 {
+      font-size: 1rem; /* Bootstrap fs-6 size */
+    }
+    .responsive-font-size-h3 {
+      font-size: 1rem; /* Bootstrap fs-6 size */
+    }
+    .textSizeForSpan{
+      font-size: 1rem;
+    }
+    .textSizeForLabel{
+      font-size: 1rem;
+    }
+
+    .checkbox-box {
+      width: 1rem; /* Smaller size for smaller screens */
+      height: 1rem;
+    }
+  
+    .checkmark {
+      font-size: 0.75rem; /* Smaller checkmark for smaller screens */
+    }
+  
+    .checkbox-label {
+      font-size: 0.875rem; /* Smaller font size for smaller screens */
     }
   }
