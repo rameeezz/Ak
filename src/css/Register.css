@@ -1,22 +1,24 @@
+/* General styles for the background and form container */
 .backgroundBg {
-  background-image: url("/src/assets/bg/bgLogin.jpg");
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.login-form {
+    background-image: url("/src/assets/bg/bgLogin.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .login-form {
     background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 300px;
     text-align: center;
-    
   }
   
+  /* Styles for regular input fields */
   .login-form input {
     width: 100%;
     padding: 10px;
@@ -25,25 +27,57 @@
     border-radius: 4px;
   }
   
-  .login-form button {
+  /* Styles for the phone input to match regular inputs */
+  .phone-input-container {
+    margin-bottom: 10px; /* Add margin to match the regular inputs */
     width: 100%;
+  }
+  
+  .phone-input {
+    width: 100%; /* Ensure the phone input takes full width */
+  }
+  /* katb width fy index.css */
+  .phone-input-field {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    outline: none;
+  }
+  
+  /* Button styling */
+  .login-form button {
+    width: 90%;
     padding: 10px;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-  }
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+}
   
   .login-form button:hover {
     background-color: #0056b3;
   }
-
-
-.styleLineBetweenItems{
-  width: 50%;
-  height: 2px;
-  background-color: #007bff;
-  border-radius: 10%;
-}
-
+  
+  /* Style for the separator line */
+  .styleLineBetweenItems {
+    width: 50%;
+    height: 2px;
+    background-color: #007bff;
+    border-radius: 10%;
+  }
+  
+  /* Styling for icons (e.g., social login buttons) */
+  .sizeOfI {
+    font-size: 24px; /* Adjust size as needed */
+  }
+  
+  .CursorPointer {
+    cursor: pointer;
+  }
+  

@@ -6,6 +6,9 @@
   margin: 0%;
   box-sizing: border-box;
 }
+.phone-input-field{
+width: 100% !important;
+}
 .hiegt{
   height: 400px;
 }
