@@ -7,6 +7,7 @@ import MasterLayout from './pages/MasterLayout';
 import NotFound from './pages/NotFound';
 import Register from './pages/Register';
 import LogIn from './pages/LogIn';
+import ForgetPassword from './pages/ForgetPassword';
 function App() {
 
 let Router = createBrowserRouter([
@@ -15,6 +16,7 @@ let Router = createBrowserRouter([
   {path: "home" , element:<Home/>},
   {path: "register" , element:<Register/>},
   {path: "login" , element:<LogIn/>},
+  {path: "forgetPassword" , element:<ForgetPassword/>},
 
 ]}
 
