@@ -113,11 +113,11 @@ export default function LogIn({saveUser}) {
             {errorMessage == "" ? (
               ""
             ) : (
-              <div className="my-3 text-muted">{errorMessage}</div>
+              <div className="my-3 text-danger">{errorMessage}</div>
             )}
             {errorList.length > 0
               ? errorList.map((element) => (
-                  <div className="my-2 text-muted textSTyleForError">
+                  <div className="my-2 text-danger textSTyleForError">
                     {element.message}
                   </div>
                 ))
