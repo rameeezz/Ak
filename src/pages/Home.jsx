@@ -10,7 +10,7 @@ export default function Home({user}) {
       console.log("yarab");
       navigate("/login")
     }else{
-      console.log("may");
+      alert("نتمنى لكم حياة افضل ")
       
     }
   }
