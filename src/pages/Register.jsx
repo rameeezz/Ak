@@ -211,10 +211,10 @@ export default function Register() {
           {errorMessage == "" ? (
             ""
           ) : (
-            <div className="alert text-muted">{errorMessage}</div>
+            <div className="alert text-danger">{errorMessage}</div>
           )}
           {errorList.length >0 ? (
-            errorList.map((element)=><div className="my-2 text-muted textSTyleForError">{element.message}</div>)
+            errorList.map((element)=><div className="my-2 text-danger textSTyleForError">{element.message}</div>)
           ) : (
             ""
           )}
