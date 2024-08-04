@@ -6,6 +6,9 @@
   margin: 0%;
   box-sizing: border-box;
 }
+.textSTyleForError{
+  font-size: 14px;
+}
 .phone-input-field{
 width: 100% !important;
 }
