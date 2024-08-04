@@ -132,7 +132,7 @@ export default function Register() {
       password: joi
         .string()
         .required()
-        .pattern(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/))
+        .pattern(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&-])[A-Za-z\d@$!%*?&-]{8,}$/))
         .messages({
           'string.base': 'Password must be a string.',
           'string.empty': 'Password is required.',
