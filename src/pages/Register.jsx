@@ -100,7 +100,6 @@ export default function Register() {
         .required()
         .min(3)
         .max(15)
-        .alphanum()
         .messages({
           'string.base': 'First name must be a string.',
           'string.empty': 'First name is required.',
@@ -113,7 +112,6 @@ export default function Register() {
         .required()
         .min(3)
         .max(15)
-        .alphanum()
         .messages({
           'string.base': 'Last name must be a string.',
           'string.empty': 'Last name is required.',
@@ -129,7 +127,7 @@ export default function Register() {
           'string.base': 'Email must be a string.',
           'string.empty': 'Email is required.',
           'string.email': 'Please enter a valid email address.',
-          'any.invalid': 'Email must be a .com or .net domain.',
+          'any.invalid': 'Email must be a .com or .net .',
         }),
       password: joi
         .string()
