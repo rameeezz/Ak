@@ -28,12 +28,11 @@ function App() {
   }
   function logOut() {
     console.log("ssss");
-
     localStorage.removeItem("token");
     setUser(null);
     return redirect("/login");
   }
-  function protectRouter(props) {
+  function ProtectRouter(props) {
     if (localStorage.getItem("token") == null) {
       return <Navigate to="/login" />;
     } else {
@@ -50,19 +49,19 @@ function App() {
         {
           path: "",
           element: (
-            <protectRouter>
+            <ProtectRouter>
               {" "}
               <Home />{" "}
-            </protectRouter>
+            </ProtectRouter>
           ),
         },
         {
           path: "home",
           element: (
-            <protectRouter>
+            <ProtectRouter>
               {" "}
               <Home />{" "}
-            </protectRouter>
+            </ProtectRouter>
           ),
         },
         { path: "register", element: <Register /> },
