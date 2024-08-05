@@ -4,7 +4,7 @@ import "../css/LogIn.css";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import joi from "joi";
 import axios from "axios";
-export default function LogIn({saveUser}) {
+export default function LogIn({ saveUser }) {
   let [user, setUser] = useState({
     username: "",
     password: "",
@@ -22,66 +22,84 @@ export default function LogIn({saveUser}) {
     setChecked(!checked);
   };
   const [errorMessage, setErrorMessage] = useState("");
-  const [errorList, setErrorList] = useState([]);
+  // const [errorList, setErrorList] = useState([]);
   // console.log(errorList);
   const [Loading, setLoading] = useState(false);
-  let navigate = useNavigate()
+  let navigate = useNavigate();
   async function handleSubmit(e) {
-    e.preventDefault();
-    let valid = validUser();
+    // e.preventDefault();
+    // let valid = validUser();
     // console.log(valid);
-    if (valid.error == null) {
-      setLoading(true) 
-      try{
-        let {data} = await axios.post("https://freelance1-production.up.railway.app/auth/login",user)
-        console.log(data.message);
-        localStorage.setItem("token" , data.token)
-        saveUser()
-        setErrorMessage("")
-        setLoading(false)
-        setErrorList([])
-        navigate("/home")
-      }catch(error){
-        if (error.response && error.response.status === 400) {
-          setErrorMessage("email or password wrong")
-          setErrorList([])
-          setLoading(false)
-        }
+    // if (valid.error == null) {
+    //   setLoading(true)
+    //   try{
+    //     let {data} = await axios.post("https://freelance1-production.up.railway.app/auth/login",user)
+    //     console.log(data.message);
+    //     localStorage.setItem("token" , data.token)
+    //     saveUser()
+    //     setErrorMessage("")
+    //     setLoading(false)
+    //     setErrorList([])
+    //     navigate("/home")
+    //   }catch(error){
+    //     if (error.response && error.response.status === 400) {
+    //       setErrorMessage("email or password wrong")
+    //       setErrorList([])
+    //       setLoading(false)
+    //     }
+    //   }
+    // }else{
+    //   setErrorList(valid.error.details);
+    // }
+    e.preventDefault();
+    setLoading(true);
+    try {
+      let { data } = await axios.post(
+        "https://freelance1-production.up.railway.app/auth/login",
+        user
+      );
+      console.log(data.message);
+      localStorage.setItem("token", data.token);
+      saveUser();
+      setErrorMessage("");
+      setLoading(false);
+      navigate("/home");
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        setErrorMessage("email or password wrong");
+        setLoading(false);
       }
-    }else{
-      setErrorList(valid.error.details);
     }
-    
   }
-  function validUser() {
-    let scheme = joi.object({
-      username: joi
-        .string()
-        .required()
-        .email({ tlds: { allow: ["com", "net"] } })
-        .messages({
-          "string.base": "Email must be a string.",
-          "string.empty": "Email is required.",
-          "string.email": "Please enter a valid email address.",
-          "any.invalid": "Email must be a .com or .net .",
-        }),
-      password: joi
-        .string()
-        .required()
-        .pattern(
-          new RegExp(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&-])[A-Za-z\d@$!%*?&-]{8,}$/
-          )
-        )
-        .messages({
-          "string.base": "Password must be a string.",
-          "string.empty": "Password is required.",
-          "string.pattern.base":
-            "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.",
-        }),
-    });
-    return scheme.validate(user, { abortEarly: false });
-  }
+  // function validUser() {
+  //   let scheme = joi.object({
+  //     username: joi
+  //       .string()
+  //       .required()
+  //       .email({ tlds: { allow: ["com", "net"] } })
+  //       .messages({
+  //         "string.base": "Email must be a string.",
+  //         "string.empty": "Email is required.",
+  //         "string.email": "Please enter a valid email address.",
+  //         "any.invalid": "Email must be a .com or .net .",
+  //       }),
+  //     password: joi
+  //       .string()
+  //       .required()
+  //       .pattern(
+  //         new RegExp(
+  //           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&-])[A-Za-z\d@$!%*?&-]{8,}$/
+  //         )
+  //       )
+  //       .messages({
+  //         "string.base": "Password must be a string.",
+  //         "string.empty": "Password is required.",
+  //         "string.pattern.base":
+  //           "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.",
+  //       }),
+  //   });
+  //   return scheme.validate(user, { abortEarly: false });
+  // }
   return (
     <>
       {/* <img src={BgForLogin} alt="bg" className='bgForLogin'/> */}
@@ -115,13 +133,13 @@ export default function LogIn({saveUser}) {
             ) : (
               <div className="my-3 text-danger">{errorMessage}</div>
             )}
-            {errorList.length > 0
+            {/* {errorList.length > 0
               ? errorList.map((element) => (
                   <div className="my-2 text-danger textSTyleForError">
                     {element.message}
                   </div>
                 ))
-              : ""}
+              : ""} */}
             {Loading ? (
               <button>
                 <i className="fa solid fa-spinner fa-spin"></i>
