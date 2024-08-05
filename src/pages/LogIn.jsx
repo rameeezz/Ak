@@ -39,7 +39,7 @@ export default function LogIn({ saveUser, userRole }) {
       saveUser();
       setErrorMessage("");
       setLoading(false);
-      console.log(userRole.role);
+      // console.log(userRole.role);
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrorMessage("email or password wrong");
@@ -141,7 +141,7 @@ export default function LogIn({ saveUser, userRole }) {
               </button>
             ) : (
               <div className="d-flex flex-column align-items-start">
-                <button type="button" onClick={handleSubmit} className="">
+                <button type="submit" onClick={handleSubmit} className="">
                   Login
                 </button>
                 <Link className="sizeOfFontNav" to="/forgetPassword">
