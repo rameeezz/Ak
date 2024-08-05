@@ -17,11 +17,12 @@ export default function Home({user}) {
   return (
     <>
     <div className='w-100 h-vh  d-flex justify-content-center align-items-center'>
-    <img src={akPhoto} alt="sss" className='w-50 hiegt' />
+    <img src={akPhoto} alt="flower" className='w-50 hiegt' />
     </div>
     <div className='d-flex justify-content-center align-items-center'>
     <button onClick={addToCart} className='btn btn-primary p-5 '> add </button>
     </div>
+    <h1 className='text-center text-primary  my-5'>Ak florist</h1>
     </>
   )
 }

@@ -9,7 +9,7 @@ export default function LogIn({ saveUser }) {
     username: "",
     password: "",
   });
-  console.log(user);
+  // console.log(user);
 
   function SetUser(e) {
     let myUser = { ...user };
@@ -58,7 +58,7 @@ export default function LogIn({ saveUser }) {
         "https://freelance1-production.up.railway.app/auth/login",
         user
       );
-      console.log(data.message);
+      console.log(data);
       localStorage.setItem("token", data.token);
       saveUser();
       setErrorMessage("");
