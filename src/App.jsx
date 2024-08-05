@@ -126,7 +126,8 @@ import ForgetPassword from "./pages/ForgetPassword";
 
 function App() {
   const [user, setUser] = useState(null);
-
+  // console.log(user);
+  
   useEffect(() => {
     if (localStorage.getItem("token") != null) {
       SaveUserData();
@@ -142,7 +143,7 @@ function App() {
   function logOut() {
     localStorage.removeItem("token");
     setUser(null);
-    return <Navigate to="/login" />;
+    // return <Navigate to="/login" />;
   }
 
   function ProtectRouter({ children, requiredRole }) {
@@ -183,13 +184,13 @@ function App() {
         {
           path: "admin1",
           element: (
-            <ProtectRouter requiredRole="admin1">
-              <Admin1 />
-            </ProtectRouter>
+            <Admin1 />
+            //  <ProtectRouter requiredRole="admin1">
+            //  </ProtectRouter> 
           ),
         },
         { path: "register", element: <Register /> },
-        { path: "login", element: <LogIn saveUser={SaveUserData} /> },
+        { path: "login", element: <LogIn saveUser={SaveUserData}  userRole={user}/> },
         { path: "forgetPassword", element: <ForgetPassword /> },
       ],
     },

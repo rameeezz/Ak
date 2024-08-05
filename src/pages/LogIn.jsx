@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import BgForLogin from "../assets/bg/bgLogin.jpg";
 import "../css/LogIn.css";
-import { NavLink, Link, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate ,Navigate} from "react-router-dom";
 import joi from "joi";
 import axios from "axios";
-export default function LogIn({ saveUser }) {
+export default function LogIn({ saveUser, userRole }) {
   let [user, setUser] = useState({
     username: "",
     password: "",
@@ -27,30 +27,6 @@ export default function LogIn({ saveUser }) {
   const [Loading, setLoading] = useState(false);
   let navigate = useNavigate();
   async function handleSubmit(e) {
-    // e.preventDefault();
-    // let valid = validUser();
-    // console.log(valid);
-    // if (valid.error == null) {
-    //   setLoading(true)
-    //   try{
-    //     let {data} = await axios.post("https://freelance1-production.up.railway.app/auth/login",user)
-    //     console.log(data.message);
-    //     localStorage.setItem("token" , data.token)
-    //     saveUser()
-    //     setErrorMessage("")
-    //     setLoading(false)
-    //     setErrorList([])
-    //     navigate("/home")
-    //   }catch(error){
-    //     if (error.response && error.response.status === 400) {
-    //       setErrorMessage("email or password wrong")
-    //       setErrorList([])
-    //       setLoading(false)
-    //     }
-    //   }
-    // }else{
-    //   setErrorList(valid.error.details);
-    // }
     e.preventDefault();
     setLoading(true);
     try {
@@ -58,12 +34,12 @@ export default function LogIn({ saveUser }) {
         "https://freelance1-production.up.railway.app/auth/login",
         user
       );
-      console.log(data);
+      // console.log(data.user.role);
       localStorage.setItem("token", data.token);
       saveUser();
       setErrorMessage("");
       setLoading(false);
-      navigate("/home");
+      console.log(userRole.role);
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrorMessage("email or password wrong");
@@ -71,6 +47,25 @@ export default function LogIn({ saveUser }) {
       }
     }
   }
+  useEffect(()=>{
+    if (userRole?.role) {
+      switch (userRole.role) {
+        case "customer":
+          // return <Navigate to="/home" replace />;
+          navigate("/home")
+          break;
+        case "admin1":
+          // navigate("/admin1");
+          // return <Navigate to="/admin1" replace />;
+          navigate("/admin1")
+          break;
+        default:
+          // return <Navigate to="/" replace />;
+          navigate("/")
+          break;
+      }
+    }
+  },[userRole?.role])
   // function validUser() {
   //   let scheme = joi.object({
   //     username: joi
