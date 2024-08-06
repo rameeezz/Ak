@@ -34,25 +34,25 @@ function App() {
     // return <Navigate to="/login" />
   }
 
-  // function ProtectRouter({ children, requiredRole }) {
-  //   if (!user) {
-  //     return <Navigate to="/login" />;
-  //   }
+  function ProtectRouter({ children, requiredRole }) {
+    if (!user) {
+      return <Navigate to="/login" />;
+    }
 
-  //   if (requiredRole && user.role !== requiredRole) {
-  //     // Redirect to a different page if the role doesn't match
-  //     if (user.role === "customer") {
-  //       return <Navigate to="/home" />;
-  //     }
-  //     if (user.role === "admin1") {
-  //       return <Navigate to="/admin1" />;
-  //     }
-  //     // Add more role checks as needed
-  //     return <Navigate to="/unauthorized" />;
-  //   }
+    if (requiredRole && user.role !== requiredRole) {
+      // Redirect to a different page if the role doesn't match
+      if (user.role === "customer") {
+        return <Navigate to="/home" />;
+      }
+      if (user.role === "admin1") {
+        return <Navigate to="/admin1" />;
+      }
+      // Add more role checks as needed
+      return <Navigate to="/unauthorized" />;
+    }
 
-  //   return children;
-  // }
+    return children;
+  }
   // Function to handle the "Add to Cart" action
 
   const Router = createBrowserRouter([
@@ -72,9 +72,9 @@ function App() {
         {
           path: "admin1",
           element: (
-            <Admin1  logOut= {logOut}/>
-            //  <ProtectRouter requiredRole="admin1">
-            //  </ProtectRouter>
+            <ProtectRouter requiredRole="admin1">
+               <Admin1  logOut= {logOut}/>
+             </ProtectRouter>
           ),
         },
         { path: "register", element: <Register /> },
