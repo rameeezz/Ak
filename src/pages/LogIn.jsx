@@ -8,22 +8,22 @@ import axios from "axios";
 function navigates(url) {
   window.location.href = url
 }
-// async function auth() {
-//   const response = await fetch("https://freelance1-production.up.railway.app/auth/google",{method:'post'})
-//   const data =await response.json();
-//   console.log(data.url);
-  
-//   navigates(data.url); 
-// }
 async function auth() {
-  try {
-    const response = await fetch("/api/auth/google", { method: "post" });
-    const data = await response.json();
-    navigates(data.url);
-  } catch (error) {
-    console.error("Error during auth:", error);
-  }
+  const response = await fetch("https://freelance1-production.up.railway.app/auth/google",{method:'post'})
+  const data =await response.json();
+  console.log(data.url);
+  
+  navigates(data.url); 
 }
+// async function auth() {
+//   try {
+//     const response = await fetch("/api/auth/google", { method: "post" });
+//     const data = await response.json();
+//     navigates(data.url);
+//   } catch (error) {
+//     console.error("Error during auth:", error);
+//   }
+// }
 
 
 export default function LogIn({ saveUser, userRole }) {
