@@ -34,7 +34,7 @@ export default function NavBar({ user, logOut }) {
           </div>
         )}
       </nav>}
-      <button onClick={goOutt}> sssssssssssssss</button>
+      {/* <button onClick={goOutt}> sssssssssssssss</button> */}
     </>
   );
 }
