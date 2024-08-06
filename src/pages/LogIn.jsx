@@ -14,9 +14,9 @@ export default function LogIn({ saveUser, userRole }) {
   function SetUser(e) {
     let myUser = { ...user };
     myUser[e.target.name] = e.target.value;
-    // if (e.target.name === "username") {
-    //   myUser.username = myUser.username.toLowerCase();
-    // }
+    if (e.target.name === "username") {
+      myUser.username = myUser.username.toLowerCase();
+    }
     setUser(myUser);
     console.log(myUser);
     
