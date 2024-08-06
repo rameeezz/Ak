@@ -15,14 +15,33 @@ export default function Register() {
     confirmPassword: "",
     mobileNumber: "",
   });
-  // console.log(RegisterInfo);
+  console.log(RegisterInfo);
+  // function SetInfo(e) {
+  //   let MyUser = { ...RegisterInfo };
+  //   MyUser[e.target.name] = e.target.value;
+  //   MyUser.email.toLowerCase();
+
+  //   console.log(MyUser);
+  //   setRegisterInfo(MyUser);
+    
+  //   // console.log(MyUser);
+  //   setLoading(false)
+  // }
   function SetInfo(e) {
     let MyUser = { ...RegisterInfo };
     MyUser[e.target.name] = e.target.value;
-    setRegisterInfo(MyUser);
+  
+    // Convert the email to lowercase if the input name is "email"
+    if (e.target.name === "email") {
+      MyUser.email = MyUser.email.toLowerCase();
+    }
+  
     // console.log(MyUser);
-    setLoading(false)
+    setRegisterInfo(MyUser);
+  
+    setLoading(false);
   }
+  
   const [phone, setPhone] = useState("");
 
   const handleOnChange = (value) => {
@@ -171,12 +190,14 @@ export default function Register() {
               placeholder="First Name"
               name="firstName"
               onChange={SetInfo}
+              className="form-control"
             />
             <input
               type="text"
               placeholder="Last Name"
               name="lastName"
               onChange={SetInfo}
+              className="form-control"
             />
           </div>
           <input
@@ -184,6 +205,7 @@ export default function Register() {
             type="email"
             placeholder="Email"
             name="email"
+            className="form-control"
           />
           <div className="phone-input-container">
             <PhoneInput
@@ -201,12 +223,14 @@ export default function Register() {
             placeholder="Password"
             name="password"
             onChange={SetInfo}
+            className="form-control"
           />
           <input
             type="password"
             placeholder="Confirm Password"
             name="confirmPassword"
             onChange={SetInfo}
+            className="form-control"
           />
           {errorMessage == "" ? (
             ""

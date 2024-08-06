@@ -16,7 +16,7 @@ import ForgetPassword from "./pages/ForgetPassword";
 
 function App() {
   const [user, setUser] = useState(null);
-  console.log(user);
+  // console.log(user);
   useEffect(() => {
     if (localStorage.getItem("token") != null) {
       SaveUserData();

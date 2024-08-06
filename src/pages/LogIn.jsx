@@ -14,7 +14,12 @@ export default function LogIn({ saveUser, userRole }) {
   function SetUser(e) {
     let myUser = { ...user };
     myUser[e.target.name] = e.target.value;
+    // if (e.target.name === "username") {
+    //   myUser.username = myUser.username.toLowerCase();
+    // }
     setUser(myUser);
+    console.log(myUser);
+    
   }
   const [checked, setChecked] = useState(false);
 
@@ -107,12 +112,14 @@ export default function LogIn({ saveUser, userRole }) {
               placeholder="Email"
               name="username"
               onChange={SetUser}
+              className="form-control"
             />
             <input
               type="password"
               placeholder="Password"
               name="password"
               onChange={SetUser}
+              className="form-control"
             />
             <div
               className="checkbox-container mb-2"
