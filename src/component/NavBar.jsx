@@ -9,7 +9,7 @@ export default function NavBar({ user, logOut }) {
   return (
     <>
    
-      {user?.role == "admin1" ? "" : <nav className="position-fixed z-3 bg-transparent w-100 text-primary d-flex py-3 gap-5">
+      {user?.role == "admin1" || user?.role == "admin2" ? "" : <nav className="position-fixed z-3 bg-transparent w-100 text-primary d-flex py-3 gap-5">
         <NavLink to="home">Home</NavLink>
         {user != null ? (
           <button onClick={logOut}>log out</button>

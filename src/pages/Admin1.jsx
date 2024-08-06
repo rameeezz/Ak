@@ -52,6 +52,7 @@ export default function Admin1({ logOut }) {
           password: "",
           confirmPassword: "",
         });
+        alert("done")
       } catch (error) {
         if (error.response && error.response.status === 400) {
           setLoading(false);

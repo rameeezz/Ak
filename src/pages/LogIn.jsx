@@ -90,6 +90,11 @@ export default function LogIn({ saveUser, userRole }) {
           // return <Navigate to="/admin1" replace />;
           navigate("/admin1")
           break;
+        case "admin2":
+          // navigate("/admin1");
+          // return <Navigate to="/admin1" replace />;
+          navigate("/admin2")
+          break;
         default:
           // return <Navigate to="/" replace />;
           navigate("/")

@@ -14,6 +14,7 @@ import Register from "./pages/Register";
 import LogIn from "./pages/LogIn";
 import ForgetPassword from "./pages/ForgetPassword";
 import Terms from './pages/footer pages/Terms';
+import Admin2 from './pages/Admin2';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -47,6 +48,9 @@ function App() {
       if (user.role === "admin1") {
         return <Navigate to="/admin1" />;
       }
+      if (user.role === "admin2") {
+        return <Navigate to="/admin2" />;
+      }
       return <Navigate to="/unauthorized" />;
     }
 
@@ -72,6 +76,14 @@ function App() {
           element: (
             <ProtectRouter requiredRole="admin1">
               <Admin1 logOut={logOut} />
+            </ProtectRouter>
+          ),
+        },
+        {
+          path: "admin2",
+          element: (
+            <ProtectRouter requiredRole="admin2">
+              <Admin2 logOut={logOut} />
             </ProtectRouter>
           ),
         },
