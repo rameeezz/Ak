@@ -1,28 +1,33 @@
-import React from 'react'
-import akPhoto from '../../public/akIcon.jpg'
-import { useNavigate } from 'react-router-dom';
-export default function Home({user}) {
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import '../css/Home.css'
+export default function Home({ user }) {
   console.log(user);
-  
-  let navigate = useNavigate()
-  function addToCart(){
+
+  let navigate = useNavigate();
+  function addToCart() {
     if (user == null) {
       console.log("yarab");
-      navigate("/login")
-    }else{
-      alert("نتمنى لكم حياة افضل ")
-      
+      navigate("/login");
+    } else {
+      alert("نتمنى لكم حياة افضل ");
     }
   }
   return (
     <>
-    <div className='w-100 h-vh  d-flex justify-content-center align-items-center'>
-    <img src={akPhoto} alt="flower" className='w-50 hiegt' />
-    </div>
-    <div className='d-flex justify-content-center align-items-center'>
-    <button onClick={addToCart} className='btn btn-primary p-5 '> add </button>
-    </div>
-    <h1 className='text-center text-primary  my-5'>Ak florist</h1>
+      {/* <h1 className="text-center text-primary  my-5">Ak florist</h1> */}
+      <div className="TOGoUnderNav"></div>
+      <div className="d-flex justify-content-center align-items-center my-5">
+        <button>
+          <i className="fa solid fa-spinner fa-spin textSize"></i>
+        </button>
+      </div>
+      <div className="d-flex justify-content-center align-items-center">
+        <button onClick={addToCart} className="btn btn-primary p-4 ">
+          {" "}
+          add{" "}
+        </button>
+      </div>
     </>
-  )
+  );
 }
