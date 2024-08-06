@@ -61,7 +61,7 @@ export function Footer({user}) {
           </p>
         </div>
       </footer> */}
-     {user?.role == "admin1" || user === null ? "": <footer className="bg-[#ecd9e8]">
+     {user?.role == "admin1"  ? "": <footer className="bg-[#ecd9e8]">
         <div className="container-sm text-center">
           <div className="row py-4 ">
             <div className="col-md-4 col-sm-2">
