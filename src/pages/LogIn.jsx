@@ -61,7 +61,7 @@ export default function LogIn({ saveUser, userRole }) {
         "https://freelance1-production.up.railway.app/auth/login",
         user
       );
-      // console.log(data.user.role);
+      console.log(data.user);
       localStorage.setItem("token", data.token);
       saveUser();
       setErrorMessage("");
