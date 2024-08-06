@@ -4,6 +4,28 @@ import "../css/LogIn.css";
 import { NavLink, Link, useNavigate ,Navigate} from "react-router-dom";
 import joi from "joi";
 import axios from "axios";
+
+function navigates(url) {
+  window.location.href = url
+}
+// async function auth() {
+//   const response = await fetch("https://freelance1-production.up.railway.app/auth/google",{method:'post'})
+//   const data =await response.json();
+//   console.log(data.url);
+  
+//   navigates(data.url); 
+// }
+async function auth() {
+  try {
+    const response = await fetch("/api/auth/google", { method: "post" });
+    const data = await response.json();
+    navigates(data.url);
+  } catch (error) {
+    console.error("Error during auth:", error);
+  }
+}
+
+
 export default function LogIn({ saveUser, userRole }) {
   let [user, setUser] = useState({
     username: "",
@@ -44,6 +66,10 @@ export default function LogIn({ saveUser, userRole }) {
       saveUser();
       setErrorMessage("");
       setLoading(false);
+      setUser({
+        username:"",
+        password:""
+      })
       // console.log(userRole.role);
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -111,6 +137,7 @@ export default function LogIn({ saveUser, userRole }) {
               type="text"
               placeholder="Email"
               name="username"
+              value={user.username}
               onChange={SetUser}
               className="form-control"
             />
@@ -118,6 +145,7 @@ export default function LogIn({ saveUser, userRole }) {
               type="password"
               placeholder="Password"
               name="password"
+              value={user.password}
               onChange={SetUser}
               className="form-control"
             />
@@ -172,8 +200,8 @@ export default function LogIn({ saveUser, userRole }) {
               <div className="styleLineBetweenItems"></div>
             </div>
             <div className="d-flex justify-content-center gap-2 mt-3 ">
-              <i className="fa-brands fa-google text-success sizeOfI CursorPointer"></i>
-              <i className="fa-brands fa-facebook sizeOfI CursorPointer text-primary"></i>
+              <i onClick={()=>auth()} className="fa-brands fa-google text-success sizeOfI CursorPointer"></i>
+             <i className="fa-brands fa-facebook sizeOfI CursorPointer text-primary"></i>
             </div>
           </form>
         </div>
