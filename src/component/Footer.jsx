@@ -1,7 +1,8 @@
 import React from "react";
 import "../css/Footer.css";
 import Visa from "../assets/png payment/visa.png";
-export function Footer() {
+import { Link } from 'react-router-dom';
+export function Footer({user}) {
   return (
     <>
       {/* <footer className="bg-[#ecd9e8]">
@@ -60,11 +61,12 @@ export function Footer() {
           </p>
         </div>
       </footer> */}
-      <footer className="bg-[#ecd9e8]">
+     {user?.role == "admin1" ? "": <footer className="bg-[#ecd9e8]">
         <div className="container-sm text-center">
           <div className="row py-4 ">
             <div className="col-md-4 col-sm-2">
               <h3 className="responsive-font-size ">Navigation</h3>
+              <Link to="/terms">Terms & conditions</Link>
               <p className="moveOfPInFooter">Categories</p>
             </div>
             <div className="col-md-4 col-sm-2">
@@ -109,7 +111,7 @@ export function Footer() {
             &copy; 2024 MyWebsite. All rights reserved.
           </p>
         </div>
-      </footer>
+      </footer> }
     </>
   );
 }
