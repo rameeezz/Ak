@@ -283,7 +283,7 @@ function DeleteCategory() {
           </div>
           {/* ---------------------------------------------- */}
           {/* show category and delete from it  */}
-          {/* <div className="row text-center">
+          <div className="row text-center">
             <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
               
               <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
@@ -379,98 +379,6 @@ function DeleteCategory() {
                 <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
               </p>
               
-            </div>
-          </div> */}
-          <div className="d-flex justify-content-center gap-4 flex-wrap">
-            <div>
-            <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-            </div>
-            <div>
-            <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-            </div>
-            <div>
-            <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-            </div>
-            <div>
-            <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-            </div>
-            <div>
-            <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-            </div>
-            <div>
-            <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-            </div>
-            <div>
-            <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-            </div>
-            <div>
-            <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-            </div>
-            <div>
-            <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-            </div>
-            <div>
-            <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-            </div>
-            <div>
-            <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-            </div>
-            <div>
-            <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-            </div>
-            <div>
-            <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-            </div>
-            <div>
-            <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-            </div>
-            <div>
-            <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
             </div>
           </div>
           {/* ------------------------------------ */}
