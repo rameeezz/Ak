@@ -284,77 +284,101 @@ function DeleteCategory() {
           {/* ---------------------------------------------- */}
           {/* show category and delete from it  */}
           <div className="row text-center">
-            <div className="col-md-2 col-sm-1 my-2">
-              <div className="position-relative d-flex justify-content-center">
-              <p className=" bg-info w-50 text-white py-1 rounded-1">
+            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
+              
+              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
                 Below 500
+                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
               </p>
-                <i onClick={DeleteCategory} className="fa-solid fa-xmark styleOFX"></i>
-              </div>
+              
             </div>
-            <div className="col-md-2 col-sm-1 my-2">
-              <div className="position-relative d-flex justify-content-center">
-              <p className=" bg-info w-50 text-white py-1 rounded-1">
+            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
+              
+              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
                 Below 500
+                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
               </p>
-                <i onClick={DeleteCategory} className="fa-solid fa-xmark styleOFX"></i>
-              </div>
+              
             </div>
-            <div className="col-md-2 col-sm-1 my-2">
-              <div className="position-relative d-flex justify-content-center">
-              <p className=" bg-info w-50 text-white py-1 rounded-1">
+            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
+              
+              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
                 Below 500
+                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
               </p>
-                <i onClick={DeleteCategory} className="fa-solid fa-xmark styleOFX"></i>
-              </div>
+              
             </div>
-            <div className="col-md-2 col-sm-1 my-2">
-              <div className="position-relative d-flex justify-content-center">
-              <p className=" bg-info w-50 text-white py-1 rounded-1">
+            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
+              
+              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
                 Below 500
+                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
               </p>
-                <i onClick={DeleteCategory} className="fa-solid fa-xmark styleOFX"></i>
-              </div>
+              
             </div>
-            <div className="col-md-2 col-sm-1 my-2">
-              <div className="position-relative d-flex justify-content-center">
-              <p className=" bg-info w-50 text-white py-1 rounded-1">
+            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
+              
+              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
                 Below 500
+                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
               </p>
-                <i onClick={DeleteCategory} className="fa-solid fa-xmark styleOFX"></i>
-              </div>
+              
             </div>
-            <div className="col-md-2 col-sm-1 my-2">
-              <div className="position-relative d-flex justify-content-center">
-              <p className=" bg-info w-50 text-white py-1 rounded-1">
+            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
+              
+              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
                 Below 500
+                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
               </p>
-                <i onClick={DeleteCategory} className="fa-solid fa-xmark styleOFX"></i>
-              </div>
+              
             </div>
-            <div className="col-md-2 col-sm-1 my-2">
-              <div className="position-relative d-flex justify-content-center">
-              <p className=" bg-info w-50 text-white py-1 rounded-1">
+            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
+              
+              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
                 Below 500
+                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
               </p>
-                <i onClick={DeleteCategory} className="fa-solid fa-xmark styleOFX"></i>
-              </div>
+              
             </div>
-            <div className="col-md-2 col-sm-1 my-2">
-              <div className="position-relative d-flex justify-content-center">
-              <p className=" bg-info w-50 text-white py-1 rounded-1">
+            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
+              
+              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
                 Below 500
+                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
               </p>
-                <i onClick={DeleteCategory} className="fa-solid fa-xmark styleOFX"></i>
-              </div>
+              
             </div>
-            <div className="col-md-2 col-sm-1 my-2">
-              <div className="position-relative d-flex justify-content-center">
-              <p className=" bg-info w-50 text-white py-1 rounded-1">
+            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
+              
+              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
                 Below 500
+                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
               </p>
-                <i onClick={DeleteCategory} className="fa-solid fa-xmark styleOFX"></i>
-              </div>
+              
+            </div>
+            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
+              
+              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
+                Below 500
+                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
+              </p>
+              
+            </div>
+            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
+              
+              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
+                Below 500
+                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
+              </p>
+              
+            </div>
+            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
+              
+              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
+                Below 500
+                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
+              </p>
+              
             </div>
           </div>
           {/* ------------------------------------ */}
