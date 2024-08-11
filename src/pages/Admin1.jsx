@@ -52,7 +52,7 @@ export default function Admin1({ logOut }) {
           password: "",
           confirmPassword: "",
         });
-        alert("done")
+        alert("done");
       } catch (error) {
         if (error.response && error.response.status === 400) {
           setLoading(false);
@@ -94,46 +94,61 @@ export default function Admin1({ logOut }) {
   }
   // done admin  *********************
   // work of add category ********
-const [categoryName , setCategoryName] = useState({
-  name:""
-})
+  const [categoryName, setCategoryName] = useState({
+    name: "",
+  });
 
-function getCategoryName(e) {
-  const myCategory = {...categoryName}
-  myCategory[e.target.name] = e.target.value
-  // console.log(myCategory);
-  setCategoryName(myCategory)
-}
-const [LoadingAddCategory , setLoadingAddCategory] = useState(false)
-async function sendCategoryName(e) {
-  e.preventDefault()
-  setLoadingAddCategory(true)
-  try {
-    let { data } = await axios.post(
-      "https://freelance1-production.up.railway.app/admin2/addCategory",
-      categoryName
-    );
-    console.log(data);
-    
-    setLoadingAddCategory(false)
-    alert("done")
-    setCategoryName({
-      name:""
-    })
-  } catch (error) {
-    if (error.response && error.response.status === 404 ) {
-      // console.log("m4 dayf");
-      alert("try again later")
-      setLoadingAddCategory(false)
+  function getCategoryName(e) {
+    const myCategory = { ...categoryName };
+    myCategory[e.target.name] = e.target.value;
+    // console.log(myCategory);
+    setCategoryName(myCategory);
+    setErrorMessageForCategory("");
+  }
+  const [LoadingAddCategory, setLoadingAddCategory] = useState(false);
+  const [ErrorMessageForCategory, setErrorMessageForCategory] = useState("");
+  async function sendCategoryName(e) {
+    e.preventDefault();
+    setLoadingAddCategory(true);
+    try {
+      let { data } = await axios.post(
+        "https://freelance1-production.up.railway.app/admin2/addCategory",
+        categoryName
+      );
+      console.log(data);
+
+      setLoadingAddCategory(false);
+      alert("done");
+      setErrorMessageForCategory("");
+      setCategoryName({
+        name: "",
+      });
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        // console.log("m4 dayf");
+        setErrorMessageForCategory("try again later");
+        setLoadingAddCategory(false);
+      }
+      if (error.response && error.response.status === 422) {
+        // console.log("m4 dayf");
+        setErrorMessageForCategory("Category creation failed.");
+        setLoadingAddCategory(false);
+      }
+      if (error.response && error.response.status === 412) {
+        // console.log("m4 dayf");
+        setErrorMessageForCategory("This category already exists.");
+        setLoadingAddCategory(false);
+      }
     }
   }
-}
+  // done category *******************
+
   return (
     <>
       <div>
         <div className=" position-fixed end-2 rounded-circle bg-danger top-5">
           <button className=" p-3 text-white" onClick={GoTOLOgin}>
-          <i className="fa-solid fa-right-from-bracket"></i>
+            <i className="fa-solid fa-right-from-bracket"></i>
           </button>
         </div>
         <div className="container colorForBg py-5">
@@ -208,7 +223,7 @@ async function sendCategoryName(e) {
           </h2>
           <div className="d-flex justify-content-center align-items-center my-5">
             <form onSubmit={sendCategoryName} className="w-50">
-            <div className="mb-3">
+              <div className="mb-3">
                 <label className="form-label">name of category</label>
                 <input
                   type="text"
@@ -218,6 +233,13 @@ async function sendCategoryName(e) {
                   onChange={getCategoryName}
                 />
               </div>
+              {ErrorMessageForCategory == "" ? (
+                ""
+              ) : (
+                <div className="my-3 text-danger text-center">
+                  {ErrorMessageForCategory}
+                </div>
+              )}
               {LoadingAddCategory ? (
                 <button className=" btn btn-primary px-4">
                   <i className="fa solid fa-spinner fa-spin "></i>
@@ -234,6 +256,9 @@ async function sendCategoryName(e) {
             </form>
           </div>
           {/* ---------------------------------------------- */}
+          {/* show category and delete from it  */}
+          
+          {/* ------------------------------------ */}
         </div>
       </div>
     </>
