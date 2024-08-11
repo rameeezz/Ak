@@ -122,7 +122,8 @@ async function sendCategoryName(e) {
     })
   } catch (error) {
     if (error.response && error.response.status === 404 ) {
-      console.log("m4 dayf");
+      // console.log("m4 dayf");
+      alert("try again later")
       setLoadingAddCategory(false)
     }
   }
