@@ -177,7 +177,7 @@ function DeleteCategory() {
             <i className="fa-solid fa-right-from-bracket"></i>
           </button>
         </div>
-        <div className="container colorForBg py-5">
+        <div className="container-lg colorForBg py-5">
           {/* add Admin2 */}
           <h2 className="responsive-font-size-h3 colorForTitles text-center">
             Add Admin
