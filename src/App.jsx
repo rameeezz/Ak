@@ -18,6 +18,7 @@ import Admin2 from './pages/Admin2';
 
 function App() {
   const [user, setUser] = useState(null);
+console.log(user);
 
   useEffect(() => {
     if (localStorage.getItem("token") != null) {
