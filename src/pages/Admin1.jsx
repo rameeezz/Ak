@@ -112,7 +112,7 @@ export default function Admin1({ logOut }) {
     setLoadingAddCategory(true);
     try {
       let { data } = await axios.post(
-        "https://freelance1-production.up.railway.app/admin2/addCategory",
+        "https://freelance1-production.up.railway.app/admin1/addCategory",
         categoryName
       );
       console.log(data);
