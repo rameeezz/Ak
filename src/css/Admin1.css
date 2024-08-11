@@ -7,3 +7,9 @@
 .colorForTitles{
     color:#7E96C4;
 }
+.styleOFX{
+    position: absolute;
+    left: 71%;
+    top: -22%;
+    cursor: pointer;
+}

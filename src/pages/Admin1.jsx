@@ -6,6 +6,13 @@ import joi from "joi";
 
 export default function Admin1({ logOut }) {
   let navigate = useNavigate();
+  const [showAlert, setShowAlert] = useState("d-none");
+  const showAlertMessage = () => {
+    setShowAlert(" position-fixed start-3 top-5 alert alert-success w-25");
+    setTimeout(() => {
+      setShowAlert("d-none");
+    }, 1000);
+  };
   function GoTOLOgin() {
     navigate("/login");
     logOut();
@@ -52,7 +59,7 @@ export default function Admin1({ logOut }) {
           password: "",
           confirmPassword: "",
         });
-        alert("done");
+        showAlertMessage()
       } catch (error) {
         if (error.response && error.response.status === 400) {
           setLoading(false);
@@ -118,8 +125,9 @@ export default function Admin1({ logOut }) {
       console.log(data);
 
       setLoadingAddCategory(false);
-      alert("done");
+      // alert("done");
       setErrorMessageForCategory("");
+      showAlertMessage()
       setCategoryName({
         name: "",
       });
@@ -142,10 +150,28 @@ export default function Admin1({ logOut }) {
     }
   }
   // done category *******************
-
+  const [showCategory , setShowCategory] = useState([])
+ async function getCategory() {
+    try {
+      let {data} = await axios.get("")
+    } catch (error) {
+      
+    }
+  }
+// Show category 
+// done show category *************
+// delete category 
+function DeleteCategory() {
+ alert("sa")
+  
+}
+// done delete categroy *****************
   return (
     <>
       <div>
+        <div className={showAlert}>
+          <div className="custom-alert text-center">Done</div>
+        </div>
         <div className=" position-fixed end-2 rounded-circle bg-danger top-5">
           <button className=" p-3 text-white" onClick={GoTOLOgin}>
             <i className="fa-solid fa-right-from-bracket"></i>
@@ -257,7 +283,16 @@ export default function Admin1({ logOut }) {
           </div>
           {/* ---------------------------------------------- */}
           {/* show category and delete from it  */}
-          
+          <div className="row text-center">
+            <div className="col-md-2 col-sm-1 my-2">
+              <div className="position-relative d-flex justify-content-center">
+              <p className=" bg-info w-50 text-white py-1 rounded-1">
+                Below 500
+              </p>
+                <i onClick={DeleteCategory} className="fa-solid fa-xmark styleOFX"></i>
+              </div>
+            </div>
+          </div>
           {/* ------------------------------------ */}
         </div>
       </div>
