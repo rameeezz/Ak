@@ -10,9 +10,8 @@ export default function Admin2({logOut}) {
   return (
     <>
     <div className=" position-fixed end-2 rounded-circle bg-danger top-5">
-          <button className=" p-2  text-white" onClick={GoTOLOgin}>
-            {" "}
-            log out{" "}
+          <button className=" p-3  text-white" onClick={GoTOLOgin}>
+          <i className="fa-solid fa-right-from-bracket"></i>
           </button>
         </div>
     <div className="TOGoUnderNav"></div>
