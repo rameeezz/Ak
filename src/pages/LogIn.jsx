@@ -11,7 +11,7 @@ function navigates(url) {
 async function auth() {
   const response = await fetch("https://freelance1-production.up.railway.app/auth/google",{method:'post'})
   const data =await response.json();
-  console.log(data.url);
+  console.log(data);
   
   navigates(data.url); 
 }
