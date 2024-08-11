@@ -292,6 +292,70 @@ function DeleteCategory() {
                 <i onClick={DeleteCategory} className="fa-solid fa-xmark styleOFX"></i>
               </div>
             </div>
+            <div className="col-md-2 col-sm-1 my-2">
+              <div className="position-relative d-flex justify-content-center">
+              <p className=" bg-info w-50 text-white py-1 rounded-1">
+                Below 500
+              </p>
+                <i onClick={DeleteCategory} className="fa-solid fa-xmark styleOFX"></i>
+              </div>
+            </div>
+            <div className="col-md-2 col-sm-1 my-2">
+              <div className="position-relative d-flex justify-content-center">
+              <p className=" bg-info w-50 text-white py-1 rounded-1">
+                Below 500
+              </p>
+                <i onClick={DeleteCategory} className="fa-solid fa-xmark styleOFX"></i>
+              </div>
+            </div>
+            <div className="col-md-2 col-sm-1 my-2">
+              <div className="position-relative d-flex justify-content-center">
+              <p className=" bg-info w-50 text-white py-1 rounded-1">
+                Below 500
+              </p>
+                <i onClick={DeleteCategory} className="fa-solid fa-xmark styleOFX"></i>
+              </div>
+            </div>
+            <div className="col-md-2 col-sm-1 my-2">
+              <div className="position-relative d-flex justify-content-center">
+              <p className=" bg-info w-50 text-white py-1 rounded-1">
+                Below 500
+              </p>
+                <i onClick={DeleteCategory} className="fa-solid fa-xmark styleOFX"></i>
+              </div>
+            </div>
+            <div className="col-md-2 col-sm-1 my-2">
+              <div className="position-relative d-flex justify-content-center">
+              <p className=" bg-info w-50 text-white py-1 rounded-1">
+                Below 500
+              </p>
+                <i onClick={DeleteCategory} className="fa-solid fa-xmark styleOFX"></i>
+              </div>
+            </div>
+            <div className="col-md-2 col-sm-1 my-2">
+              <div className="position-relative d-flex justify-content-center">
+              <p className=" bg-info w-50 text-white py-1 rounded-1">
+                Below 500
+              </p>
+                <i onClick={DeleteCategory} className="fa-solid fa-xmark styleOFX"></i>
+              </div>
+            </div>
+            <div className="col-md-2 col-sm-1 my-2">
+              <div className="position-relative d-flex justify-content-center">
+              <p className=" bg-info w-50 text-white py-1 rounded-1">
+                Below 500
+              </p>
+                <i onClick={DeleteCategory} className="fa-solid fa-xmark styleOFX"></i>
+              </div>
+            </div>
+            <div className="col-md-2 col-sm-1 my-2">
+              <div className="position-relative d-flex justify-content-center">
+              <p className=" bg-info w-50 text-white py-1 rounded-1">
+                Below 500
+              </p>
+                <i onClick={DeleteCategory} className="fa-solid fa-xmark styleOFX"></i>
+              </div>
+            </div>
           </div>
           {/* ------------------------------------ */}
         </div>
