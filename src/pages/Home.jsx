@@ -26,31 +26,33 @@ export default function Home({ user }) {
       </div>
       <div className="container d-flex justify-content-center gap-4 my-5">
       <div className="card sa" >
-        <img src={PHoto2} className="card-img-top" alt="" />
+        <img src={PHoto1} className="card-img-top" alt="" />
         <div className="card-body">
-          <h5 className="card-title">Card title</h5>
-          <p className="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+        <p className="text-muted mb-2">690 EGP</p>
+          <h5 className="card-title">Red Roses Bouquet</h5>
+          <p className="card-text mb-2">
+          Red Love Bouquet | Black Wrap.
           </p>
-          <a className="btn btn-primary">
-            Go somewhere
-          </a>
+          <button onClick={addToCart} className="btn text-white de  w-100">
+            add to cart 
+          </button>
         </div>
       </div>
       <div className="card sa" >
-        <img src={PHoto1} className="card-img-top" alt="" />
+        <img src={PHoto2} className="card-img-top" alt="" />
         <div className="card-body">
-          <h5 className="card-title">Card title</h5>
-          <p className="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+        <p className="text-muted mb-2">690 EGP</p>
+          <h5 className="card-title">Red Roses Bouquet</h5>
+          <p className="card-text mb-2">
+          Red Love Bouquet | Black Wrap.
           </p>
-          <a className="btn btn-primary">
-            Go somewhere
-          </a>
+          <button onClick={addToCart} className="btn text-white de  w-100">
+            add to cart 
+          </button>
         </div>
       </div>
+      
+      
       </div>
       <div className="d-flex justify-content-center align-items-center">
         <button onClick={addToCart} className="btn btn-primary p-4 ">

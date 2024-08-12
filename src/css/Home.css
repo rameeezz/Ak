@@ -11,3 +11,9 @@
 .sa{
     width: 18rem;
 }
+.de{
+    background-color: #D4B11C;
+}
+.de:hover{
+    background-color: #495F75 !important;
+}
