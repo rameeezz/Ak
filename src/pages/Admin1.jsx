@@ -59,7 +59,7 @@ export default function Admin1({ logOut }) {
           password: "",
           confirmPassword: "",
         });
-        showAlertMessage()
+        showAlertMessage();
       } catch (error) {
         if (error.response && error.response.status === 400) {
           setLoading(false);
@@ -116,56 +116,105 @@ export default function Admin1({ logOut }) {
   const [ErrorMessageForCategory, setErrorMessageForCategory] = useState("");
   async function sendCategoryName(e) {
     e.preventDefault();
-    setLoadingAddCategory(true);
-    try {
-      let { data } = await axios.post(
-        "https://freelance1-production.up.railway.app/admin1/addCategory",
-        categoryName
-      );
-      console.log(data);
+    if (categoryName.name === "") {
+      alert("please write name of category");
+    } else {
+      setLoadingAddCategory(true);
+      try {
+        let { data } = await axios.post(
+          "https://freelance1-production.up.railway.app/admin1/addCategory",
+          categoryName
+        );
+        console.log(data);
 
-      setLoadingAddCategory(false);
-      // alert("done");
-      setErrorMessageForCategory("");
-      showAlertMessage()
-      setCategoryName({
-        name: "",
-      });
-    } catch (error) {
-      if (error.response && error.response.status === 404) {
-        // console.log("m4 dayf");
-        setErrorMessageForCategory("try again later");
         setLoadingAddCategory(false);
-      }
-      if (error.response && error.response.status === 422) {
-        // console.log("m4 dayf");
-        setErrorMessageForCategory("Category creation failed.");
-        setLoadingAddCategory(false);
-      }
-      if (error.response && error.response.status === 412) {
-        // console.log("m4 dayf");
-        setErrorMessageForCategory("This category already exists.");
-        setLoadingAddCategory(false);
+        // alert("done");
+        setErrorMessageForCategory("");
+        showAlertMessage();
+        setCategoryName({
+          name: "",
+        });
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          // console.log("m4 dayf");
+          setErrorMessageForCategory("try again later");
+          setLoadingAddCategory(false);
+        }
+        if (error.response && error.response.status === 422) {
+          // console.log("m4 dayf");
+          setErrorMessageForCategory("Category creation failed.");
+          setLoadingAddCategory(false);
+        }
+        if (error.response && error.response.status === 412) {
+          // console.log("m4 dayf");
+          setErrorMessageForCategory("This category already exists.");
+          setLoadingAddCategory(false);
+        }
       }
     }
   }
-  // done category *******************
-  const [showCategory , setShowCategory] = useState([])
- async function getCategory() {
+  // done add category *******************
+  // Show category
+  const [showCategory, setShowCategory] = useState([]);
+  // console.log(showCategory);
+
+  const [classOFShowCategroy, setClassOfShowCategory] = useState("d-none");
+  async function getCategory() {
     try {
-      let {data} = await axios.get("")
+      let { data } = await axios.get(
+        "https://freelance1-production.up.railway.app/admin1/getCategories"
+      );
+      // console.log(data);
+      setShowCategory(data);
+    } catch (error) {
+      if (error.response && error.response.status === 502) {
+        alert("server is down try again later");
+      }
+    }
+  }
+  useEffect(() => {
+    getCategory();
+  }, [showCategory]);
+  function openCayegory() {
+    setClassOfShowCategory("row text-center");
+  }
+  function closeCategory() {
+    setClassOfShowCategory("d-none");
+  }
+  // done show category *************
+  // delete category
+  const [setCategoryId , setSetCategoryId] = useState({
+    categoryID:""
+  }) 
+  // console.log(setCategoryId);
+  
+  const [sureMessage , setSureMessage]  = useState("")
+  const [classOFShowSureBox , setclassOFShowSureBox]  = useState("d-none ")
+   function DeleteCategory(IdOfElement) {
+    // console.log(IdOfElement);
+    
+  setSetCategoryId({...setCategoryId , categoryID:IdOfElement})
+  setSureMessage("are you sure you want to delete this category ?")
+  setclassOFShowSureBox("position-fixed top-50 start-50 translate-middle z-3 bg-white shadow rounded-3  text-black p-5")
+  }
+  async function sureDeleteCategory() {
+    // console.log(setCategoryId.categoryID);
+    
+    try {
+      let {data} = await axios.delete(`https://freelance1-production.up.railway.app/admin1/deleteCategory/${setCategoryId.categoryID}`)
+      console.log(data);
+      showAlertMessage();
+      setclassOFShowSureBox("d-none")
+      // getCategory()
     } catch (error) {
       
     }
+    
   }
-// Show category 
-// done show category *************
-// delete category 
-function DeleteCategory() {
- alert("sa")
-  
-}
-// done delete categroy *****************
+  function closeSureSection() {
+    setclassOFShowSureBox("d-none")
+  }
+  // done delete categroy *****************
   return (
     <>
       <div>
@@ -177,7 +226,7 @@ function DeleteCategory() {
             <i className="fa-solid fa-right-from-bracket"></i>
           </button>
         </div>
-        <div className="container-lg colorForBg py-5">
+        <div className="container colorForBg py-5">
           {/* add Admin2 */}
           <h2 className="responsive-font-size-h3 colorForTitles text-center">
             Add Admin
@@ -283,102 +332,50 @@ function DeleteCategory() {
           </div>
           {/* ---------------------------------------------- */}
           {/* show category and delete from it  */}
-          <div className="row text-center">
-            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
-              
-              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
+          <div className="d-flex justify-content-start">
+            {classOFShowCategroy === "d-none" ? (
+              <button
+                onClick={() => {
+                  openCayegory();
+                }}
+                className="btn btn-secondary"
+              >
+                show categories
+              </button>
+            ) : (
+              <button
+                onClick={closeCategory}
+                className="btn btn-close text-danger"
+              ></button>
+            )}
+          </div>
+          <div className={classOFShowCategroy}>
+            {showCategory == null || showCategory.length == 0 ? (
+              <p className="text-center text-danger">
+                "There are no categories, please add categories"
               </p>
-              
-            </div>
-            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
-              
-              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-              
-            </div>
-            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
-              
-              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-              
-            </div>
-            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
-              
-              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-              
-            </div>
-            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
-              
-              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-              
-            </div>
-            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
-              
-              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-              
-            </div>
-            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
-              
-              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-              
-            </div>
-            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
-              
-              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-              
-            </div>
-            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
-              
-              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-              
-            </div>
-            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
-              
-              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-              
-            </div>
-            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
-              
-              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-              
-            </div>
-            <div className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
-              
-              <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
-                Below 500
-                <i onClick={DeleteCategory} className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"></i>
-              </p>
-              
+            ) : (
+              showCategory.map((element,i) => (
+                <div key={i} className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
+                  <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
+                    {element?.name}
+                    <i
+                      onClick={() => {
+                        DeleteCategory(element?._id);
+                      }}
+                      className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"
+                    ></i>
+                  </p>
+                </div>
+              ))
+            )}
+          </div>
+          {/* box to show sure message  */}
+          <div className={classOFShowSureBox}>
+            <button  onClick={closeSureSection} className="position-absolute end-2 top-2 btn btn-close"></button>
+            <p className="py-4"> {sureMessage}</p>
+            <div className="d-flex justify-content-center">
+            <button onClick={sureDeleteCategory} className="btn btn-primary ">delete</button>
             </div>
           </div>
           {/* ------------------------------------ */}
