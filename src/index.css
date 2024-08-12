@@ -33,6 +33,9 @@ width: 100% !important;
   font-size: 13px;
   line-height: 19px;
 }
+.cursorPOinter{
+  cursor: pointer;
+}
 .responsive-font-size-p {
   font-size: 21.6px; /* Bootstrap fs-1 size */
 }

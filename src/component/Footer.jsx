@@ -62,19 +62,21 @@ export function Footer({user}) {
         </div>
       </footer> */}
      {user?.role == "admin1" || user?.role =="admin2"  ? "": <footer className="bg-[#ecd9e8]">
-        <div className="container-sm text-center">
-          <div className="row py-4 ">
-            <div className="col-md-4 col-sm-2">
-              <h3 className="responsive-font-size ">Navigation</h3>
-              <Link to="/terms">Terms & conditions</Link>
-              <p className="moveOfPInFooter">Categories</p>
+        <div className="container-sm">
+          <div className="d-flex justify-content-evenly py-4 ">
+            <div className="text-center">
+              <h3 className="text-[#323232] font-medium text-lg  mb-1">Get to know us</h3>
+              <p className="moveOfPInFooter">About us</p>
+              <p className="moveOfPInFooter">Contact us</p>
+              <p className="moveOfPInFooter">Privacy policy</p>
             </div>
-            <div className="col-md-4 col-sm-2">
-              <h3>Navigation</h3>
+            <div className="text-center">
+              <h3 className="text-[#323232] font-medium text-lg  mb-1">Navigation</h3>
               <p className="moveOfPInFooter">Categories</p>
+              <p className="moveOfPInFooter">Occasions</p>
             </div>
-            <div className="col-md-4 col-sm-2">
-            <div className=" ">
+            
+            <div className="text-center">
             <h3 className="text-[#323232] font-medium text-lg  mb-1">
               Follow Us
             </h3>
@@ -103,7 +105,7 @@ export function Footer({user}) {
               </div>
             
           </div>
-            </div>
+           
           </div>
         </div>
         <div className="bg-[#323232] py-2 mt-6">

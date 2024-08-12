@@ -1,0 +1,25 @@
+.styleFOrNav{
+    width: 40px;
+    height: 4px;
+    border-radius: 15%;
+    background-color: rgb(13, 50, 143);
+    -webkit-border-radius: 15%;
+    -moz-border-radius: 15%;
+    -ms-border-radius: 15%;
+    -o-border-radius: 15%;
+}
+.styleOfNavToGetOut{
+    top: 0%;
+    left: -100%;
+    height: 100vh;
+    width: 20%;
+    z-index: 3;
+    transition: all 0.8s;
+    -webkit-transition: all 0.8s;
+    -moz-transition: all 0.8s;
+    -ms-transition: all 0.8s;
+    -o-transition: all 0.8s;
+}
+.styleOfNavToGetOut.active{
+    left: 0%;
+}

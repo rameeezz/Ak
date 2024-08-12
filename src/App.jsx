@@ -13,7 +13,6 @@ import Admin1 from "./pages/Admin1";
 import Register from "./pages/Register";
 import LogIn from "./pages/LogIn";
 import ForgetPassword from "./pages/ForgetPassword";
-import Terms from './pages/footer pages/Terms';
 import Admin2 from './pages/Admin2';
 
 function App() {
@@ -93,7 +92,6 @@ function App() {
           element: <LogIn saveUser={SaveUserData} userRole={user} />,
         },
         { path: "forgetPassword", element: <ForgetPassword /> },
-        { path: "terms", element: <Terms/> },
       ],
     },
   ]);
