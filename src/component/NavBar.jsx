@@ -16,24 +16,25 @@ export default function NavBar({ user, logOut }) {
   return (
     <>
     <div onClick={openNav} className="position-fixed z-3 bg-transparent start-5 top-5  d-flex flex-column gap-1 justify-content-center p-3 cursorPOinter">
-      <div className="styleFOrNav"></div>
-      <div className="styleFOrNav"></div>
-      <div className="styleFOrNav"></div>
+      <div className="styleFOrNav shadow"></div>
+      <div className="styleFOrNav shadow"></div>
+      <div className="styleFOrNav shadow"></div>
     </div>
-      {user?.role == "admin1" || user?.role == "admin2" ? "" :  <div  className= {`position-fixed styleOfNavToGetOut bg-body-secondary ${activeNav == false ? "" : "active"}`}>
-      <div onClick={CloseNav} className="btn btn-close position-absolute end-5 top-5"></div>
-      <div className="d-flex justify-content-center mt-5">
+      {user?.role == "admin1" || user?.role == "admin2" ? "" :  <div  className= {`position-fixed styleOfNavToGetOut bgForNav ${activeNav == false ? "" : "active"}`}>
+      <div onClick={CloseNav} className="btn btn-close position-absolute  end-5 top-5"></div>
+      <div className="text-white d-flex justify-content-center mt-5">
       <Link  to="home">Home</Link>
       </div>
-      <p className="my-3 text-center">category</p> 
-      <p className="my-3 text-center">category</p> 
-      <p className="my-3 text-center">category</p> 
-      <p className="my-3 text-center">category</p> 
-      <p className="my-3 text-center">category</p> 
-      <p className="my-3 text-center">category</p> 
-      <p className="my-3 text-center">category</p> 
+      <p className="my-3 text-center text-white">category</p>  
+      <p className="my-3 text-center text-white">category</p>  
+      <p className="my-3 text-center text-white">category</p>  
+      <p className="my-3 text-center text-white">category</p>  
+      <p className="my-3 text-center text-white">category</p>  
+      <p className="my-3 text-center text-white">category</p>  
+      <p className="my-3 text-center text-white">category</p>  
+      <p className="my-3 text-center text-white">category</p>  
       {user != null ? (
-          <div className="d-flex justify-content-center">
+          <div className="d-flex justify-content-center text-white">
             <button onClick={logOut}>log out</button>
           </div>
         ) : (
@@ -41,7 +42,7 @@ export default function NavBar({ user, logOut }) {
             <NavLink
               to="register"
               className={(isActive) =>
-                isActive ? "nav-link active" : "nav-link"
+                isActive ? "nav-link active text-white" : "nav-link text-white"
               }
             >
               Register
@@ -49,7 +50,7 @@ export default function NavBar({ user, logOut }) {
             <NavLink
               to="login"
               className={(isActive) =>
-                isActive ? "nav-link active" : "nav-link"
+                isActive ? "nav-link active text-white" : "nav-link text-white"
               }
             >
               login
