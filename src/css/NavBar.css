@@ -23,3 +23,8 @@
 .styleOfNavToGetOut.active{
     left: 0%;
 }
+@media (max-width: 576px) {
+    .styleOfNavToGetOut{
+        width: 30%;
+    }
+  }
