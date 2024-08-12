@@ -170,6 +170,9 @@ export default function Admin1({ logOut }) {
       if (error.response && error.response.status === 502) {
         alert("server is down try again later");
       }
+      if (error.response && error.response.status === 404) {
+        setShowCategory([])
+      }
     }
   }
   useEffect(() => {
@@ -205,7 +208,7 @@ export default function Admin1({ logOut }) {
       console.log(data);
       showAlertMessage();
       setclassOFShowSureBox("d-none")
-      // getCategory()
+      getCategory()
     } catch (error) {
       
     }
