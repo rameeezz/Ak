@@ -15,7 +15,7 @@ export default function NavBar({ user, logOut }) {
   }
   return (
     <>
-    <div onClick={openNav} className="position-fixed z-3 bg-transparent start-24 top-8  d-flex flex-column gap-1 justify-content-center p-3 cursorPOinter">
+    <div onClick={openNav} className="position-fixed z-3 bg-transparent start-5 top-5  d-flex flex-column gap-1 justify-content-center p-3 cursorPOinter">
       <div className="styleFOrNav"></div>
       <div className="styleFOrNav"></div>
       <div className="styleFOrNav"></div>
