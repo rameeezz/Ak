@@ -248,7 +248,7 @@ export default function Admin1({ logOut }) {
 
   function closeShowItens() {
     setshowDivOfItems(false);
-    sendItemDetail({
+    setItemsDetails({
       name: "",
       description: "",
       price: "",
