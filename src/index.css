@@ -40,10 +40,10 @@ width: 100% !important;
   font-size: 21.6px; /* Bootstrap fs-1 size */
 }
 .responsive-font-size-h1 {
-  font-size: 2.5rem; /* Bootstrap fs-1 size */
+  font-size: 2rem; /* Bootstrap fs-1 size */
 }
 .responsive-font-size-h3 {
-  font-size: 2.5rem; /* Bootstrap fs-1 size */
+  font-size: 1.8rem; /* Bootstrap fs-1 size */
 }
 @media (max-width: 576px) {
   /* Small screens (sm) and below */

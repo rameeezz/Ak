@@ -171,53 +171,112 @@ export default function Admin1({ logOut }) {
         alert("server is down try again later");
       }
       if (error.response && error.response.status === 404) {
-        setShowCategory([])
+        setShowCategory([]);
       }
     }
   }
   useEffect(() => {
     getCategory();
-  }, [showCategory]);
+  }, []);
   function openCayegory() {
     setClassOfShowCategory("row text-center");
+    getCategory()
   }
   function closeCategory() {
     setClassOfShowCategory("d-none");
   }
   // done show category *************
   // delete category
-  const [setCategoryId , setSetCategoryId] = useState({
-    categoryID:""
-  }) 
+  const [setCategoryId, setSetCategoryId] = useState({
+    categoryID: "",
+  });
   // console.log(setCategoryId);
-  
-  const [sureMessage , setSureMessage]  = useState("")
-  const [classOFShowSureBox , setclassOFShowSureBox]  = useState("d-none ")
-   function DeleteCategory(IdOfElement) {
-    // console.log(IdOfElement);
-    
-  setSetCategoryId({...setCategoryId , categoryID:IdOfElement})
-  setSureMessage("are you sure you want to delete this category ?")
-  setclassOFShowSureBox("position-fixed top-50 start-50 translate-middle z-3 bg-white shadow rounded-3  text-black p-5")
+
+  const [sureMessage, setSureMessage] = useState("");
+  const [classOFShowSureBox, setclassOFShowSureBox] = useState("d-none ");
+  function DeleteCategory(IdOfElement) {
+    setSetCategoryId({ ...setCategoryId, categoryID: IdOfElement });
+    setSureMessage("are you sure you want to delete this category ?");
+    setclassOFShowSureBox(
+      "position-fixed top-50 start-50 translate-middle z-3 bg-white shadow rounded-3  text-black p-5"
+    );
   }
   async function sureDeleteCategory() {
     // console.log(setCategoryId.categoryID);
-    
+
     try {
-      let {data} = await axios.delete(`https://freelance1-production.up.railway.app/admin1/deleteCategory/${setCategoryId.categoryID}`)
+      let { data } = await axios.delete(
+        `https://freelance1-production.up.railway.app/admin1/deleteCategory/${setCategoryId.categoryID}`
+      );
       console.log(data);
       showAlertMessage();
-      setclassOFShowSureBox("d-none")
-      getCategory()
-    } catch (error) {
-      
-    }
-    
+      setclassOFShowSureBox("d-none");
+      getCategory();
+    } catch (error) {}
   }
   function closeSureSection() {
-    setclassOFShowSureBox("d-none")
+    setclassOFShowSureBox("d-none");
   }
   // done delete categroy *****************
+  // add items in category ***************\\\\\\
+
+  const [itemsDetails, setItemsDetails] = useState({
+    name: "",
+    description: "",
+    price: "",
+    category: "",
+    image: "",
+  });
+  const [showDivOfItems, setshowDivOfItems]= useState(false)
+  // console.log(itemsDetails);
+  const [showNameOfCategory , setshowNameOfCategory] = useState("")
+function putIdOfCategoryForItem(IdOfCategory , categoryNam) {
+  setItemsDetails({...itemsDetails , category:IdOfCategory})
+  setshowDivOfItems(true)
+  setshowNameOfCategory(categoryNam)
+}
+function putItemInfo(e) {
+  let myItem = {...itemsDetails}
+  myItem[e.target.name] = e.target.value
+  setItemsDetails(myItem)
+}
+const [images, setImages] = useState([]);
+const handleImageChange = (e) => {
+  const selectedFiles = Array.from(e.target.files);
+  setImages((prevImages) => [...prevImages, ...selectedFiles]);
+};
+
+function closeShowItens() {
+  setshowDivOfItems(false)
+  sendItemDetail({
+    name: "",
+    description: "",
+    price: "",
+    category: "",
+    image: "",
+  })
+  setImages([])
+}
+async function sendItemDetail(e) {
+  e.preventDefault()
+  setItemsDetails({...itemsDetails, image :images})
+  try {
+    let {data} = await axios.post("https://freelance1-production.up.railway.app/admin1/additems",itemsDetails)
+    // console.log(data);
+    showAlertMessage()
+    setItemsDetails({
+      name: "",
+    description: "",
+    price: "",
+    category: "",
+    image: "",
+    })
+    setImages([])
+  } catch (error) {
+    
+  }
+}
+  // done add items in category /********/*/* */
   return (
     <>
       <div>
@@ -358,8 +417,11 @@ export default function Admin1({ logOut }) {
                 "There are no categories, please add categories"
               </p>
             ) : (
-              showCategory.map((element,i) => (
-                <div key={i} className="col-md-2 col-sm-1 my-2 d-flex justify-content-center">
+              showCategory.map((element, i) => (
+                <div
+                  key={i}
+                  className="col-md-2 col-sm-1 my-2 d-flex justify-content-center"
+                >
                   <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
                     {element?.name}
                     <i
@@ -375,13 +437,74 @@ export default function Admin1({ logOut }) {
           </div>
           {/* box to show sure message  */}
           <div className={classOFShowSureBox}>
-            <button  onClick={closeSureSection} className="position-absolute end-2 top-2 btn btn-close"></button>
+            <button
+              onClick={closeSureSection}
+              className="position-absolute end-2 top-2 btn btn-close"
+            ></button>
             <p className="py-4"> {sureMessage}</p>
             <div className="d-flex justify-content-center">
-            <button onClick={sureDeleteCategory} className="btn btn-primary ">delete</button>
+              <button onClick={sureDeleteCategory} className="btn btn-primary ">
+                delete
+              </button>
             </div>
           </div>
           {/* ------------------------------------ */}
+          {/* add items in category */}
+          <h2 className="responsive-font-size-h3 colorForTitles text-center">
+            add items in category
+          </h2>
+          <div className="container flex-wrap d-flex justify-content-center gap-3 py-5">
+            {showCategory === null || showCategory.length === 0 ? (
+              <p className="text-center text-danger">
+                "There are no categories"
+              </p>
+            ) : (
+              showCategory.map((element, i) => (
+                <button onClick={()=>{putIdOfCategoryForItem(element._id,element.name)}} key={i} className="btn btn-secondary text-white">
+                  {element?.name}
+                </button>
+              ))
+            )}
+          </div>
+          {/* show form to add items */}
+          {showDivOfItems? <div className="container position-relative d-flex align-items-center flex-column">
+            <div className="position-absolute end-0 top-0 ">
+              <button onClick={closeShowItens} className="btn btn-close"></button>
+            </div>
+            <h3 className="text-center my-3 responsive-font-size-h3">{showNameOfCategory}</h3>
+          <form className="w-50">
+  <div className="mb-3">
+    <label htmlFor="name" className="form-label">item name</label>
+    <input onChange={putItemInfo} type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="name" value={itemsDetails.name}/>
+  </div>
+  <div className="mb-3">
+    <label htmlFor="description" className="form-label">description</label>
+    <input onChange={putItemInfo} type="text" className="form-control" id="exampleInputPassword1" name="description" value={itemsDetails.description}/>
+  </div>
+  <div className="mb-3">
+    <label className="form-label" htmlFor="price">price </label>
+    <input onChange={putItemInfo} type="number" className="form-control" id="exampleCheck1" name="price" value={itemsDetails.price}/>
+  </div>
+  <div className="mb-3">
+    <label className="form-label" htmlFor="image">image </label>
+    <input onChange={handleImageChange} multiple type="file" className="form-control" id="exampleCheck1" name="image" accept="image/*" />
+    {images.length > 0 || images === null ?  <div className="d-flex gap-3 flex-wrap">
+          {images.map((image, index) => (
+            <div key={index}>
+              <p>{image.name}</p>
+              <img src={URL.createObjectURL(image)} alt="Preview" width="90px" />
+            </div>
+          
+            
+          )) }
+        </div>
+       :""}
+  </div>
+  <button onClick={sendItemDetail} type="submit" className="btn btn-primary">Submit</button>
+</form>
+          </div>:""}
+          
+          {/* done add items in category ***************** */}
         </div>
       </div>
     </>
