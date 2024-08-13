@@ -26,6 +26,9 @@
 .bgForNav{
     background-color: #495F75;
 }
+.HeightOfDivBeforeLogOut{
+    height: 2px;
+}
 @media (max-width: 576px) {
     .styleOfNavToGetOut{
         width: 50%;

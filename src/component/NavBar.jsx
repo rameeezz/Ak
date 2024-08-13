@@ -33,11 +33,17 @@ export default function NavBar({ user, logOut }) {
       <p className="my-3 text-center text-white">category</p>  
       <p className="my-3 text-center text-white">category</p>  
       <p className="my-3 text-center text-white">category</p>  
-      {user != null ? (
+      {user != null ? (<>
+        <div className="w-25 bg-black rounded-2 shadow HeightOfDivBeforeLogOut"></div>
           <div className="d-flex justify-content-center text-white">
             <button onClick={logOut}>log out</button>
           </div>
-        ) : (
+      </>
+        
+        ) : (<>
+        <div className="d-flex justify-content-center my-2">
+        <div className="w-50 bg-black rounded-2 shadow HeightOfDivBeforeLogOut"></div>
+        </div>
           <div className="d-flex flex-column justify-content-center align-items-center">
             <NavLink
               to="register"
@@ -56,6 +62,8 @@ export default function NavBar({ user, logOut }) {
               login
             </NavLink>
           </div>
+        </>
+          
         )}
     </div>
 }
