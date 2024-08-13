@@ -114,7 +114,7 @@ export function Footer({ user }) {
               </div>
             </div>
           </div>
-          <div className="bg-[#323232] py-2 mt-6">
+          <div className="bg-[#323232] py-2 mt-2">
             <p className="text-center text-white">
               &copy; 2024 MyWebsite. All rights reserved.
             </p>
