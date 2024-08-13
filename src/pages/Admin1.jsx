@@ -291,9 +291,9 @@ export default function Admin1({ logOut }) {
         </div>
         <div className="container colorForBg py-5">
           {/* add Admin2 */}
-          <h2 className="responsive-font-size-h3 colorForTitles text-center">
+          <h3 className="responsive-font-size-h3 colorForTitles text-center">
             Add Admin
-          </h2>
+          </h3>
           <div className="d-flex justify-content-center align-items-center my-5">
             <form onSubmit={HandleSubmitForAdmin} className="w-50">
               <div className="mb-3">
@@ -356,9 +356,9 @@ export default function Admin1({ logOut }) {
           </div>
           {/* -------------------------- */}
           {/* add category  */}
-          <h2 className="responsive-font-size-h3 colorForTitles text-center">
+          <h3 className="responsive-font-size-h3 colorForTitles text-center">
             add category
-          </h2>
+          </h3>
           <div className="d-flex justify-content-center align-items-center my-5">
             <form onSubmit={sendCategoryName} className="w-50">
               <div className="mb-3">
@@ -451,9 +451,9 @@ export default function Admin1({ logOut }) {
           </div>
           {/* ------------------------------------ */}
           {/* add items in category */}
-          <h2 className="responsive-font-size-h3 colorForTitles text-center">
+          <h3 className="responsive-font-size-h3 mt-3 colorForTitles text-center">
             add items in category
-          </h2>
+          </h3>
           <div className="container flex-wrap d-flex justify-content-center gap-3 py-5">
             {showCategory === null || showCategory.length === 0 ? (
               <p className="text-center text-danger">
