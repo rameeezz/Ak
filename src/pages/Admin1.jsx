@@ -180,7 +180,7 @@ export default function Admin1({ logOut }) {
   }, []);
   function openCayegory() {
     setClassOfShowCategory("row text-center");
-    getCategory()
+    getCategory();
   }
   function closeCategory() {
     setClassOfShowCategory("d-none");
@@ -227,55 +227,56 @@ export default function Admin1({ logOut }) {
     category: "",
     image: "",
   });
-  const [showDivOfItems, setshowDivOfItems]= useState(false)
+  const [showDivOfItems, setshowDivOfItems] = useState(false);
   // console.log(itemsDetails);
-  const [showNameOfCategory , setshowNameOfCategory] = useState("")
-function putIdOfCategoryForItem(IdOfCategory , categoryNam) {
-  setItemsDetails({...itemsDetails , category:IdOfCategory})
-  setshowDivOfItems(true)
-  setshowNameOfCategory(categoryNam)
-}
-function putItemInfo(e) {
-  let myItem = {...itemsDetails}
-  myItem[e.target.name] = e.target.value
-  setItemsDetails(myItem)
-}
-const [images, setImages] = useState([]);
-const handleImageChange = (e) => {
-  const selectedFiles = Array.from(e.target.files);
-  setImages((prevImages) => [...prevImages, ...selectedFiles]);
-};
-
-function closeShowItens() {
-  setshowDivOfItems(false)
-  sendItemDetail({
-    name: "",
-    description: "",
-    price: "",
-    category: "",
-    image: "",
-  })
-  setImages([])
-}
-async function sendItemDetail(e) {
-  e.preventDefault()
-  setItemsDetails({...itemsDetails, image :images})
-  try {
-    let {data} = await axios.post("https://freelance1-production.up.railway.app/admin1/additems",itemsDetails)
-    // console.log(data);
-    showAlertMessage()
-    setItemsDetails({
-      name: "",
-    description: "",
-    price: "",
-    category: "",
-    image: "",
-    })
-    setImages([])
-  } catch (error) {
-    
+  const [showNameOfCategory, setshowNameOfCategory] = useState("");
+  function putIdOfCategoryForItem(IdOfCategory, categoryNam) {
+    setItemsDetails({ ...itemsDetails, category: IdOfCategory });
+    setshowDivOfItems(true);
+    setshowNameOfCategory(categoryNam);
   }
-}
+  function putItemInfo(e) {
+    let myItem = { ...itemsDetails };
+    myItem[e.target.name] = e.target.value;
+    setItemsDetails(myItem);
+  }
+  const [images, setImages] = useState([]);
+  const handleImageChange = (e) => {
+    const selectedFiles = Array.from(e.target.files);
+    setImages((prevImages) => [...prevImages, ...selectedFiles]);
+  };
+
+  function closeShowItens() {
+    setshowDivOfItems(false);
+    sendItemDetail({
+      name: "",
+      description: "",
+      price: "",
+      category: "",
+      image: "",
+    });
+    setImages([]);
+  }
+  async function sendItemDetail(e) {
+    e.preventDefault();
+    setItemsDetails({ ...itemsDetails, image: images });
+    try {
+      let { data } = await axios.post(
+        "https://freelance1-production.up.railway.app/admin1/additems",
+        itemsDetails
+      );
+      // console.log(data);
+      showAlertMessage();
+      setItemsDetails({
+        name: "",
+        description: "",
+        price: "",
+        category: "",
+        image: "",
+      });
+      setImages([]);
+    } catch (error) {}
+  }
   // done add items in category /********/*/* */
   return (
     <>
@@ -460,50 +461,114 @@ async function sendItemDetail(e) {
               </p>
             ) : (
               showCategory.map((element, i) => (
-                <button onClick={()=>{putIdOfCategoryForItem(element._id,element.name)}} key={i} className="btn btn-secondary text-white">
+                <button
+                  onClick={() => {
+                    putIdOfCategoryForItem(element._id, element.name);
+                  }}
+                  key={i}
+                  className="btn btn-secondary text-white"
+                >
                   {element?.name}
                 </button>
               ))
             )}
           </div>
           {/* show form to add items */}
-          {showDivOfItems? <div className="container position-relative d-flex align-items-center flex-column">
-            <div className="position-absolute end-0 top-0 ">
-              <button onClick={closeShowItens} className="btn btn-close"></button>
+          {showDivOfItems ? (
+            <div className="container position-relative d-flex align-items-center flex-column">
+              <div className="position-absolute end-0 top-0 ">
+                <button
+                  onClick={closeShowItens}
+                  className="btn btn-close"
+                ></button>
+              </div>
+              <h3 className="text-center my-3 responsive-font-size-h3">
+                {showNameOfCategory}
+              </h3>
+              <form className="w-50">
+                <div className="mb-3">
+                  <label htmlFor="name" className="form-label">
+                    item name
+                  </label>
+                  <input
+                    onChange={putItemInfo}
+                    type="text"
+                    className="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                    name="name"
+                    value={itemsDetails.name}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="description" className="form-label">
+                    description
+                  </label>
+                  <input
+                    onChange={putItemInfo}
+                    type="text"
+                    className="form-control"
+                    id="exampleInputPassword1"
+                    name="description"
+                    value={itemsDetails.description}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label" htmlFor="price">
+                    price{" "}
+                  </label>
+                  <input
+                    onChange={putItemInfo}
+                    type="number"
+                    className="form-control"
+                    id="exampleCheck1"
+                    name="price"
+                    value={itemsDetails.price}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label" htmlFor="image">
+                    image{" "}
+                  </label>
+                  <input
+                    onChange={handleImageChange}
+                    multiple
+                    type="file"
+                    className="form-control"
+                    id="exampleCheck1"
+                    name="image"
+                    accept="image/*"
+                  />
+                  {images.length > 0 || images === null ? (
+                    <div className="d-flex gap-3 flex-wrap">
+                      {images.map((image, index) => (
+                        <div key={index}>
+                          <p>{image.name}</p>
+                          <img
+                            src={URL.createObjectURL(image)}
+                            alt="Preview"
+                            width="90px"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <button
+                  onClick={sendItemDetail}
+                  type="submit"
+                  className="btn btn-primary"
+                >
+                  Submit
+                </button>
+              </form>
             </div>
-            <h3 className="text-center my-3 responsive-font-size-h3">{showNameOfCategory}</h3>
-          <form className="w-50">
-  <div className="mb-3">
-    <label htmlFor="name" className="form-label">item name</label>
-    <input onChange={putItemInfo} type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="name" value={itemsDetails.name}/>
-  </div>
-  <div className="mb-3">
-    <label htmlFor="description" className="form-label">description</label>
-    <input onChange={putItemInfo} type="text" className="form-control" id="exampleInputPassword1" name="description" value={itemsDetails.description}/>
-  </div>
-  <div className="mb-3">
-    <label className="form-label" htmlFor="price">price </label>
-    <input onChange={putItemInfo} type="number" className="form-control" id="exampleCheck1" name="price" value={itemsDetails.price}/>
-  </div>
-  <div className="mb-3">
-    <label className="form-label" htmlFor="image">image </label>
-    <input onChange={handleImageChange} multiple type="file" className="form-control" id="exampleCheck1" name="image" accept="image/*" />
-    {images.length > 0 || images === null ?  <div className="d-flex gap-3 flex-wrap">
-          {images.map((image, index) => (
-            <div key={index}>
-              <p>{image.name}</p>
-              <img src={URL.createObjectURL(image)} alt="Preview" width="90px" />
-            </div>
-          
-            
-          )) }
-        </div>
-       :""}
-  </div>
-  <button onClick={sendItemDetail} type="submit" className="btn btn-primary">Submit</button>
-</form>
-          </div>:""}
-          
+          ) : (
+            ""
+          )}
+
           {/* done add items in category ***************** */}
         </div>
       </div>
