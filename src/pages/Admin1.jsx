@@ -257,9 +257,11 @@ export default function Admin1({ logOut }) {
     });
     setImages([]);
   }
+  const [isLoading , setIsLoading] = useState(false) 
   async function sendItemDetail(e) {
     e.preventDefault();
     setItemsDetails({ ...itemsDetails, image: images });
+    setIsLoading(true)
     try {
       let { data } = await axios.post(
         "https://freelance1-production.up.railway.app/admin1/additems",
@@ -275,6 +277,7 @@ export default function Admin1({ logOut }) {
         image: "",
       });
       setImages([]);
+      setIsLoading(false)
     } catch (error) {}
   }
   // done add items in category /********/*/* */
@@ -556,13 +559,16 @@ export default function Admin1({ logOut }) {
                     ""
                   )}
                 </div>
-                <button
+                {isLoading? <button className=" btn btn-primary px-4">
+                  <i className="fa solid fa-spinner fa-spin "></i>
+                </button> : <button
                   onClick={sendItemDetail}
                   type="submit"
                   className="btn btn-primary"
                 >
                   Submit
-                </button>
+                </button>}
+                
               </form>
             </div>
           ) : (
