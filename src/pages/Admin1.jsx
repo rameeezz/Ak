@@ -254,7 +254,7 @@ export default function Admin1({ logOut }) {
       description: "",
       price: 0,
       category: "",
-      image: "",
+      image: [],
     });
     setImages([]);
   }
@@ -274,7 +274,7 @@ export default function Admin1({ logOut }) {
         description: "",
         price: 0,
         category: "",
-        image: "",
+        image: [],
       });
       setImages([]);
       setIsLoading(false)
@@ -545,6 +545,7 @@ export default function Admin1({ logOut }) {
                     id="exampleCheck1"
                     name="image"
                     accept="image/*"
+                    value={itemsDetails.image}
                   />
                   {images.length > 0 || images === null ? (
                     <div className="d-flex gap-3 flex-wrap">
