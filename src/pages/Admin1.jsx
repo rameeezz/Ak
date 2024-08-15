@@ -278,7 +278,11 @@ export default function Admin1({ logOut }) {
       });
       setImages([]);
       setIsLoading(false)
-    } catch (error) {}
+    } catch (error) {
+      if (error.response && error.response.status === 502) {
+        alert("click on name of category again ")
+      }
+    }
   }
   // done add items in category /********/*/* */
   return (
