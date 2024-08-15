@@ -76,6 +76,10 @@ export default function LogIn({ saveUser, userRole }) {
         setErrorMessage("email or password wrong");
         setLoading(false);
       }
+      if (error.response && error.response.status === 502) {
+        alert("server is down")
+        setLoading(false);
+      }
     }
   }
   useEffect(()=>{
