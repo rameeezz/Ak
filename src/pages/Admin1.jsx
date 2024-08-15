@@ -225,7 +225,7 @@ export default function Admin1({ logOut }) {
     description: "",
     price: 0,
     category: "",
-    image: "",
+    image: [],
   });
   const [showDivOfItems, setshowDivOfItems] = useState(false);
   // console.log(itemsDetails);
