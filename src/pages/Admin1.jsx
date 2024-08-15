@@ -228,7 +228,7 @@ export default function Admin1({ logOut }) {
     image: [],
   });
   const [showDivOfItems, setshowDivOfItems] = useState(false);
-  // console.log(itemsDetails);
+  console.log(itemsDetails);
   const [showNameOfCategory, setshowNameOfCategory] = useState("");
   function putIdOfCategoryForItem(IdOfCategory, categoryNam) {
     setItemsDetails({ ...itemsDetails, category: IdOfCategory });
@@ -290,7 +290,7 @@ export default function Admin1({ logOut }) {
         name: "",
         description: "",
         price: 0,
-        category: "",
+        category: itemsDetails.category,
         image: [],
       });
       setImages([]);
