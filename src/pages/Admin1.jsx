@@ -223,7 +223,7 @@ export default function Admin1({ logOut }) {
   const [itemsDetails, setItemsDetails] = useState({
     name: "",
     description: "",
-    price: "",
+    price: 0,
     category: "",
     image: "",
   });
@@ -244,6 +244,7 @@ export default function Admin1({ logOut }) {
   const handleImageChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
     setImages((prevImages) => [...prevImages, ...selectedFiles]);
+    setItemsDetails({...itemsDetails , image:selectedFiles})
   };
 
   function closeShowItens() {
@@ -251,7 +252,7 @@ export default function Admin1({ logOut }) {
     setItemsDetails({
       name: "",
       description: "",
-      price: "",
+      price: 0,
       category: "",
       image: "",
     });
@@ -260,19 +261,18 @@ export default function Admin1({ logOut }) {
   const [isLoading , setIsLoading] = useState(false) 
   async function sendItemDetail(e) {
     e.preventDefault();
-    setItemsDetails({ ...itemsDetails, image: images });
     setIsLoading(true)
     try {
       let { data } = await axios.post(
         "https://freelance1-production.up.railway.app/admin1/additems",
         itemsDetails
       );
-      // console.log(data);
+      console.log(data);
       showAlertMessage();
       setItemsDetails({
         name: "",
         description: "",
-        price: "",
+        price: 0,
         category: "",
         image: "",
       });
