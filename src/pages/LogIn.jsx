@@ -176,7 +176,7 @@ export default function LogIn({ saveUser, userRole }) {
                 ))
               : ""} */}
             {Loading ? (
-              <button>
+              <button disabled>
                 <i className="fa solid fa-spinner fa-spin"></i>
               </button>
             ) : (
