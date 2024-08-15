@@ -244,10 +244,14 @@ export default function Admin1({ logOut }) {
   const handleImageChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
     setImages((prevImages) => [...prevImages, ...selectedFiles]);
-    setItemsDetails({...itemsDetails , image:selectedFiles})
+    setItemsDetails({
+      ...itemsDetails,
+      image: [...itemsDetails.image, ...selectedFiles],
+    });
   };
+  const [resetKey, setResetKey] = useState(0);
 
-  function closeShowItens() {
+  const closeShowItems = () => {
     setshowDivOfItems(false);
     setItemsDetails({
       name: "",
@@ -257,11 +261,24 @@ export default function Admin1({ logOut }) {
       image: [],
     });
     setImages([]);
-  }
-  const [isLoading , setIsLoading] = useState(false) 
+    setResetKey(prevKey => prevKey + 1); // This will reset the input field
+  };
+  
+  // function closeShowItems() {
+    
+  //   setItemsDetails({
+  //     name: "",
+  //     description: "",
+  //     price: 0,
+  //     category: "",
+  //     image: [],
+  //   });
+  //   setImages([]);
+  // }
+  const [isLoading, setIsLoading] = useState(false);
   async function sendItemDetail(e) {
     e.preventDefault();
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       let { data } = await axios.post(
         "https://freelance1-production.up.railway.app/admin1/additems",
@@ -277,10 +294,10 @@ export default function Admin1({ logOut }) {
         image: [],
       });
       setImages([]);
-      setIsLoading(false)
+      setIsLoading(false);
     } catch (error) {
       if (error.response && error.response.status === 502) {
-        alert("click on name of category again ")
+        alert("click on name of category again ");
       }
     }
   }
@@ -485,7 +502,7 @@ export default function Admin1({ logOut }) {
             <div className="container position-relative d-flex align-items-center flex-column">
               <div className="position-absolute end-0 top-0 ">
                 <button
-                  onClick={closeShowItens}
+                  onClick={closeShowItems}
                   className="btn btn-close"
                 ></button>
               </div>
@@ -538,6 +555,7 @@ export default function Admin1({ logOut }) {
                     image{" "}
                   </label>
                   <input
+                    key={resetKey} // A unique key to force re-render the input
                     onChange={handleImageChange}
                     multiple
                     type="file"
@@ -545,8 +563,8 @@ export default function Admin1({ logOut }) {
                     id="exampleCheck1"
                     name="image"
                     accept="image/*"
-                    value={itemsDetails.image}
                   />
+
                   {images.length > 0 || images === null ? (
                     <div className="d-flex gap-3 flex-wrap">
                       {images.map((image, index) => (
@@ -564,16 +582,19 @@ export default function Admin1({ logOut }) {
                     ""
                   )}
                 </div>
-                {isLoading? <button className=" btn btn-primary px-4">
-                  <i className="fa solid fa-spinner fa-spin "></i>
-                </button> : <button
-                  onClick={sendItemDetail}
-                  type="submit"
-                  className="btn btn-primary"
-                >
-                  Submit
-                </button>}
-                
+                {isLoading ? (
+                  <button className=" btn btn-primary px-4">
+                    <i className="fa solid fa-spinner fa-spin "></i>
+                  </button>
+                ) : (
+                  <button
+                    onClick={sendItemDetail}
+                    type="submit"
+                    className="btn btn-primary"
+                  >
+                    Submit
+                  </button>
+                )}
               </form>
             </div>
           ) : (
