@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "../css/Admin1.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import joi from "joi";
-
 export default function Admin1({ logOut }) {
   let navigate = useNavigate();
   const [showAlert, setShowAlert] = useState("d-none");
@@ -225,10 +224,12 @@ export default function Admin1({ logOut }) {
     description: "",
     price: 0,
     category: "",
-    image: [],
+    images: [],
   });
   const [showDivOfItems, setshowDivOfItems] = useState(false);
-  console.log(itemsDetails);
+  // console.log(itemsDetails);
+  const [imagePreviews, setImagePreviews] = useState([]);
+
   const [showNameOfCategory, setshowNameOfCategory] = useState("");
   function putIdOfCategoryForItem(IdOfCategory, categoryNam) {
     setItemsDetails({ ...itemsDetails, category: IdOfCategory });
@@ -239,18 +240,22 @@ export default function Admin1({ logOut }) {
     let myItem = { ...itemsDetails };
     myItem[e.target.name] = e.target.value;
     setItemsDetails(myItem);
+    if (myItem[e.target.name] == "name") {
+      setErrorMessageForItem("");
+    }
   }
-  const [images, setImages] = useState([]);
-  const handleImageChange = (e) => {
-    const selectedFiles = Array.from(e.target.files);
-    setImages((prevImages) => [...prevImages, ...selectedFiles]);
-    setItemsDetails({
-      ...itemsDetails,
-      image: [...itemsDetails.image, ...selectedFiles],
-    });
-  };
-  const [resetKey, setResetKey] = useState(0);
-
+  const [errorMessageForItem, setErrorMessageForItem] = useState("");
+  const imageInputRef = useRef(null);
+  function handleImageOnChange(event) {
+    const files = Array.from(event.target.files); // Convert FileList to Array
+    // Create image preview URLs
+    const imageUrls = files.map((file) => URL.createObjectURL(file));
+    setItemsDetails((prev) => ({
+      ...prev,
+      images: [...prev.images, ...files], // Append new files to the existing array
+    }));
+    setImagePreviews((prev) => [...prev, ...imageUrls]);
+  }
   const closeShowItems = () => {
     setshowDivOfItems(false);
     setItemsDetails({
@@ -258,50 +263,140 @@ export default function Admin1({ logOut }) {
       description: "",
       price: 0,
       category: "",
-      image: [],
+      images: [],
     });
-    setImages([]);
-    setResetKey(prevKey => prevKey + 1); // This will reset the input field
+    setshowNameOfCategory("");
+    setImagePreviews([]);
   };
-  
-  // function closeShowItems() {
-    
-  //   setItemsDetails({
-  //     name: "",
-  //     description: "",
-  //     price: 0,
-  //     category: "",
-  //     image: [],
-  //   });
-  //   setImages([]);
-  // }
   const [isLoading, setIsLoading] = useState(false);
   async function sendItemDetail(e) {
     e.preventDefault();
     setIsLoading(true);
+    const formData = new FormData();
+
+    formData.append("name", itemsDetails.name);
+    formData.append("description", itemsDetails.description);
+    formData.append("price", itemsDetails.price);
+    formData.append("category", itemsDetails.category);
+
+    // Append each image in the array
+    itemsDetails.images.forEach((image, index) => {
+      formData.append("images", image); // Sending images without an index
+    });
     try {
       let { data } = await axios.post(
         "https://freelance1-production.up.railway.app/admin1/additems",
-        itemsDetails
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
-      console.log(data);
-      showAlertMessage();
+      // console.log(data);
+      // Reset the form or perform other actions
       setItemsDetails({
         name: "",
         description: "",
         price: 0,
         category: itemsDetails.category,
-        image: [],
+        images: [],
       });
-      setImages([]);
+      setImagePreviews([]);
       setIsLoading(false);
+      setErrorMessageForItem("");
+      showAlertMessage()
     } catch (error) {
-      if (error.response && error.response.status === 502) {
-        alert("click on name of category again ");
+      if (error.response && error.response.status === 422) {
+        setErrorMessageForItem("name already exist.");
+      }
+      if (error.response && error.response.status === 404) {
+        alert("server is down");
+        setIsLoading(false);
       }
     }
   }
   // done add items in category /********/*/* */
+
+  /* add status for each item IN stock or out  */
+
+  const [itemsInCategory, setItemInCategory] = useState([]);
+  const [classForItems, setClassForItems] = useState("d-none");
+  const [errorMessageForItemsInCategory, setErrorMessageForItemsInCategory] =
+    useState("");
+  const [loadingForItems, setLoadingForItems] = useState(false);
+  const [idForOneItem, setIdForOneItem] = useState("");
+  async function getItems(e, itemID) {
+    e.preventDefault();
+    
+    setLoadingForItems(true);
+    setIdForOneItem(itemID);
+    try {
+      let { data } = await axios.get(
+        `https://freelance1-production.up.railway.app/admin1/getItems/${itemID}`
+      );
+      // console.log(data);
+      setLoadingForItems(false);
+      setItemInCategory(data);
+      setClassForItems(
+        "d-flex justify-content-center gap-3 flex-wrap position-relative"
+      );
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        setErrorMessageForItemsInCategory("No Items In This Category.");
+        setItemInCategory([]);
+        setLoadingForItems(false);
+        setClassForItems(
+          "d-flex justify-content-center gap-3 flex-wrap position-relative"
+        );
+      }
+    }
+  }
+  function CloseItemsInCategory() {
+    setClassForItems("d-none");
+  }
+
+  // delete items *******------------
+  const [itemIDForDelete, setItemIdForDelete] = useState({ itemID: "" });
+  const [sureDeleteItem, setSureDeleteItem] = useState("d-none");
+  function putItemId(itemID) {
+    setItemIdForDelete(itemID);
+    // console.log(itemID);
+
+    setSureDeleteItem(
+      "position-fixed top-50 start-50 translate-middle z-3 bg-white shadow rounded-3  text-black p-5"
+    );
+  }
+  function closeSureBox() {
+    setSureDeleteItem("d-none");
+  }
+  async function deleteItem(e) {
+    e.preventDefault();
+    try {
+      let { data } = await axios.delete(
+        `https://freelance1-production.up.railway.app/admin1/deleteItem/${itemIDForDelete}`
+      );
+      // console.log(data);
+      setSureDeleteItem("d-none");
+      getItems(e, idForOneItem);
+      showAlertMessage();
+    } catch (error) {}
+  }
+  /* end of status  ****************************----*/
+
+
+  // in stock or out 
+  async function putStatusOfItem(e,idOfItem) {
+    e.preventDefault()
+    try {
+      let {data} = await axios.patch(`https://freelance1-production.up.railway.app/admin1/changeStatus/${idOfItem}`)
+      console.log(data);
+      getItems(e, idForOneItem);
+    } catch (error) {
+      
+    }
+  }
+  // ************************************
   return (
     <>
       <div>
@@ -381,7 +476,7 @@ export default function Admin1({ logOut }) {
           {/* -------------------------- */}
           {/* add category  */}
           <h3 className="responsive-font-size-h3 colorForTitles text-center">
-            add category
+            Add Category
           </h3>
           <div className="d-flex justify-content-center align-items-center my-5">
             <form onSubmit={sendCategoryName} className="w-50">
@@ -476,7 +571,7 @@ export default function Admin1({ logOut }) {
           {/* ------------------------------------ */}
           {/* add items in category */}
           <h3 className="responsive-font-size-h3 mt-3 colorForTitles text-center">
-            add items in category
+            Add Items In Category
           </h3>
           <div className="container flex-wrap d-flex justify-content-center gap-3 py-5">
             {showCategory === null || showCategory.length === 0 ? (
@@ -551,39 +646,31 @@ export default function Admin1({ logOut }) {
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label" htmlFor="image">
+                  <label className="form-label" htmlFor="images">
                     image{" "}
                   </label>
                   <input
-                    key={resetKey} // A unique key to force re-render the input
-                    onChange={handleImageChange}
+                    onChange={handleImageOnChange}
+                    ref={imageInputRef}
                     multiple
                     type="file"
                     className="form-control"
                     id="exampleCheck1"
-                    name="image"
+                    name="images"
                     accept="image/*"
                   />
-
-                  {images.length > 0 || images === null ? (
-                    <div className="d-flex gap-3 flex-wrap">
-                      {images.map((image, index) => (
-                        <div key={index}>
-                          <p>{image.name}</p>
-                          <img
-                            src={URL.createObjectURL(image)}
-                            alt="Preview"
-                            width="90px"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    ""
-                  )}
                 </div>
+                <div className="image-preview-container d-flex gap-3">
+                  {imagePreviews.length > 0 &&
+                    imagePreviews.map((image, index) => (
+                      <div key={index} className="image-preview">
+                        <img src={image} alt={`Preview ${index}`} width="100" />
+                      </div>
+                    ))}
+                </div>
+                {errorMessageForItem == "" ? "" : errorMessageForItem}
                 {isLoading ? (
-                  <button className=" btn btn-primary px-4">
+                  <button disabled className=" btn btn-primary px-4">
                     <i className="fa solid fa-spinner fa-spin "></i>
                   </button>
                 ) : (
@@ -602,6 +689,104 @@ export default function Admin1({ logOut }) {
           )}
 
           {/* done add items in category ***************** */}
+
+          {/* add status for each item IN stock or out  */}
+          <h3 className="responsive-font-size-h3 mt-3 colorForTitles text-center">
+            Choose Category To Show Items
+          </h3>
+          <div className="container flex-wrap d-flex justify-content-center gap-3 py-5">
+            {showCategory === null || showCategory.length === 0 ? (
+              <p className="text-center text-danger">
+                "There are no categories"
+              </p>
+            ) : (
+              showCategory.map((element, i) => (
+                <button
+                  onClick={(e) => {
+                    getItems(e, element._id);
+                  }}
+                  key={i}
+                  className="btn btn-secondary text-white"
+                >
+                  {element?.name}
+                </button>
+              ))
+            )}
+          </div>
+          {/* show items */}
+          <div>
+            {loadingForItems ? (
+              <div className="w-100 d-flex justify-content-center">
+                <i className="fa solid fa-spinner fa-spin responsive-font-size-h1"></i>
+              </div>
+            ) : (
+              ""
+            )}
+            <div className={classForItems}>
+              <div className="position-absolute end-0 top-0">
+                <button
+                  onClick={CloseItemsInCategory}
+                  className="btn btn-close"
+                ></button>
+              </div>
+              {itemsInCategory == null || itemsInCategory.length == 0 ? (
+                <p className="text-center text-danger mt-5">
+                  {errorMessageForItemsInCategory}
+                </p>
+              ) : (
+                itemsInCategory.map((element, i) => (
+                  <div key={i} className="card w-25 my-5 position-relative">
+                    <div className="position-absolute top-0 start-100 translate-middle">
+                      <button
+                        onClick={() => {
+                          putItemId(element._id);
+                        }}
+                        className="btn btn-close"
+                      ></button>
+                    </div>
+                    <img
+                      src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
+                      className="card-img-top"
+                      alt=""
+                    />
+                    <div className="card-body">
+                      <p className="text-muted mb-2">{element?.price} EGP</p>
+                      <h5 className="card-title">{element?.name}</h5>
+                      <p className="card-text mb-2">{element?.description}</p>
+                      <div className="d-flex justify-content-end">
+                      <button
+                      onClick={(e)=>{putStatusOfItem(e,element._id)}}
+                        className={`btn  ${
+                          element?.status =="in stock"? "btn-success" : "btn-danger"
+                        }`}
+                      >
+                        {element?.status == "in stock"? "In Stock" : "Out of Stock"}
+                      </button>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
+              <div className={sureDeleteItem}>
+                <button
+                  onClick={closeSureBox}
+                  className="position-absolute end-2 top-2 btn btn-close"
+                ></button>
+                <p className="py-4">
+                  {" "}
+                  Are you sure you want to delete this item? This action is
+                  irreversible and will permanently remove the item from the
+                  system.{" "}
+                </p>
+                <div className="d-flex justify-content-center">
+                  <button onClick={deleteItem} className="btn btn-primary ">
+                    delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* end of status  ****************************----*/}
         </div>
       </div>
     </>
