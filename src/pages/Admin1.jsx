@@ -305,7 +305,7 @@ export default function Admin1({ logOut }) {
       setImagePreviews([]);
       setIsLoading(false);
       setErrorMessageForItem("");
-      showAlertMessage()
+      showAlertMessage();
     } catch (error) {
       if (error.response && error.response.status === 422) {
         setErrorMessageForItem("name already exist.");
@@ -328,7 +328,7 @@ export default function Admin1({ logOut }) {
   const [idForOneItem, setIdForOneItem] = useState("");
   async function getItems(e, itemID) {
     e.preventDefault();
-    
+
     setLoadingForItems(true);
     setIdForOneItem(itemID);
     try {
@@ -384,17 +384,16 @@ export default function Admin1({ logOut }) {
   }
   /* end of status  ****************************----*/
 
-
-  // in stock or out 
-  async function putStatusOfItem(e,idOfItem) {
-    e.preventDefault()
+  // in stock or out
+  async function putStatusOfItem(e, idOfItem) {
+    e.preventDefault();
     try {
-      let {data} = await axios.patch(`https://freelance1-production.up.railway.app/admin1/changeStatus/${idOfItem}`)
+      let { data } = await axios.patch(
+        `https://freelance1-production.up.railway.app/admin1/changeStatus/${idOfItem}`
+      );
       // console.log(data);
       getItems(e, idForOneItem);
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   }
   // ************************************
   return (
@@ -734,8 +733,9 @@ export default function Admin1({ logOut }) {
                   {errorMessageForItemsInCategory}
                 </p>
               ) : (
-                itemsInCategory.map((element, i) => (
-                  <div key={i} className="card w-25 my-5 position-relative">
+                <div className="d-flex justify-content-center gap-3 flex-wrap">
+                 { itemsInCategory.map((element, i) => (
+                  <div key={i} className="card widthOfCard my-5 position-relative">
                     <div className="position-absolute top-0 start-100 translate-middle">
                       <button
                         onClick={() => {
@@ -754,18 +754,25 @@ export default function Admin1({ logOut }) {
                       <h5 className="card-title">{element?.name}</h5>
                       <p className="card-text mb-2">{element?.description}</p>
                       <div className="d-flex justify-content-end">
-                      <button
-                      onClick={(e)=>{putStatusOfItem(e,element._id)}}
-                        className={`btn  ${
-                          element?.status =="in stock"? "btn-success" : "btn-danger"
-                        }`}
-                      >
-                        {element?.status == "in stock"? "In Stock" : "Out of Stock"}
-                      </button>
+                        <button
+                          onClick={(e) => {
+                            putStatusOfItem(e, element._id);
+                          }}
+                          className={`btn  ${
+                            element?.status == "in stock"
+                              ? "btn-success"
+                              : "btn-danger"
+                          }`}
+                        >
+                          {element?.status == "in stock"
+                            ? "In Stock"
+                            : "Out of Stock"}
+                        </button>
                       </div>
                     </div>
                   </div>
-                ))
+                  ))}
+                </div>
               )}
               <div className={sureDeleteItem}>
                 <button
