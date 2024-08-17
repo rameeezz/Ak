@@ -356,9 +356,10 @@ export default function Admin1({ logOut }) {
     setClassForItems("d-none");
   }
 
-  // delete items *******------------
+  // delete items and status *******------------
   const [itemIDForDelete, setItemIdForDelete] = useState({ itemID: "" });
   const [sureDeleteItem, setSureDeleteItem] = useState("d-none");
+  const [statusLoading , setStatusLoading] = useState(false)
   function putItemId(itemID) {
     setItemIdForDelete(itemID);
     // console.log(itemID);
@@ -382,19 +383,19 @@ export default function Admin1({ logOut }) {
       showAlertMessage();
     } catch (error) {}
   }
-  /* end of status  ****************************----*/
-
-  // in stock or out
   async function putStatusOfItem(e, idOfItem) {
     e.preventDefault();
+    setStatusLoading(true)
     try {
       let { data } = await axios.patch(
         `https://freelance1-production.up.railway.app/admin1/changeStatus/${idOfItem}`
       );
+      setStatusLoading(false)
       // console.log(data);
       getItems(e, idForOneItem);
     } catch (error) {}
   }
+  /* end of status and delete ****************************----*/
   // ************************************
   return (
     <>
@@ -754,7 +755,7 @@ export default function Admin1({ logOut }) {
                       <h5 className="card-title">{element?.name}</h5>
                       <p className="card-text mb-2">{element?.description}</p>
                       <div className="d-flex justify-content-end">
-                        <button
+                        {statusLoading? <i className="fa solid fa-spinner fa-spin responsive-font-size-h1"></i>: <button
                           onClick={(e) => {
                             putStatusOfItem(e, element._id);
                           }}
@@ -767,7 +768,8 @@ export default function Admin1({ logOut }) {
                           {element?.status == "in stock"
                             ? "In Stock"
                             : "Out of Stock"}
-                        </button>
+                        </button>}
+                       
                       </div>
                     </div>
                   </div>
