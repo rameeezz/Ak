@@ -390,7 +390,7 @@ export default function Admin1({ logOut }) {
     e.preventDefault()
     try {
       let {data} = await axios.patch(`https://freelance1-production.up.railway.app/admin1/changeStatus/${idOfItem}`)
-      console.log(data);
+      // console.log(data);
       getItems(e, idForOneItem);
     } catch (error) {
       
