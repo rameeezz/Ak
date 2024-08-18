@@ -505,7 +505,7 @@ export default function Admin1({ logOut }) {
         <div className={showAlert}>
           <div className="custom-alert text-center">Done</div>
         </div>
-        <div className=" position-fixed end-2 rounded-circle bg-danger top-5">
+        <div className=" position-fixed z-3 end-2 rounded-circle bg-danger top-5">
           <button className=" p-3 text-white" onClick={GoTOLOgin}>
             <i className="fa-solid fa-right-from-bracket"></i>
           </button>
@@ -825,7 +825,7 @@ export default function Admin1({ logOut }) {
               ""
             )}
             <div className={classForItems}>
-              <div className="position-absolute end-0 top-0">
+              <div className="position-absolute z-3 end-0 top-0">
                 <button
                   onClick={CloseItemsInCategory}
                   className="btn btn-close"
