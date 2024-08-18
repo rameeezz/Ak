@@ -300,6 +300,8 @@ export default function Admin1({ logOut }) {
         );
         // console.log(data);
         // Reset the form or perform other actions
+        console.log(data);
+        
         setItemsDetails({
           name: "",
           description: "",
@@ -877,7 +879,7 @@ export default function Admin1({ logOut }) {
                             </button>
                           </div>
                           {salePutted && salePuttedItemId === element._id ? "done" : ""}
-                          {element?.discount === 0 ? (
+                          {element?.discount <= 0 || element?.discount == null ? (
                             ""
                           ) : (
                             <div className="d-flex justify-content-center gap-2 mt-2">
