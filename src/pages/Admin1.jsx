@@ -359,7 +359,7 @@ export default function Admin1({ logOut }) {
   // delete items and status *******------------
   const [itemIDForDelete, setItemIdForDelete] = useState({ itemID: "" });
   const [sureDeleteItem, setSureDeleteItem] = useState("d-none");
-  const [statusLoading , setStatusLoading] = useState(false)
+  const [statusLoading, setStatusLoading] = useState(false);
   function putItemId(itemID) {
     setItemIdForDelete(itemID);
     // console.log(itemID);
@@ -385,17 +385,40 @@ export default function Admin1({ logOut }) {
   }
   async function putStatusOfItem(e, idOfItem) {
     e.preventDefault();
-    setStatusLoading(true)
+    setStatusLoading(true);
     try {
       let { data } = await axios.patch(
         `https://freelance1-production.up.railway.app/admin1/changeStatus/${idOfItem}`
       );
-      setStatusLoading(false)
+      setStatusLoading(false);
       // console.log(data);
       getItems(e, idForOneItem);
     } catch (error) {}
   }
   /* end of status and delete ****************************----*/
+  // work on sale of item 
+  const [salePercent , setSalePercent] = useState({
+    itemID:"",
+    discount:0
+  })
+  // console.log(salePercent);
+  
+  function putSalePercent(e) {
+    setSalePercent({...salePercent , discount:e.target.value})
+  }
+  function putSalePercentItemId(itemID) {
+    setSalePercent({...salePercent, itemID:itemID})
+  }
+  async function submitSalePercent(e) {
+    e.preventDefault()
+    try {
+      let {data} = await axios.patch("https://freelance1-production.up.railway.app/admin1/sale",salePercent)
+      console.log(data);
+      getItems(e, idForOneItem);
+    } catch (error) {
+      
+    }
+  }
   // ************************************
   return (
     <>
@@ -735,44 +758,70 @@ export default function Admin1({ logOut }) {
                 </p>
               ) : (
                 <div className="d-flex justify-content-center gap-3 flex-wrap">
-                 { itemsInCategory.map((element, i) => (
-                  <div key={i} className="card widthOfCard my-5 position-relative">
-                    <div className="position-absolute top-0 start-100 translate-middle">
-                      <button
-                        onClick={() => {
-                          putItemId(element._id);
-                        }}
-                        className="btn btn-close"
-                      ></button>
-                    </div>
-                    <img
-                      src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
-                      className="card-img-top"
-                      alt=""
-                    />
-                    <div className="card-body">
-                      <p className="text-muted mb-2">{element?.price} EGP</p>
-                      <h5 className="card-title">{element?.name}</h5>
-                      <p className="card-text mb-2">{element?.description}</p>
-                      <div className="d-flex justify-content-end">
-                        {statusLoading? <i className="fa solid fa-spinner fa-spin responsive-font-size-h1"></i>: <button
-                          onClick={(e) => {
-                            putStatusOfItem(e, element._id);
+                  {itemsInCategory.map((element, i) => (
+                    <div
+                      key={i}
+                      className="card widthOfCard my-5 position-relative"
+                    >
+                      <div className="position-absolute top-0 start-100 translate-middle">
+                        <button
+                          onClick={() => {
+                            putItemId(element._id);
                           }}
-                          className={`btn  ${
-                            element?.status == "in stock"
-                              ? "btn-success"
-                              : "btn-danger"
-                          }`}
-                        >
-                          {element?.status == "in stock"
-                            ? "In Stock"
-                            : "Out of Stock"}
-                        </button>}
-                       
+                          className="btn btn-close"
+                        ></button>
+                      </div>
+                      <img
+                        src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
+                        className="card-img-top"
+                        alt=""
+                      />
+                      <div className="card-body">
+                        <p className="text-muted mb-2">{element?.price} EGP</p>
+                        <h5 className="card-title">{element?.name}</h5>
+                        <p className="card-text mb-2">{element?.description}</p>
+                        <div className="d-flex justify-content-end">
+                          {statusLoading ? (
+                            <i className="fa solid fa-spinner fa-spin responsive-font-size-h1"></i>
+                          ) : (
+                            <button
+                              onClick={(e) => {
+                                putStatusOfItem(e, element._id);
+                              }}
+                              className={`btn  ${
+                                element?.status == "in stock"
+                                  ? "btn-success"
+                                  : "btn-danger"
+                              }`}
+                            >
+                              {element?.status == "in stock"
+                                ? "In Stock"
+                                : "Out of Stock"}
+                            </button>
+                          )}
+                        </div>
+                        <div className="mt-3">
+                          <div className="d-flex justify-content-center gap-2">
+                          <input
+                            type="number"
+                            className="form-control"
+                            placeholder="discount percent"
+                            onChange={putSalePercent}
+                          />
+                          <button onClick={()=>{
+                            putSalePercentItemId(element._id)
+                          }} className="btn btn-secondary"> OK</button>
+                          </div>
+                          <div className="d-flex justify-content-center">
+                            <button onClick={(e)=>{
+                              submitSalePercent(e)
+                            }} className="btn btn-primary mt-2">
+                              submit
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
                   ))}
                 </div>
               )}
