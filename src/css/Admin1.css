@@ -11,5 +11,22 @@
     cursor: pointer;
 }
 .widthOfCard{
-    width: 12rem;
+    width: 10rem;
 }
+.pagination-controls .btn {
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 4px;
+    padding: 10px 20px;
+  }
+  
+  .pagination-controls .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .pagination-controls span {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  

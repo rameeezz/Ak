@@ -67,7 +67,7 @@ export default function Admin1({ logOut }) {
       }
     } else {
       setErrorList(valid.error.details);
-      setErrorMessage("")
+      setErrorMessage("");
       // console.log(valid.error.details);
     }
   }
@@ -284,10 +284,10 @@ export default function Admin1({ logOut }) {
     itemsDetails.images.forEach((image, index) => {
       formData.append("images", image); // Sending images without an index
     });
-    if (itemsDetails.images.length >= 10 ) {
+    if (itemsDetails.images.length >= 10) {
       alert("max number of images 10");
       setIsLoading(false);
-    }else{
+    } else {
       try {
         let { data } = await axios.post(
           "https://freelance1-production.up.railway.app/admin1/additems",
@@ -301,7 +301,7 @@ export default function Admin1({ logOut }) {
         // console.log(data);
         // Reset the form or perform other actions
         console.log(data);
-        
+
         setItemsDetails({
           name: "",
           description: "",
@@ -337,6 +337,19 @@ export default function Admin1({ logOut }) {
   /* add status for each item IN stock or out  */
 
   const [itemsInCategory, setItemInCategory] = useState([]);
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+  const totalPages = Math.ceil(itemsInCategory.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItem = itemsInCategory.slice(indexOfFirstItem, indexOfLastItem);
+  const paginate = (pageNumber) => {
+    if (pageNumber > 0 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
+  // done pagination
   const [classForItems, setClassForItems] = useState("d-none");
   const [errorMessageForItemsInCategory, setErrorMessageForItemsInCategory] =
     useState("");
@@ -475,7 +488,7 @@ export default function Admin1({ logOut }) {
     submitSalePercent(e);
   }
   function closeSureBoxForCancelPer() {
-    setSureBoxForCAncelPer(false)
+    setSureBoxForCAncelPer(false);
   }
   // ************************************
   return (
@@ -810,13 +823,13 @@ export default function Admin1({ logOut }) {
                   className="btn btn-close"
                 ></button>
               </div>
-              {itemsInCategory == null || itemsInCategory.length == 0 ? (
+              {currentItem == null || currentItem.length == 0 ? (
                 <p className="text-center text-danger mt-5">
                   {errorMessageForItemsInCategory}
                 </p>
               ) : (
-                <div className="d-flex justify-content-center gap-3 flex-wrap">
-                  {itemsInCategory.map((element, i) => (
+                <div className="d-flex justify-content-center position-relative gap-3 flex-wrap">
+                  {currentItem.map((element, i) => (
                     <div
                       key={i}
                       className="card widthOfCard my-5 position-relative"
@@ -878,8 +891,11 @@ export default function Admin1({ logOut }) {
                               OK
                             </button>
                           </div>
-                          {salePutted && salePuttedItemId === element._id ? "done" : ""}
-                          {element?.discount <= 0 || element?.discount == null ? (
+                          {salePutted && salePuttedItemId === element._id
+                            ? "done"
+                            : ""}
+                          {element?.discount <= 0 ||
+                          element?.discount == null ? (
                             ""
                           ) : (
                             <div className="d-flex justify-content-center gap-2 mt-2">
@@ -894,24 +910,28 @@ export default function Admin1({ logOut }) {
                               </button>
                             </div>
                           )}
-                          {sureBoxForCancelper? <div className="position-fixed top-50 start-50 translate-middle z-3 bg-white shadow rounded-3  text-black p-5">
-                            <button
-                              onClick={closeSureBoxForCancelPer}
-                              className="position-absolute end-2 top-2 btn btn-close"
-                            ></button>
-                            <p>are you sure you want to cancel the sale </p>
-                            <div className="d-flex justify-content-center mt-4">
+                          {sureBoxForCancelper ? (
+                            <div className="position-fixed top-50 start-50 translate-middle z-3 bg-white shadow rounded-3  text-black p-5">
                               <button
-                                onClick={(e) => {
-                                  submitCancelPercent(e);
-                                }}
-                                className="btn btn-primary"
-                              >
-                                submit
-                              </button>
+                                onClick={closeSureBoxForCancelPer}
+                                className="position-absolute end-2 top-2 btn btn-close"
+                              ></button>
+                              <p>are you sure you want to cancel the sale </p>
+                              <div className="d-flex justify-content-center mt-4">
+                                <button
+                                  onClick={(e) => {
+                                    submitCancelPercent(e);
+                                  }}
+                                  className="btn btn-primary"
+                                >
+                                  submit
+                                </button>
+                              </div>
                             </div>
-                          </div>: ""}
-                          
+                          ) : (
+                            ""
+                          )}
+
                           <div className="d-flex justify-content-center">
                             {loadForPercent ? (
                               <button className="btn btn-primary">
@@ -932,8 +952,10 @@ export default function Admin1({ logOut }) {
                       </div>
                     </div>
                   ))}
+                  {/* osition-absolute bottom-0 start-50 translate-middle-x d-flex justify-content-center */}
                 </div>
               )}
+
               <div className={sureDeleteItem}>
                 <button
                   onClick={closeSureBox}
@@ -952,6 +974,25 @@ export default function Admin1({ logOut }) {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="pagination-controls my-4 d-flex justify-content-center ">
+            <button
+              className="btn btn-secondary mx-2"
+              onClick={() => paginate(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              &laquo; Previous
+            </button>
+            <span className="mx-2 mt-2">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              className="btn btn-secondary mx-2"
+              onClick={() => paginate(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Next &raquo;
+            </button>
           </div>
           {/* end of status  ****************************----*/}
         </div>
