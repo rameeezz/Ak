@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import "../css/Admin1.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -326,6 +326,10 @@ export default function Admin1({ logOut }) {
     useState("");
   const [loadingForItems, setLoadingForItems] = useState(false);
   const [idForOneItem, setIdForOneItem] = useState("");
+  const [salePercent, setSalePercent] = useState({
+    itemID: "",
+    discount: 0,
+  });
   async function getItems(e, itemID) {
     e.preventDefault();
 
@@ -354,6 +358,11 @@ export default function Admin1({ logOut }) {
   }
   function CloseItemsInCategory() {
     setClassForItems("d-none");
+    setSaleputted(false);
+    setSalePercent({
+      itemID: "",
+      discount: 0,
+    });
   }
 
   // delete items and status *******------------
@@ -396,28 +405,59 @@ export default function Admin1({ logOut }) {
     } catch (error) {}
   }
   /* end of status and delete ****************************----*/
-  // work on sale of item 
-  const [salePercent , setSalePercent] = useState({
-    itemID:"",
-    discount:0
-  })
-  // console.log(salePercent);
-  
+  // work on sale of item
+  const [loadForPercent, setLoadForPercent] = useState(false);
+  console.log(salePercent);
+
   function putSalePercent(e) {
-    setSalePercent({...salePercent , discount:e.target.value})
+    setSalePercent({ ...salePercent, discount: e.target.value });
+    setSaleputted(false);
   }
+  const [salePutted, setSaleputted] = useState(false);
   function putSalePercentItemId(itemID) {
-    setSalePercent({...salePercent, itemID:itemID})
+    setSalePercent({ ...salePercent, itemID: itemID });
+    setSaleputted(true);
   }
   async function submitSalePercent(e) {
-    e.preventDefault()
-    try {
-      let {data} = await axios.patch("https://freelance1-production.up.railway.app/admin1/sale",salePercent)
-      console.log(data);
-      getItems(e, idForOneItem);
-    } catch (error) {
-      
+    e.preventDefault();
+    setLoadForPercent(true);
+    if (
+      !salePercent.itemID ||
+      salePercent.discount === null ||
+      salePercent.discount === undefined ||
+      salePercent.itemID === undefined
+    ) {
+      alert("Please Put Percent Before You Clicked.");
+      setLoadForPercent(false);
+    } else {
+      try {
+        let { data } = await axios.patch(
+          "https://freelance1-production.up.railway.app/admin1/sale",
+          salePercent
+        );
+        console.log(data);
+        getItems(e, idForOneItem);
+        setSaleputted(false);
+        setSalePercent({ itemID: "", discount: 0 });
+        showAlertMessage();
+        setLoadForPercent(false);
+        setSureBoxForCAncelPer(false);
+      } catch (error) {}
     }
+  }
+  const [sureBoxForCancelper, setSureBoxForCAncelPer] = useState(false);
+  function cancelSale(idOFOneItem) {
+    setSalePercent({
+      itemID: idOFOneItem,
+      discount: 0,
+    });
+    setSureBoxForCAncelPer(true);
+  }
+  function submitCancelPercent(e) {
+    submitSalePercent(e);
+  }
+  function closeSureBoxForCancelPer() {
+    setSureBoxForCAncelPer(false)
   }
   // ************************************
   return (
@@ -777,10 +817,12 @@ export default function Admin1({ logOut }) {
                         alt=""
                       />
                       <div className="card-body">
-                        <p className="text-muted mb-2">{element?.price} EGP</p>
+                        <p className="text-muted mb-2">
+                          {element?.lastPrice} EGP
+                        </p>
                         <h5 className="card-title">{element?.name}</h5>
                         <p className="card-text mb-2">{element?.description}</p>
-                        <div className="d-flex justify-content-end">
+                        <div className="d-flex justify-content-center">
                           {statusLoading ? (
                             <i className="fa solid fa-spinner fa-spin responsive-font-size-h1"></i>
                           ) : (
@@ -802,22 +844,71 @@ export default function Admin1({ logOut }) {
                         </div>
                         <div className="mt-3">
                           <div className="d-flex justify-content-center gap-2">
-                          <input
-                            type="number"
-                            className="form-control"
-                            placeholder="discount percent"
-                            onChange={putSalePercent}
-                          />
-                          <button onClick={()=>{
-                            putSalePercentItemId(element._id)
-                          }} className="btn btn-secondary"> OK</button>
-                          </div>
-                          <div className="d-flex justify-content-center">
-                            <button onClick={(e)=>{
-                              submitSalePercent(e)
-                            }} className="btn btn-primary mt-2">
-                              submit
+                            <input
+                              type="number"
+                              className="form-control"
+                              placeholder="discount percent"
+                              onChange={putSalePercent}
+                            />
+                            <button
+                              onClick={() => {
+                                putSalePercentItemId(element._id);
+                              }}
+                              className="btn btn-secondary"
+                            >
+                              {" "}
+                              OK
                             </button>
+                          </div>
+                          {salePutted ? "done" : ""}
+                          {element?.discount === 0 ? (
+                            ""
+                          ) : (
+                            <div className="d-flex justify-content-center gap-2 mt-2">
+                              <p>cancel sale</p>
+                              <button
+                                onClick={() => {
+                                  cancelSale(element._id);
+                                }}
+                                className="btn btn-primary p-1"
+                              >
+                                cancel
+                              </button>
+                            </div>
+                          )}
+                          {sureBoxForCancelper? <div className="position-fixed top-50 start-50 translate-middle z-3 bg-white shadow rounded-3  text-black p-5">
+                            <button
+                              onClick={closeSureBoxForCancelPer}
+                              className="position-absolute end-2 top-2 btn btn-close"
+                            ></button>
+                            <p>are you sure you want to cancel the sale </p>
+                            <div className="d-flex justify-content-center mt-4">
+                              <button
+                                onClick={(e) => {
+                                  submitCancelPercent(e);
+                                }}
+                                className="btn btn-primary"
+                              >
+                                submit
+                              </button>
+                            </div>
+                          </div>: ""}
+                          
+                          <div className="d-flex justify-content-center">
+                            {loadForPercent ? (
+                              <button className="btn btn-primary">
+                                <i className="fa solid fa-spinner fa-spin "></i>
+                              </button>
+                            ) : (
+                              <button
+                                onClick={(e) => {
+                                  submitSalePercent(e);
+                                }}
+                                className="btn btn-primary mt-2"
+                              >
+                                submit
+                              </button>
+                            )}
                           </div>
                         </div>
                       </div>
