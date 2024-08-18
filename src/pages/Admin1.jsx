@@ -349,6 +349,7 @@ export default function Admin1({ logOut }) {
       setCurrentPage(pageNumber);
     }
   };
+  const [classOfArrow , setClassOFArrow] = useState("d-none") 
   // done pagination
   const [classForItems, setClassForItems] = useState("d-none");
   const [errorMessageForItemsInCategory, setErrorMessageForItemsInCategory] =
@@ -374,6 +375,7 @@ export default function Admin1({ logOut }) {
       setClassForItems(
         "d-flex justify-content-center gap-3 flex-wrap position-relative"
       );
+      setClassOFArrow("pagination-controls my-4 d-flex justify-content-center ")
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setErrorMessageForItemsInCategory("No Items In This Category.");
@@ -382,6 +384,7 @@ export default function Admin1({ logOut }) {
         setClassForItems(
           "d-flex justify-content-center gap-3 flex-wrap position-relative"
         );
+        setClassOFArrow("pagination-controls my-4 d-flex justify-content-center ")
       }
     }
   }
@@ -392,6 +395,7 @@ export default function Admin1({ logOut }) {
       itemID: "",
       discount: 0,
     });
+    setClassOFArrow("d-none ")
   }
 
   // delete items and status *******------------
@@ -975,7 +979,7 @@ export default function Admin1({ logOut }) {
               </div>
             </div>
           </div>
-          <div className="pagination-controls my-4 d-flex justify-content-center ">
+          <div className={classOfArrow}>
             <button
               className="btn btn-secondary mx-2"
               onClick={() => paginate(currentPage - 1)}
