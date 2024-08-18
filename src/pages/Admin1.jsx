@@ -62,22 +62,23 @@ export default function Admin1({ logOut }) {
       } catch (error) {
         if (error.response && error.response.status === 400) {
           setLoading(false);
-          setErrorMessage("there are user as the same username");
+          setErrorMessage("username already exist.");
         }
       }
     } else {
       setErrorList(valid.error.details);
-      console.log(valid.error.details);
+      setErrorMessage("")
+      // console.log(valid.error.details);
     }
   }
   function ValidData() {
     const scheme = joi.object({
       username: joi.string().required().min(3).max(15).messages({
-        "string.base": "First name must be a string.",
-        "string.empty": "First name is required.",
-        "string.min": "First name must be at least 3 characters long.",
-        "string.max": "First name cannot exceed 15 characters.",
-        "string.alphanum": "First name must contain only letters and numbers.",
+        "string.base": "username must be a string.",
+        "string.empty": "username is required.",
+        "string.min": "username must be at least 3 characters long.",
+        "string.max": "username cannot exceed 15 characters.",
+        "string.alphanum": "username must contain only letters and numbers.",
       }),
 
       password: joi.string().required().messages({
@@ -283,36 +284,49 @@ export default function Admin1({ logOut }) {
     itemsDetails.images.forEach((image, index) => {
       formData.append("images", image); // Sending images without an index
     });
-    try {
-      let { data } = await axios.post(
-        "https://freelance1-production.up.railway.app/admin1/additems",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      // console.log(data);
-      // Reset the form or perform other actions
-      setItemsDetails({
-        name: "",
-        description: "",
-        price: 0,
-        category: itemsDetails.category,
-        images: [],
-      });
-      setImagePreviews([]);
+    if (itemsDetails.images.length >= 10 ) {
+      alert("max number of images 10");
       setIsLoading(false);
-      setErrorMessageForItem("");
-      showAlertMessage();
-    } catch (error) {
-      if (error.response && error.response.status === 422) {
-        setErrorMessageForItem("name already exist.");
-      }
-      if (error.response && error.response.status === 404) {
-        alert("server is down");
+    }else{
+      try {
+        let { data } = await axios.post(
+          "https://freelance1-production.up.railway.app/admin1/additems",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        // console.log(data);
+        // Reset the form or perform other actions
+        setItemsDetails({
+          name: "",
+          description: "",
+          price: 0,
+          category: itemsDetails.category,
+          images: [],
+        });
+        setImagePreviews([]);
         setIsLoading(false);
+        setErrorMessageForItem("");
+        showAlertMessage();
+      } catch (error) {
+        if (error.response && error.response.status === 422) {
+          setErrorMessageForItem("name already exist.");
+        }
+        if (error.response && error.response.status === 404) {
+          alert("name is already exist.");
+          setIsLoading(false);
+        }
+        if (error.response && error.response.status === 500) {
+          alert("max number of images 10");
+          setIsLoading(false);
+        }
+        if (error.response && error.response.status === 400) {
+          alert("please add name and description");
+          setIsLoading(false);
+        }
       }
     }
   }
@@ -407,16 +421,18 @@ export default function Admin1({ logOut }) {
   /* end of status and delete ****************************----*/
   // work on sale of item
   const [loadForPercent, setLoadForPercent] = useState(false);
-  console.log(salePercent);
+  // console.log(salePercent);
 
   function putSalePercent(e) {
     setSalePercent({ ...salePercent, discount: e.target.value });
     setSaleputted(false);
   }
   const [salePutted, setSaleputted] = useState(false);
+  const [salePuttedItemId, setSalePuttedItemId] = useState(null);
   function putSalePercentItemId(itemID) {
     setSalePercent({ ...salePercent, itemID: itemID });
     setSaleputted(true);
+    setSalePuttedItemId(itemID);
   }
   async function submitSalePercent(e) {
     e.preventDefault();
@@ -435,7 +451,7 @@ export default function Admin1({ logOut }) {
           "https://freelance1-production.up.railway.app/admin1/sale",
           salePercent
         );
-        console.log(data);
+        // console.log(data);
         getItems(e, idForOneItem);
         setSaleputted(false);
         setSalePercent({ itemID: "", discount: 0 });
@@ -860,7 +876,7 @@ export default function Admin1({ logOut }) {
                               OK
                             </button>
                           </div>
-                          {salePutted ? "done" : ""}
+                          {salePutted && salePuttedItemId === element._id ? "done" : ""}
                           {element?.discount === 0 ? (
                             ""
                           ) : (
