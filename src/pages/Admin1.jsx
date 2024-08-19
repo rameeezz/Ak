@@ -393,7 +393,7 @@ export default function Admin1({ logOut }) {
         );
         // console.log(data);
         // Reset the form or perform other actions
-        console.log(data);
+        // console.log(data);
 
         setItemsDetails({
           name: "",
@@ -453,6 +453,33 @@ export default function Admin1({ logOut }) {
     itemID: "",
     discount: 0,
   });
+  const [getSubCategorys, setGetSubCategorys] = useState([]);
+  async function getSubCategories(e, idOfParentCateg) {
+    e.preventDefault();
+    try {
+      let { data } = await axios.get(
+        `https://freelance1-production.up.railway.app/admin1/getCategoryContent/${idOfParentCateg}`
+      );
+      // console.log(data.subcategories);
+      setGetSubCategorys(data.subcategories);
+      setItemInCategory([])
+      setLoadingForItems(false);
+      setErrorMessageForItemsInCategory("")
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        setErrorMessageForItemsInCategory("No Items In This Category.");
+        setItemInCategory([]);
+        setLoadingForItems(false);
+        setClassForItems(
+          "d-flex justify-content-center gap-3 flex-wrap position-relative"
+        );
+        setClassOFArrow(
+          "pagination-controls my-4 d-flex justify-content-center "
+        );
+        setGetSubCategorys([])
+      }
+    }
+  }
   async function getItems(e, itemID) {
     e.preventDefault();
 
@@ -465,6 +492,7 @@ export default function Admin1({ logOut }) {
       // console.log(data);
       setLoadingForItems(false);
       setItemInCategory(data);
+      setGetSubCategorys([])
       setClassForItems(
         "d-flex justify-content-center gap-3 flex-wrap position-relative"
       );
@@ -473,15 +501,7 @@ export default function Admin1({ logOut }) {
       );
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        setErrorMessageForItemsInCategory("No Items In This Category.");
-        setItemInCategory([]);
-        setLoadingForItems(false);
-        setClassForItems(
-          "d-flex justify-content-center gap-3 flex-wrap position-relative"
-        );
-        setClassOFArrow(
-          "pagination-controls my-4 d-flex justify-content-center "
-        );
+        getSubCategories(e, itemID);
       }
     }
   }
@@ -493,6 +513,7 @@ export default function Admin1({ logOut }) {
       discount: 0,
     });
     setClassOFArrow("d-none ");
+    setGetSubCategorys([])
   }
 
   // delete items and status *******------------
@@ -986,6 +1007,21 @@ export default function Admin1({ logOut }) {
                 </button>
               ))
             )}
+          </div>
+          <div className="d-flex justify-content-center flex-row gap-2">
+            {getSubCategorys === null || getSubCategorys.length === 0
+              ? ""
+              : getSubCategorys.map((element , i) => (
+                  <button
+                    onClick={(e) => {
+                      getItems(e, element._id);
+                    }}
+                    key={i}
+                    className="btn btn-primary text-white"
+                  >
+                    {element?.name}
+                  </button>
+                ))}
           </div>
           {/* show items */}
           <div>
