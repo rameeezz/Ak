@@ -774,7 +774,7 @@ export default function Admin1({ logOut }) {
             <div class="position-fixed top-50 start-50 translate-middle z-3 shadow bg-white rounded-3 p-4">
               <button
                 onClick={closeAddSubCategory}
-                className="btn btn-close position-absolute end-3 top-3"
+                className="btn btn-close position-absolute top-0 start-100 translate-middle"
               ></button>
               <label htmlFor="name">Sub Category Name</label>
               <input
