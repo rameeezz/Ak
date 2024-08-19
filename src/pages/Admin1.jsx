@@ -125,7 +125,7 @@ export default function Admin1({ logOut }) {
           "https://freelance1-production.up.railway.app/admin1/addCategory",
           categoryName
         );
-        console.log(data);
+        // console.log(data);
 
         setLoadingAddCategory(false);
         // alert("done");
@@ -186,6 +186,71 @@ export default function Admin1({ logOut }) {
     setClassOfShowCategory("d-none");
   }
   // done show category *************
+  // add sub category ******************
+  const [subCategoryDetails, setSubCategoryDetails] = useState({
+    name: "",
+    mainCategory: "",
+  });
+
+  const [classOfAddSubCategory, setClassOfAddSubCategory] = useState(false);
+  const [loadingForSubCategroy, setLoadingForSubCategory] = useState(false);
+  const [ErrorMessageForSubCategory, setErrorMessageForSubCategory] =
+    useState("");
+  function showDivToPutSubCategory(idOFMainCategory) {
+    setClassOfAddSubCategory(true);
+    setSubCategoryDetails({
+      ...subCategoryDetails,
+      mainCategory: idOFMainCategory,
+    });
+  }
+  function nameOfSubCategory(e) {
+    setSubCategoryDetails({ ...subCategoryDetails, name: e.target.value });
+  }
+  async function sendSubCategoryName(e) {
+    e.preventDefault();
+    if (subCategoryDetails.name === "") {
+      alert("please write name of category");
+    } else {
+      setLoadingForSubCategory(true);
+      try {
+        let { data } = await axios.post(
+          "https://freelance1-production.up.railway.app/admin1/addCategory",
+          subCategoryDetails
+        );
+        // console.log(data);
+
+        setLoadingForSubCategory(false);
+        // alert("done");
+        setErrorMessageForSubCategory("");
+        showAlertMessage();
+        setClassOfAddSubCategory(false);
+        setSubCategoryDetails({ name: "", mainCategory: "" });
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          // console.log("m4 dayf");
+          setErrorMessageForSubCategory("try again later");
+          setLoadingForSubCategory(false);
+        }
+        if (error.response && error.response.status === 422) {
+          // console.log("m4 dayf");
+          setErrorMessageForSubCategory("Category creation failed.");
+          setLoadingForSubCategory(false);
+        }
+        if (error.response && error.response.status === 412) {
+          // console.log("m4 dayf");
+          setErrorMessageForSubCategory("This category already exists.");
+          setLoadingForSubCategory(false);
+        }
+      }
+    }
+  }
+  function closeAddSubCategory() {
+    setClassOfAddSubCategory(false);
+    setSubCategoryDetails({ name: "", mainCategory: "" });
+    setLoadingForSubCategory(false);
+    setErrorMessageForSubCategory("");
+  }
+  // done add sub category
   // delete category
   const [setCategoryId, setSetCategoryId] = useState({
     categoryID: "",
@@ -227,16 +292,44 @@ export default function Admin1({ logOut }) {
     category: "",
     images: [],
   });
+  const [getSubCategory, setGetSubCategory] = useState([]);
+  // console.log(getSubCategory);
+  const [loadingForSub, setLoadingForSub] = useState(null);
   const [showDivOfItems, setshowDivOfItems] = useState(false);
   // console.log(itemsDetails);
   const [imagePreviews, setImagePreviews] = useState([]);
 
   const [showNameOfCategory, setshowNameOfCategory] = useState("");
-  function putIdOfCategoryForItem(IdOfCategory, categoryNam) {
-    setItemsDetails({ ...itemsDetails, category: IdOfCategory });
-    setshowDivOfItems(true);
-    setshowNameOfCategory(categoryNam);
+  async function putIdOfCategoryForItem(e, IdOfCategory, categoryNam) {
+    e.preventDefault();
+    setLoadingForSub(IdOfCategory);
+    try {
+      let { data } = await axios.get(
+        `https://freelance1-production.up.railway.app/admin1/getCategoryContent/${IdOfCategory}`
+      );
+      // console.log(data.subcategories);
+      if (data.subcategories == undefined) {
+        setItemsDetails({ ...itemsDetails, category: IdOfCategory });
+        setshowDivOfItems(true);
+        setshowNameOfCategory(categoryNam);
+        setLoadingForSub(null);
+        setGetSubCategory([]);
+      } else {
+        setGetSubCategory(data.subcategories);
+        setLoadingForSub(null);
+        setshowDivOfItems(false);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        setItemsDetails({ ...itemsDetails, category: IdOfCategory });
+        setshowDivOfItems(true);
+        setshowNameOfCategory(categoryNam);
+        setLoadingForSub(null);
+        setGetSubCategory([]);
+      }
+    }
   }
+
   function putItemInfo(e) {
     let myItem = { ...itemsDetails };
     myItem[e.target.name] = e.target.value;
@@ -642,17 +735,22 @@ export default function Admin1({ logOut }) {
               showCategory.map((element, i) => (
                 <div
                   key={i}
-                  className="col-md-2 col-sm-1 my-2 d-flex justify-content-center"
+                  className="col-md-2 col-sm-1 my-2 d-flex justify-content-center gap-0"
                 >
-                  <p className=" bg-info p-2 text-white py-1 rounded-1 position-relative">
+                  <p
+                    onClick={() => {
+                      showDivToPutSubCategory(element._id);
+                    }}
+                    className=" bg-info CursorPointer p-1 text-white rounded-1 "
+                  >
                     {element?.name}
-                    <i
-                      onClick={() => {
-                        DeleteCategory(element?._id);
-                      }}
-                      className="position-absolute top-0 start-100 translate-middle fa-solid fa-xmark styleOFX text-black"
-                    ></i>
                   </p>
+                  <i
+                    onClick={() => {
+                      DeleteCategory(element?._id);
+                    }}
+                    className="fa-solid fa-xmark text-black CursorPointer "
+                  ></i>
                 </div>
               ))
             )}
@@ -671,6 +769,49 @@ export default function Admin1({ logOut }) {
             </div>
           </div>
           {/* ------------------------------------ */}
+          {/* add sub category *-*-*-*-*-* */}
+          {classOfAddSubCategory ? (
+            <div class="position-fixed top-50 start-50 translate-middle z-3 shadow bg-white rounded-3 p-5">
+              <button
+                onClick={closeAddSubCategory}
+                className="btn btn-close position-absolute end-3 top-3"
+              ></button>
+              <label htmlFor="name">Sub Category Name</label>
+              <input
+                onChange={nameOfSubCategory}
+                type="text"
+                className="form-control my-3"
+                name="name"
+              />
+              {ErrorMessageForSubCategory === "" ? (
+                ""
+              ) : (
+                <p className="text-center text-danger my-3">
+                  {ErrorMessageForSubCategory}
+                </p>
+              )}
+              {loadingForSubCategroy ? (
+                <div className="d-flex justify-content-center">
+                  <button disabled className=" btn btn-primary px-4">
+                    <i className="fa solid fa-spinner fa-spin "></i>
+                  </button>
+                </div>
+              ) : (
+                <div className="d-flex justify-content-center">
+                  <button
+                    onClick={sendSubCategoryName}
+                    className="btn btn-primary"
+                  >
+                    Submit
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            ""
+          )}
+
+          {/* doneeeeeeeeeeeee-- */}
           {/* add items in category */}
           <h3 className="responsive-font-size-h3 mt-3 colorForTitles text-center">
             Add Items In Category
@@ -682,18 +823,49 @@ export default function Admin1({ logOut }) {
               </p>
             ) : (
               showCategory.map((element, i) => (
-                <button
-                  onClick={() => {
-                    putIdOfCategoryForItem(element._id, element.name);
-                  }}
-                  key={i}
-                  className="btn btn-secondary text-white"
-                >
-                  {element?.name}
-                </button>
+                <div key={i}>
+                  {loadingForSub === element._id ? (
+                    <button disabled className="btn btn-secondary px-4">
+                      <i className="fa solid fa-spinner fa-spin"></i>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={(e) => {
+                        putIdOfCategoryForItem(e, element._id, element.name);
+                      }}
+                      className="btn btn-secondary text-white"
+                    >
+                      {element?.name}
+                    </button>
+                  )}
+                </div>
               ))
             )}
           </div>
+
+          <div className="d-flex justify-content-center flex-row gap-3 position-relative">
+            {Array.isArray(getSubCategory) && getSubCategory.length > 0
+              ? getSubCategory.map((element, i) => (
+                  <div key={i}>
+                    {loadingForSub === element._id ? (
+                      <button disabled className="btn btn-primary px-4">
+                        <i className="fa solid fa-spinner fa-spin"></i>
+                      </button>
+                    ) : (
+                      <button
+                        onClick={(e) => {
+                          putIdOfCategoryForItem(e, element._id, element.name);
+                        }}
+                        className="btn btn-primary text-white"
+                      >
+                        {element?.name}
+                      </button>
+                    )}
+                  </div>
+                ))
+              : ""}
+          </div>
+
           {/* show form to add items */}
           {showDivOfItems ? (
             <div className="container position-relative d-flex align-items-center flex-column">
