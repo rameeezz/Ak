@@ -771,7 +771,7 @@ export default function Admin1({ logOut }) {
           {/* ------------------------------------ */}
           {/* add sub category *-*-*-*-*-* */}
           {classOfAddSubCategory ? (
-            <div class="position-fixed top-50 start-50 translate-middle z-3 shadow bg-white rounded-3 p-5">
+            <div class="position-fixed top-50 start-50 translate-middle z-3 shadow bg-white rounded-3 p-3">
               <button
                 onClick={closeAddSubCategory}
                 className="btn btn-close position-absolute end-3 top-3"
