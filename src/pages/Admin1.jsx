@@ -259,6 +259,7 @@ export default function Admin1({ logOut }) {
 
   const [sureMessage, setSureMessage] = useState("");
   const [classOFShowSureBox, setclassOFShowSureBox] = useState("d-none ");
+  const [loadForSureDelete, setLoadForSureDelete] = useState(false);
   function DeleteCategory(IdOfElement) {
     setSetCategoryId({ ...setCategoryId, categoryID: IdOfElement });
     setSureMessage("are you sure you want to delete this category ?");
@@ -268,16 +269,19 @@ export default function Admin1({ logOut }) {
   }
   async function sureDeleteCategory() {
     // console.log(setCategoryId.categoryID);
-
+    setLoadForSureDelete(true);
     try {
       let { data } = await axios.delete(
         `https://freelance1-production.up.railway.app/admin1/deleteCategory/${setCategoryId.categoryID}`
       );
-      console.log(data);
+      // console.log(data);
       showAlertMessage();
       setclassOFShowSureBox("d-none");
       getCategory();
-    } catch (error) {}
+      setLoadForSureDelete(false);
+    } catch (error) {
+      setLoadForSureDelete(false);
+    }
   }
   function closeSureSection() {
     setclassOFShowSureBox("d-none");
@@ -462,9 +466,9 @@ export default function Admin1({ logOut }) {
       );
       // console.log(data.subcategories);
       setGetSubCategorys(data.subcategories);
-      setItemInCategory([])
+      setItemInCategory([]);
       setLoadingForItems(false);
-      setErrorMessageForItemsInCategory("")
+      setErrorMessageForItemsInCategory("");
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setErrorMessageForItemsInCategory("No Items In This Category.");
@@ -476,7 +480,7 @@ export default function Admin1({ logOut }) {
         setClassOFArrow(
           "pagination-controls my-4 d-flex justify-content-center "
         );
-        setGetSubCategorys([])
+        setGetSubCategorys([]);
       }
     }
   }
@@ -492,7 +496,7 @@ export default function Admin1({ logOut }) {
       // console.log(data);
       setLoadingForItems(false);
       setItemInCategory(data);
-      setGetSubCategorys([])
+      setGetSubCategorys([]);
       setClassForItems(
         "d-flex justify-content-center gap-3 flex-wrap position-relative"
       );
@@ -513,7 +517,7 @@ export default function Admin1({ logOut }) {
       discount: 0,
     });
     setClassOFArrow("d-none ");
-    setGetSubCategorys([])
+    setGetSubCategorys([]);
   }
 
   // delete items and status *******------------
@@ -776,7 +780,7 @@ export default function Admin1({ logOut }) {
               ))
             )}
           </div>
-          {/* box to show sure message  */}
+          {/* box to show sure delete category message  */}
           <div className={classOFShowSureBox}>
             <button
               onClick={closeSureSection}
@@ -784,9 +788,18 @@ export default function Admin1({ logOut }) {
             ></button>
             <p className="py-4"> {sureMessage}</p>
             <div className="d-flex justify-content-center">
-              <button onClick={sureDeleteCategory} className="btn btn-primary ">
-                delete
-              </button>
+              {loadForSureDelete ? (
+                <button disabled className="btn btn-primary px-4">
+                  <i className="fa solid fa-spinner fa-spin"></i>
+                </button>
+              ) : (
+                <button
+                  onClick={sureDeleteCategory}
+                  className="btn btn-primary "
+                >
+                  delete
+                </button>
+              )}
             </div>
           </div>
           {/* ------------------------------------ */}
@@ -1011,16 +1024,24 @@ export default function Admin1({ logOut }) {
           <div className="d-flex justify-content-center flex-row gap-2">
             {getSubCategorys === null || getSubCategorys.length === 0
               ? ""
-              : getSubCategorys.map((element , i) => (
-                  <button
-                    onClick={(e) => {
-                      getItems(e, element._id);
-                    }}
-                    key={i}
-                    className="btn btn-primary text-white"
-                  >
-                    {element?.name}
-                  </button>
+              : getSubCategorys.map((element, i) => (
+                  <div>
+                    <button
+                      onClick={(e) => {
+                        getItems(e, element._id);
+                      }}
+                      key={i}
+                      className="btn btn-primary text-white"
+                    >
+                      {element?.name}
+                    </button>
+                    <i
+                      onClick={() => {
+                        DeleteCategory(element?._id);
+                      }}
+                      className="fa-solid fa-xmark text-black CursorPointer"
+                    ></i>
+                  </div>
                 ))}
           </div>
           {/* show items */}
@@ -1168,10 +1189,9 @@ export default function Admin1({ logOut }) {
                       </div>
                     </div>
                   ))}
-                  {/* osition-absolute bottom-0 start-50 translate-middle-x d-flex justify-content-center */}
                 </div>
               )}
-
+              {/* delete item */}
               <div className={sureDeleteItem}>
                 <button
                   onClick={closeSureBox}
@@ -1209,6 +1229,27 @@ export default function Admin1({ logOut }) {
             >
               Next &raquo;
             </button>
+          </div>
+          <div className={classOFShowSureBox}>
+            <button
+              onClick={closeSureSection}
+              className="position-absolute end-2 top-2 btn btn-close"
+            ></button>
+            <p className="py-4"> {sureMessage}</p>
+            <div className="d-flex justify-content-center">
+              {loadForSureDelete ? (
+                <button disabled className="btn btn-primary px-4">
+                  <i className="fa solid fa-spinner fa-spin"></i>
+                </button>
+              ) : (
+                <button
+                  onClick={sureDeleteCategory}
+                  className="btn btn-primary "
+                >
+                  delete
+                </button>
+              )}
+            </div>
           </div>
           {/* end of status  ****************************----*/}
         </div>
