@@ -17,6 +17,7 @@ export default function NavBar({ user, logOut }) {
 
   function CloseNav() {
     setActiveNav(false);
+    setExpandedCategory(null)
   }
 
   useEffect(() => {
@@ -35,6 +36,7 @@ export default function NavBar({ user, logOut }) {
   }
 
   async function getSubCategory(idOfCategory) {
+    setExpandedCategory(null)
     try {
       let { data } = await axios.get(
         `https://freelance1-production.up.railway.app/admin1/getCategoryContent/${idOfCategory}`
