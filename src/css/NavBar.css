@@ -26,6 +26,9 @@
 .bgForNav{
     background-color: #495F75;
 }
+.FontSizeForP{
+    font-size: 13px;
+}
 .HeightOfDivBeforeLogOut{
     height: 2px;
 }
@@ -34,3 +37,17 @@
         width: 50%;
     }
   }
+  .subcategories-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 450ms ease;
+    -webkit-transition: max-height 450ms ease;
+    -moz-transition: max-height 450ms ease;
+    -ms-transition: max-height 450ms ease;
+    -o-transition: max-height 450ms ease;
+}
+  
+  .subcategories-container.expanded {
+    max-height: 200px; /* Adjust based on content size */
+  }
+  

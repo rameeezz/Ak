@@ -177,7 +177,7 @@ export default function Admin1({ logOut }) {
   }
   useEffect(() => {
     getCategory();
-  }, []);
+  }, [showCategory]);
   function openCayegory() {
     setClassOfShowCategory("row text-center");
     getCategory();

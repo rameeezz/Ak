@@ -14,6 +14,7 @@ import Register from "./pages/Register";
 import LogIn from "./pages/LogIn";
 import ForgetPassword from "./pages/ForgetPassword";
 import Admin2 from './pages/Admin2';
+import ShowItems from './pages/ShowItems';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -87,6 +88,7 @@ function App() {
           ),
         },
         { path: "register", element: <Register /> },
+        { path: "showItems", element: <ShowItems/>},
         {
           path: "login",
           element: <LogIn saveUser={SaveUserData} userRole={user} />,
