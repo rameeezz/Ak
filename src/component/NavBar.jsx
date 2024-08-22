@@ -86,7 +86,7 @@ export default function NavBar({ user, logOut }) {
               onClick={CloseNav}
               className="btn btn-close position-absolute end-5 top-5"
             ></div>
-            <div className="text-white d-flex justify-content-center mt-5">
+            <div className="text-[#b38e38] d-flex justify-content-center mt-5">
               <Link to="home">Home</Link>
             </div>
             {category.length === 0 ? (
@@ -99,7 +99,7 @@ export default function NavBar({ user, logOut }) {
                 <div key={i}>
                   <p
                     onClick={() => getSubCategory(element?._id)}
-                    className="my-3 text-center text-white CursorPointer"
+                    className="my-3 text-center text-[#b38e38] CursorPointer"
                   >
                     {element?.name}
                     {categoryWithSubCategories[element?._id] && (
@@ -128,7 +128,7 @@ export default function NavBar({ user, logOut }) {
                                 pathname: "showItems",
                               }}
                               state={{ id: subElement?._id }} // Pass the id as state
-                              className="text-white text-center FontSizeForP"
+                              className="text-[#b38e38] text-center FontSizeForP"
                             >
                               {subElement?.name}
                             </Link>
@@ -143,7 +143,7 @@ export default function NavBar({ user, logOut }) {
                 <div className="d-flex justify-content-center my-2">
                   <div className="w-50 bg-black rounded-2 shadow HeightOfDivBeforeLogOut"></div>
                 </div>
-                <div className="d-flex justify-content-center text-white">
+                <div className="d-flex justify-content-center text-[#b38e38]">
                   <button onClick={logOut}>log out</button>
                 </div>
               </>
@@ -157,8 +157,8 @@ export default function NavBar({ user, logOut }) {
                     to="register"
                     className={(isActive) =>
                       isActive
-                        ? "nav-link active text-white"
-                        : "nav-link text-white"
+                        ? "nav-link active text-[#b38e38]"
+                        : "nav-link text-[#b38e38]"
                     }
                   >
                     Register
@@ -167,8 +167,8 @@ export default function NavBar({ user, logOut }) {
                     to="login"
                     className={(isActive) =>
                       isActive
-                        ? "nav-link active text-white"
-                        : "nav-link text-white"
+                        ? "nav-link active text-[#b38e38]"
+                        : "nav-link text-[#b38e38]"
                     }
                   >
                     login

@@ -8,24 +8,24 @@ export function Footer({ user }) {
       {user?.role == "admin1" || user?.role == "admin2" ? (
         ""
       ) : (
-        <footer className="bg-[#f6f0f0]">
+        <footer className="bg-[#b38e38]">
           <div className="container-fluid">
             <div className="d-flex justify-content-evenly py-4 ">
               <div className="text-center">
                 <h3 className="text-white font-medium text-lg  mb-1 responsive-font-size-p">
                   Get to know us
                 </h3>
-                <p className="moveOfPInFooter">About us</p>
-                <p className="moveOfPInFooter">Contact us</p>
-                <p className="moveOfPInFooter">Privacy policy</p>
+                <p className="moveOfPInFooter text-white">About us</p>
+                <p className="moveOfPInFooter text-white">Contact us</p>
+                <p className="moveOfPInFooter text-white">Privacy policy</p>
               </div>
 
               <div className="text-center">
                 <h3 className="text-white font-medium text-lg  mb-1 responsive-font-size-p">
                   Navigation
                 </h3>
-                <p className="moveOfPInFooter">Categories</p>
-                <p className="moveOfPInFooter">Occasions</p>
+                <p className="moveOfPInFooter text-white">Categories</p>
+                <p className="moveOfPInFooter text-white">Occasions</p>
               </div>
 
               <div className="text-center">
