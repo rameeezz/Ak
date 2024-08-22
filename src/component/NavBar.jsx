@@ -9,9 +9,7 @@ export default function NavBar({ user, logOut }) {
   const [category, setCategory] = useState([]);
   const [expandedCategory, setExpandedCategory] = useState(null); // Track which category is expanded
   const [subCategory, setSubCategory] = useState([]);
-  const [categoryWithSubCategories, setCategoryWithSubCategories] = useState(
-    {}
-  ); // Store which categories have subcategories
+  const [categoryWithSubCategories, setCategoryWithSubCategories] = useState({}); // Store which categories have subcategories
 
   function openNav() {
     setActiveNav(true);
@@ -19,7 +17,7 @@ export default function NavBar({ user, logOut }) {
 
   function CloseNav() {
     setActiveNav(false);
-    setExpandedCategory(null);
+    setExpandedCategory(null)
   }
 
   useEffect(() => {
@@ -38,14 +36,6 @@ export default function NavBar({ user, logOut }) {
   }
 
   async function getSubCategory(idOfCategory) {
-    if (expandedCategory === idOfCategory) {
-      // If it’s already expanded, just close it
-      setExpandedCategory(null);
-      setSubCategory([]);
-      return;
-    }
-
-    setExpandedCategory(idOfCategory); // Expand the new category
     try {
       let { data } = await axios.get(
         `https://freelance1-production.up.railway.app/admin1/getCategoryContent/${idOfCategory}`
@@ -128,7 +118,7 @@ export default function NavBar({ user, logOut }) {
                   >
                     {/* Render the subcategories here */}
                     <div className="d-flex justify-content-center flex-column align-items-center">
-                      {subCategory.length === 0
+                      {subCategory === null || subCategory.length === 0
                         ? ""
                         : subCategory.map((subElement, i) => (
                             <Link
@@ -147,7 +137,6 @@ export default function NavBar({ user, logOut }) {
                 </div>
               ))
             )}
-
             {user != null ? (
               <>
                 <div className="d-flex justify-content-center my-2">
