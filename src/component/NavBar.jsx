@@ -106,7 +106,7 @@ export default function NavBar({ user, logOut }) {
                         {expandedCategory === element?._id ? (
                           <span>&#9660;</span> // Down arrow
                         ) : (
-                          <span>&#9660;</span> // Right arrow
+                          <span>&#9654;</span> // Right arrow
                         )}
                       </span>
                     )}
