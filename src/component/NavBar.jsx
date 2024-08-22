@@ -36,7 +36,14 @@ export default function NavBar({ user, logOut }) {
   }
 
   async function getSubCategory(idOfCategory) {
-    setExpandedCategory(null)
+    if (expandedCategory === idOfCategory) {
+      // If it’s already expanded, just close it
+      setExpandedCategory(null);
+      setSubCategory([]);
+      return;
+    }
+  
+    setExpandedCategory(idOfCategory); // Expand the new category
     try {
       let { data } = await axios.get(
         `https://freelance1-production.up.railway.app/admin1/getCategoryContent/${idOfCategory}`
