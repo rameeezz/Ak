@@ -2,6 +2,7 @@
     padding-left: 0%;
     transition: padding-left 0.3s ease;
     cursor: pointer;
+    color: black;
 }
 .moveOfPInFooter:hover{
     padding-left: 5%;
