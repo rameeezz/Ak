@@ -71,7 +71,7 @@ export default function NavBar({ user, logOut }) {
         <>
           <div
             onClick={openNav}
-            className="position-fixed z-3 bg-transparent start-5 top-5 d-flex flex-column gap-1 justify-content-center p-3 cursorPointer"
+            className="position-fixed CursorPointer z-3 bg-transparent start-5 top-5 d-flex flex-column gap-1 justify-content-center p-3 cursorPointer"
           >
             <div className="styleFOrNav shadow"></div>
             <div className="styleFOrNav shadow"></div>
