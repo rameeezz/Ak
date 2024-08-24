@@ -377,10 +377,12 @@ export default function Admin1({ logOut }) {
     setImagePreviews([]);
   };
   function removeCategoryId(categoryID, categoryName) {
-    setAllCategoryId((prevIds) => prevIds.filter(id => id !== categoryID));
-    setAllCategoryName((prevNames) => prevNames.filter(name => name !== categoryName));
+    setAllCategoryId((prevIds) => prevIds.filter((id) => id !== categoryID));
+    setAllCategoryName((prevNames) =>
+      prevNames.filter((name) => name !== categoryName)
+    );
   }
-  
+
   const [isLoading, setIsLoading] = useState(false);
   async function sendItemDetail(e) {
     e.preventDefault();
@@ -390,11 +392,14 @@ export default function Admin1({ logOut }) {
     formData.append("name", itemsDetails.name);
     formData.append("description", itemsDetails.description);
     formData.append("price", itemsDetails.price);
-    formData.append("category", itemsDetails.category);
+    // formData.append("category", itemsDetails.category);
 
     // Append each image in the array
     itemsDetails.images.forEach((image, index) => {
       formData.append("images", image); // Sending images without an index
+    });
+    itemsDetails.category.forEach((categoryID) => {
+      formData.append("category", categoryID);
     });
     if (itemsDetails.images.length >= 10) {
       alert("max number of images 10");
@@ -418,17 +423,19 @@ export default function Admin1({ logOut }) {
           name: "",
           description: "",
           price: 0,
-          category: itemsDetails.category,
+          category: [],
           images: [],
         });
         setImagePreviews([]);
         setIsLoading(false);
         setErrorMessageForItem("");
         setAllCategoryName([]);
+        setAllCategoryId([]);
         showAlertMessage();
       } catch (error) {
         if (error.response && error.response.status === 422) {
           setErrorMessageForItem("name already exist.");
+          setIsLoading(false);
         }
         if (error.response && error.response.status === 404) {
           alert("name is already exist.");
@@ -450,6 +457,8 @@ export default function Admin1({ logOut }) {
   /* add status for each item IN stock or out  */
 
   const [itemsInCategory, setItemInCategory] = useState([]);
+  // console.log(itemsInCategory);
+
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
@@ -540,6 +549,9 @@ export default function Admin1({ logOut }) {
   const [itemIDForDelete, setItemIdForDelete] = useState({ itemID: "" });
   const [sureDeleteItem, setSureDeleteItem] = useState("d-none");
   const [statusLoading, setStatusLoading] = useState(false);
+
+  // console.log(bestSeller);
+
   function putItemId(itemID) {
     setItemIdForDelete(itemID);
     // console.log(itemID);
@@ -573,8 +585,40 @@ export default function Admin1({ logOut }) {
       setStatusLoading(false);
       // console.log(data);
       getItems(e, idForOneItem);
-    } catch (error) {}
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        console.log("leeeh");
+        setStatusLoading(false);
+      }
+    }
   }
+  // best seller work 
+  function handleSellerButtonClick(e, idOfItem) {
+    // Call submitSellerOfItem with the correct itemID
+    submitSellerOfItem(e, idOfItem);
+    // console.log(idOfItem);
+  }
+  async function submitSellerOfItem(e, itemID) {
+    e.preventDefault();
+    setSellerLoading(true);
+    //  console.log(itemID);
+    if (itemID === "") {
+      alert("try again later");
+    } else {
+      try {
+        let { data } = await axios.patch(
+          "https://freelance1-production.up.railway.app/admin1/bestSeller",
+          { itemID: `${itemID}` }
+        );
+        setSellerLoading(false);
+        getItems(e, idForOneItem);
+      } catch (error) {
+        setSellerLoading(false);
+        console.error("Error updating best seller:", error);
+      }
+    }
+  }
+  const [sellerLoading, setSellerLoading] = useState(false);
   /* end of status and delete ****************************----*/
   // work on sale of item
   const [loadForPercent, setLoadForPercent] = useState(false);
@@ -1150,6 +1194,26 @@ export default function Admin1({ logOut }) {
                               {element?.status == "in stock"
                                 ? "In Stock"
                                 : "Out of Stock"}
+                            </button>
+                          )}
+                        </div>
+                        <div className="d-flex justify-content-center mt-3">
+                          {sellerLoading ? (
+                            <i className="fa solid fa-spinner fa-spin responsive-font-size-h1"></i>
+                          ) : (
+                            <button
+                              onClick={(e) =>
+                                handleSellerButtonClick(e, element._id)
+                              }
+                              className={`btn ${
+                                element?.bestSeller === false
+                                  ? "btn-danger"
+                                  : "btn-success"
+                              }`}
+                            >
+                              {element?.bestSeller === false
+                                ? "Out of Best"
+                                : "Best Seller"}
                             </button>
                           )}
                         </div>
