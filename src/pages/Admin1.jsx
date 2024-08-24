@@ -868,7 +868,7 @@ export default function Admin1({ logOut }) {
           </h3>
 
           {/* add itmes in categories  */}
-          <div className="d-flex justify-content-center gap-3 mt-5">
+          <div className="d-flex justify-content-center flex-wrap gap-3 mt-5">
             <div className="d-flex border-3 border-secondary rounded pt-3 flex-column gap-3">
               <div className="d-flex justify-content-center gap-3 flex-wrap">
                 {showCategory === null || showCategory.length === 0 ? (
@@ -926,7 +926,7 @@ export default function Admin1({ logOut }) {
                     ))
                   : ""}
               </div>
-              <div className="d-flex justify-content-center border-3 border-secondary gap-3 flex-wrap p-2">
+              <div className="d-flex justify-content-center border-3 border-secondary gap-3 flex-wrap p-2 overflow-auto">
                 {AllCategoryName === null || AllCategoryName.length === 0
                   ? "Here, you will find the categories you have selected. This section provides a clear and organized view of your chosen categories, ensuring that you can easily track and manage your selections."
                   : AllCategoryName.map((element, i) => (
