@@ -19,7 +19,11 @@
     -moz-transition: all 0.8s;
     -ms-transition: all 0.8s;
     -o-transition: all 0.8s;
+    scrollbar-width: none;
 }
+.styleOfNavToGetOut::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Edge */
+  }
 .styleOfNavToGetOut.active{
     left: 0%;
 }

@@ -177,7 +177,7 @@ export default function Admin1({ logOut }) {
   }
   useEffect(() => {
     getCategory();
-  }, [showCategory]);
+  }, []);
   function openCayegory() {
     setClassOfShowCategory("row text-center");
     getCategory();
@@ -288,48 +288,66 @@ export default function Admin1({ logOut }) {
   }
   // done delete categroy *****************
   // add items in category ***************\\\\\\
+  const [AllCategoryId, setAllCategoryId] = useState([]);
+  const [AllCategoryName, setAllCategoryName] = useState([]);
 
   const [itemsDetails, setItemsDetails] = useState({
     name: "",
     description: "",
     price: 0,
-    category: "",
+    category: [],
     images: [],
   });
+  useEffect(() => {
+    setItemsDetails((prevDetails) => ({
+      ...prevDetails,
+      category: AllCategoryId,
+    }));
+  }, [AllCategoryId]);
   const [getSubCategory, setGetSubCategory] = useState([]);
   // console.log(getSubCategory);
   const [loadingForSub, setLoadingForSub] = useState(null);
-  const [showDivOfItems, setshowDivOfItems] = useState(false);
   // console.log(itemsDetails);
   const [imagePreviews, setImagePreviews] = useState([]);
 
-  const [showNameOfCategory, setshowNameOfCategory] = useState("");
-  async function putIdOfCategoryForItem(e, IdOfCategory, categoryNam) {
+  async function putIdOfCategoryForItem(e, IdOfCategory, categoryName) {
     e.preventDefault();
     setLoadingForSub(IdOfCategory);
     try {
       let { data } = await axios.get(
         `https://freelance1-production.up.railway.app/admin1/getCategoryContent/${IdOfCategory}`
       );
-      // console.log(data.subcategories);
+      setLoadingForSub(null);
       if (data.subcategories == undefined) {
-        setItemsDetails({ ...itemsDetails, category: IdOfCategory });
-        setshowDivOfItems(true);
-        setshowNameOfCategory(categoryNam);
-        setLoadingForSub(null);
-        setGetSubCategory([]);
-      } else {
-        setGetSubCategory(data.subcategories);
-        setLoadingForSub(null);
-        setshowDivOfItems(false);
+        setAllCategoryId((prevIds) => {
+          if (!prevIds.includes(IdOfCategory)) {
+            setAllCategoryName((prevNames) => {
+              if (!prevNames.includes(categoryName)) {
+                return [...prevNames, categoryName];
+              }
+              return prevNames;
+            });
+            return [...prevIds, IdOfCategory];
+          }
+          return prevIds;
+        });
       }
+      setGetSubCategory(data.subcategories);
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        setItemsDetails({ ...itemsDetails, category: IdOfCategory });
-        setshowDivOfItems(true);
-        setshowNameOfCategory(categoryNam);
         setLoadingForSub(null);
-        setGetSubCategory([]);
+        setAllCategoryId((prevIds) => {
+          if (!prevIds.includes(IdOfCategory)) {
+            setAllCategoryName((prevNames) => {
+              if (!prevNames.includes(categoryName)) {
+                return [...prevNames, categoryName];
+              }
+              return prevNames;
+            });
+            return [...prevIds, IdOfCategory];
+          }
+          return prevIds;
+        });
       }
     }
   }
@@ -355,17 +373,14 @@ export default function Admin1({ logOut }) {
     setImagePreviews((prev) => [...prev, ...imageUrls]);
   }
   const closeShowItems = () => {
-    setshowDivOfItems(false);
-    setItemsDetails({
-      name: "",
-      description: "",
-      price: 0,
-      category: "",
-      images: [],
-    });
-    setshowNameOfCategory("");
+    setItemsDetails({ ...itemsDetails, images: [] });
     setImagePreviews([]);
   };
+  function removeCategoryId(categoryID, categoryName) {
+    setAllCategoryId((prevIds) => prevIds.filter(id => id !== categoryID));
+    setAllCategoryName((prevNames) => prevNames.filter(name => name !== categoryName));
+  }
+  
   const [isLoading, setIsLoading] = useState(false);
   async function sendItemDetail(e) {
     e.preventDefault();
@@ -409,6 +424,7 @@ export default function Admin1({ logOut }) {
         setImagePreviews([]);
         setIsLoading(false);
         setErrorMessageForItem("");
+        setAllCategoryName([]);
         showAlertMessage();
       } catch (error) {
         if (error.response && error.response.status === 422) {
@@ -850,112 +866,142 @@ export default function Admin1({ logOut }) {
           <h3 className="responsive-font-size-h3 mt-3 colorForTitles text-center">
             Add Items In Category
           </h3>
-          <div className="container flex-wrap d-flex justify-content-center gap-3 py-5">
-            {showCategory === null || showCategory.length === 0 ? (
-              <p className="text-center text-danger">
-                "There are no categories"
-              </p>
-            ) : (
-              showCategory.map((element, i) => (
-                <div key={i}>
-                  {loadingForSub === element._id ? (
-                    <button disabled className="btn btn-secondary px-4">
-                      <i className="fa solid fa-spinner fa-spin"></i>
-                    </button>
-                  ) : (
-                    <button
-                      onClick={(e) => {
-                        putIdOfCategoryForItem(e, element._id, element.name);
-                      }}
-                      className="btn btn-secondary text-white"
-                    >
-                      {element?.name}
-                    </button>
-                  )}
-                </div>
-              ))
-            )}
-          </div>
 
-          <div className="d-flex justify-content-center flex-row gap-3 position-relative">
-            {Array.isArray(getSubCategory) && getSubCategory.length > 0
-              ? getSubCategory.map((element, i) => (
-                  <div key={i}>
-                    {loadingForSub === element._id ? (
-                      <button disabled className="btn btn-primary px-4">
-                        <i className="fa solid fa-spinner fa-spin"></i>
-                      </button>
-                    ) : (
-                      <button
-                        onClick={(e) => {
-                          putIdOfCategoryForItem(e, element._id, element.name);
-                        }}
-                        className="btn btn-primary text-white"
-                      >
-                        {element?.name}
-                      </button>
-                    )}
-                  </div>
-                ))
-              : ""}
-          </div>
-
-          {/* show form to add items */}
-          {showDivOfItems ? (
-            <div className="container position-relative d-flex align-items-center flex-column">
-              <div className="position-absolute end-0 top-0 ">
-                <button
-                  onClick={closeShowItems}
-                  className="btn btn-close"
-                ></button>
+          {/* add itmes in categories  */}
+          <div className="d-flex justify-content-center gap-3 mt-5">
+            <div className="d-flex border-3 border-secondary rounded pt-3 flex-column gap-3">
+              <div className="d-flex justify-content-center gap-3 flex-wrap">
+                {showCategory === null || showCategory.length === 0 ? (
+                  <p className="text-center text-danger">
+                    "There are no categories"
+                  </p>
+                ) : (
+                  showCategory.map((element, i) => (
+                    <div key={i}>
+                      {loadingForSub === element._id ? (
+                        <button disabled className="btn btn-secondary px-4">
+                          <i className="fa solid fa-spinner fa-spin"></i>
+                        </button>
+                      ) : (
+                        <button
+                          onClick={(e) => {
+                            putIdOfCategoryForItem(
+                              e,
+                              element?._id,
+                              element?.name
+                            );
+                          }}
+                          className="btn btn-secondary text-white"
+                        >
+                          {element?.name}
+                        </button>
+                      )}
+                    </div>
+                  ))
+                )}
               </div>
-              <h3 className="text-center my-3 responsive-font-size-h3">
-                {showNameOfCategory}
-              </h3>
+              <div className="d-flex justify-content-center flex-wrap flex-row gap-3">
+                {Array.isArray(getSubCategory) && getSubCategory.length > 0
+                  ? getSubCategory.map((element, i) => (
+                      <div key={i}>
+                        {loadingForSub === element._id ? (
+                          <button disabled className="btn btn-primary px-4">
+                            <i className="fa solid fa-spinner fa-spin"></i>
+                          </button>
+                        ) : (
+                          <button
+                            onClick={(e) => {
+                              putIdOfCategoryForItem(
+                                e,
+                                element._id,
+                                element.name
+                              );
+                            }}
+                            className="btn btn-primary text-white"
+                          >
+                            {element?.name}
+                          </button>
+                        )}
+                      </div>
+                    ))
+                  : ""}
+              </div>
+              <div className="d-flex justify-content-center border-3 border-secondary gap-3 flex-wrap p-2">
+                {AllCategoryName === null || AllCategoryName.length === 0
+                  ? "Here, you will find the categories you have selected. This section provides a clear and organized view of your chosen categories, ensuring that you can easily track and manage your selections."
+                  : AllCategoryName.map((element, i) => (
+                      <div
+                        key={i}
+                        className="d-flex justify-content-center gap-1"
+                      >
+                        <button className="btn btn-light text-dark">
+                          {element}
+                        </button>
+                        <button
+                          onClick={() => {
+                            const categoryID = AllCategoryId[i]; // This assumes names and IDs are in the same order
+                            removeCategoryId(categoryID, element);
+                          }}
+                          className="btn btn-close"
+                        ></button>
+                      </div>
+                    ))}
+              </div>
+            </div>
+            {/* form ---------------------- */}
+            <div className="container border-3 border-secondary rounded d-flex align-items-center flex-column p-3 position-relative ">
+              <div
+                onClick={closeShowItems}
+                className="position-absolute end-4 top-50"
+              >
+                <button className="btn btn-close"></button>
+              </div>
               <form className="w-50">
                 <div className="mb-3">
-                  <label htmlFor="name" className="form-label">
+                  <label htmlFor="itemName" className="form-label">
                     item name
                   </label>
                   <input
                     onChange={putItemInfo}
                     type="text"
                     className="form-control"
-                    id="exampleInputEmail1"
+                    id="itemName" // Unique id
                     aria-describedby="emailHelp"
                     name="name"
                     value={itemsDetails.name}
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="description" className="form-label">
+                  <label htmlFor="itemDescription" className="form-label">
                     description
                   </label>
                   <input
                     onChange={putItemInfo}
                     type="text"
                     className="form-control"
-                    id="exampleInputPassword1"
+                    id="itemDescription" // Unique id
                     name="description"
                     value={itemsDetails.description}
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label" htmlFor="price">
-                    price{" "}
+                  <label className="form-label" htmlFor="itemPrice1">
+                    {" "}
+                    {/* Changed id */}
+                    price
                   </label>
                   <input
                     onChange={putItemInfo}
                     type="number"
                     className="form-control"
-                    id="exampleCheck1"
+                    id="itemPrice1" // Unique id
                     name="price"
                     value={itemsDetails.price}
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label" htmlFor="images">
-                    image{" "}
+                  <label className="form-label" htmlFor="itemImages">
+                    image
                   </label>
                   <input
                     onChange={handleImageOnChange}
@@ -963,7 +1009,7 @@ export default function Admin1({ logOut }) {
                     multiple
                     type="file"
                     className="form-control"
-                    id="exampleCheck1"
+                    id="itemImages" // Unique id
                     name="images"
                     accept="image/*"
                   />
@@ -976,7 +1022,7 @@ export default function Admin1({ logOut }) {
                       </div>
                     ))}
                 </div>
-                {errorMessageForItem == "" ? "" : errorMessageForItem}
+                {errorMessageForItem === "" ? "" : errorMessageForItem}
                 {isLoading ? (
                   <button disabled className=" btn btn-primary px-4">
                     <i className="fa solid fa-spinner fa-spin "></i>
@@ -992,10 +1038,7 @@ export default function Admin1({ logOut }) {
                 )}
               </form>
             </div>
-          ) : (
-            ""
-          )}
-
+          </div>
           {/* done add items in category ***************** */}
 
           {/* add status for each item IN stock or out  */}
