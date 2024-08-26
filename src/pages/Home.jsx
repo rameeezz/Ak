@@ -74,7 +74,7 @@ export default function Home({ user }) {
             </div>
           </div>
         </div>
-        <div className="d-flex justify-content-center gap-4 flex-wrap forDivOfBestSeller">
+        {/* <div className="d-flex justify-content-center gap-4 flex-wrap forDivOfBestSeller">
           {bestSellerCategory === null || bestSellerCategory.length === 0 ? (
             loadingBestSellerCategory ? (
               <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
@@ -106,11 +106,11 @@ export default function Home({ user }) {
 
                 <img
                   src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
-                  className="card-img-top h-50 ScaleForPhoto"
+                  className="card-img-top ScaleForPhoto"
                   alt=""
                 />
 
-                <div className="card-body h-50">
+                <div className="card-body">
                   {element?.discount === 0 ? (
                     <p className="text-muted">{element?.lastPrice} EGP</p>
                   ) : (
@@ -162,10 +162,10 @@ export default function Home({ user }) {
                   )}
                   <img
                     src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
-                    className="card-img-top h-50 ScaleForPhoto "
+                    className="card-img-top ScaleForPhoto "
                     alt=""
                   />
-                  <div className="card-body h-50">
+                  <div className="card-body">
                     {element?.discount === 0 ? (
                       <p className="text-muted">{element?.lastPrice} EGP</p>
                     ) : (
@@ -190,7 +190,8 @@ export default function Home({ user }) {
                   </div>
                 </div>
               ))}
-        </div>
+        </div> */}
+        
         {/* DOne Best Sellet  */}
       </div>
       {/* <div className="d-flex justify-content-center align-items-center">
