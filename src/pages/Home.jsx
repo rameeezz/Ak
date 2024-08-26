@@ -162,10 +162,10 @@ export default function Home({ user }) {
                   )}
                   <img
                     src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
-                    className="card-img-top ScaleForPhoto "
+                    className="card-img-top h-50 ScaleForPhoto "
                     alt=""
                   />
-                  <div className="card-body">
+                  <div className="card-body h-50">
                     {element?.discount === 0 ? (
                       <p className="text-muted">{element?.lastPrice} EGP</p>
                     ) : (
