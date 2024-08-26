@@ -13,6 +13,7 @@
 }
 .widthOfHomeCard{
     width: 18rem;
+    height: 300px !important;
 }
 .ColorButton{
     background-color: #D4B11C;

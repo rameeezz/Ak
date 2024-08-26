@@ -119,7 +119,7 @@ export default function BestSellerItems({user}) {
                     </div>
                   )}
                   <h5 className="card-title">{element?.name}</h5>
-                  <p className="card-text">{element?.description}</p>
+                  <p className="card-text">{element?.description.slice(0,37)}</p>
                   <button
                     onClick={addToCart}
                     className="btn text-white ColorButton w-100"
@@ -176,7 +176,7 @@ export default function BestSellerItems({user}) {
                       </div>
                     )}
                     <h5 className="card-title">{element?.name}</h5>
-                    <p className="card-text">{element?.description}</p>
+                    <p className="card-text">{element?.description.slice(0,37)}</p>
                     <button
                       onClick={addToCart}
                       className="btn text-white ColorButton  w-100"
