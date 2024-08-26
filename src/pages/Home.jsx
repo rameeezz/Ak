@@ -180,7 +180,7 @@ export default function Home({ user }) {
                       </div>
                     )}
                     <h5 className="card-title">{element?.name}</h5>
-                    <p className="card-text">{element?.description.slice(0,37)}</p>
+                    <p className="card-text">{element?.description.slice(0,20)}</p>
                     <button
                       onClick={addToCart}
                       className="btn text-white ColorButton  w-100"
