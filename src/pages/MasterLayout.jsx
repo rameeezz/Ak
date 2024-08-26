@@ -11,11 +11,7 @@ export default function MasterLayout({ user, logOut }) {
     }
 
     if (user?.role === "admin2") {
-      navigate("/admin1");
-    }
-
-    if (user?.role === "customer") {
-      navigate("/admin1");
+      navigate("/admin2");
     }
     if (user?.role === null) {
       navigate("/home");

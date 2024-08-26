@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
+import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import "../css/Home.css";
-import bg from "../assets/bg/imresizer-1724329258313.jpg";
-import PHoto1 from "../assets/card photo/1.jpeg";
-import axios from "axios";
-export default function Home({ user }) {
-  // console.log(user);
+import HeadOfPages from './HeadOfPages';
 
-  let navigate = useNavigate();
-  function addToCart() {
-    if (user == null) {
-      console.log("yarab");
-      navigate("/login");
-    } else {
-      alert("نتمنى لكم حياة افضل ");
-    }
-  }
-  // get Best Seller for Category
+export default function BestSellerItems({user}) {
+    let naviagte = useNavigate()
+    function addToCart() {
+        if (user == null) {
+          console.log("yarab");
+          navigate("/login");
+        } else {
+          alert("نتمنى لكم حياة افضل ");
+        }
+      }
+    useEffect(() => {
+        getCategoryBestSeller();
+        getOccasionBestSeller();
+      }, []);
   const [bestSellerCategory, setBestSellerCategory] = useState([]);
   const [loadingBestSellerCategory, setLoadingBestSellerCategroy] =
     useState(false);
@@ -29,7 +29,7 @@ export default function Home({ user }) {
         "https://freelance1-production.up.railway.app/admin1/getBestSeller"
       );
       setBestSellerCategory(data);
-      // console.log(data);
+    //   console.log(data);
       setLoadingBestSellerCategroy(false);
       setErrorMessageForGetCategory("");
     } catch (error) {
@@ -51,27 +51,23 @@ export default function Home({ user }) {
       // console.log(data);
     } catch (error) {}
   }
-  useEffect(() => {
-    getCategoryBestSeller();
-    getOccasionBestSeller();
-  }, []);
-  // view more best seller
-  function moveToBestSellerPage() {
-    navigate("/best-sellers")
+  function goHome() {
+    naviagte("/home")
   }
-  // done
+  //   done -----------
   return (
     <>
-      <img src={bg} alt="Ak Florist" className="classForBg" />
+      <HeadOfPages/>
       <div className="container mb-5">
         {/* Best seller  */}
-        <div className="d-flex flex-column align-items-center justify-content-center mt-5 mb-4">
+        <div className="d-flex flex-column align-items-start justify-content-center mt-5 mb-4">
           <h2 className="responsive-font-size-h2-Home fw-bold">Best Sellers</h2>
-          <div className="w-100 d-flex justify-content-center position-relative">
-            <p>| Bloom with our exquisite best sellers |</p>
-            <div onClick={moveToBestSellerPage} className=" d-flex justify-content-center cursorPOinter position-absolute end-5">
-              <span className="ForViewMore">View More</span>
-            </div>
+          <p>| Bloom with our exquisite best sellers |</p>
+          <div className="d-flex justify-content-center gap-1 mt-1 align-items-center">
+          <i className="fa-solid fa-house-chimney text-muted"></i>
+          <p className="cursorPOinter" onClick={goHome}>Home</p>
+          <i class="fa-solid fa-angle-right text-muted"></i>
+          <p>Best Sellers</p>
           </div>
         </div>
         <div className="d-flex justify-content-center gap-4 flex-wrap">
@@ -82,7 +78,7 @@ export default function Home({ user }) {
               <p>{errorMessageForGetCategory}</p>
             )
           ) : (
-            bestSellerCategory.slice(0, 4).map((element, i) => (
+            bestSellerCategory.map((element, i) => (
               <div key={i} className="card widthOfHomeCard position-relative">
                 {element?.status === "in stock" ? (
                   ""
@@ -137,7 +133,7 @@ export default function Home({ user }) {
 
           {bestSellerOccasion === null || bestSellerOccasion.length === 0
             ? ""
-            : bestSellerOccasion.slice(0, 4).map((element, i) => (
+            : bestSellerOccasion.map((element, i) => (
                 <div key={i} className="card widthOfHomeCard position-relative">
                   {element?.status == "in stock" ? (
                     ""
@@ -193,12 +189,6 @@ export default function Home({ user }) {
         </div>
         {/* DOne Best Sellet  */}
       </div>
-      {/* <div className="d-flex justify-content-center align-items-center">
-        <button onClick={addToCart} className="btn btn-primary p-4 ">
-          {" "}
-          add{" "}
-        </button>
-      </div> */}
     </>
   );
 }
