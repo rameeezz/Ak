@@ -1096,26 +1096,26 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
       }
     }
   }
-  async function submitSellerOfItem(e, itemID) {
-    e.preventDefault();
-    setSellerLoadingForOccasion(true);
-    //  console.log(itemID);
-    if (itemID === "") {
-      alert("try again later");
-    } else {
-      try {
-        let { data } = await axios.patch(
-          "https://freelance1-production.up.railway.app/admin1/bestSeller",
-          { itemID: `${itemID}` }
-        );
-        setSellerLoadingForOccasion(false);
-        getItemsForOccasions(e, idForOneItem);
-      } catch (error) {
-        setSellerLoadingForOccasion(false);
-        console.error("Error updating best seller:", error);
-      }
-    }
-  }
+  // async function submitSellerOfItemForOccasion(e, itemID) {
+  //   e.preventDefault();
+  //   setSellerLoadingForOccasion(true);
+  //   //  console.log(itemID);
+  //   if (itemID === "") {
+  //     alert("try again later");
+  //   } else {
+  //     try {
+  //       let { data } = await axios.patch(
+  //         "https://freelance1-production.up.railway.app/admin1/bestSellerOccasionr",
+  //         { itemID: `${itemID}` }
+  //       );
+  //       setSellerLoadingForOccasion(false);
+  //       getItemsForOccasions(e, idForOneItem);
+  //     } catch (error) {
+  //       setSellerLoadingForOccasion(false);
+  //       console.error("Error updating best seller:", error);
+  //     }
+  //   }
+  // }
   function handleSellerButtonClickForOccasion(e, idOfItem) {
     // Call submitSellerOfItem with the correct itemID
     submitSellerOfItemForOccasion(e, idOfItem);
@@ -1431,7 +1431,7 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
           {/* ------------------------------------ */}
           {/* add sub category *-*-*-*-*-* */}
           {classOfAddSubCategory ? (
-            <div class="position-fixed top-50 start-50 translate-middle z-3 shadow bg-white rounded-3 p-4">
+            <div className="position-fixed top-50 start-50 translate-middle z-3 shadow bg-white rounded-3 p-4">
               <button
                 onClick={closeAddSubCategory}
                 className="btn btn-close position-absolute top-0 start-100 translate-middle"

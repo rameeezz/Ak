@@ -45,6 +45,9 @@ width: 100% !important;
 .responsive-font-size-h3 {
   font-size: 1.8rem; /* Bootstrap fs-1 size */
 }
+.responsive-font-size-h2-Home{
+ font-size: 2.0625rem;
+}
 @media (max-width: 576px) {
   /* Small screens (sm) and below */
   .responsive-font-size-p {
@@ -56,6 +59,9 @@ width: 100% !important;
   .responsive-font-size-h3 {
     font-size: 1.8rem; /* Bootstrap fs-6 size */
   }
+  .responsive-font-size-h2-Home{
+    font-size: 1.8rem;
+   }
   .textSizeForSpan {
     font-size: 0.88rem;
   }

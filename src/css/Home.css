@@ -18,5 +18,32 @@
     background-color: #D4B11C;
 }
 .ColorButton:hover{
-    background-color: #495F75 !important;
+    background-color: #b38e38 !important;
 }
+.ScaleForPhoto{
+    transform: scale(1);
+    transition: transform 0.3s ease;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+}
+.ScaleForPhoto:hover{
+    transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    -o-transform: scale(0.9);
+    cursor: pointer;
+}
+.ForViewMore{
+    color: #843e78;
+    font-size: 1.0625rem;
+}
+.strikethrough {
+    text-decoration: line-through;
+    text-decoration-color: grey;
+    text-decoration-thickness: 2px;
+    -moz-text-decoration-color: grey;
+}
+
