@@ -69,12 +69,12 @@ export default function Home({ user }) {
           <h2 className="responsive-font-size-h2-Home fw-bold">Best Sellers</h2>
           <div className="w-100 d-flex justify-content-center position-relative">
             <p>| Bloom with our exquisite best sellers |</p>
-            <div onClick={moveToBestSellerPage} className=" d-flex justify-content-center cursorPOinter position-absolute end-5">
+            <div onClick={moveToBestSellerPage} className=" d-flex justify-content-center cursorPOinter position-absolute end-5 forDivViewMore">
               <span className="ForViewMore">View More</span>
             </div>
           </div>
         </div>
-        <div className="d-flex justify-content-center gap-4 flex-wrap">
+        <div className="d-flex justify-content-center gap-4 flex-wrap forDivOfBestSeller">
           {bestSellerCategory === null || bestSellerCategory.length === 0 ? (
             loadingBestSellerCategory ? (
               <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
