@@ -46,29 +46,36 @@
     text-decoration-thickness: 2px;
     -moz-text-decoration-color: grey;
 }
-.StyleOfBestSeller{
-    height: 300px;
+
+   .StyleOfBestSeller {
+    height: 350px;
     padding: 15px 0 15px 10px;
-}
-.mainCard{
-    width: 20%;
-    height: 100%;
-    border: 2px solid #D4B11C;
-}
-.UpperCard{
-    width: 100%;
-    height: 50%;
-}
-.BottomCard{
-    width: 100%;
-    height: 50%;
-}
-.StyleOfBestSeller {
+    overflow-x: scroll; /* Allow horizontal scrolling */
+    overflow-y: hidden; /* Prevent vertical scrolling */
     -ms-overflow-style: none; /* Internet Explorer 10+ */
     scrollbar-width: none; /* Firefox */
-  }
-  
-  .StyleOfBestSeller::-webkit-scrollbar {
+}
+
+.StyleOfBestSeller::-webkit-scrollbar {
     display: none; /* Safari and Chrome */
-  }
-  
+}
+
+.mainCard {
+    border: 2px solid #D4B11C;
+}
+
+.UpperCard {
+    width: 100%;
+    height: 60%;
+}
+
+.UpperCard img {
+    width: 100%;
+    height: 100%; /* Fill the entire UpperCard height */
+    object-fit: fill; /* Ensure the image covers the container */
+}
+
+.BottomCard {
+    width: 100%;
+    height: 40%;
+}

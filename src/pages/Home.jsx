@@ -231,7 +231,7 @@ export default function Home({ user }) {
                 <div className="UpperCard">
                   <img
                     src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
-                    className="card-img-top ScaleForPhoto h-100 w-100 rounded"
+                    className="card-img-top ScaleForPhoto rounded"
                     alt=""
                   />
                 </div>
