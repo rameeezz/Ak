@@ -57,7 +57,7 @@ export default function Home({ user }) {
   }, []);
   // view more best seller
   function moveToBestSellerPage() {
-    navigate("/best-sellers")
+    navigate("/best-sellers");
   }
   // done
   return (
@@ -69,7 +69,10 @@ export default function Home({ user }) {
           <h2 className="responsive-font-size-h2-Home fw-bold">Best Sellers</h2>
           <div className="w-100 d-flex justify-content-center position-relative">
             <p>| Bloom with our exquisite best sellers |</p>
-            <div onClick={moveToBestSellerPage} className=" d-flex justify-content-center cursorPOinter position-absolute end-5 forDivViewMore">
+            <div
+              onClick={moveToBestSellerPage}
+              className=" d-flex justify-content-center cursorPOinter position-absolute end-5 forDivViewMore"
+            >
               <span className="ForViewMore">View More</span>
             </div>
           </div>
@@ -191,7 +194,76 @@ export default function Home({ user }) {
                 </div>
               ))}
         </div> */}
-        
+        <div className="d-flex flex-row w-100 StyleOfBestSeller gap-3 overflow-x-scroll">
+          {bestSellerCategory === null || bestSellerCategory.length === 0 ? (
+            loadingBestSellerCategory ? (
+              <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+            ) : (
+              <p>{errorMessageForGetCategory}</p>
+            )
+          ) : (
+            bestSellerCategory.slice(0, 10).map((element, i) => (
+              <div
+                key={i}
+                className="mainCard rounded position-relative"
+                style={{ minWidth: "250px" }}
+              >
+                {element?.status == "in stock" ? (
+                  ""
+                ) : (
+                  <div className="position-absolute start-2 top-4 z-3">
+                    <span className="bg-[#D4B11C] text-white px-2 py-2 rounded-2">
+                      Out Of Stock
+                    </span>
+                  </div>
+                )}
+
+                {element?.discount === 0 ? (
+                  ""
+                ) : (
+                  <div className="position-absolute end-3 top-4 z-3 ">
+                    <span className="bg-danger text-white px-3 py-2 rounded-2">
+                      Sale
+                    </span>
+                  </div>
+                )}
+
+                <div className="UpperCard">
+                  <img
+                    src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
+                    className="card-img-top ScaleForPhoto h-100 w-100 rounded"
+                    alt=""
+                  />
+                </div>
+
+                <div className="BottomCard p-2">
+                  {element?.discount === 0 ? (
+                    <p className="text-muted">{element?.lastPrice} EGP</p>
+                  ) : (
+                    <div className="d-flex justify-content-start w-100">
+                      <div className="d-flex justify-content-center gap-2">
+                        <span className="strikethrough">{element?.price}</span>
+                        <span>||</span>
+                        <p className="text-muted">{element?.lastPrice} EGP</p>
+                      </div>
+                    </div>
+                  )}
+                  <h5 className="card-title">{element?.name}</h5>
+                  <p className="card-text">
+                    {element?.description.slice(0, 20)}
+                  </p>
+                  <button
+                    onClick={addToCart}
+                    className="btn text-white ColorButton w-100"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
         {/* DOne Best Sellet  */}
       </div>
       {/* <div className="d-flex justify-content-center align-items-center">
