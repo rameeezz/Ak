@@ -47,41 +47,61 @@
     -moz-text-decoration-color: grey;
 }
 
-.StyleOfBestSeller {
-    height: 350px;
-    padding: 15px 0 15px 10px;
-    overflow-x: scroll; 
-    overflow-y: hidden; 
-    -ms-overflow-style: none;
-    scrollbar-width: none; 
+.StyleForBestSeller{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
 }
+.styleForContentDiv {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    width: 256.750px;
+    height: 340px;
+  }
+  .upperCard{
+      height: 60%;
+      width: 100%;
+  }
+  .upperCard img{
+      object-fit: fill;
+  }
+  .lowerCard{
+      height: 40%;
+      width: 100%;
+      padding-top:15px;
+      padding-left: 20px;
+  }
 
-.StyleOfBestSeller::-webkit-scrollbar {
-    display: none;
-}
-
-.mainCard {
-    border: 2px solid #D4B11C;
-}
-
-.UpperCard {
-    width: 100%;
-    height: 60%;
-}
-
-.UpperCard img {
-    width: 100%;
-    height: 100%; 
-    object-fit: fill;
-}
-
-.BottomCard {
-    width: 100%;
-    height: 40%;
-}
-@media (max-width: 576px) {
- .StyleOfBestSeller{
-    height: 330px;
- }
+  @media (max-width: 576px) {
+    .StyleForBestSeller {
+        display: flex;
+        flex-wrap: nowrap; /* Prevent wrapping */
+        overflow-x: auto; /* Enable horizontal scrolling */
+        scrollbar-width: none; /* Hide scrollbar in Firefox */
+        -ms-overflow-style: none;  /* Hide scrollbar in IE and Edge */
+       margin-left: 50px;
+    }
+    
+    .StyleOfBestSeller::-webkit-scrollbar {
+        display: none;
+    }
+    .styleForContentDiv {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        align-items: center;
+        width: 138.887px;
+        height: 218.887px;
+      }
+      .lowerCard{
+        padding-top: 2px;
+        padding-left: 10px;
+        padding-right: 10px;
+        justify-content: flex-start;
+    }
+    
   }
   

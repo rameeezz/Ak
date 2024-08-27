@@ -18,6 +18,15 @@ width: 100% !important;
 .h-vh{
   height: 100vh;
 }
+.responsive-For-Card-h2{
+  font-size: 1rem;
+}
+.responsive-For-Card-span{
+  font-size: 1rem;
+}
+.responsive-For-Card-p{
+  font-size: 1rem;
+}
 .sizeOfI {
   font-weight: 300;
   font-size: 1.6rem;
@@ -90,8 +99,23 @@ width: 100% !important;
   }
   .forDivViewMore{
     top: 100%;
+      right: 35px !important;
   }
   .forDivOfBestSeller{
     margin-top: 10%;
   }
+  .responsive-For-Card-h2 {
+    font-size: 0.50rem;
+}
+  .responsive-For-Card-span{
+    font-size: 0.75rem;
+  }
+  .responsive-For-Card-p{
+    font-size: 0.75rem;
+  }
+  .classForButtonForCard {
+    font-size: 0.20rem;
+    width: 100% !important;
+    margin-top: 0px !important;
+}
 }
