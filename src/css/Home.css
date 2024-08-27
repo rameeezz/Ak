@@ -52,6 +52,8 @@
     justify-content: center;
     flex-wrap: wrap;
     flex-direction: row;
+    padding-left: 0;
+    margin-left: 0;
 }
 .styleForContentDiv {
     display: flex;

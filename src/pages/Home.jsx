@@ -59,6 +59,7 @@ export default function Home({ user }) {
   function moveToBestSellerPage() {
     navigate("/best-sellers");
   }
+
   // done
   return (
     <>
@@ -135,7 +136,7 @@ export default function Home({ user }) {
               </div>
             ))
           )}
-          {/* {bestSellerOccasion === null || bestSellerOccasion.length === 0 ? (
+          {bestSellerOccasion === null || bestSellerOccasion.length === 0 ? (
             ""
           ) : (
             bestSellerOccasion.slice(0, 4).map((element, i) => (
@@ -165,21 +166,21 @@ export default function Home({ user }) {
                 <div className="lowerCard">
                   <div className="d-flex justify-content-start flex-wrap">
                   {element?.discount === 0 ? (
-                    <h2 className="w-100 text-muted">{element?.lastPrice} EGP</h2>
+                    <h2 className="w-100 text-muted responsive-For-Card-h2">{element?.lastPrice} EGP</h2>
                   ) : (
                     <div className="d-flex justify-content-center gap-2">
-                    <span className="strikethrough">{element?.price}</span>
+                    <span className="strikethrough responsive-For-Card-h2">{element?.price}</span>
                     <span className="text-muted">||</span>
-                    <p className="text-muted">{element?.lastPrice} EGP</p>
+                    <p className="text-muted responsive-For-Card-h2">{element?.lastPrice} EGP</p>
                    </div>
                   )}
-                    <h2 className="w-100 mt-1">{element?.name}</h2>
-                    <h2 className="w-100 mt-1">{element?.description.slice(0,25)}</h2>
+                    <h2 className="w-100 mt-1 responsive-For-Card-h2">{element?.name}</h2>
+                    <h2 className="w-100 mt-1 responsive-For-Card-p">{element?.description.slice(0,25)}</h2>
                   </div>
                   <div className="d-flex justify-content-center align-items-center">
                   <button
                     onClick={addToCart}
-                    className="btn text-white ColorButton w-100 mt-2 me-3"
+                    className="btn classForButtonForCard text-white ColorButton w-100 mt-2 me-3"
                   >
                     Add to Cart
                   </button>
@@ -187,7 +188,7 @@ export default function Home({ user }) {
                 </div>
               </div>
             ))
-          )} */}
+          )}
         </div>
         {/* DOne Best Sellet  */}
       </div>
