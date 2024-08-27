@@ -121,7 +121,7 @@ export default function BestSellerItems({user}) {
                     </div>
                   )}
                   <h5 className="card-title responsive-For-Card-h2-Best-Seller">{element?.name}</h5>
-                  <p className="card-text responsive-For-Card-h2-Best-Seller">{element?.description.slice(0,37)}</p>
+                  <p className="card-text responsive-For-Card-p">{element?.description.slice(0,37)}</p>
                   <button
                     onClick={addToCart}
                     className="btn text-white ColorButton classForButtonForCardForBestSeller w-100"
@@ -163,7 +163,7 @@ export default function BestSellerItems({user}) {
                     className="card-img-top forBestSellerPageResponsiveImage ScaleForPhoto "
                     alt=""
                   />
-                  <div className="card-body">
+                  <div className="card-body responsiveForBestSellerPage">
                     {element?.discount === 0 ? (
                       <p className="text-muted responsive-For-Card-h2-Best-Seller">{element?.lastPrice} EGP</p>
                     ) : (
@@ -178,7 +178,7 @@ export default function BestSellerItems({user}) {
                       </div>
                     )}
                     <h5 className="card-title responsive-For-Card-h2-Best-Seller">{element?.name}</h5>
-                    <p className="card-text responsive-For-Card-h2-Best-Seller">{element?.description.slice(0,36)}</p>
+                    <p className="card-text responsive-For-Card-p">{element?.description.slice(0,36)}</p>
                     <button
                       onClick={addToCart}
                       className="btn text-white ColorButton classForButtonForCardForBestSeller  w-100"

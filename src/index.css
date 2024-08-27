@@ -122,7 +122,7 @@ width: 100% !important;
 }
 .forBestSellerPageResponsive{
   width: 40%;
-  height:auto;
+  height:220px;
 }
 .forBestSellerPageResponsiveImage{
   height: 60%;
@@ -134,7 +134,7 @@ width: 100% !important;
 }
 .responsive-For-Card-h2-Best-Seller {
   font-size: 0.70rem;
-  margin: 0px;
+  margin-top: 4px;
 }
 .classForButtonForCardForBestSeller {
   font-size: 0.60rem;
