@@ -136,7 +136,7 @@ export default function BestSellerItems({user}) {
           {bestSellerOccasion === null || bestSellerOccasion.length === 0
             ? ""
             : bestSellerOccasion.map((element, i) => (
-                <div key={i} className="card widthOfHomeCard position-relative">
+                <div key={i} className="card forBestSellerPageResponsive widthOfHomeCard position-relative">
                   {element?.status == "in stock" ? (
                     ""
                   ) : (
