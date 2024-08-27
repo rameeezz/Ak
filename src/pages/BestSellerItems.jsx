@@ -60,6 +60,7 @@ export default function BestSellerItems({user}) {
       <HeadOfPages/>
       <div className="container mb-5">
         {/* Best seller  */}
+        <div className="container-xxl ">
         <div className="d-flex flex-column align-items-start justify-content-center mt-5 mb-4">
           <h2 className="responsive-font-size-h2-Home fw-bold">Best Sellers</h2>
           <p>| Bloom with our exquisite best sellers |</p>
@@ -70,7 +71,8 @@ export default function BestSellerItems({user}) {
           <p>Best Sellers</p>
           </div>
         </div>
-        <div className="d-flex justify-content-center gap-4 flex-wrap">
+        </div>
+        <div className="d-flex justify-content-center  gap-4 flex-wrap">
           {bestSellerCategory === null || bestSellerCategory.length === 0 ? (
             loadingBestSellerCategory ? (
               <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
@@ -79,7 +81,7 @@ export default function BestSellerItems({user}) {
             )
           ) : (
             bestSellerCategory.map((element, i) => (
-              <div key={i} className="card widthOfHomeCard position-relative">
+              <div key={i} className="card widthOfHomeCard forBestSellerPageResponsive position-relative">
                 {element?.status === "in stock" ? (
                   ""
                 ) : (
@@ -102,27 +104,27 @@ export default function BestSellerItems({user}) {
 
                 <img
                   src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
-                  className="card-img-top ScaleForPhoto"
+                  className="card-img-top ScaleForPhoto forBestSellerPageResponsiveImage"
                   alt=""
                 />
 
-                <div className="card-body">
+                <div className="card-body responsiveForBestSellerPage">
                   {element?.discount === 0 ? (
-                    <p className="text-muted">{element?.lastPrice} EGP</p>
+                    <p className="text-muted responsive-For-Card-h2-Best-Seller">{element?.lastPrice} EGP</p>
                   ) : (
                     <div className="d-flex justify-content-start w-100">
                       <div className="d-flex justify-content-center gap-2">
-                        <span className="strikethrough">{element?.price}</span>
+                        <span className="strikethrough responsive-For-Card-h2-Best-Seller">{element?.price}</span>
                         <span>||</span>
-                        <p className="text-muted">{element?.lastPrice} EGP</p>
+                        <p className="text-muted responsive-For-Card-h2-Best-Seller">{element?.lastPrice} EGP</p>
                       </div>
                     </div>
                   )}
-                  <h5 className="card-title">{element?.name}</h5>
-                  <p className="card-text">{element?.description.slice(0,37)}</p>
+                  <h5 className="card-title responsive-For-Card-h2-Best-Seller">{element?.name}</h5>
+                  <p className="card-text responsive-For-Card-h2-Best-Seller">{element?.description.slice(0,37)}</p>
                   <button
                     onClick={addToCart}
-                    className="btn text-white ColorButton w-100"
+                    className="btn text-white ColorButton classForButtonForCardForBestSeller w-100"
                   >
                     Add to Cart
                   </button>
