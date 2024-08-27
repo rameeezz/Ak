@@ -81,7 +81,9 @@ export default function Home({ user }) {
         <div className="StyleForBestSeller gap-3">
           {bestSellerCategory === null || bestSellerCategory.length === 0 ? (
             loadingBestSellerCategory ? (
-              <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+              <div className="w-100 justify-content-center d-flex">
+                <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+              </div>
             ) : (
               <p>{errorMessageForGetCategory}</p>
             )
