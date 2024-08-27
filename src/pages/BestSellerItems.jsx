@@ -160,28 +160,28 @@ export default function BestSellerItems({user}) {
                   )}
                   <img
                     src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
-                    className="card-img-top ScaleForPhoto "
+                    className="card-img-top forBestSellerPageResponsiveImage ScaleForPhoto "
                     alt=""
                   />
                   <div className="card-body">
                     {element?.discount === 0 ? (
-                      <p className="text-muted">{element?.lastPrice} EGP</p>
+                      <p className="text-muted responsive-For-Card-h2-Best-Seller">{element?.lastPrice} EGP</p>
                     ) : (
                       <div className="d-flex justify-content-start w-100">
                         <div className="d-flex justify-content-center gap-2">
-                          <span className="strikethrough">
+                          <span className="strikethrough responsive-For-Card-h2-Best-Seller">
                             {element?.price}
                           </span>
                           <span>||</span>
-                          <p className="text-muted">{element?.lastPrice} EGP</p>
+                          <p className="text-muted responsive-For-Card-h2-Best-Seller">{element?.lastPrice} EGP</p>
                         </div>
                       </div>
                     )}
-                    <h5 className="card-title">{element?.name}</h5>
-                    <p className="card-text">{element?.description.slice(0,36)}</p>
+                    <h5 className="card-title responsive-For-Card-h2-Best-Seller">{element?.name}</h5>
+                    <p className="card-text responsive-For-Card-h2-Best-Seller">{element?.description.slice(0,36)}</p>
                     <button
                       onClick={addToCart}
-                      className="btn text-white ColorButton  w-100"
+                      className="btn text-white ColorButton classForButtonForCardForBestSeller  w-100"
                     >
                       add to cart
                     </button>
