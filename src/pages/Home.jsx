@@ -87,7 +87,10 @@ export default function Home({ user }) {
             )
           ) : (
             bestSellerCategory.slice(0, 4).map((element, i) => (
-              <div key={i} className="styleForContentDiv border-2 border-[#D4B11C] rounded">
+              <div
+                key={i}
+                className="styleForContentDiv border-2 border-[#D4B11C] rounded"
+              >
                 {element?.status === "in stock" ? (
                   ""
                 ) : (
@@ -108,87 +111,116 @@ export default function Home({ user }) {
                 )}
 
                 <div className="upperCard">
-                  <img  src={`https://freelance1-production.up.railway.app/${element?.images[0]}`} alt="" className="w-100 h-100 ScaleForPhoto rounded " />
+                  <img
+                    src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
+                    alt=""
+                    className="w-100 h-100 ScaleForPhoto rounded "
+                  />
                 </div>
                 <div className="lowerCard">
                   <div className="d-flex justify-content-start flex-wrap">
-                  {element?.discount === 0 ? (
-                    <h2 className="w-100 text-muted responsive-For-Card-h2">{element?.lastPrice} EGP</h2>
-                  ) : (
-                    <div className="d-flex justify-content-center gap-2">
-                    <span className="strikethrough responsive-For-Card-h2">{element?.price}</span>
-                    <span className="text-muted">||</span>
-                    <p className="text-muted responsive-For-Card-h2">{element?.lastPrice} EGP</p>
-                   </div>
-                  )}
-                    <h2 className="w-100 mt-1 responsive-For-Card-h2">{element?.name}</h2>
-                    <h2 className="w-100 mt-1 responsive-For-Card-p">{element?.description.slice(0,32)}</h2>
+                    {element?.discount === 0 ? (
+                      <h2 className="w-100 text-muted responsive-For-Card-h2">
+                        {element?.lastPrice} EGP
+                      </h2>
+                    ) : (
+                      <div className="d-flex justify-content-center gap-2">
+                        <span className="strikethrough responsive-For-Card-h2">
+                          {element?.price}
+                        </span>
+                        <span className="text-muted">||</span>
+                        <p className="text-muted responsive-For-Card-h2">
+                          {element?.lastPrice} EGP
+                        </p>
+                      </div>
+                    )}
+                    <h2 className="w-100 mt-1 responsive-For-Card-h2">
+                      {element?.name}
+                    </h2>
+                    <h2 className="w-100 mt-1 responsive-For-Card-p">
+                      {element?.description.slice(0, 32)}
+                    </h2>
                   </div>
                   <div className="d-flex justify-content-center align-items-center">
-                  <button
-                    onClick={addToCart}
-                    className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
-                  >
-                    Add to Cart
-                  </button>
+                    <button
+                      onClick={addToCart}
+                      className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
+                    >
+                      Add to Cart
+                    </button>
                   </div>
                 </div>
               </div>
             ))
           )}
-          {bestSellerOccasion === null || bestSellerOccasion.length === 0 ? (
-            ""
-          ) : (
-            bestSellerOccasion.slice(0, 4).map((element, i) => (
-              <div key={i} className="styleForContentDiv border-2 border-[#D4B11C] rounded">
-                {element?.status === "in stock" ? (
-                  ""
-                ) : (
-                  <div className="position-absolute start-2 top-4 z-3">
-                    <span className="bg-[#D4B11C] text-white px-2 py-2 rounded-2">
-                      Out Of Stock
-                    </span>
-                  </div>
-                )}
-                {element?.discount === 0 ? (
-                  ""
-                ) : (
-                  <div className="position-absolute end-3 top-4 z-3">
-                    <span className="bg-danger text-white px-3 py-2 rounded-2">
-                      Sale
-                    </span>
-                  </div>
-                )}
+          {bestSellerOccasion === null || bestSellerOccasion.length === 0
+            ? ""
+            : bestSellerOccasion.slice(0, 4).map((element, i) => (
+                <div
+                  key={i}
+                  className="styleForContentDiv border-2 border-[#D4B11C] rounded"
+                >
+                  {element?.status === "in stock" ? (
+                    ""
+                  ) : (
+                    <div className="position-absolute start-2 top-4 z-3">
+                      <span className="bg-[#D4B11C] text-white px-2 py-2 rounded-2">
+                        Out Of Stock
+                      </span>
+                    </div>
+                  )}
+                  {element?.discount === 0 ? (
+                    ""
+                  ) : (
+                    <div className="position-absolute end-3 top-4 z-3">
+                      <span className="bg-danger text-white px-3 py-2 rounded-2">
+                        Sale
+                      </span>
+                    </div>
+                  )}
 
-                <div className="upperCard">
-                  <img  src={`https://freelance1-production.up.railway.app/${element?.images[0]}`} alt="" className="w-100 h-100 rounded ScaleForPhoto" />
-                </div>
-                <div className="lowerCard">
-                  <div className="d-flex justify-content-start flex-wrap">
-                  {element?.discount === 0 ? (
-                    <h2 className="w-100 text-muted responsive-For-Card-h2">{element?.lastPrice} EGP</h2>
-                  ) : (
-                    <div className="d-flex justify-content-center gap-2">
-                    <span className="strikethrough responsive-For-Card-h2">{element?.price}</span>
-                    <span className="text-muted">||</span>
-                    <p className="text-muted responsive-For-Card-h2">{element?.lastPrice} EGP</p>
-                   </div>
-                  )}
-                    <h2 className="w-100 mt-1 responsive-For-Card-h2">{element?.name}</h2>
-                    <h2 className="w-100 mt-1 responsive-For-Card-p">{element?.description.slice(0,25)}</h2>
+                  <div className="upperCard">
+                    <img
+                      src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
+                      alt=""
+                      className="w-100 h-100 rounded ScaleForPhoto"
+                    />
                   </div>
-                  <div className="d-flex justify-content-center align-items-center">
-                  <button
-                    onClick={addToCart}
-                    className="btn classForButtonForCard text-white ColorButton w-100 mt-2 me-3"
-                  >
-                    Add to Cart
-                  </button>
+                  <div className="lowerCard">
+                    <div className="d-flex justify-content-start flex-wrap">
+                      {element?.discount === 0 ? (
+                        <h2 className="w-100 text-muted responsive-For-Card-h2">
+                          {element?.lastPrice} EGP
+                        </h2>
+                      ) : (
+                        <div className="d-flex justify-content-center gap-2">
+                          <span className="strikethrough responsive-For-Card-h2">
+                            {element?.price}
+                          </span>
+                          <span className="text-muted">||</span>
+                          <p className="text-muted responsive-For-Card-h2">
+                            {element?.lastPrice} EGP
+                          </p>
+                        </div>
+                      )}
+                      <h2 className="w-100 mt-1 responsive-For-Card-h2">
+                        {element?.name}
+                      </h2>
+                      <h2 className="w-100 mt-1 responsive-For-Card-p">
+                        {element?.description.slice(0, 25)}
+                      </h2>
+                    </div>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <button
+                        onClick={addToCart}
+                        className="btn classForButtonForCard text-white ColorButton w-100 mt-2 me-3"
+                      >
+                        Add to Cart
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))
-          )}
+              ))}
         </div>
         {/* DOne Best Sellet  */}
       </div>
