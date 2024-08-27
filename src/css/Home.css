@@ -82,7 +82,7 @@
         overflow-x: auto; /* Enable horizontal scrolling */
         scrollbar-width: none; /* Hide scrollbar in Firefox */
         -ms-overflow-style: none;  /* Hide scrollbar in IE and Edge */
-       margin-left: 50px;
+        padding-left: 200px;
     }
     
     .StyleOfBestSeller::-webkit-scrollbar {
@@ -97,10 +97,10 @@
         height: 218.887px;
       }
       .lowerCard{
-        padding-top: 2px;
+        padding-top: 5px;
         padding-left: 10px;
         padding-right: 10px;
-        justify-content: flex-start;
+        justify-content: center;
     }
     
   }

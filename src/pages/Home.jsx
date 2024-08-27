@@ -121,7 +121,7 @@ export default function Home({ user }) {
                    </div>
                   )}
                     <h2 className="w-100 mt-1 responsive-For-Card-h2">{element?.name}</h2>
-                    <h2 className="w-100 mt-1 responsive-For-Card-h2">{element?.description.slice(0,32)}</h2>
+                    <h2 className="w-100 mt-1 responsive-For-Card-p">{element?.description.slice(0,32)}</h2>
                   </div>
                   <div className="d-flex justify-content-center align-items-center">
                   <button
@@ -135,7 +135,7 @@ export default function Home({ user }) {
               </div>
             ))
           )}
-          {bestSellerOccasion === null || bestSellerOccasion.length === 0 ? (
+          {/* {bestSellerOccasion === null || bestSellerOccasion.length === 0 ? (
             ""
           ) : (
             bestSellerOccasion.slice(0, 4).map((element, i) => (
@@ -187,7 +187,7 @@ export default function Home({ user }) {
                 </div>
               </div>
             ))
-          )}
+          )} */}
         </div>
         {/* DOne Best Sellet  */}
       </div>
