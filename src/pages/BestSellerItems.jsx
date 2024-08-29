@@ -71,7 +71,7 @@ export default function BestSellerItems({ user }) {
               <p className="cursorPOinter" onClick={goHome}>
                 Home
               </p>
-              <i class="fa-solid fa-angle-right text-muted"></i>
+              <i className="fa-solid fa-angle-right text-muted"></i>
               <p>Best Sellers</p>
             </div>
           </div>

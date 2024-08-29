@@ -94,7 +94,11 @@
   background-repeat: no-repeat;
   background-position: center; /* Center the image */
 }
-
+/* all category page */
+.styleForCategories{
+  white-space: nowrap;
+  font-size: 1.4rem;
+}
 @media (max-width: 576px) {
   .StyleForBestSeller {
     display: flex;
