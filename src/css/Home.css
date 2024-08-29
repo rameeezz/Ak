@@ -142,6 +142,7 @@
     width: 30% !important;
   }
   .styleForCategories{
-    font-size: 0.55rem;
+    font-size: 0.8rem;
+    white-space: wrap;
   }
 }
