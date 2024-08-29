@@ -269,7 +269,7 @@ export default function Home({ user }) {
           </div>
         </div>
         <div className="d-flex justify-content-center flex-row gap-2">
-          <div className="w-25 rounded shadow">
+          <div className="w-25 rounded shadow forSmallScreenCategoryImage">
             <img src={PHoto1} alt="" className="rounded" />
           </div>
           <div className="d-flex flex-row justify-content-left align-items-center gap-3 overflow-x-scroll removeScrollBardFromCAtegroy w-100 cursorPOinter">
@@ -286,7 +286,7 @@ export default function Home({ user }) {
                 <div
                   key={i}
                   className="bgForCategroySection styleForCategoriesCard rounded"
-                  style={{ minWidth: "250px" }}
+                  // style={{ minWidth: "250px" }}
                 >
                   <div className="d-flex justify-content-center align-items-center h-100 w-100">
                     <h2 className="text-white responsiveTextForCategory">

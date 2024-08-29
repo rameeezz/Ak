@@ -78,7 +78,7 @@
 }
 /* category */
 .styleForCategoriesCard {
-  width: 20%;
+ min-width: 250px;
   height: 80%;
 }
 .responsiveTextForCategory {
@@ -125,5 +125,13 @@
   /* ctegorySection */
   .removeScrollBardFromCAtegroy::-webkit-scrollbar {
     display: none;
+  }
+  .forSmallScreenCategoryImage{
+    width: 45% !important;
+  }.styleForCategoriesCard {
+    min-width: 100px;
+  }
+  .responsiveTextForCategory{
+    font-size: 0.8rem;
   }
 }
