@@ -29,6 +29,7 @@
 }
 .bgForNav{
     background-color:  #f1ebeb;
+    z-index: 215;
 }
 .FontSizeForP{
     font-size: 13px;

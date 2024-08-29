@@ -6,25 +6,25 @@
   margin: 0%;
   box-sizing: border-box;
 }
-.textSTyleForError{
+.textSTyleForError {
   font-size: 14px;
 }
-.phone-input-field{
-width: 100% !important;
+.phone-input-field {
+  width: 100% !important;
 }
-.hiegt{
+.hiegt {
   height: 400px;
 }
-.h-vh{
+.h-vh {
   height: 100vh;
 }
-.responsive-For-Card-h2{
+.responsive-For-Card-h2 {
   font-size: 1rem;
 }
-.responsive-For-Card-span{
+.responsive-For-Card-span {
   font-size: 1rem;
 }
-.responsive-For-Card-p{
+.responsive-For-Card-p {
   font-size: 1rem;
 }
 .sizeOfI {
@@ -42,7 +42,7 @@ width: 100% !important;
   font-size: 13px;
   line-height: 19px;
 }
-.cursorPOinter{
+.cursorPOinter {
   cursor: pointer;
 }
 .responsive-font-size-p {
@@ -52,10 +52,10 @@ width: 100% !important;
   font-size: 2rem; /* Bootstrap fs-1 size */
 }
 .responsive-font-size-h3 {
-  font-size: 1.8rem; 
+  font-size: 1.8rem;
 }
-.responsive-font-size-h2-Home{
- font-size: 2.0625rem;
+.responsive-font-size-h2-Home {
+  font-size: 2.0625rem;
 }
 @media (max-width: 576px) {
   /* Small screens (sm) and below */
@@ -68,9 +68,9 @@ width: 100% !important;
   .responsive-font-size-h3 {
     font-size: 1.8rem; /* Bootstrap fs-6 size */
   }
-  .responsive-font-size-h2-Home{
+  .responsive-font-size-h2-Home {
     font-size: 1.8rem;
-   }
+  }
   .textSizeForSpan {
     font-size: 0.88rem;
   }
@@ -90,57 +90,71 @@ width: 100% !important;
   }
 
   .checkbox-label {
-    font-size: 0.875rem; 
+    font-size: 0.875rem;
   }
-  .sizeOfI{
+  .sizeOfI {
     font-weight: 300;
     font-size: 1.5rem;
     line-height: 1.125rem;
   }
-  .forDivViewMore{
+  .forDivViewMore {
     top: 100%;
-      right: 35px !important;
+    right: 35px !important;
   }
-  .forDivOfBestSeller{
+  .forDivOfBestSeller {
     margin-top: 10%;
   }
   .responsive-For-Card-h2 {
-    font-size: 0.70rem;
-}
-  .responsive-For-Card-span{
+    font-size: 0.7rem;
+  }
+  .responsive-For-Card-span {
     font-size: 0.75rem;
   }
-  .responsive-For-Card-p{
+  .responsive-For-Card-p {
     /* font-size: 0.75rem; */
     display: none;
   }
   .classForButtonForCard {
-    font-size: 0.60rem;
+    font-size: 0.6rem;
     width: 100% !important;
     margin-top: 10% !important;
     white-space: nowrap;
-}
-.forBestSellerPageResponsive{
-  width: 40%;
-  height:220px;
-}
-.forBestSellerPageResponsiveImage{
-  height: 60%;
-}
-.responsiveForBestSellerPage{
-  padding-left: 5px;
-  padding-top: 2px;
-
-}
-.responsive-For-Card-h2-Best-Seller {
-  font-size: 0.70rem;
-  margin-top: 4px;
-}
-.classForButtonForCardForBestSeller {
-  font-size: 0.60rem;
-  width: 100% !important;
-  margin-top: 5% !important;
+  }
+  .forBestSellerPageResponsive {
+    width: 40%;
+    height: 220px;
+  }
+  .forBestSellerPageResponsiveImage {
+    height: 60%;
+  }
+  .responsiveForBestSellerPage {
+    padding-left: 5px;
+    padding-top: 2px;
+  }
+  .responsive-For-Card-h2-Best-Seller {
+    font-size: 0.7rem;
+    margin-top: 4px;
+  }
+  .classForButtonForCardForBestSeller {
+    font-size: 0.6rem;
+    width: 100% !important;
+    margin-top: 5% !important;
+    white-space: nowrap;
+  }
+  .styleForSale {
+    white-space: nowrap;
+    width: 25% !important;
+    padding: 0px !important;
+    font-size: 0.6rem;
+    top: 4%;
+    right: 25%;
+  }
+  .styleForStock {
   white-space: nowrap;
-
-}
+  width: 25% !important;
+  padding: 0px !important;
+  font-size: 0.6rem;
+  top: 4%;
+  left: 3%;
+  }
 }

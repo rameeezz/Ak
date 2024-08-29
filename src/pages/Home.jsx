@@ -96,7 +96,7 @@ export default function Home({ user }) {
                 {element?.status === "in stock" ? (
                   ""
                 ) : (
-                  <div className="position-absolute start-2 top-4 z-3">
+                  <div className="position-absolute start-2 top-4 styleForStock z-3">
                     <span className="bg-[#D4B11C] text-white px-2 py-2 rounded-2">
                       Out Of Stock
                     </span>
@@ -105,7 +105,7 @@ export default function Home({ user }) {
                 {element?.discount === 0 ? (
                   ""
                 ) : (
-                  <div className="position-absolute end-3 top-4 z-3">
+                  <div className="position-absolute styleForSale end-3 top-4 z-3">
                     <span className="bg-danger text-white px-3 py-2 rounded-2">
                       Sale
                     </span>
@@ -126,11 +126,13 @@ export default function Home({ user }) {
                         {element?.lastPrice} EGP
                       </h2>
                     ) : (
-                      <div className="d-flex justify-content-center gap-2">
+                      <div className="d-flex justify-content-center gap-1">
                         <span className="strikethrough responsive-For-Card-h2">
                           {element?.price}
                         </span>
-                        <span className="text-muted">||</span>
+                        <span className="text-muted responsive-For-Card-h2">
+                          ||
+                        </span>
                         <p className="text-muted responsive-For-Card-h2">
                           {element?.lastPrice} EGP
                         </p>
@@ -165,7 +167,7 @@ export default function Home({ user }) {
                   {element?.status === "in stock" ? (
                     ""
                   ) : (
-                    <div className="position-absolute start-2 top-4 z-3">
+                    <div className="position-absolute start-2 top-4 styleForStock z-3">
                       <span className="bg-[#D4B11C] text-white px-2 py-2 rounded-2">
                         Out Of Stock
                       </span>
@@ -174,7 +176,7 @@ export default function Home({ user }) {
                   {element?.discount === 0 ? (
                     ""
                   ) : (
-                    <div className="position-absolute end-3 top-4 z-3">
+                    <div className="position-absolute styleForSale end-3 top-4 z-3">
                       <span className="bg-danger text-white px-3 py-2 rounded-2">
                         Sale
                       </span>
@@ -195,11 +197,13 @@ export default function Home({ user }) {
                           {element?.lastPrice} EGP
                         </h2>
                       ) : (
-                        <div className="d-flex justify-content-center gap-2">
+                        <div className="d-flex justify-content-center gap-1">
                           <span className="strikethrough responsive-For-Card-h2">
                             {element?.price}
                           </span>
-                          <span className="text-muted">||</span>
+                          <span className="text-muted responsive-For-Card-h2">
+                            ||
+                          </span>
                           <p className="text-muted responsive-For-Card-h2">
                             {element?.lastPrice} EGP
                           </p>
