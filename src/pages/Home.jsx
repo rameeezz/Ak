@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Home.css";
 import bg from "../assets/bg/imresizer-1724329258313.jpg";
-import PHoto1 from "../assets/card photo/1.jpeg";
+import PHoto1 from "../assets/card photo/photoCategory.jpg";
 import axios from "axios";
 export default function Home({ user }) {
   // console.log(user);
@@ -54,13 +54,40 @@ export default function Home({ user }) {
   useEffect(() => {
     getCategoryBestSeller();
     getOccasionBestSeller();
+    getAllCategory();
   }, []);
   // view more best seller
   function moveToBestSellerPage() {
     navigate("/best-sellers");
   }
+  function moveToAllCategory() {
+    navigate("/all-category");
+  }
 
   // done
+  // get Category
+  const [allCategory, setAllCategory] = useState([]);
+  console.log(allCategory);
+
+  const [loadingForCategory, setLoadingForCategory] = useState(false);
+  const [errorMessageForCategory, setErrorMessageForCategory] = useState("");
+  async function getAllCategory() {
+    setLoadingForCategory(true);
+    try {
+      let { data } = await axios.get(
+        "https://freelance1-production.up.railway.app/customer/getCategory"
+      );
+      setAllCategory(data.getCategory);
+      setLoadingForCategory(false);
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        setErrorMessageForCategory("no items");
+        setLoadingForCategory(false);
+        setAllCategory([])
+      }
+    }
+  }
+  // done-----------------
   return (
     <>
       <img src={bg} alt="Ak Florist" className="classForBg" />
@@ -229,6 +256,36 @@ export default function Home({ user }) {
               ))}
         </div>
         {/* DOne Best Sellet  */}
+      </div>
+      <div className="container-xxl mb-5">
+        <div className="d-flex flex-column align-items-center justify-content-center mt-5 mb-4">
+          <h2 className="responsive-font-size-h2-Home fw-bold">Categories</h2>
+          <div className="w-100 d-flex justify-content-center position-relative">
+            <p>| Discover Blooms Beyond Compare |</p>
+            <div
+              onClick={moveToAllCategory}
+              className=" d-flex justify-content-center cursorPOinter position-absolute end-[120px] forDivViewMore"
+            >
+              <span className="ForViewMore">View More</span>
+            </div>
+          </div>
+        </div>
+        <div className="d-flex justify-content-center flex-row gap-2">
+          <div className="w-25 rounded shadow">
+            <img src={PHoto1} alt="" className="rounded" />
+          </div>
+          <div className="d-flex flex-row justify-content-left align-items-center gap-3 overflow-x-scroll removeScrollBardFromCAtegroy w-100 cursorPOinter">
+           {allCategory === null || allCategory.length === 0 ? "": allCategory.slice(0,6).map((element , i)=> <div
+           key={i}
+              className="bgForCategroySection styleForCategoriesCard rounded"
+              style={{ minWidth: "250px" }}
+            >
+              <div className="d-flex justify-content-center align-items-center h-100 w-100">
+                <h2 className="text-white responsiveTextForCategory">{element?.name}</h2>
+              </div>
+            </div>)}
+          </div>
+        </div>
       </div>
       {/* <div className="d-flex justify-content-center align-items-center">
         <button onClick={addToCart} className="btn btn-primary p-4 ">

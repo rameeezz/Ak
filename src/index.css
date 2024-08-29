@@ -57,6 +57,13 @@
 .responsive-font-size-h2-Home {
   font-size: 2.0625rem;
 }
+.responsive-For-I{
+  /* font-size: 0.7rem; */
+  position: fixed;
+  top: 92%;
+  right: 1%;
+  cursor: pointer;
+}
 @media (max-width: 576px) {
   /* Small screens (sm) and below */
   .responsive-font-size-p {
@@ -156,5 +163,7 @@
   font-size: 0.6rem;
   top: 4%;
   left: 3%;
+  }.responsive-For-I{
+    display: none;
   }
 }

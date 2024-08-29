@@ -76,6 +76,24 @@
   padding-top: 15px;
   padding-left: 20px;
 }
+/* category */
+.styleForCategoriesCard {
+  width: 20%;
+  height: 80%;
+}
+.responsiveTextForCategory {
+  font-size: 2rem;
+}
+.removeScrollBardFromCAtegroy::-webkit-scrollbar {
+  display: none;
+}
+.bgForCategroySection {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    /* Black gradient with 0.75 opacity */ url("../assets/bg/category.jpg"); /* Your background image */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center; /* Center the image */
+}
 
 @media (max-width: 576px) {
   .StyleForBestSeller {
@@ -103,5 +121,9 @@
     padding-left: 10px;
     padding-right: 10px;
     justify-content: center;
+  }
+  /* ctegorySection */
+  .removeScrollBardFromCAtegroy::-webkit-scrollbar {
+    display: none;
   }
 }

@@ -17,12 +17,16 @@ export default function MasterLayout({ user, logOut }) {
       navigate("/home");
     }
   }, [user, navigate]);
+  function arrowUp() {
+    window.scrollTo(0, 0);    
+}
   return (
     <>
       <NavBar user={user} logOut={logOut} />
       <TransitionWrapper>
         <Outlet />
       </TransitionWrapper>
+      <i onClick={arrowUp} className="fa-solid fa-circle-arrow-up text-danger responsive-For-I fs-2 z-3 "></i>
       <Footer user={user} />
     </>
   );

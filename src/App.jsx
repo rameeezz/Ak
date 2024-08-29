@@ -119,6 +119,7 @@ import ForgetPassword from "./pages/ForgetPassword";
 import Admin2 from './pages/Admin2';
 import ShowItems from './pages/ShowItems';
 import BestSellerItems from './pages/BestSellerItems';
+import AllCategory from './pages/AllCategory';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -193,6 +194,7 @@ function App() {
         },
         { path: "register", element: <Register /> },
         { path: "showItems", element: <ShowItems /> },
+        { path: "all-category", element: <AllCategory /> },
         { path: "best-sellers", element: <BestSellerItems user={user} /> },
         {
           path: "login",
