@@ -138,4 +138,10 @@
   .responsiveTextForCategory{
     font-size: 0.8rem;
   }
+  .forAllCategoryItems{
+    width: 30% !important;
+  }
+  .styleForCategories{
+    font-size: 0.55rem;
+  }
 }

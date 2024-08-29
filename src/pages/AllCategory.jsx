@@ -66,7 +66,7 @@ export default function AllCategory() {
             allCategory.map((element, i) => (
               <div
                 key={i}
-                className="rounded w-80 position-relative"
+                className="rounded w-80 position-relative forAllCategoryItems"
                 // style={{ minWidth: "250px" }}
               >
                 <img src={PHoto1} alt=""  className="w-100 h-100 rounded"/>
