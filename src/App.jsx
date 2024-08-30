@@ -193,7 +193,7 @@ function App() {
           ),
         },
         { path: "register", element: <Register /> },
-        { path: "showItems", element: <ShowItems /> },
+        { path: "show-items", element: <ShowItems /> },
         { path: "all-category", element: <AllCategory /> },
         { path: "best-sellers", element: <BestSellerItems user={user} /> },
         {

@@ -32,7 +32,12 @@ export default function AllCategory() {
       }
     }
   }
+  // on click open the items 
+  function goToItems(idOfCategory){
+    navigate("/show-items", { state: { id: idOfCategory } });
   
+    
+  }
   return (
     <>
       <HeadOfPages />
@@ -65,6 +70,9 @@ export default function AllCategory() {
           ) : (
             allCategory.map((element, i) => (
               <div
+              onClick={()=>{
+                goToItems(element._id)
+              }}
                 key={i}
                 className="rounded w-80 position-relative forAllCategoryItems"
                 // style={{ minWidth: "250px" }}

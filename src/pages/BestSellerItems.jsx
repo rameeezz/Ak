@@ -7,8 +7,7 @@ export default function BestSellerItems({ user }) {
   let naviagte = useNavigate();
   function addToCart() {
     if (user == null) {
-      console.log("yarab");
-      navigate("/login");
+      naviagte("/login");
     } else {
       alert("نتمنى لكم حياة افضل ");
     }

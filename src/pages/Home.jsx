@@ -85,6 +85,11 @@ export default function Home({ user }) {
       }
     }
   }
+  function goToItems(idOfCategory){
+    navigate("/show-items", { state: { id: idOfCategory } });
+  
+    
+  }
   // done-----------------
   return (
     <>
@@ -284,6 +289,9 @@ export default function Home({ user }) {
             ) : (
               allCategory.slice(0, 6).map((element, i) => (
                 <div
+                onClick={()=>{
+                  goToItems(element._id)
+                }}
                   key={i}
                   className="bgForCategroySection styleForCategoriesCard rounded"
                   // style={{ minWidth: "250px" }}

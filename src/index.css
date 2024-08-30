@@ -166,4 +166,13 @@
   }.responsive-For-I{
     display: none;
   }
+  .inSmallScreen{
+    display: none;
+  }
+  .inSmallScreenButton{
+    width: 25% ;
+    text-wrap: nowrap;
+    font-size: 0.7rem !important;
+    padding: 0px !important;
+  }
 }

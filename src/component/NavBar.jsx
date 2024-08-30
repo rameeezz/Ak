@@ -252,7 +252,7 @@ export default function NavBar({ user, logOut }) {
         );
         setSubCategory(data.subcategories);
       } else {
-        navigate("/showItems", { state: { id: idOfCategory } });
+        navigate("/show-items", { state: { id: idOfCategory } });
       }
     } catch (error) {
       if (error.response && error.response.status === 404) {
@@ -324,7 +324,7 @@ export default function NavBar({ user, logOut }) {
                             <Link
                               key={i}
                               to={{
-                                pathname: "showItems",
+                                pathname: "/show-items",
                               }}
                               state={{ id: subElement?._id }} // Pass the id as state
                               className="text-[#b38e38] text-center FontSizeForP"
