@@ -128,6 +128,7 @@ export default function ShowItems() {
   const handleSelectChangeForSubCategory = (event) => {
     if (event.target.value === id) {
       getAllItems();
+      setSelectedOptionForSubCategory(event.target.value)
     } else {
       setSelectedOptionForSubCategory(event.target.value);
     }
@@ -161,7 +162,7 @@ export default function ShowItems() {
               Home
             </p>
             <i className="fa-solid fa-angle-right text-muted"></i>
-            <p>Best Sellers</p>
+            <p>Items</p>
           </div>
         </div>
       </div>
