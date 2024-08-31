@@ -364,7 +364,7 @@ export default function Home({ user }) {
           </div>
           <div className="d-flex flex-row justify-content-left align-items-center gap-3 overflow-x-scroll removeScrollBardFromCAtegroy w-100 cursorPOinter">
             <div className="d-flex flex-column py-3 justify-content-center align-items-center gap-2">
-            <div className="d-flex justify-content-center gap-3">
+            <div className="d-flex justify-content-between gap-3">
             {allOccasion.length === 0 ? (
               loadingForOccasion ? (
                 <div className="w-100 justify-content-center d-flex">
@@ -374,13 +374,13 @@ export default function Home({ user }) {
                 <div>{errorMessageForOccasion}</div> // Ensure that this is a string or valid JSX
               )
             ) : (
-              allOccasion.slice(0,4).map((element, i) => (
+              allOccasion.slice(0,6).map((element, i) => (
                 <div
                   onClick={() => {
                     goToOccasionItems(element._id);
                   }}
                   key={i}
-                  className=" styleForCategoriesCard rounded"
+                  className=" styleForoccasions rounded"
                   // style={{ minWidth: "250px" }}
                 >
                   <div className="h-100 w-100 position-relative">
@@ -401,21 +401,15 @@ export default function Home({ user }) {
             </div>
             <div className="d-flex justify-content-center gap-3">
             {allOccasion.length === 0 ? (
-              loadingForOccasion ? (
-                <div className="w-100 justify-content-center d-flex">
-                  <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
-                </div>
-              ) : (
-                <div>{errorMessageForOccasion}</div> // Ensure that this is a string or valid JSX
-              )
+              ""
             ) : (
-              allOccasion.slice(0,4).map((element, i) => (
+              allOccasion.slice(6,12).map((element, i) => (
                 <div
                   onClick={() => {
                     goToOccasionItems(element._id);
                   }}
                   key={i}
-                  className=" styleForCategoriesCard rounded"
+                  className=" styleForoccasions rounded"
                   // style={{ minWidth: "250px" }}
                 >
                   <div className="h-100 w-100 position-relative">
@@ -425,7 +419,7 @@ export default function Home({ user }) {
                       className="w-100 h-100 rounded"
                     />
                     <div className="position-absolute w-100 h-100 top-0 bottom-0 d-flex justify-content-center align-items-center rounded">
-                      <h2 className="text-white text-center responsiveTextForCategory">
+                      <h2 className="text-white text-center responsiveTextForOccasion">
                         {element?.name}
                       </h2>
                     </div>
