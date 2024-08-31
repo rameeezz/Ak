@@ -1,76 +1,71 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import HeadOfPages from "./HeadOfPages";
+import React, { useEffect, useState } from 'react'
+import HeadOfPages from './HeadOfPages';
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-import "../css/Home.css";
-import PHoto1 from "../assets/card photo/2.jpeg";
-export default function AllCategory() {
+export default function AllOccasions() {
   let navigate = useNavigate();
   function goHome() {
     navigate("/home");
   }
-  useEffect(() => {
-    getAllCategory();
-  }, []);
-  const [allCategory, setAllCategory] = useState([]);
-  console.log(allCategory);
-
-  const [loadingForCategory, setLoadingForCategory] = useState(false);
-  const [errorMessageForCategory, setErrorMessageForCategory] = useState("");
-  async function getAllCategory() {
-    setLoadingForCategory(true);
+  useEffect(()=>{
+    getAllOccasion()
+  },[])
+  const [allOccasion, setAllOccasion] = useState([]);
+  const [loadingForOccasion, setLoadingForOcassion] = useState(false);
+  const [errorMessageForOccasion, setErrorMessageForOccasion] = useState("");
+  async function getAllOccasion() {
+    setLoadingForOcassion(true);
     try {
       let { data } = await axios.get(
-        "https://freelance1-production.up.railway.app/customer/getCategory"
+        "https://freelance1-production.up.railway.app/customer/getOccasions"
       );
-      setAllCategory(data.getCategory);
-      setLoadingForCategory(false);
+      setAllOccasion(data);
+      setLoadingForOcassion(false);
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        setErrorMessageForCategory("no items");
-        setLoadingForCategory(false);
-        setAllCategory([]);
+        setErrorMessageForOccasion("no items");
+        setLoadingForOcassion(false);
+        setAllOccasion([]);
       }
     }
   }
-  // on click open the items
-  function goToItems(idOfCategory) {
-    navigate("/show-items", { state: { id: idOfCategory } });
+  function goToOccasionItems(idOfCategory) {
+    navigate("/show-items-in-occasion", { state: { id: idOfCategory } });
   }
   return (
     <>
-      <HeadOfPages />
+     <HeadOfPages />
       <div className="container-xxl ">
         <div className="d-flex flex-column align-items-start justify-content-center mt-5 mb-4">
           <h2 className="responsive-font-size-h2-Home fw-bold">
-            Flowers Categories
+            Flowers Occasions
           </h2>
-          <p>Imagine - Explore - Enjoy Our Gifts</p>
+          <p>Celebrate every moment with us!</p>
           <div className="d-flex justify-content-center gap-1 mt-1 align-items-center">
             <i className="fa-solid fa-house-chimney text-muted"></i>
             <p className="cursorPOinter" onClick={goHome}>
               Home
             </p>
             <i className="fa-solid fa-angle-right text-muted"></i>
-            <p>Categories</p>
+            <p>Occasions</p>
           </div>
         </div>
       </div>
       <div className="container mb-5">
         <div className="d-flex flex-row justify-content-center gap-3 w-100 cursorPOinter flex-wrap">
-          {allCategory.length === 0 ? (
-            loadingForCategory ? (
+          {allOccasion.length === 0 ? (
+            loadingForOccasion ? (
               <div className="w-100 justify-content-center d-flex">
                 <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
               </div>
             ) : (
-              <div>{errorMessageForCategory}</div> // Ensure that this is a string or valid JSX
+              <div>{errorMessageForOccasion}</div> // Ensure that this is a string or valid JSX
             )
           ) : (
-            allCategory.map((element, i) => (
+            allOccasion.map((element, i) => (
               <div
                 onClick={() => {
-                  goToItems(element._id);
+                  goToOccasionItems(element._id);
                 }}
                 key={i}
                 className="rounded w-80 position-relative forAllCategoryItems"
@@ -91,5 +86,5 @@ export default function AllCategory() {
         </div>
       </div>
     </>
-  );
+  )
 }

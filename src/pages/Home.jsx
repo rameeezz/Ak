@@ -55,6 +55,7 @@ export default function Home({ user }) {
     getCategoryBestSeller();
     getOccasionBestSeller();
     getAllCategory();
+    getAllOccasion();
   }, []);
   // view more best seller
   function moveToBestSellerPage() {
@@ -62,6 +63,9 @@ export default function Home({ user }) {
   }
   function moveToAllCategory() {
     navigate("/all-category");
+  }
+  function moveToAllOccasions() {
+    navigate("/all-occasion");
   }
 
   // done
@@ -91,6 +95,34 @@ export default function Home({ user }) {
     navigate("/show-items", { state: { id: idOfCategory } });
   }
   // done-----------------
+  // get Ocassions
+  const [allOccasion, setAllOccasion] = useState([]);
+  console.log(allOccasion);
+
+  const [loadingForOccasion, setLoadingForOcassion] = useState(false);
+  const [errorMessageForOccasion, setErrorMessageForOccasion] = useState("");
+  async function getAllOccasion() {
+    setLoadingForOcassion(true);
+    try {
+      let { data } = await axios.get(
+        "https://freelance1-production.up.railway.app/customer/getOccasions"
+      );
+      console.log(data);
+      
+      setAllOccasion(data);
+      setLoadingForOcassion(false);
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        setErrorMessageForOccasion("no items");
+        setLoadingForOcassion(false);
+        setAllOccasion([]);
+      }
+    }
+  }
+  function goToOccasionItems(idOfCategory) {
+    navigate("/show-items-in-occasion", { state: { id: idOfCategory } });
+  }
+  // done
   return (
     <>
       <img src={bg} alt="Ak Florist" className="classForBg" />
@@ -311,6 +343,98 @@ export default function Home({ user }) {
                 </div>
               ))
             )}
+          </div>
+        </div>
+        {/* occasions */}
+        <div className="d-flex flex-column align-items-center justify-content-center mt-5 mb-4">
+          <h2 className="responsive-font-size-h2-Home fw-bold">Occasions</h2>
+          <div className="w-100 d-flex justify-content-center position-relative">
+            <p>| Unveil the Beauty of Gifted Blooms |</p>
+            <div
+              onClick={moveToAllOccasions}
+              className=" d-flex justify-content-center cursorPOinter position-absolute end-[120px] forDivViewMore"
+            >
+              <span className="ForViewMore">View More</span>
+            </div>
+          </div>
+        </div>
+        <div className="d-flex justify-content-center gap-2 flex-row">
+        <div className="w-25 rounded shadow forSmallScreenCategoryImage">
+            <img src={PHoto1} alt="" className="rounded w-100 h-100" />
+          </div>
+          <div className="d-flex flex-row justify-content-left align-items-center gap-3 overflow-x-scroll removeScrollBardFromCAtegroy w-100 cursorPOinter">
+            <div className="d-flex flex-column py-3 justify-content-center align-items-center gap-2">
+            <div className="d-flex justify-content-center gap-3">
+            {allOccasion.length === 0 ? (
+              loadingForOccasion ? (
+                <div className="w-100 justify-content-center d-flex">
+                  <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+                </div>
+              ) : (
+                <div>{errorMessageForOccasion}</div> // Ensure that this is a string or valid JSX
+              )
+            ) : (
+              allOccasion.slice(0,4).map((element, i) => (
+                <div
+                  onClick={() => {
+                    goToOccasionItems(element._id);
+                  }}
+                  key={i}
+                  className=" styleForCategoriesCard rounded"
+                  // style={{ minWidth: "250px" }}
+                >
+                  <div className="h-100 w-100 position-relative">
+                    <img
+                      src={`https://freelance1-production.up.railway.app/${element?.image}`}
+                      alt="Occasion Photo"
+                      className="w-100 h-100 rounded"
+                    />
+                    <div className="position-absolute w-100 h-100 top-0 bottom-0 d-flex justify-content-center align-items-center rounded">
+                      <h2 className="text-white text-center responsiveTextForCategory">
+                        {element?.name}
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+            </div>
+            <div className="d-flex justify-content-center gap-3">
+            {allOccasion.length === 0 ? (
+              loadingForOccasion ? (
+                <div className="w-100 justify-content-center d-flex">
+                  <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+                </div>
+              ) : (
+                <div>{errorMessageForOccasion}</div> // Ensure that this is a string or valid JSX
+              )
+            ) : (
+              allOccasion.slice(0,4).map((element, i) => (
+                <div
+                  onClick={() => {
+                    goToOccasionItems(element._id);
+                  }}
+                  key={i}
+                  className=" styleForCategoriesCard rounded"
+                  // style={{ minWidth: "250px" }}
+                >
+                  <div className="h-100 w-100 position-relative">
+                    <img
+                      src={`https://freelance1-production.up.railway.app/${element?.image}`}
+                      alt="Occasion Photo"
+                      className="w-100 h-100 rounded"
+                    />
+                    <div className="position-absolute w-100 h-100 top-0 bottom-0 d-flex justify-content-center align-items-center rounded">
+                      <h2 className="text-white text-center responsiveTextForCategory">
+                        {element?.name}
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+            </div>
+            </div>
           </div>
         </div>
       </div>

@@ -79,6 +79,7 @@
 /* category */
 .styleForCategoriesCard {
  min-width: 250px;
+ max-width: 250px;
   height: 80%;
 }
 .responsiveTextForCategory {
@@ -87,6 +88,7 @@
 .removeScrollBardFromCAtegroy::-webkit-scrollbar {
   display: none;
 }
+/* m4 mst5dmha  */
 .bgForCategroySection {
   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
     /* Black gradient with 0.75 opacity */ url("../assets/bg/category.jpg"); /* Your background image */

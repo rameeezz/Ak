@@ -120,6 +120,8 @@ import Admin2 from './pages/Admin2';
 import ShowItems from './pages/ShowItems';
 import BestSellerItems from './pages/BestSellerItems';
 import AllCategory from './pages/AllCategory';
+import AllOccasions from './pages/AllOccasions';
+import ShowItemsInOccasion from "./pages/ShowItemsInOccasion";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -194,7 +196,9 @@ function App() {
         },
         { path: "register", element: <Register /> },
         { path: "show-items", element: <ShowItems /> },
+        { path: "show-items-in-occasion", element: <ShowItemsInOccasion /> },
         { path: "all-category", element: <AllCategory /> },
+        { path: "all-occasion", element: <AllOccasions /> },
         { path: "best-sellers", element: <BestSellerItems user={user} /> },
         {
           path: "login",
