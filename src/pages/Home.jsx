@@ -67,6 +67,8 @@ export default function Home({ user }) {
   // done
   // get Category
   const [allCategory, setAllCategory] = useState([]);
+  // console.log(allCategory);
+
   const [loadingForCategory, setLoadingForCategory] = useState(false);
   const [errorMessageForCategory, setErrorMessageForCategory] = useState("");
   async function getAllCategory() {
@@ -85,10 +87,8 @@ export default function Home({ user }) {
       }
     }
   }
-  function goToItems(idOfCategory){
+  function goToItems(idOfCategory) {
     navigate("/show-items", { state: { id: idOfCategory } });
-  
-    
   }
   // done-----------------
   return (
@@ -275,7 +275,7 @@ export default function Home({ user }) {
         </div>
         <div className="d-flex justify-content-center flex-row gap-2">
           <div className="w-25 rounded shadow forSmallScreenCategoryImage">
-            <img src={PHoto1} alt="" className="rounded" />
+            <img src={PHoto1} alt="" className="rounded w-100 h-100" />
           </div>
           <div className="d-flex flex-row justify-content-left align-items-center gap-3 overflow-x-scroll removeScrollBardFromCAtegroy w-100 cursorPOinter">
             {allCategory.length === 0 ? (
@@ -289,17 +289,24 @@ export default function Home({ user }) {
             ) : (
               allCategory.slice(0, 6).map((element, i) => (
                 <div
-                onClick={()=>{
-                  goToItems(element._id)
-                }}
+                  onClick={() => {
+                    goToItems(element._id);
+                  }}
                   key={i}
-                  className="bgForCategroySection styleForCategoriesCard rounded"
+                  className=" styleForCategoriesCard rounded"
                   // style={{ minWidth: "250px" }}
                 >
-                  <div className="d-flex justify-content-center align-items-center h-100 w-100">
-                    <h2 className="text-white responsiveTextForCategory">
-                      {element?.name}
-                    </h2>
+                  <div className="h-100 w-100 position-relative">
+                    <img
+                      src={`https://freelance1-production.up.railway.app/${element?.image}`}
+                      alt="Category Photo"
+                      className="w-100 h-100 rounded"
+                    />
+                    <div className="position-absolute w-100 h-100 top-0 bottom-0 d-flex justify-content-center align-items-center rounded">
+                      <h2 className="text-white text-center responsiveTextForCategory">
+                        {element?.name}
+                      </h2>
+                    </div>
                   </div>
                 </div>
               ))

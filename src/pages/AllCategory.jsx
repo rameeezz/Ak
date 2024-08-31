@@ -10,10 +10,11 @@ export default function AllCategory() {
     navigate("/home");
   }
   useEffect(() => {
-    getAllCategory();    
+    getAllCategory();
   }, []);
   const [allCategory, setAllCategory] = useState([]);
-  
+  console.log(allCategory);
+
   const [loadingForCategory, setLoadingForCategory] = useState(false);
   const [errorMessageForCategory, setErrorMessageForCategory] = useState("");
   async function getAllCategory() {
@@ -32,11 +33,9 @@ export default function AllCategory() {
       }
     }
   }
-  // on click open the items 
-  function goToItems(idOfCategory){
+  // on click open the items
+  function goToItems(idOfCategory) {
     navigate("/show-items", { state: { id: idOfCategory } });
-  
-    
   }
   return (
     <>
@@ -70,19 +69,21 @@ export default function AllCategory() {
           ) : (
             allCategory.map((element, i) => (
               <div
-              onClick={()=>{
-                goToItems(element._id)
-              }}
+                onClick={() => {
+                  goToItems(element._id);
+                }}
                 key={i}
                 className="rounded w-80 position-relative forAllCategoryItems"
                 // style={{ minWidth: "250px" }}
               >
-                <img src={PHoto1} alt=""  className="w-100 h-100 rounded"/>
-                <div className="position-absolute top-0 h-100 w-100 bg-info opacity-25 z-1"></div>
+                <img
+                  src={`https://freelance1-production.up.railway.app/${element?.image}`}
+                  alt=""
+                  className="w-100 h-100 rounded"
+                />
+                <div className="position-absolute top-0 h-100 w-100 bg-black opacity-25 z-1 rounded"></div>
                 <div className="d-flex justify-content-center align-items-center position-absolute w-100 h-100 z-3 top-0 styleForCategories z-2">
-                  <h2 className="text-white text-center">
-                    {element?.name}
-                  </h2>
+                  <h2 className="text-white text-center">{element?.name}</h2>
                 </div>
               </div>
             ))

@@ -101,58 +101,122 @@ export default function Admin1({ logOut }) {
   }
   // done admin  *********************
   // work of add category ********
+  //   const [categoryName, setCategoryName] = useState({
+  //     name: "",
+  //     image: ""
+  //   });
+  // console.log(categoryName);
+
+  //   function getCategoryName(e) {
+  //     const myCategory = { ...categoryName };
+  //     myCategory[e.target.name] = e.target.value;
+  //     // console.log(myCategory);
+  //     setCategoryName(myCategory);
+  //     setErrorMessageForCategory("");
+  //   }
+  //   const [LoadingAddCategory, setLoadingAddCategory] = useState(false);
+  //   const [ErrorMessageForCategory, setErrorMessageForCategory] = useState("");
+  //   async function sendCategoryName(e) {
+  //     e.preventDefault();
+  //     if (categoryName.name === "") {
+  //       alert("please write name of category");
+  //     } else {
+  //       setLoadingAddCategory(true);
+  //       try {
+  //         let { data } = await axios.post(
+  //           "https://freelance1-production.up.railway.app/admin1/addCategory",
+  //           categoryName
+  //         );
+  //         // console.log(data);
+
+  //         setLoadingAddCategory(false);
+  //         // alert("done");
+  //         setErrorMessageForCategory("");
+  //         showAlertMessage();
+  //         setCategoryName({
+  //           name: "",
+  //           image:""
+  //         });
+  //       } catch (error) {
+  //         if (error.response && error.response.status === 404) {
+  //           // console.log("m4 dayf");
+  //           setErrorMessageForCategory("try again later");
+  //           setLoadingAddCategory(false);
+  //         }
+  //         if (error.response && error.response.status === 422) {
+  //           // console.log("m4 dayf");
+  //           setErrorMessageForCategory("Category creation failed.");
+  //           setLoadingAddCategory(false);
+  //         }
+  //         if (error.response && error.response.status === 412) {
+  //           // console.log("m4 dayf");
+  //           setErrorMessageForCategory("This category already exists.");
+  //           setLoadingAddCategory(false);
+  //         }
+  //       }
+  //     }
+  //   }
   const [categoryName, setCategoryName] = useState({
     name: "",
   });
-
-  function getCategoryName(e) {
-    const myCategory = { ...categoryName };
-    myCategory[e.target.name] = e.target.value;
-    // console.log(myCategory);
-    setCategoryName(myCategory);
-    setErrorMessageForCategory("");
-  }
+  const [imageFile, setImageFile] = useState(null); // For handling the image file
   const [LoadingAddCategory, setLoadingAddCategory] = useState(false);
   const [ErrorMessageForCategory, setErrorMessageForCategory] = useState("");
+
+  function getCategoryName(e) {
+    const { name, value } = e.target;
+    setCategoryName((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setErrorMessageForCategory("");
+  }
+
+  function handleImageUpload(e) {
+    setImageFile(e.target.files[0]); // Set the image file
+  }
+
   async function sendCategoryName(e) {
     e.preventDefault();
     if (categoryName.name === "") {
-      alert("please write name of category");
+      alert("please write the name of the category");
+    } else if (!imageFile) {
+      alert("please select an image");
     } else {
       setLoadingAddCategory(true);
+      const formData = new FormData();
+      formData.append("name", categoryName.name);
+      formData.append("image", imageFile);
+
       try {
         let { data } = await axios.post(
           "https://freelance1-production.up.railway.app/admin1/addCategory",
-          categoryName
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
         );
-        // console.log(data);
 
         setLoadingAddCategory(false);
-        // alert("done");
         setErrorMessageForCategory("");
         showAlertMessage();
-        setCategoryName({
-          name: "",
-        });
+        setCategoryName({ name: "" });
+        setImageFile(null); // Reset the image file
       } catch (error) {
         if (error.response && error.response.status === 404) {
-          // console.log("m4 dayf");
-          setErrorMessageForCategory("try again later");
-          setLoadingAddCategory(false);
-        }
-        if (error.response && error.response.status === 422) {
-          // console.log("m4 dayf");
+          setErrorMessageForCategory("Try again later");
+        } else if (error.response && error.response.status === 422) {
           setErrorMessageForCategory("Category creation failed.");
-          setLoadingAddCategory(false);
-        }
-        if (error.response && error.response.status === 412) {
-          // console.log("m4 dayf");
+        } else if (error.response && error.response.status === 412) {
           setErrorMessageForCategory("This category already exists.");
-          setLoadingAddCategory(false);
         }
+        setLoadingAddCategory(false);
       }
     }
   }
+
   // done add category *******************
   // Show category
   const [showCategory, setShowCategory] = useState([]);
@@ -720,58 +784,73 @@ export default function Admin1({ logOut }) {
   // add occasions
   const [categoryNameForOccasion, setCategoryNameForOccasion] = useState({
     name: "",
+    image: null, // Initialize image as null
   });
+
   const [
     ErrorMessageForCategoryForOccasion,
     setErrorMessageForCategoryForOccasion,
   ] = useState("");
   const [LoadingAddCategoryForOccasion, setLoadingAddCategoryForOccasion] =
     useState(false);
+
   function getCategoryNameForOccasion(e) {
+    const { name, value, files } = e.target;
     const myCategory = { ...categoryNameForOccasion };
-    myCategory[e.target.name] = e.target.value;
-    // console.log(myCategory);
+    if (name === "image") {
+      // Handle file input
+      myCategory[name] = files[0];
+    } else {
+      // Handle text input
+      myCategory[name] = value;
+    }
     setCategoryNameForOccasion(myCategory);
     setErrorMessageForCategoryForOccasion("");
   }
+
   async function sendCategoryNameForOccasion(e) {
     e.preventDefault();
     if (categoryNameForOccasion.name === "") {
-      alert("please write name of category");
+      alert("Please write the name of the category.");
     } else {
       setLoadingAddCategoryForOccasion(true);
+
+      // Create FormData object to handle file uploads
+      const formData = new FormData();
+      formData.append("name", categoryNameForOccasion.name);
+      formData.append("image", categoryNameForOccasion.image);
+
       try {
         let { data } = await axios.post(
           "https://freelance1-production.up.railway.app/admin1/addOccasion",
-          categoryNameForOccasion
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data", // Set content type for file uploads
+            },
+          }
         );
-        // console.log(data);
 
         setLoadingAddCategoryForOccasion(false);
-        // alert("done");
         setErrorMessageForCategoryForOccasion("");
         showAlertMessage();
         setCategoryNameForOccasion({
           name: "",
+          image: null,
         });
         getCategoryForOccasions();
       } catch (error) {
-        if (error.response && error.response.status === 404) {
-          // console.log("m4 dayf");
-          setErrorMessageForCategoryForOccasion("try again later");
-          setLoadingAddCategoryForOccasion(false);
-        }
-        if (error.response && error.response.status === 422) {
-          // console.log("m4 dayf");
-          setErrorMessageForCategoryForOccasion("Category creation failed.");
-          setLoadingAddCategoryForOccasion(false);
-        }
-        if (error.response && error.response.status === 412) {
-          // console.log("m4 dayf");
-          setErrorMessageForCategoryForOccasion(
-            "This category already exists."
-          );
-          setLoadingAddCategoryForOccasion(false);
+        setLoadingAddCategoryForOccasion(false);
+        if (error.response) {
+          if (error.response.status === 404) {
+            setErrorMessageForCategoryForOccasion("Try again later.");
+          } else if (error.response.status === 422) {
+            setErrorMessageForCategoryForOccasion("Category creation failed.");
+          } else if (error.response.status === 412) {
+            setErrorMessageForCategoryForOccasion(
+              "This category already exists."
+            );
+          }
         }
       }
     }
@@ -865,58 +944,57 @@ export default function Admin1({ logOut }) {
     occasions: [],
     images: [],
   });
-function handleCategorySelection(categoryID, categoryName) {
-  setItemsDetailsForOccasion((prevDetails) => {
-    // Only update if the categoryID is not already in the occasions array
-    if (!prevDetails.occasions.includes(categoryID)) {
-      return {
-        ...prevDetails,
-        occasions: [...prevDetails.occasions, categoryID],
-      };
-    }
-    return prevDetails;
-  });
+  function handleCategorySelection(categoryID, categoryName) {
+    setItemsDetailsForOccasion((prevDetails) => {
+      // Only update if the categoryID is not already in the occasions array
+      if (!prevDetails.occasions.includes(categoryID)) {
+        return {
+          ...prevDetails,
+          occasions: [...prevDetails.occasions, categoryID],
+        };
+      }
+      return prevDetails;
+    });
 
-  setAllCategoryIdForOccasion((prevIds) => {
-    if (!prevIds.includes(categoryID)) {
-      return [...prevIds, categoryID];
-    }
-    return prevIds;
-  });
+    setAllCategoryIdForOccasion((prevIds) => {
+      if (!prevIds.includes(categoryID)) {
+        return [...prevIds, categoryID];
+      }
+      return prevIds;
+    });
 
-  setAllCategoryNameForOccasion((prevNames) => {
-    if (!prevNames.includes(categoryName)) {
-      return [...prevNames, categoryName];
-    }
-    return prevNames;
-  });
-}
+    setAllCategoryNameForOccasion((prevNames) => {
+      if (!prevNames.includes(categoryName)) {
+        return [...prevNames, categoryName];
+      }
+      return prevNames;
+    });
+  }
 
-function removeCategoryIdForOccasion(categoryID, categoryName) {
-  setItemsDetailsForOccasion((prevDetails) => {
-    // Only update if the categoryID is in the occasions array
-    if (prevDetails.occasions.includes(categoryID)) {
-      return {
-        ...prevDetails,
-        occasions: prevDetails.occasions.filter((id) => id !== categoryID),
-      };
-    }
-    return prevDetails;
-  });
+  function removeCategoryIdForOccasion(categoryID, categoryName) {
+    setItemsDetailsForOccasion((prevDetails) => {
+      // Only update if the categoryID is in the occasions array
+      if (prevDetails.occasions.includes(categoryID)) {
+        return {
+          ...prevDetails,
+          occasions: prevDetails.occasions.filter((id) => id !== categoryID),
+        };
+      }
+      return prevDetails;
+    });
 
-  setAllCategoryIdForOccasion((prevIds) =>
-    prevIds.includes(categoryID)
-      ? prevIds.filter((id) => id !== categoryID)
-      : prevIds
-  );
+    setAllCategoryIdForOccasion((prevIds) =>
+      prevIds.includes(categoryID)
+        ? prevIds.filter((id) => id !== categoryID)
+        : prevIds
+    );
 
-  setAllCategoryNameForOccasion((prevNames) =>
-    prevNames.includes(categoryName)
-      ? prevNames.filter((name) => name !== categoryName)
-      : prevNames
-  );
-}
-
+    setAllCategoryNameForOccasion((prevNames) =>
+      prevNames.includes(categoryName)
+        ? prevNames.filter((name) => name !== categoryName)
+        : prevNames
+    );
+  }
 
   function putItemInfoForOccasion(e) {
     let myItem = { ...itemsDetailsForOccasion };
@@ -945,23 +1023,23 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
     e.preventDefault();
     setIsLoadingForOccasion(true);
     const formData = new FormData();
-  
+
     formData.append("name", itemsDetailsForOccasion.name);
     formData.append("description", itemsDetailsForOccasion.description);
     formData.append("price", itemsDetailsForOccasion.price);
-  
+
     // Append each image in the array
     itemsDetailsForOccasion.images.forEach((image, index) => {
       formData.append("images", image);
     });
-  
+
     // Safely iterate over the occasions array
     if (Array.isArray(itemsDetailsForOccasion.occasions)) {
       itemsDetailsForOccasion.occasions.forEach((categoryID) => {
         formData.append("occasions", categoryID);
       });
     }
-  
+
     if (itemsDetailsForOccasion.images.length >= 10) {
       alert("max number of images 10");
       setIsLoadingForOccasion(false);
@@ -976,13 +1054,13 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
             },
           }
         );
-  
+
         // Reset the form or perform other actions
         setItemsDetailsForOccasion({
           name: "",
           description: "",
           price: 0,
-          occasions: [],  // Reset to an empty array
+          occasions: [], // Reset to an empty array
           images: [],
         });
         setImagePreviewsForOccasion([]);
@@ -1005,18 +1083,27 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
       }
     }
   }
-  
+
   // ----------------------
   // show items in occasion and delete and status and discount
-  const [loadingForItemsForOccasion, setLoadingForItemsForOccasion] = useState(false);
-  const [classForItemsForOccasion, setClassForItemsForOccasion] = useState("d-none");
-  const [statusLoadingForOccasion, setStatusLoadingForOccasion] = useState(false);
-  const [itemsInCategoryForOccasion, setItemInCategoryForOccasion] = useState([]);
-  const [itemIDForDeleteForOccasion, setItemIdForDeleteForOccasion] = useState({ itemID: "" });
+  const [loadingForItemsForOccasion, setLoadingForItemsForOccasion] =
+    useState(false);
+  const [classForItemsForOccasion, setClassForItemsForOccasion] =
+    useState("d-none");
+  const [statusLoadingForOccasion, setStatusLoadingForOccasion] =
+    useState(false);
+  const [itemsInCategoryForOccasion, setItemInCategoryForOccasion] = useState(
+    []
+  );
+  const [itemIDForDeleteForOccasion, setItemIdForDeleteForOccasion] = useState({
+    itemID: "",
+  });
   // console.log(itemIDForDeleteForOccasion);
-  
-  const [sureDeleteItemForOccasion, setSureDeleteItemForOccasion] = useState("d-none");
-  const [sellerLoadingForOccasion, setSellerLoadingForOccasion] = useState(false);
+
+  const [sureDeleteItemForOccasion, setSureDeleteItemForOccasion] =
+    useState("d-none");
+  const [sellerLoadingForOccasion, setSellerLoadingForOccasion] =
+    useState(false);
   const [categroryIdForOccasion, setCategoryIDForOccasion] = useState({
     categoryId: "",
     itemID: "",
@@ -1026,18 +1113,28 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
     discount: 0,
   });
   const [salePuttedForOccasion, setSaleputtedForOccasion] = useState(false);
-  const [salePuttedItemIdForOccasion, setSalePuttedItemIdForOccasion] = useState(null);
-  const [sureBoxForCancelperForOcccasion, setSureBoxForCAncelPerForOccasion] = useState(false);
-  const [loadForPercentForOccasion, setLoadForPercentForOccasion] = useState(false);
+  const [salePuttedItemIdForOccasion, setSalePuttedItemIdForOccasion] =
+    useState(null);
+  const [sureBoxForCancelperForOcccasion, setSureBoxForCAncelPerForOccasion] =
+    useState(false);
+  const [loadForPercentForOccasion, setLoadForPercentForOccasion] =
+    useState(false);
   const [sureDeleteItemFromOneOccasion, setSureDeleteItemFromOccasion] =
-  useState("d-none");
-  // pagination 
+    useState("d-none");
+  // pagination
   const [currentPageForOccasion, setCurrentPageForOccasion] = useState(1);
   const itemsPerPageForOccasion = 6;
-  const totalPagesForOccasion = Math.ceil(itemsInCategoryForOccasion.length / itemsPerPageForOccasion);
-  const indexOfLastItemForOccasion = currentPageForOccasion * itemsPerPageForOccasion;
-  const indexOfFirstItemForOcassion = indexOfLastItemForOccasion - itemsPerPageForOccasion;
-  const currentItemForOccasion = itemsInCategoryForOccasion.slice(indexOfFirstItemForOcassion, indexOfLastItemForOccasion);
+  const totalPagesForOccasion = Math.ceil(
+    itemsInCategoryForOccasion.length / itemsPerPageForOccasion
+  );
+  const indexOfLastItemForOccasion =
+    currentPageForOccasion * itemsPerPageForOccasion;
+  const indexOfFirstItemForOcassion =
+    indexOfLastItemForOccasion - itemsPerPageForOccasion;
+  const currentItemForOccasion = itemsInCategoryForOccasion.slice(
+    indexOfFirstItemForOcassion,
+    indexOfLastItemForOccasion
+  );
   // console.log(currentItem);
 
   const paginateForOccasion = (pageNumber) => {
@@ -1045,17 +1142,23 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
       setCurrentPageForOccasion(pageNumber);
     }
   };
-  const [classOfArrowForOccasion, setClassOFArrowForOccasion] = useState("d-none");
+  const [classOfArrowForOccasion, setClassOFArrowForOccasion] =
+    useState("d-none");
   // end of pagination
- async function getItemsForOccasions(e, categoryId) {
-    e.preventDefault()
+  async function getItemsForOccasions(e, categoryId) {
+    e.preventDefault();
     setLoadingForItemsForOccasion(true);
     try {
-      let {data} = await axios.get(`https://freelance1-production.up.railway.app/admin1/getItemOfOccasion/${categoryId}`)
+      let { data } = await axios.get(
+        `https://freelance1-production.up.railway.app/admin1/getItemOfOccasion/${categoryId}`
+      );
       // console.log(data);
       setLoadingForItemsForOccasion(false);
       setItemInCategoryForOccasion(data);
-      setCategoryIDForOccasion({ ...categroryIdForOccasion, categoryId: categoryId });
+      setCategoryIDForOccasion({
+        ...categroryIdForOccasion,
+        categoryId: categoryId,
+      });
       setClassForItemsForOccasion(
         "d-flex justify-content-center gap-3 flex-wrap position-relative"
       );
@@ -1065,8 +1168,8 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setLoadingForItemsForOccasion(false);
-        setItemInCategoryForOccasion([])
-        alert("no items in this occasion")
+        setItemInCategoryForOccasion([]);
+        alert("no items in this occasion");
       }
     }
   }
@@ -1078,10 +1181,10 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
     setSureDeleteItemForOccasion(
       "position-fixed top-50 start-50 translate-middle z-3 bg-white shadow rounded-3  text-black p-5"
     );
-  } 
+  }
   async function putStatusOfItemForOccasion(e, idOfItem) {
     console.log(idOfItem);
-    
+
     e.preventDefault();
     setStatusLoadingForOccasion(true);
     try {
@@ -1122,7 +1225,10 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
     // console.log(idOfItem);
   }
   function putSalePercentForOccasion(e) {
-    setSalePercentForOccasion({ ...salePercentForOccasion, discount: e.target.value });
+    setSalePercentForOccasion({
+      ...salePercentForOccasion,
+      discount: e.target.value,
+    });
     setSaleputtedForOccasion(false);
   }
   function CloseItemsInCategoryForOccasion() {
@@ -1132,7 +1238,7 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
       itemID: "",
       discount: 0,
     });
-    
+
     setClassOFArrowForOccasion("d-none ");
   }
   function putSalePercentItemIdForOccasion(itemID) {
@@ -1204,7 +1310,10 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
   async function deleteItemFromOneOccasion(e) {
     // console.log(itemID);
     e.preventDefault();
-    if (categroryIdForOccasion.itemID == "" || categroryIdForOccasion.categoryId == "") {
+    if (
+      categroryIdForOccasion.itemID == "" ||
+      categroryIdForOccasion.categoryId == ""
+    ) {
       alert("click on delete again please");
     } else {
       try {
@@ -1235,7 +1344,7 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
         );
         setSellerLoadingForOccasion(false);
         getItemsForOccasions(e, categroryIdForOccasion.categoryId);
-        showAlertMessage()
+        showAlertMessage();
       } catch (error) {
         setSellerLoadingForOccasion(false);
         console.error("Error updating best seller:", error);
@@ -1325,7 +1434,7 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
             Add Category
           </h3>
           <div className="d-flex justify-content-center align-items-center my-5">
-            <form onSubmit={sendCategoryName} className="w-50">
+            {/* <form onSubmit={sendCategoryName} className="w-50">
               <div className="mb-3">
                 <label className="form-label">name of category</label>
                 <input
@@ -1335,6 +1444,17 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
                   value={categoryName.name}
                   onChange={getCategoryName}
                 />
+                <label className="form-label mt-3" htmlFor="categoryImages">
+                    image
+                  </label>
+                  <input
+                    onChange={getCategoryName}
+                    type="file"
+                    className="form-control"
+                    id="categoryImages" // Unique id
+                    name="image"
+                    accept="image/*"
+                  />
               </div>
               {ErrorMessageForCategory == "" ? (
                 ""
@@ -1344,6 +1464,43 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
                 </div>
               )}
               {LoadingAddCategory ? (
+                <button className=" btn btn-primary px-4">
+                  <i className="fa solid fa-spinner fa-spin "></i>
+                </button>
+              ) : (
+                <button
+                  onClick={sendCategoryName}
+                  type="submit"
+                  className="btn btn-primary"
+                >
+                  add category
+                </button>
+              )}
+            </form> */}
+            <form onSubmit={sendCategoryName}>
+              <input
+                type="text"
+                name="name"
+                className="form-control"
+                value={categoryName.name}
+                onChange={getCategoryName}
+                placeholder="Category Name"
+              />
+              <input
+                type="file"
+                name="image"
+                className="form-control my-3"
+                accept="image/*"
+                onChange={handleImageUpload}
+              />
+              {ErrorMessageForCategory == "" ? (
+                ""
+              ) : (
+                <div className="my-3 text-danger text-center">
+                  {ErrorMessageForCategory}
+                </div>
+              )}
+             {LoadingAddCategory ? (
                 <button className=" btn btn-primary px-4">
                   <i className="fa solid fa-spinner fa-spin "></i>
                 </button>
@@ -1960,38 +2117,45 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
             Add occasion
           </h3>
           <div className="d-flex justify-content-center align-items-center my-5">
-            <form onSubmit={sendCategoryNameForOccasion} className="w-50">
-              <div className="mb-3">
-                <label className="form-label">name of occasion</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="name"
-                  value={categoryNameForOccasion.name}
-                  onChange={getCategoryNameForOccasion}
-                />
-              </div>
-              {ErrorMessageForCategoryForOccasion == "" ? (
-                ""
-              ) : (
-                <div className="my-3 text-danger text-center">
-                  {ErrorMessageForCategoryForOccasion}
-                </div>
-              )}
-              {LoadingAddCategoryForOccasion ? (
-                <button className=" btn btn-primary px-4">
-                  <i className="fa solid fa-spinner fa-spin "></i>
-                </button>
-              ) : (
-                <button
-                  onClick={sendCategoryNameForOccasion}
-                  type="submit"
-                  className="btn btn-primary"
-                >
-                  Add Occasion
-                </button>
-              )}
-            </form>
+          <form onSubmit={sendCategoryNameForOccasion} className="w-50">
+      <div className="mb-3">
+        <label className="form-label">Name of Occasion</label>
+        <input
+          type="text"
+          className="form-control"
+          name="name"
+          value={categoryNameForOccasion.name}
+          onChange={getCategoryNameForOccasion}
+        />
+      </div>
+      <div className="mb-3">
+        <label className="form-label" htmlFor="occasionImages">
+          Image
+        </label>
+        <input
+          onChange={getCategoryNameForOccasion}
+          type="file"
+          className="form-control"
+          id="occasionImages"
+          name="image"
+          accept="image/*"
+        />
+      </div>
+      {ErrorMessageForCategoryForOccasion && (
+        <div className="my-3 text-danger text-center">
+          {ErrorMessageForCategoryForOccasion}
+        </div>
+      )}
+      {LoadingAddCategoryForOccasion ? (
+        <button className="btn btn-primary px-4" disabled>
+          <i className="fa solid fa-spinner fa-spin"></i>
+        </button>
+      ) : (
+        <button type="submit" className="btn btn-primary">
+          Add Occasion
+        </button>
+      )}
+    </form>
           </div>
           {/* ---------------------------------------------- */}
           {/* show Occasion and delete from it  */}
@@ -2206,7 +2370,8 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
             Choose Occasion To Show Items
           </h3>
           <div className="container flex-wrap d-flex justify-content-center gap-3 py-5">
-            {showCategoryForOccasion === null || showCategoryForOccasion.length === 0 ? (
+            {showCategoryForOccasion === null ||
+            showCategoryForOccasion.length === 0 ? (
               <p className="text-center text-danger">
                 "There are no categories"
               </p>
@@ -2240,13 +2405,14 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
                   className="btn btn-close"
                 ></button>
               </div>
-              {currentItemForOccasion == null || currentItemForOccasion.length == 0 ? (
-                ''
+              {currentItemForOccasion == null ||
+              currentItemForOccasion.length == 0 ? (
+                ""
               ) : (
-                <div  className="d-flex justify-content-center position-relative gap-3 flex-wrap">
+                <div className="d-flex justify-content-center position-relative gap-3 flex-wrap">
                   {currentItemForOccasion.map((element, i) => (
                     <div
-                    key={i}
+                      key={i}
                       className="card widthOfCard my-5 position-relative"
                     >
                       <div className="position-absolute top-0 start-100 translate-middle">
@@ -2294,7 +2460,10 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
                           ) : (
                             <button
                               onClick={(e) =>
-                                handleSellerButtonClickForOccasion(e, element?._id)
+                                handleSellerButtonClickForOccasion(
+                                  e,
+                                  element?._id
+                                )
                               }
                               className={`btn ${
                                 element?.bestSeller === false
@@ -2327,7 +2496,8 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
                               OK
                             </button>
                           </div>
-                          {salePuttedForOccasion && salePuttedItemIdForOccasion === element._id
+                          {salePuttedForOccasion &&
+                          salePuttedItemIdForOccasion === element._id
                             ? "done"
                             : ""}
                           {element?.discount <= 0 ||
@@ -2413,7 +2583,10 @@ function removeCategoryIdForOccasion(categoryID, categoryName) {
                   system.{" "}
                 </p>
                 <div className="d-flex justify-content-center">
-                  <button onClick={deleteItemForOccasion} className="btn btn-primary ">
+                  <button
+                    onClick={deleteItemForOccasion}
+                    className="btn btn-primary "
+                  >
                     delete
                   </button>
                 </div>

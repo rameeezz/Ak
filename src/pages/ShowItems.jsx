@@ -9,7 +9,6 @@ export default function ShowItems() {
 
   // Destructure `id` from location.state, or set to undefined if state is null
   const { id } = location.state || {};
-  // console.log(id);
   function addToCart() {
     if (user == null) {
       navigate("/login");
@@ -30,6 +29,7 @@ export default function ShowItems() {
   // show items now
   useEffect(() => {
     getAllItems();
+    getSubCategories();
   }, []);
   const [allItems, setAllItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -102,7 +102,51 @@ export default function ShowItems() {
     setAllItems(filteredItems);
   };
 
-  
+  // get sub categories
+  const [allSubCategories, setAllSubCategories] = useState([]);
+  async function getSubCategories() {
+    try {
+      let { data } = await axios.get(
+        `https://freelance1-production.up.railway.app/customer/getSubCategories/${id}`
+      );
+      // console.log(data.getCategory);
+      setAllSubCategories(data.getCategory);
+      setErrorForAllItems("");
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        setErrorForAllItems("no items");
+      }
+    }
+  }
+  // for itmes in sub category
+  const [selectedOptionForSubCategory, setSelectedOptionForSubCategory] =
+    useState("");
+  // console.log(selectedOptionForSubCategory);
+  useEffect(() => {
+    itemsInSubCategory();
+  }, [selectedOptionForSubCategory]);
+  const handleSelectChangeForSubCategory = (event) => {
+    if (event.target.value === id) {
+      getAllItems();
+    } else {
+      setSelectedOptionForSubCategory(event.target.value);
+    }
+  };
+  async function itemsInSubCategory() {
+    try {
+      let { data } = await axios.get(
+        `https://freelance1-production.up.railway.app/customer/getItemsFromCategory/${selectedOptionForSubCategory}`
+      );
+      // console.log(data);
+      setAllItems(data);
+      setErrorForAllItems("");
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        setAllItems([]);
+        setErrorForAllItems("no items");
+      }
+    }
+  }
   return (
     <>
       <HeadOfPages />
@@ -128,23 +172,44 @@ export default function ShowItems() {
               <div className="ms-4 inSmallScreen">
                 Showing {currentPage} - {totalPages}
               </div>
+
+              <div className="me-4 d-flex justify-content-center align-items-center gap-2">
+                <p className="inSmallScreen">Filter by:</p>
+                <div>
+                  <select
+                    id="dropdown"
+                    className="form-select"
+                    value={selectedOptionForSubCategory}
+                    onChange={handleSelectChangeForSubCategory}
+                  >
+                    <option value={id}>All</option>
+                    {allSubCategories === null || allSubCategories.length === 0
+                      ? ""
+                      : allSubCategories.map((element, i) => (
+                          <option value={element._id} key={i}>
+                            {element.name}
+                          </option>
+                        ))}
+                  </select>
+                </div>
+              </div>
               <div className="me-4 d-flex justify-content-center align-items-center gap-2">
                 <p className="inSmallScreen">Sort by:</p>
                 <div>
-                <select
-                id="dropdown"
-                className="form-select"
-                value={selectedOption}
-                onChange={handleSelectChange}
-              >
-                <option value="" disabled>
-                  Recommended
-                </option>
-                <option value="option1">Name (A - Z)</option>
-                <option value="option2">Name (Z - A)</option>
-                <option value="option3">Price (Low - High)</option>
-                <option value="option4">Price (High - Low)</option>
-              </select>
+                  <select
+                    id="dropdown"
+                    className="form-select"
+                    value={selectedOption}
+                    onChange={handleSelectChange}
+                  >
+                    <option value="" disabled>
+                      Recommended
+                    </option>
+                    <option value="option1">Name (A - Z)</option>
+                    <option value="option2">Name (Z - A)</option>
+                    <option value="option3">Price (Low - High)</option>
+                    <option value="option4">Price (High - Low)</option>
+                  </select>
                 </div>
               </div>
             </div>
