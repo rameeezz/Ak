@@ -122,6 +122,7 @@ import BestSellerItems from './pages/BestSellerItems';
 import AllCategory from './pages/AllCategory';
 import AllOccasions from './pages/AllOccasions';
 import ShowItemsInOccasion from "./pages/ShowItemsInOccasion";
+import AllSpecialDeals from './pages/AllSpecialDeals';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -199,6 +200,7 @@ function App() {
         { path: "show-items-in-occasion", element: <ShowItemsInOccasion /> },
         { path: "all-category", element: <AllCategory /> },
         { path: "all-occasion", element: <AllOccasions /> },
+        { path: "all-special-deals", element: <AllSpecialDeals /> },
         { path: "best-sellers", element: <BestSellerItems user={user} /> },
         {
           path: "login",

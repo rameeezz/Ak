@@ -102,13 +102,13 @@
   font-size: 1.4rem;
 }
 /* occasion */
-.styleForoccasions{
+/* .styleForoccasions{
   width: 180px;
   height: 140px;
 }
 .responsiveTextForOccasion{
   font-size: 1.5rem;
-}
+} */
 @media (max-width: 576px) {
   .StyleForBestSeller {
     display: flex;
@@ -155,11 +155,11 @@
     font-size: 0.8rem;
     white-space: wrap;
   }
-  .styleForoccasions{
+  /* .styleForoccasions{
     width: 80px;
     height: 60px;
   }
   .responsiveTextForOccasion{
     font-size: 0.8rem;
-  }
+  } */
 }
