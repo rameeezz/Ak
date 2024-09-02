@@ -64,6 +64,9 @@
   right: 1%;
   cursor: pointer;
 }
+.responsive-for-i-head-page{
+  font-size: 1.5rem;
+}
 @media (max-width: 576px) {
   /* Small screens (sm) and below */
   .responsive-font-size-p {
@@ -174,5 +177,11 @@
     text-wrap: nowrap;
     font-size: 0.7rem !important;
     padding: 0px !important;
+  }.responsive-for-i-head-page{
+    font-size: 1.2rem;
+  }
+  .classforResponsive{
+    width: 100% !important;
+    margin-top: 16%;
   }
 }

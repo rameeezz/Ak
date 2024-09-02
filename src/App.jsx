@@ -123,6 +123,7 @@ import AllCategory from './pages/AllCategory';
 import AllOccasions from './pages/AllOccasions';
 import ShowItemsInOccasion from "./pages/ShowItemsInOccasion";
 import AllSpecialDeals from './pages/AllSpecialDeals';
+import SubCategoryItems from './pages/SubCategoryItems';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -197,6 +198,7 @@ function App() {
         },
         { path: "register", element: <Register /> },
         { path: "show-items", element: <ShowItems /> },
+        { path: "show-items-in-sub-category", element: <SubCategoryItems /> },
         { path: "show-items-in-occasion", element: <ShowItemsInOccasion /> },
         { path: "all-category", element: <AllCategory /> },
         { path: "all-occasion", element: <AllOccasions /> },

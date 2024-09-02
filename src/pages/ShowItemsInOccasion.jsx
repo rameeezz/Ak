@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import HeadOfPages from "./HeadOfPages";
 import  axios  from 'axios';
 
 export default function ShowItemsInOccasion() {
@@ -102,7 +101,6 @@ export default function ShowItemsInOccasion() {
   };
   return (
     <>
-      <HeadOfPages />
       <div className="container-xxl ">
         <div className="d-flex flex-column align-items-start justify-content-center mt-5 mb-4">
           <h2 className="responsive-font-size-h2-Home fw-bold">

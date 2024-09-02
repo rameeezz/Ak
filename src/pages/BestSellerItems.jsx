@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import HeadOfPages from "./HeadOfPages";
+
 
 export default function BestSellerItems({ user }) {
   let naviagte = useNavigate();
@@ -56,7 +56,6 @@ export default function BestSellerItems({ user }) {
   //   done -----------
   return (
     <>
-      <HeadOfPages />
       <div className="container mb-5">
         {/* Best seller  */}
         <div className="container-xxl ">
@@ -88,25 +87,25 @@ export default function BestSellerItems({ user }) {
                 key={i}
                 className="card widthOfHomeCard forBestSellerPageResponsive position-relative"
               >
-                 {element?.status === "in stock" ? (
-                    ""
-                  ) : (
-                    <div className="position-absolute start-2 top-4 styleForStock z-3">
-                      <span className="bg-[#D4B11C] text-white px-2 py-2 rounded-2">
-                        Out Of Stock
-                      </span>
-                    </div>
-                  )}
+                {element?.status === "in stock" ? (
+                  ""
+                ) : (
+                  <div className="position-absolute start-2 top-4 styleForStock z-3">
+                    <span className="bg-[#D4B11C] text-white px-2 py-2 rounded-2">
+                      Out Of Stock
+                    </span>
+                  </div>
+                )}
 
-{element?.discount === 0 ? (
-                    ""
-                  ) : (
-                    <div className="position-absolute styleForSale end-3 top-4 z-3">
-                      <span className="bg-danger text-white px-3 py-2 rounded-2">
-                        Sale
-                      </span>
-                    </div>
-                  )}
+                {element?.discount === 0 ? (
+                  ""
+                ) : (
+                  <div className="position-absolute styleForSale end-3 top-4 z-3">
+                    <span className="bg-danger text-white px-3 py-2 rounded-2">
+                      Sale
+                    </span>
+                  </div>
+                )}
 
                 <img
                   src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
@@ -115,23 +114,23 @@ export default function BestSellerItems({ user }) {
                 />
 
                 <div className="card-body responsiveForBestSellerPage">
-                {element?.discount === 0 ? (
-                      <h2 className="w-100 text-muted responsive-For-Card-h2">
+                  {element?.discount === 0 ? (
+                    <h2 className="w-100 text-muted responsive-For-Card-h2">
+                      {element?.lastPrice} EGP
+                    </h2>
+                  ) : (
+                    <div className="d-flex justify-content-center gap-1">
+                      <span className="strikethrough responsive-For-Card-h2">
+                        {element?.price}
+                      </span>
+                      <span className="text-muted responsive-For-Card-h2">
+                        ||
+                      </span>
+                      <p className="text-muted responsive-For-Card-h2">
                         {element?.lastPrice} EGP
-                      </h2>
-                    ) : (
-                      <div className="d-flex justify-content-center gap-1">
-                        <span className="strikethrough responsive-For-Card-h2">
-                          {element?.price}
-                        </span>
-                        <span className="text-muted responsive-For-Card-h2">
-                          ||
-                        </span>
-                        <p className="text-muted responsive-For-Card-h2">
-                          {element?.lastPrice} EGP
-                        </p>
-                      </div>
-                    )}
+                      </p>
+                    </div>
+                  )}
                   <h5 className="card-title responsive-For-Card-h2-Best-Seller">
                     {element?.name}
                   </h5>

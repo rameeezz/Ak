@@ -2,12 +2,17 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-export default function ShowItems() {
+
+export default function SubCategoryItems() {
   const location = useLocation();
   const navigate = useNavigate();
-
+  function goHome() {
+    navigate("/home");
+  }
   // Destructure `id` from location.state, or set to undefined if state is null
   const { id } = location.state || {};
+  console.log(id);
+
   function addToCart() {
     if (user == null) {
       navigate("/login");
@@ -25,11 +30,10 @@ export default function ShowItems() {
   if (!id) {
     return null; // Optionally render nothing or a fallback UI until redirect
   }
-  // show items now
+
   useEffect(() => {
     getAllItems();
-    getSubCategories();
-  }, []);
+  }, [id]);
   const [allItems, setAllItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
@@ -51,26 +55,21 @@ export default function ShowItems() {
     setLoadingAllItems(true);
     try {
       let { data } = await axios.get(
-        `https://freelance1-production.up.railway.app/customer/getItemFromMainCategory/${id}`
+        `https://freelance1-production.up.railway.app/customer/getItemsFromCategory/${id}`
       );
-      // console.log(data.items);
+      console.log(data);
       setLoadingAllItems(false);
       setErrorForAllItems("");
-      setAllItems(data.items);
+      setAllItems(data);
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setLoadingAllItems(false);
         setErrorForAllItems("no items");
+        setAllItems([])
       }
     }
   }
-  function goHome() {
-    navigate("/home");
-  }
-  // dorpDownlIst
   const [selectedOption, setSelectedOption] = useState("");
-  // console.log(selectedOption);
-
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -101,52 +100,6 @@ export default function ShowItems() {
     setAllItems(filteredItems);
   };
 
-  // get sub categories
-  const [allSubCategories, setAllSubCategories] = useState([]);
-  async function getSubCategories() {
-    try {
-      let { data } = await axios.get(
-        `https://freelance1-production.up.railway.app/customer/getSubCategories/${id}`
-      );
-      // console.log(data.getCategory);
-      setAllSubCategories(data.getCategory);
-      setErrorForAllItems("");
-    } catch (error) {
-      if (error.response && error.response.status === 404) {
-        setErrorForAllItems("no items");
-      }
-    }
-  }
-  // for itmes in sub category
-  const [selectedOptionForSubCategory, setSelectedOptionForSubCategory] =
-    useState("");
-  // console.log(selectedOptionForSubCategory);
-  useEffect(() => {
-    itemsInSubCategory();
-  }, [selectedOptionForSubCategory]);
-  const handleSelectChangeForSubCategory = (event) => {
-    if (event.target.value === id) {
-      getAllItems();
-      setSelectedOptionForSubCategory(event.target.value)
-    } else {
-      setSelectedOptionForSubCategory(event.target.value);
-    }
-  };
-  async function itemsInSubCategory() {
-    try {
-      let { data } = await axios.get(
-        `https://freelance1-production.up.railway.app/customer/getItemsFromCategory/${selectedOptionForSubCategory}`
-      );
-      // console.log(data);
-      setAllItems(data);
-      setErrorForAllItems("");
-    } catch (error) {
-      if (error.response && error.response.status === 404) {
-        setAllItems([]);
-        setErrorForAllItems("no items");
-      }
-    }
-  }
   return (
     <>
       <div className="container-xxl ">
@@ -172,26 +125,6 @@ export default function ShowItems() {
                 Showing {currentPage} - {totalPages}
               </div>
 
-              <div className="me-4 d-flex justify-content-center align-items-center gap-2">
-                <p className="inSmallScreen">Filter by:</p>
-                <div>
-                  <select
-                    id="dropdown"
-                    className="form-select"
-                    value={selectedOptionForSubCategory}
-                    onChange={handleSelectChangeForSubCategory}
-                  >
-                    <option value={id}>All</option>
-                    {allSubCategories === null || allSubCategories.length === 0
-                      ? ""
-                      : allSubCategories.map((element, i) => (
-                          <option value={element._id} key={i}>
-                            {element.name}
-                          </option>
-                        ))}
-                  </select>
-                </div>
-              </div>
               <div className="me-4 d-flex justify-content-center align-items-center gap-2">
                 <p className="inSmallScreen">Sort by:</p>
                 <div>

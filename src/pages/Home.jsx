@@ -527,7 +527,7 @@ export default function Home({ user }) {
           {specialDealsOccasion === null || specialDealsOccasion.length === 0 ? (
            ""
           ) : (
-            specialDealsOccasion.slice(4,8 ).map((element, i) => (
+            specialDealsOccasion.slice(0,4 ).map((element, i) => (
               <div
                 key={i}
                 className="styleForContentDiv border-2 border-[#D4B11C] rounded"

@@ -100,62 +100,6 @@ export default function Admin1({ logOut }) {
     return scheme.validate(AdminInfo, { abortEarly: false });
   }
   // done admin  *********************
-  // work of add category ********
-  //   const [categoryName, setCategoryName] = useState({
-  //     name: "",
-  //     image: ""
-  //   });
-  // console.log(categoryName);
-
-  //   function getCategoryName(e) {
-  //     const myCategory = { ...categoryName };
-  //     myCategory[e.target.name] = e.target.value;
-  //     // console.log(myCategory);
-  //     setCategoryName(myCategory);
-  //     setErrorMessageForCategory("");
-  //   }
-  //   const [LoadingAddCategory, setLoadingAddCategory] = useState(false);
-  //   const [ErrorMessageForCategory, setErrorMessageForCategory] = useState("");
-  //   async function sendCategoryName(e) {
-  //     e.preventDefault();
-  //     if (categoryName.name === "") {
-  //       alert("please write name of category");
-  //     } else {
-  //       setLoadingAddCategory(true);
-  //       try {
-  //         let { data } = await axios.post(
-  //           "https://freelance1-production.up.railway.app/admin1/addCategory",
-  //           categoryName
-  //         );
-  //         // console.log(data);
-
-  //         setLoadingAddCategory(false);
-  //         // alert("done");
-  //         setErrorMessageForCategory("");
-  //         showAlertMessage();
-  //         setCategoryName({
-  //           name: "",
-  //           image:""
-  //         });
-  //       } catch (error) {
-  //         if (error.response && error.response.status === 404) {
-  //           // console.log("m4 dayf");
-  //           setErrorMessageForCategory("try again later");
-  //           setLoadingAddCategory(false);
-  //         }
-  //         if (error.response && error.response.status === 422) {
-  //           // console.log("m4 dayf");
-  //           setErrorMessageForCategory("Category creation failed.");
-  //           setLoadingAddCategory(false);
-  //         }
-  //         if (error.response && error.response.status === 412) {
-  //           // console.log("m4 dayf");
-  //           setErrorMessageForCategory("This category already exists.");
-  //           setLoadingAddCategory(false);
-  //         }
-  //       }
-  //     }
-  //   }
   const [categoryName, setCategoryName] = useState({
     name: "",
   });

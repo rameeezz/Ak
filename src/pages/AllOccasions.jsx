@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import HeadOfPages from './HeadOfPages';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 export default function AllOccasions() {
@@ -34,7 +33,7 @@ export default function AllOccasions() {
   }
   return (
     <>
-     <HeadOfPages />
+
       <div className="container-xxl ">
         <div className="d-flex flex-column align-items-start justify-content-center mt-5 mb-4">
           <h2 className="responsive-font-size-h2-Home fw-bold">

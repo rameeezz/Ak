@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import HeadOfPages from "./HeadOfPages";
 import axios from "axios";
 import "../css/Home.css";
 import PHoto1 from "../assets/card photo/2.jpeg";
@@ -39,7 +38,7 @@ export default function AllCategory() {
   }
   return (
     <>
-      <HeadOfPages />
+
       <div className="container-xxl ">
         <div className="d-flex flex-column align-items-start justify-content-center mt-5 mb-4">
           <h2 className="responsive-font-size-h2-Home fw-bold">
