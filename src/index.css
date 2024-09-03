@@ -76,6 +76,13 @@
 .firstButtonInSmallScreen{
   width: 35%;
 }
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.active-thumbnail {
+  border: 2px solid #D4B11C; /* Example for highlighting the active thumbnail */
+}
 @media (max-width: 576px) {
   /* Small screens (sm) and below */
   .responsive-font-size-p {
@@ -223,4 +230,11 @@
   .forSmallScreenDiv{
     margin: 0px !important;
   }
+  .buttonForSmallScreen{
+    border-radius: 6%;
+    -webkit-border-radius: 6%;
+    -moz-border-radius: 6%;
+    -ms-border-radius: 6%;
+    -o-border-radius: 6%;
+}
 }
