@@ -83,6 +83,18 @@
 .active-thumbnail {
   border: 2px solid #D4B11C; /* Example for highlighting the active thumbnail */
 }
+.widthOfPhotosForSmallPages {
+  overflow-x: auto; /* Enable horizontal scrolling */
+  white-space: nowrap; /* Prevent wrapping */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.widthOfPhotosForSmallPages::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+
 @media (max-width: 576px) {
   /* Small screens (sm) and below */
   .responsive-font-size-p {
@@ -211,7 +223,8 @@
   }
   .smallPhotosStyleItemPage{
     height: 2px;
-    width: 20px !important;
+    min-width: 20px !important;
+    max-width: 20px !important;
   }
   .widthOfPhotosForSmallPages{
     padding: 0 15px 0 15px;

@@ -15,6 +15,9 @@ export default function ShowItems({user}) {
       alert("نتمنى لكم حياة افضل ");
     }
   }
+  function ShowItemContent(itemDetails) {
+    navigate("/item-content", { state: { items: itemDetails } });
+  }
   useEffect(() => {
     if (!id) {
       // If no ID is found, navigate to another page
@@ -225,6 +228,9 @@ export default function ShowItems({user}) {
         ) : (
           currentItem.map((element, i) => (
             <div
+            onClick={() => {
+              ShowItemContent(element);
+            }}
               key={i}
               className="card widthOfHomeCard forBestSellerPageResponsive position-relative"
             >

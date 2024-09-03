@@ -2,8 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
-export default function AllSpecialDeals({user}) {
+export default function AllSpecialDeals({ user }) {
   let navigate = useNavigate();
   function addToCart() {
     if (user == null) {
@@ -16,15 +15,17 @@ export default function AllSpecialDeals({user}) {
   function goHome() {
     navigate("/home");
   }
+  function ShowItemContent(itemDetails) {
+    navigate("/item-content", { state: { items: itemDetails } });
+  }
   useEffect(() => {
     getSpecialDeals();
   }, []);
   const [SpecialDealsOccasion, setSpecialDealsOccasion] = useState([]);
   const [SpecialDealsCategory, setSpecialDealsCategory] = useState([]);
   console.log();
-  
-  const [loadingSpecialDeals, setLoadingSpecialDeals] =
-    useState(false);
+
+  const [loadingSpecialDeals, setLoadingSpecialDeals] = useState(false);
   const [errorMessageForSpecialDeals, setErrorMessageForSpecialDeals] =
     useState("");
   async function getSpecialDeals() {
@@ -34,7 +35,7 @@ export default function AllSpecialDeals({user}) {
         "https://freelance1-production.up.railway.app/customer/getDiscounts"
       );
       setSpecialDealsOccasion(data.itemsOfOccasions);
-      setSpecialDealsCategory(data.items)
+      setSpecialDealsCategory(data.items);
       //   console.log(data);
       setLoadingSpecialDeals(false);
       setErrorMessageForSpecialDeals("");
@@ -63,8 +64,9 @@ export default function AllSpecialDeals({user}) {
         </div>
       </div>
       <div className="container mb-5">
-      <div className="d-flex justify-content-center  gap-4 flex-wrap">
-          {SpecialDealsCategory === null || SpecialDealsCategory.length === 0 ? (
+        <div className="d-flex justify-content-center  gap-4 flex-wrap">
+          {SpecialDealsCategory === null ||
+          SpecialDealsCategory.length === 0 ? (
             loadingSpecialDeals ? (
               <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
             ) : (
@@ -73,6 +75,9 @@ export default function AllSpecialDeals({user}) {
           ) : (
             SpecialDealsCategory.map((element, i) => (
               <div
+                onClick={() => {
+                  ShowItemContent(element);
+                }}
                 key={i}
                 className="card widthOfHomeCard forBestSellerPageResponsive position-relative"
               >
@@ -141,6 +146,9 @@ export default function AllSpecialDeals({user}) {
             ? ""
             : SpecialDealsOccasion.map((element, i) => (
                 <div
+                  onClick={() => {
+                    ShowItemContent(element);
+                  }}
                   key={i}
                   className="card forBestSellerPageResponsive widthOfHomeCard position-relative"
                 >

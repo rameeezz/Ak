@@ -12,6 +12,9 @@ export default function BestSellerItems({ user }) {
       alert("نتمنى لكم حياة افضل ");
     }
   }
+  function ShowItemContent(itemDetails) {
+    naviagte("/item-content", { state: { items: itemDetails } });
+  }
   useEffect(() => {
     getCategoryBestSeller();
     getOccasionBestSeller();
@@ -84,6 +87,9 @@ export default function BestSellerItems({ user }) {
           ) : (
             bestSellerCategory.map((element, i) => (
               <div
+              onClick={() => {
+                ShowItemContent(element);
+              }}
                 key={i}
                 className="card widthOfHomeCard forBestSellerPageResponsive position-relative"
               >
@@ -152,6 +158,9 @@ export default function BestSellerItems({ user }) {
             ? ""
             : bestSellerOccasion.map((element, i) => (
                 <div
+                onClick={() => {
+                  ShowItemContent(element);
+                }}
                   key={i}
                   className="card forBestSellerPageResponsive widthOfHomeCard position-relative"
                 >
