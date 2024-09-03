@@ -240,7 +240,7 @@ export default function Home({ user }) {
                       </div>
                     )}
                     <h2 className="w-100 mt-1 responsive-For-Card-h2">
-                      {element?.name}
+                      {element?.name.slice(0,37)}
                     </h2>
                     {/* <h2 className="w-100 mt-1 responsive-For-Card-p">
                       {element?.description.slice(0, 32)}
@@ -314,7 +314,7 @@ export default function Home({ user }) {
                         </div>
                       )}
                       <h2 className="w-100 mt-1 responsive-For-Card-h2">
-                        {element?.name}
+                      {element?.name.slice(0,37)}
                       </h2>
                       {/* <h2 className="w-100 mt-1 responsive-For-Card-p">
                         {element?.description.slice(0, 25)}
@@ -519,7 +519,7 @@ export default function Home({ user }) {
                       </div>
                     )}
                     <h2 className="w-100 mt-1 responsive-For-Card-h2">
-                      {element?.name}
+                    {element?.name.slice(0,37)}
                     </h2>
                     {/* <h2 className="w-100 mt-1 responsive-For-Card-p">
                       {element?.description.slice(0, 32)}
@@ -593,7 +593,7 @@ export default function Home({ user }) {
                         </div>
                       )}
                       <h2 className="w-100 mt-1 responsive-For-Card-h2">
-                        {element?.name}
+                      {element?.name.slice(0,37)}
                       </h2>
                       {/* <h2 className="w-100 mt-1 responsive-For-Card-p">
                         {element?.description.slice(0, 32)}
