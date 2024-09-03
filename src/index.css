@@ -67,6 +67,15 @@
 .responsive-for-i-head-page{
   font-size: 1.5rem;
 }
+.responsive-font-size-p-items{
+  font-size: 1.2rem;
+}
+.heightOfImageInItems{
+  height: 450px;
+}
+.firstButtonInSmallScreen{
+  width: 35%;
+}
 @media (max-width: 576px) {
   /* Small screens (sm) and below */
   .responsive-font-size-p {
@@ -183,5 +192,35 @@
   .classforResponsive{
     width: 100% !important;
     margin-top: 16%;
+  }
+  .forSmallScreenButton{
+    flex-direction: column !important;
+  }
+  .responsive-font-size-p-items{
+    font-size: 0.9rem;
+  }
+  .heightOfImageInItems{
+    height: 200px !important;
+  }
+  .smallPhotosStyleItemPage{
+    height: 2px;
+    width: 20px !important;
+  }
+  .widthOfPhotosForSmallPages{
+    padding: 0 15px 0 15px;
+  }
+  .forSmallScreenItemPage{
+    flex-direction: column !important;
+    align-items: center;
+  }
+  .cardOfContentInSmallScreen{
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+  }
+  .firstButtonInSmallScreen{
+    width: 100%;
+  }
+  .forSmallScreenDiv{
+    margin: 0px !important;
   }
 }

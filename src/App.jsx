@@ -124,6 +124,7 @@ import AllOccasions from './pages/AllOccasions';
 import ShowItemsInOccasion from "./pages/ShowItemsInOccasion";
 import AllSpecialDeals from './pages/AllSpecialDeals';
 import SubCategoryItems from './pages/SubCategoryItems';
+import ItemContent from './pages/ItemContent';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -197,13 +198,14 @@ function App() {
           ),
         },
         { path: "register", element: <Register /> },
-        { path: "show-items", element: <ShowItems /> },
-        { path: "show-items-in-sub-category", element: <SubCategoryItems /> },
-        { path: "show-items-in-occasion", element: <ShowItemsInOccasion /> },
+        { path: "show-items", element: <ShowItems user={user}/> },
+        { path: "show-items-in-sub-category", element: <SubCategoryItems user={user}/> },
+        { path: "show-items-in-occasion", element: <ShowItemsInOccasion user={user}/> },
         { path: "all-category", element: <AllCategory /> },
         { path: "all-occasion", element: <AllOccasions /> },
-        { path: "all-special-deals", element: <AllSpecialDeals /> },
+        { path: "all-special-deals", element: <AllSpecialDeals user={user}/> },
         { path: "best-sellers", element: <BestSellerItems user={user} /> },
+        { path: "item-content", element: <ItemContent user={user} /> },
         {
           path: "login",
           element: <LogIn saveUser={SaveUserData} userRole={user} />,

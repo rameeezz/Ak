@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-export default function AllSpecialDeals() {
+export default function AllSpecialDeals({user}) {
   let navigate = useNavigate();
   function addToCart() {
     if (user == null) {

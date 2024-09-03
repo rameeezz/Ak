@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import  axios  from 'axios';
 
-export default function ShowItemsInOccasion() {
+export default function ShowItemsInOccasion({user}) {
   const location = useLocation();
   const navigate = useNavigate();
   // Destructure `id` from location.state, or set to undefined if state is null

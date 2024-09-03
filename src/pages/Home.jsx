@@ -16,6 +16,9 @@ export default function Home({ user }) {
       alert("نتمنى لكم حياة افضل ");
     }
   }
+  function ShowItemContent(itemDetails) {
+    navigate("/item-content", { state: { items: itemDetails } });
+  }
   // get Best Seller for Category
   const [bestSellerCategory, setBestSellerCategory] = useState([]);
   const [loadingBestSellerCategory, setLoadingBestSellerCategroy] =
@@ -112,7 +115,7 @@ export default function Home({ user }) {
         "https://freelance1-production.up.railway.app/customer/getOccasions"
       );
       // console.log(data);
-      
+
       setAllOccasion(data);
       setLoadingForOcassion(false);
     } catch (error) {
@@ -130,12 +133,11 @@ export default function Home({ user }) {
   // special Deals
   const [specialDeals, setSpecialDeals] = useState([]);
   // console.log(specialDeals);
-  
+
   const [specialDealsOccasion, setSpecialDealsOccasion] = useState([]);
   // console.log(specialDealsOccasion);
-  
-  const [loadingSpecialDeals, setLoadingSpecialDeals] =
-    useState(false);
+
+  const [loadingSpecialDeals, setLoadingSpecialDeals] = useState(false);
   const [errorMessageForSpecialDeals, setErrorMessageForSpecialDeals] =
     useState("");
   async function getSpecialDeals() {
@@ -145,7 +147,7 @@ export default function Home({ user }) {
         "https://freelance1-production.up.railway.app/customer/getDiscounts"
       );
       setSpecialDeals(data.itemsOfOccasions);
-      setSpecialDealsOccasion(data.items)
+      setSpecialDealsOccasion(data.items);
       // console.log(data);
       setLoadingSpecialDeals(false);
       setErrorMessageForSpecialDeals("");
@@ -186,6 +188,9 @@ export default function Home({ user }) {
           ) : (
             bestSellerCategory.slice(0, 4).map((element, i) => (
               <div
+                onClick={() => {
+                  ShowItemContent(element);
+                }}
                 key={i}
                 className="styleForContentDiv border-2 border-[#D4B11C] rounded"
               >
@@ -237,9 +242,9 @@ export default function Home({ user }) {
                     <h2 className="w-100 mt-1 responsive-For-Card-h2">
                       {element?.name}
                     </h2>
-                    <h2 className="w-100 mt-1 responsive-For-Card-p">
+                    {/* <h2 className="w-100 mt-1 responsive-For-Card-p">
                       {element?.description.slice(0, 32)}
-                    </h2>
+                    </h2> */}
                   </div>
                   <div className="d-flex justify-content-center align-items-center">
                     <button
@@ -257,6 +262,9 @@ export default function Home({ user }) {
             ? ""
             : bestSellerOccasion.slice(0, 4).map((element, i) => (
                 <div
+                  onClick={() => {
+                    ShowItemContent(element);
+                  }}
                   key={i}
                   className="styleForContentDiv border-2 border-[#D4B11C] rounded"
                 >
@@ -308,9 +316,9 @@ export default function Home({ user }) {
                       <h2 className="w-100 mt-1 responsive-For-Card-h2">
                         {element?.name}
                       </h2>
-                      <h2 className="w-100 mt-1 responsive-For-Card-p">
+                      {/* <h2 className="w-100 mt-1 responsive-For-Card-p">
                         {element?.description.slice(0, 25)}
-                      </h2>
+                      </h2> */}
                     </div>
                     <div className="d-flex justify-content-center align-items-center">
                       <button
@@ -393,7 +401,7 @@ export default function Home({ user }) {
           </div>
         </div>
         <div className="d-flex justify-content-center gap-2 flex-row">
-        <div className="w-25 rounded shadow forSmallScreenCategoryImage">
+          <div className="w-25 rounded shadow forSmallScreenCategoryImage">
             <img src={PHoto1} alt="" className="rounded w-100 h-100" />
           </div>
           <div className="d-flex flex-row justify-content-left align-items-center gap-3 overflow-x-scroll removeScrollBardFromCAtegroy w-100 cursorPOinter">
@@ -434,7 +442,9 @@ export default function Home({ user }) {
         </div>
         {/* special deals */}
         <div className="d-flex flex-column align-items-center justify-content-center mt-5 mb-4">
-          <h2 className="responsive-font-size-h2-Home fw-bold">Special Deals</h2>
+          <h2 className="responsive-font-size-h2-Home fw-bold">
+            Special Deals
+          </h2>
           <div className="w-100 d-flex justify-content-center position-relative">
             <p>| Indulge in Nature's Blooming Beauties |</p>
             <div
@@ -457,6 +467,9 @@ export default function Home({ user }) {
           ) : (
             specialDeals.slice(0, 4).map((element, i) => (
               <div
+                onClick={() => {
+                  ShowItemContent(element);
+                }}
                 key={i}
                 className="styleForContentDiv border-2 border-[#D4B11C] rounded"
               >
@@ -508,9 +521,9 @@ export default function Home({ user }) {
                     <h2 className="w-100 mt-1 responsive-For-Card-h2">
                       {element?.name}
                     </h2>
-                    <h2 className="w-100 mt-1 responsive-For-Card-p">
+                    {/* <h2 className="w-100 mt-1 responsive-For-Card-p">
                       {element?.description.slice(0, 32)}
-                    </h2>
+                    </h2> */}
                   </div>
                   <div className="d-flex justify-content-center align-items-center">
                     <button
@@ -524,78 +537,79 @@ export default function Home({ user }) {
               </div>
             ))
           )}
-          {specialDealsOccasion === null || specialDealsOccasion.length === 0 ? (
-           ""
-          ) : (
-            specialDealsOccasion.slice(0,4 ).map((element, i) => (
-              <div
-                key={i}
-                className="styleForContentDiv border-2 border-[#D4B11C] rounded"
-              >
-                {element?.status === "in stock" ? (
-                  ""
-                ) : (
-                  <div className="position-absolute start-2 top-4 styleForStock z-3">
-                    <span className="bg-[#D4B11C] text-white px-2 py-2 rounded-2">
-                      Out Of Stock
-                    </span>
-                  </div>
-                )}
-                {element?.discount === 0 ? (
-                  ""
-                ) : (
-                  <div className="position-absolute styleForSale end-3 top-4 z-3">
-                    <span className="bg-danger text-white px-3 py-2 rounded-2">
-                      Sale
-                    </span>
-                  </div>
-                )}
+          {specialDealsOccasion === null || specialDealsOccasion.length === 0
+            ? ""
+            : specialDealsOccasion.slice(0, 4).map((element, i) => (
+                <div
+                  onClick={() => {
+                    ShowItemContent(element);
+                  }}
+                  key={i}
+                  className="styleForContentDiv border-2 border-[#D4B11C] rounded"
+                >
+                  {element?.status === "in stock" ? (
+                    ""
+                  ) : (
+                    <div className="position-absolute start-2 top-4 styleForStock z-3">
+                      <span className="bg-[#D4B11C] text-white px-2 py-2 rounded-2">
+                        Out Of Stock
+                      </span>
+                    </div>
+                  )}
+                  {element?.discount === 0 ? (
+                    ""
+                  ) : (
+                    <div className="position-absolute styleForSale end-3 top-4 z-3">
+                      <span className="bg-danger text-white px-3 py-2 rounded-2">
+                        Sale
+                      </span>
+                    </div>
+                  )}
 
-                <div className="upperCard">
-                  <img
-                    src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
-                    alt=""
-                    className="w-100 h-100 ScaleForPhoto rounded "
-                  />
-                </div>
-                <div className="lowerCard">
-                  <div className="d-flex justify-content-start flex-wrap">
-                    {element?.discount === 0 ? (
-                      <h2 className="w-100 text-muted responsive-For-Card-h2">
-                        {element?.lastPrice} EGP
-                      </h2>
-                    ) : (
-                      <div className="d-flex justify-content-center gap-1">
-                        <span className="strikethrough responsive-For-Card-h2">
-                          {element?.price}
-                        </span>
-                        <span className="text-muted responsive-For-Card-h2">
-                          ||
-                        </span>
-                        <p className="text-muted responsive-For-Card-h2">
+                  <div className="upperCard">
+                    <img
+                      src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
+                      alt=""
+                      className="w-100 h-100 ScaleForPhoto rounded "
+                    />
+                  </div>
+                  <div className="lowerCard">
+                    <div className="d-flex justify-content-start flex-wrap">
+                      {element?.discount === 0 ? (
+                        <h2 className="w-100 text-muted responsive-For-Card-h2">
                           {element?.lastPrice} EGP
-                        </p>
-                      </div>
-                    )}
-                    <h2 className="w-100 mt-1 responsive-For-Card-h2">
-                      {element?.name}
-                    </h2>
-                    <h2 className="w-100 mt-1 responsive-For-Card-p">
-                      {element?.description.slice(0, 32)}
-                    </h2>
-                  </div>
-                  <div className="d-flex justify-content-center align-items-center">
-                    <button
-                      onClick={addToCart}
-                      className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
-                    >
-                      Add to Cart
-                    </button>
+                        </h2>
+                      ) : (
+                        <div className="d-flex justify-content-center gap-1">
+                          <span className="strikethrough responsive-For-Card-h2">
+                            {element?.price}
+                          </span>
+                          <span className="text-muted responsive-For-Card-h2">
+                            ||
+                          </span>
+                          <p className="text-muted responsive-For-Card-h2">
+                            {element?.lastPrice} EGP
+                          </p>
+                        </div>
+                      )}
+                      <h2 className="w-100 mt-1 responsive-For-Card-h2">
+                        {element?.name}
+                      </h2>
+                      {/* <h2 className="w-100 mt-1 responsive-For-Card-p">
+                        {element?.description.slice(0, 32)}
+                      </h2> */}
+                    </div>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <button
+                        onClick={addToCart}
+                        className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
+                      >
+                        Add to Cart
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))
-          )}
+              ))}
         </div>
       </div>
     </>

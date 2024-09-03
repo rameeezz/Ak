@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-export default function ShowItems() {
+export default function ShowItems({user}) {
   const location = useLocation();
   const navigate = useNavigate();
 

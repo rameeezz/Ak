@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 
-export default function SubCategoryItems() {
+export default function SubCategoryItems({user}) {
   const location = useLocation();
   const navigate = useNavigate();
   function goHome() {
@@ -11,7 +11,7 @@ export default function SubCategoryItems() {
   }
   // Destructure `id` from location.state, or set to undefined if state is null
   const { id } = location.state || {};
-  console.log(id);
+  // console.log(id);
 
   function addToCart() {
     if (user == null) {
