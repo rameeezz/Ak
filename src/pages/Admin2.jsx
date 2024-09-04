@@ -461,7 +461,11 @@ export default function Admin2({ logOut }) {
         showAlertMessage();
         setSureDeleteItemFromOneCategory("d-none");
         getItems(e, categroryId.categoryId);
-      } catch (error) {}
+      } catch (error) {
+        if (error.response && error.response.status === 404 ) {
+          alert("delete it from X button")
+        }
+      }
     }
   }
   // **********************************
@@ -868,7 +872,11 @@ async function deleteItemFromOneOccasion(e) {
       showAlertMessage();
       setSureDeleteItemFromOccasion("d-none");
       getItemsForOccasions(e, categroryIdForOccasion.categoryId);
-    } catch (error) {}
+    } catch (error) {
+      if (error.response && error.response.status === 404 ) {
+        alert("delete it from X button")
+      }
+    }
   }
 }
 function closeSureBoxOFitemForOccasion() {
