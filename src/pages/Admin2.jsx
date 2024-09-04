@@ -182,7 +182,7 @@ export default function Admin2({ logOut }) {
         showAlertMessage();
       } catch (error) {
         if (error.response && error.response.status === 422) {
-          setErrorMessageForItem("name already exist.");
+          setErrorMessageForItem("you should choose category.");
           setIsLoading(false);
         }
         if (error.response && error.response.status === 404) {
@@ -634,7 +634,7 @@ async function sendItemDetailForOccasion(e) {
       showAlertMessage();
     } catch (error) {
       if (error.response && error.response.status === 422) {
-        setErrorMessageForItemForOccasion("name already exist.");
+        setErrorMessageForItemForOccasion("you should choose occasion.");
       } else if (error.response && error.response.status === 404) {
         alert("name is already exist.");
       } else if (error.response && error.response.status === 500) {

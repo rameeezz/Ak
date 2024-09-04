@@ -441,7 +441,7 @@ export default function Admin1({ logOut }) {
         showAlertMessage();
       } catch (error) {
         if (error.response && error.response.status === 422) {
-          setErrorMessageForItem("name already exist.");
+          setErrorMessageForItem("you should choose category.");
           setIsLoading(false);
         }
         if (error.response && error.response.status === 404) {
@@ -1015,7 +1015,7 @@ export default function Admin1({ logOut }) {
         showAlertMessage();
       } catch (error) {
         if (error.response && error.response.status === 422) {
-          setErrorMessageForItemForOccasion("name already exist.");
+          setErrorMessageForItemForOccasion("you should choose occasion.");
         } else if (error.response && error.response.status === 404) {
           alert("name is already exist.");
         } else if (error.response && error.response.status === 500) {
@@ -1378,49 +1378,6 @@ export default function Admin1({ logOut }) {
             Add Category
           </h3>
           <div className="d-flex justify-content-center align-items-center my-5">
-            {/* <form onSubmit={sendCategoryName} className="w-50">
-              <div className="mb-3">
-                <label className="form-label">name of category</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="name"
-                  value={categoryName.name}
-                  onChange={getCategoryName}
-                />
-                <label className="form-label mt-3" htmlFor="categoryImages">
-                    image
-                  </label>
-                  <input
-                    onChange={getCategoryName}
-                    type="file"
-                    className="form-control"
-                    id="categoryImages" // Unique id
-                    name="image"
-                    accept="image/*"
-                  />
-              </div>
-              {ErrorMessageForCategory == "" ? (
-                ""
-              ) : (
-                <div className="my-3 text-danger text-center">
-                  {ErrorMessageForCategory}
-                </div>
-              )}
-              {LoadingAddCategory ? (
-                <button className=" btn btn-primary px-4">
-                  <i className="fa solid fa-spinner fa-spin "></i>
-                </button>
-              ) : (
-                <button
-                  onClick={sendCategoryName}
-                  type="submit"
-                  className="btn btn-primary"
-                >
-                  add category
-                </button>
-              )}
-            </form> */}
             <form onSubmit={sendCategoryName}>
               <input
                 type="text"
