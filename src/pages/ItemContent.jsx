@@ -143,6 +143,12 @@ export default function ItemContent({ user }) {
                   ))}
             </div>
           </div>
+          <div className="w-100 d-flex justify-content-center mb-3 responsive-font-size-p-items">
+          <p className="text-center text-muted ">
+              {" "}
+              Note: Double tab to open image larger
+            </p>
+          </div>
           <div className="d-flex flex-column justify-content-start align-items-center w-50 my-5 cardOfContentInSmallScreen gap-3">
             <div className="mb-3 mt-5 forSmallScreenDiv">
               <h2 className="responsive-font-size-h1 text-center">
@@ -172,10 +178,7 @@ export default function ItemContent({ user }) {
             {/* <div className="d-flex flex-row justify-content-start">
             <p>Pay in installments with:</p>
           </div> */}
-            <p className="text-center text-muted ">
-              {" "}
-              Note: Double tab to open image larger
-            </p>
+            
           </div>
         </div>
         <div className={classToShowImage}>
