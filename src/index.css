@@ -250,4 +250,10 @@
     -ms-border-radius: 6%;
     -o-border-radius: 6%;
 }
+.inSmallScreenWindowImage{
+  width: 100% !important;
+}
+.inSmallScreenInsideWindowImage{
+  width: 75% !important;
+}
 }

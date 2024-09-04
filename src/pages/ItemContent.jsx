@@ -14,11 +14,12 @@ export default function ItemContent({ user }) {
       alert("نتمنى لكم حياة افضل ");
     }
   }
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const images = items.images;
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const [startPosition, setStartPosition] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [classToShowImage, setClasstoShowImage] = useState("d-none");
 
   const changePhoto = (index) => {
     setSelectedIndex(index);
@@ -38,11 +39,13 @@ export default function ItemContent({ user }) {
 
   const handleMouseDown = (event) => {
     setStartPosition(event.clientX);
-    setIsDragging(true);
+    setIsDragging(false);
   };
 
   const handleMouseUp = (event) => {
-    if (!isDragging) return;
+    if (isDragging) {
+      return; // Skip opening the image if it was a drag
+    }
 
     const endPosition = event.clientX;
     const difference = startPosition - endPosition;
@@ -52,17 +55,17 @@ export default function ItemContent({ user }) {
     } else if (difference < -50) {
       leftArrow();
     }
-
-    setIsDragging(false);
   };
 
   const handleTouchStart = (event) => {
     setStartPosition(event.touches[0].clientX);
-    setIsDragging(true);
+    setIsDragging(false);
   };
 
   const handleTouchEnd = (event) => {
-    if (!isDragging) return;
+    if (isDragging) {
+      return; // Skip opening the image if it was a drag
+    }
 
     const endPosition = event.changedTouches[0].clientX;
     const difference = startPosition - endPosition;
@@ -72,9 +75,16 @@ export default function ItemContent({ user }) {
     } else if (difference < -50) {
       leftArrow();
     }
-
-    setIsDragging(false);
   };
+  function openImage() {
+    setClasstoShowImage(
+      "d-flex justify-content-center align-items-center position-fixed bg-white rounded w-50 inSmallScreenWindowImage top-50 start-50 translate-middle shadow h-50 z-3 p-3"
+    );
+  }
+
+  function closeImage() {
+    setClasstoShowImage("d-none");
+  }
   return (
     <>
       <div className="">
@@ -95,6 +105,7 @@ export default function ItemContent({ user }) {
                 className="fa-solid fa-angle-left cursor-pointer"
               ></i>
               <img
+                onDoubleClick={openImage}
                 src={`https://freelance1-production.up.railway.app/${images[selectedIndex]}`}
                 alt=""
                 className="w-100 h-100 rounded"
@@ -161,13 +172,25 @@ export default function ItemContent({ user }) {
             {/* <div className="d-flex flex-row justify-content-start">
             <p>Pay in installments with:</p>
           </div> */}
+            <p className="text-center text-muted ">
+              {" "}
+              Note: Double tab to open image larger
+            </p>
+          </div>
+        </div>
+        <div className={classToShowImage}>
+          <div onClick={closeImage} className="position-absolute end-4 top-5">
+            <button className="btn btn-close"></button>
+          </div>
+          <div className="w-50 inSmallScreenInsideWindowImage h-100 rounded">
+            <img
+              src={`https://freelance1-production.up.railway.app/${images[selectedIndex]}`}
+              alt=""
+              className="w-100 h-100 rounded"
+            />
           </div>
         </div>
       </div>
-      {/* <h1>{items?.name}</h1>
-      <img src={`https://freelance1-production.up.railway.app/${items.images[0]}`} alt="" />
-      <p>{items?.description}</p>
-      <p>{items?.price} EGP</p> */}
     </>
   );
 }
