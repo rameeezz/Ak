@@ -156,9 +156,7 @@ export default function ShowItemsInOccasion({user}) {
               ) : (
                 currentItem.map((element, i) => (
                   <div
-                  onClick={() => {
-                    ShowItemContent(element);
-                  }}
+                 
                     key={i}
                     className="card widthOfHomeCard forBestSellerPageResponsive position-relative"
                   >
@@ -183,6 +181,9 @@ export default function ShowItemsInOccasion({user}) {
                     )}
 
                     <img
+                     onClick={() => {
+                      ShowItemContent(element);
+                    }}
                       src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
                       className="card-img-top ScaleForPhoto forBestSellerPageResponsiveImage"
                       alt=""

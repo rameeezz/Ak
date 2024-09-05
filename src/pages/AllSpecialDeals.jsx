@@ -75,9 +75,7 @@ export default function AllSpecialDeals({ user }) {
           ) : (
             SpecialDealsCategory.map((element, i) => (
               <div
-                onClick={() => {
-                  ShowItemContent(element);
-                }}
+                
                 key={i}
                 className="card widthOfHomeCard forBestSellerPageResponsive position-relative"
               >
@@ -102,6 +100,9 @@ export default function AllSpecialDeals({ user }) {
                 )}
 
                 <img
+                onClick={() => {
+                  ShowItemContent(element);
+                }}
                   src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
                   className="card-img-top ScaleForPhoto forBestSellerPageResponsiveImage"
                   alt=""
@@ -146,9 +147,7 @@ export default function AllSpecialDeals({ user }) {
             ? ""
             : SpecialDealsOccasion.map((element, i) => (
                 <div
-                  onClick={() => {
-                    ShowItemContent(element);
-                  }}
+                  
                   key={i}
                   className="card forBestSellerPageResponsive widthOfHomeCard position-relative"
                 >
@@ -172,6 +171,9 @@ export default function AllSpecialDeals({ user }) {
                     </div>
                   )}
                   <img
+                  onClick={() => {
+                    ShowItemContent(element);
+                  }}
                     src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
                     className="card-img-top forBestSellerPageResponsiveImage ScaleForPhoto "
                     alt=""

@@ -192,9 +192,7 @@ export default function Home({ user }) {
           ) : (
             bestSellerCategory.slice(0, 4).map((element, i) => (
               <div
-                onClick={() => {
-                  ShowItemContent(element);
-                }}
+                
                 key={i}
                 className="styleForContentDiv border-2 border-[#D4B11C] rounded"
               >
@@ -219,6 +217,9 @@ export default function Home({ user }) {
 
                 <div className="upperCard">
                   <img
+                  onClick={() => {
+                    ShowItemContent(element);
+                  }}
                     src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
                     alt=""
                     className="w-100 h-100 ScaleForPhoto rounded "
@@ -266,9 +267,7 @@ export default function Home({ user }) {
             ? ""
             : bestSellerOccasion.slice(0, 4).map((element, i) => (
                 <div
-                  onClick={() => {
-                    ShowItemContent(element);
-                  }}
+                 
                   key={i}
                   className="styleForContentDiv border-2 border-[#D4B11C] rounded"
                 >
@@ -293,6 +292,9 @@ export default function Home({ user }) {
 
                   <div className="upperCard">
                     <img
+                     onClick={() => {
+                      ShowItemContent(element);
+                    }}
                       src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
                       alt=""
                       className="w-100 h-100 rounded ScaleForPhoto"
@@ -471,9 +473,7 @@ export default function Home({ user }) {
           ) : (
             specialDeals.slice(0, 4).map((element, i) => (
               <div
-                onClick={() => {
-                  ShowItemContent(element);
-                }}
+                
                 key={i}
                 className="styleForContentDiv border-2 border-[#D4B11C] rounded"
               >
@@ -498,6 +498,9 @@ export default function Home({ user }) {
 
                 <div className="upperCard">
                   <img
+                  onClick={() => {
+                    ShowItemContent(element);
+                  }}
                     src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
                     alt=""
                     className="w-100 h-100 ScaleForPhoto rounded "
@@ -545,9 +548,7 @@ export default function Home({ user }) {
             ? ""
             : specialDealsOccasion.slice(0, 4).map((element, i) => (
                 <div
-                  onClick={() => {
-                    ShowItemContent(element);
-                  }}
+                 
                   key={i}
                   className="styleForContentDiv border-2 border-[#D4B11C] rounded"
                 >
@@ -572,6 +573,9 @@ export default function Home({ user }) {
 
                   <div className="upperCard">
                     <img
+                     onClick={() => {
+                      ShowItemContent(element);
+                    }}
                       src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
                       alt=""
                       className="w-100 h-100 ScaleForPhoto rounded "
