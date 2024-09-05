@@ -262,4 +262,17 @@
 .inSmallScreenInsideWindowImage{
   width: 75% !important;
 }
+.responsive-font-size-p-form{
+  font-size: 1rem;
+}
+.responsive-font-size-h1-form{
+  font-size: 1.3rem;
+}
+.inSmallscreenForForm{
+  flex-direction: column;
+gap: 50px;
+}
+.forWidthSectionOfForm{
+  width: 100% !important;
+}
 }

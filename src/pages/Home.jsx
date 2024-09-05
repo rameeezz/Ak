@@ -621,8 +621,8 @@ export default function Home({ user }) {
         </div>
       </div>
       <div className="bg-[#ededed] w-100 container  py-4">
-        <div className="container-xxl d-flex justify-content-center">
-          <div className="w-50">
+        <div className="container-xxl d-flex justify-content-center inSmallscreenForForm">
+          <div className="w-50 forWidthSectionOfForm">
             <p className="text-[#323232] responsive-font-size-p">
               Feel free to explore and connect with us. We're ready to answer
               your questions and provide assistance. Don't hesitate –{" "}
@@ -643,7 +643,7 @@ export default function Home({ user }) {
               </div>
             </div>
           </div>
-          <div className="shadow-lg bg-white p-3 w-50 rounded-3">
+          <div className="shadow-lg bg-white p-3 w-50 rounded-3 forWidthSectionOfForm">
             <p className="text-[#843e78] responsive-font-size-p-form">
               Send Us A Message
             </p>
@@ -676,7 +676,7 @@ export default function Home({ user }) {
                 />
               </div>
               <textarea className="form-control mt-3" placeholder="Message *" id="exampleFormControlTextarea1" rows="3"></textarea>
-              <button className="btn bg-[#843e78] rounded-3 text-white d-flex mt-3">Send Message <img src={sendMailSvg} alt="" /> </button>
+              <button className="btn bg-[#843e78] rounded-3 text-white d-flex mt-3 gap-2">Send Message <img src={sendMailSvg} alt="" /> </button>
             </form>
           </div>
         </div>
