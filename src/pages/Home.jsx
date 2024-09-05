@@ -6,6 +6,7 @@ import PHoto1 from "../assets/card photo/photoCategory.jpg";
 import callSvg from "../assets/card photo/outline-email (1) - Copy.svg";
 import whatsSvg from "../assets/card photo/contact-whatsapp.svg";
 import customerSurviceSvg from "../assets/card photo/customer-service.svg";
+import sendMailSvg from "../assets/card photo/send-email-message.svg";
 import axios from "axios";
 export default function Home({ user }) {
   // console.log(user);
@@ -670,7 +671,8 @@ export default function Home({ user }) {
                   placeholder="Email *"
                 />
               </div>
-              <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+              <textarea className="form-control mt-3" placeholder="Message *" id="exampleFormControlTextarea1" rows="3"></textarea>
+              <button className="btn bg-[#843e78] rounded-3 text-white d-flex mt-3">Send Message <img src={sendMailSvg} alt="" /> </button>
             </form>
           </div>
         </div>
