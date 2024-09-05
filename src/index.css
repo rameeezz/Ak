@@ -94,7 +94,12 @@
   display: none; /* Safari and Chrome */
 }
 
-
+.responsive-font-size-p-form{
+  font-size: 1.5rem;
+}
+.responsive-font-size-h1-form{
+  font-size: 1.7rem;
+}
 @media (max-width: 576px) {
   /* Small screens (sm) and below */
   .responsive-font-size-p {

@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import "../css/Home.css";
 import bg from "../assets/bg/imresizer-1724329258313.jpg";
 import PHoto1 from "../assets/card photo/photoCategory.jpg";
+import callSvg from "../assets/card photo/outline-email (1) - Copy.svg";
+import whatsSvg from "../assets/card photo/contact-whatsapp.svg";
+import customerSurviceSvg from "../assets/card photo/customer-service.svg";
 import axios from "axios";
 export default function Home({ user }) {
   // console.log(user);
@@ -240,7 +243,7 @@ export default function Home({ user }) {
                       </div>
                     )}
                     <h2 className="w-100 mt-1 responsive-For-Card-h2">
-                      {element?.name.slice(0,37)}
+                      {element?.name.slice(0, 37)}
                     </h2>
                     {/* <h2 className="w-100 mt-1 responsive-For-Card-p">
                       {element?.description.slice(0, 32)}
@@ -314,7 +317,7 @@ export default function Home({ user }) {
                         </div>
                       )}
                       <h2 className="w-100 mt-1 responsive-For-Card-h2">
-                      {element?.name.slice(0,37)}
+                        {element?.name.slice(0, 37)}
                       </h2>
                       {/* <h2 className="w-100 mt-1 responsive-For-Card-p">
                         {element?.description.slice(0, 25)}
@@ -519,7 +522,7 @@ export default function Home({ user }) {
                       </div>
                     )}
                     <h2 className="w-100 mt-1 responsive-For-Card-h2">
-                    {element?.name.slice(0,37)}
+                      {element?.name.slice(0, 37)}
                     </h2>
                     {/* <h2 className="w-100 mt-1 responsive-For-Card-p">
                       {element?.description.slice(0, 32)}
@@ -593,7 +596,7 @@ export default function Home({ user }) {
                         </div>
                       )}
                       <h2 className="w-100 mt-1 responsive-For-Card-h2">
-                      {element?.name.slice(0,37)}
+                        {element?.name.slice(0, 37)}
                       </h2>
                       {/* <h2 className="w-100 mt-1 responsive-For-Card-p">
                         {element?.description.slice(0, 32)}
@@ -610,6 +613,66 @@ export default function Home({ user }) {
                   </div>
                 </div>
               ))}
+        </div>
+      </div>
+      <div className="bg-[#ededed] w-100 container  py-4">
+        <div className="container-xxl d-flex justify-content-center">
+          <div className="w-50">
+            <p className="text-[#323232] responsive-font-size-p">
+              Feel free to explore and connect with us. We're ready to answer
+              your questions and provide assistance. Don't hesitate –{" "}
+              <span className="text-black fw-bold "> let's connect!</span>
+            </p>
+            <div className="d-flex flex-column gap-2 mt-3">
+              <div className="d-flex align-items-center gap-2">
+                <img src={customerSurviceSvg} alt="" />
+                01022317881
+              </div>
+              <div className="d-flex align-items-center gap-2">
+                <img src={whatsSvg} alt="" />
+                01022317881
+              </div>
+              <div className="d-flex align-items-center gap-2">
+                <img src={callSvg} alt="" />
+                salah@gmail.com
+              </div>
+            </div>
+          </div>
+          <div className="shadow-lg bg-white p-3 w-50 rounded-3">
+            <p className="text-[#843e78] responsive-font-size-p-form">
+              Send Us A Message
+            </p>
+            <h3 className="fw-bold responsive-font-size-h1-form mb-4">
+              Fill The Form Below
+            </h3>
+            <form>
+              <div className=" d-flex justify-content-center gap-3">
+                <input
+                  type="text"
+                  className="form-control mb-4"
+                  placeholder="Name *"
+                />
+                <input
+                  type="text"
+                  className="form-control mb-4"
+                  placeholder="Email *"
+                />
+              </div>
+              <div className=" d-flex justify-content-center gap-3">
+                <input
+                  type="number"
+                  className="form-control"
+                  placeholder="Phone *"
+                />
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Email *"
+                />
+              </div>
+              <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </form>
+          </div>
         </div>
       </div>
     </>
