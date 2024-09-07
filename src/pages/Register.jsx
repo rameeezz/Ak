@@ -15,33 +15,40 @@ export default function Register() {
     confirmPassword: "",
     mobileNumber: "",
   });
-  console.log(RegisterInfo);
-  // function SetInfo(e) {
-  //   let MyUser = { ...RegisterInfo };
-  //   MyUser[e.target.name] = e.target.value;
-  //   MyUser.email.toLowerCase();
+  const [verifyOtp, setVerifyOtp] = useState({
+    email: "",
+    otp: "",
+  });
+  // console.log(verifyOtp);
 
-  //   console.log(MyUser);
-  //   setRegisterInfo(MyUser);
-    
-  //   // console.log(MyUser);
-  //   setLoading(false)
-  // }
+  const [classOfOtp, setClassOfOtp] = useState("d-none");
+  // console.log(RegisterInfo);
   function SetInfo(e) {
+    setErrorList([]);
     let MyUser = { ...RegisterInfo };
     MyUser[e.target.name] = e.target.value;
-  
+
     // Convert the email to lowercase if the input name is "email"
     if (e.target.name === "email") {
       MyUser.email = MyUser.email.toLowerCase();
     }
-  
+
     // console.log(MyUser);
     setRegisterInfo(MyUser);
-  
+
     setLoading(false);
   }
-  
+  function takeNumberOfOtp(e, index) {
+    const otpArray = [...verifyOtp.otp];
+    otpArray[index] = e.target.value; // Update the specific index
+    const otpValue = otpArray.join(""); // Join the array to form the full OTP
+
+    setVerifyOtp({
+      ...verifyOtp,
+      otp: otpValue, // Update otp in the state with the concatenated value
+    });
+  }
+
   const [phone, setPhone] = useState("");
 
   const handleOnChange = (value) => {
@@ -52,215 +59,258 @@ export default function Register() {
   const [errorMessage, setErrorMessage] = useState("");
   const [errorList, setErrorList] = useState([]);
   // console.log(errorList);
-  
+
   const [Loading, setLoading] = useState(false);
-  async function handleSubmit(e) {
+  const [LoadingForVerify, setLoadingForVerify] = useState(false);
+  async function sendOpt(e) {
     e.preventDefault();
-   let  valid  =  ValidData()
-    console.log(valid);
-    // setErrorMessage(valid.error.details.message)
+    let valid = ValidData();
     if (valid.error == null) {
       setLoading(true);
-      setErrorList([])
+      setErrorList([]);
       try {
         let { data } = await axios.post(
-          "https://freelance1-production.up.railway.app/auth/signup",
-          RegisterInfo
+          "https://freelance1-production.up.railway.app/auth/sendOTP",
+          { email: RegisterInfo.email }
         );
-        console.log(data.message);
-        setErrorMessage("");
-        setRegisterInfo({
-          ...RegisterInfo,
-          firstName: "",
-          lastName: "",
-          email: "",
-          password: "",
-          confirmPassword: "",
-          mobileNumber: "",
-        });
+        setClassOfOtp(
+          "w-100 h-vh bg-white d-flex justify-content-center align-items-center position-fixed z-10 top-0 end-0"
+        );
         setLoading(false);
-        navigate("/login");
-      } catch (error) {
-        if (error.response && error.response.status === 422) {
-          console.log("ahmd w astna");
-          setErrorMessage(
-            "The passwords you entered do not match. Please ensure both password fields contain the same information and try again"
-          );
-          setLoading(false);
-        } else if (error.response && error.response.status === 400) {
-          console.log("user mtkrrr");
-          setErrorMessage(
-            "The email address you have entered is already associated with an existing account"
-          );
-          setLoading(false);
-        }
-      }
-    }else{
-      setErrorList(valid.error.details)
+        setVerifyOtp({ ...verifyOtp, email: RegisterInfo.email });
+      } catch (error) {}
+    } else {
+      setErrorList(valid.error.details);
     }
-   
-  
   }
-  // function ValidData() {
-  //   let scheme = joi.object({
-  //     firstName: joi.string().required().min(3).max(15).alphanum(),
-  //     lastName: joi.string().required().min(3).max(15).alphanum(),
-  //     email: joi.string().required().email({tlds: {allow :["com","net"]}}),
-  //     password: joi.string().required().pattern(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,} $/)),
-  //     confirmPassword: joi.ref('password'),
-  //   });
-  // return  scheme.validate(RegisterInfo , {abortEarly:false})
-  
-  // }
+  async function sendVerifyOtp(e) {
+    e.preventDefault()
+    setLoadingForVerify(true)
+    try {
+      let {data} =await axios.post("https://freelance1-production.up.railway.app/auth/verifyOTP",verifyOtp)
+      console.log(data);
+      setLoadingForVerify(false)
+      handleSubmit(e)
+    } catch (error) {
+      if (error.response && error.response.status === 422) {
+        alert("The (OTP) number is wrong try again.")
+        setLoadingForVerify(false)
+      }
+    }
+  }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setLoading(true);
+    setErrorList([]);
+    try {
+      let { data } = await axios.post(
+        "https://freelance1-production.up.railway.app/auth/signup",
+        RegisterInfo
+      );
+      // console.log(data.message);
+      setErrorMessage("");
+      setRegisterInfo({
+        ...RegisterInfo,
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        mobileNumber: "",
+      });
+      setLoading(false);
+      navigate("/login");
+    } catch (error) {
+      if (error.response && error.response.status === 422) {
+        setErrorMessage(
+          "The passwords you entered do not match. Please ensure both password fields contain the same information and try again"
+        );
+        setLoading(false);
+      } else if (error.response && error.response.status === 400) {
+        console.log("user mtkrrr");
+        setErrorMessage(
+          "The email address you have entered is already associated with an existing account"
+        );
+        setLoading(false);
+      }
+    }
+  }
   function ValidData() {
     const scheme = joi.object({
-      firstName: joi
-        .string()
-        .required()
-        .min(3)
-        .max(15)
-        .messages({
-          'string.base': 'First name must be a string.',
-          'string.empty': 'First name is required.',
-          'string.min': 'First name must be at least 3 characters long.',
-          'string.max': 'First name cannot exceed 15 characters.',
-          'string.alphanum': 'First name must contain only letters and numbers.',
-        }),
-      lastName: joi
-        .string()
-        .required()
-        .min(3)
-        .max(15)
-        .messages({
-          'string.base': 'Last name must be a string.',
-          'string.empty': 'Last name is required.',
-          'string.min': 'Last name must be at least 3 characters long.',
-          'string.max': 'Last name cannot exceed 15 characters.',
-          'string.alphanum': 'Last name must contain only letters and numbers.',
-        }),
+      firstName: joi.string().required().min(3).max(15).messages({
+        "string.base": "First name must be a string.",
+        "string.empty": "First name is required.",
+        "string.min": "First name must be at least 3 characters long.",
+        "string.max": "First name cannot exceed 15 characters.",
+        "string.alphanum": "First name must contain only letters and numbers.",
+      }),
+      lastName: joi.string().required().min(3).max(15).messages({
+        "string.base": "Last name must be a string.",
+        "string.empty": "Last name is required.",
+        "string.min": "Last name must be at least 3 characters long.",
+        "string.max": "Last name cannot exceed 15 characters.",
+        "string.alphanum": "Last name must contain only letters and numbers.",
+      }),
       email: joi
         .string()
         .required()
-        .email({ tlds: { allow: ['com', 'net'] } })
+        .email({ tlds: { allow: ["com", "net"] } })
         .messages({
-          'string.base': 'Email must be a string.',
-          'string.empty': 'Email is required.',
-          'string.email': 'Please enter a valid email address.',
-          'any.invalid': 'Email must be a .com or .net .',
+          "string.base": "Email must be a string.",
+          "string.empty": "Email is required.",
+          "string.email": "Please enter a valid email address.",
+          "any.invalid": "Email must be a .com or .net .",
         }),
       password: joi
         .string()
         .required()
-        .pattern(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&-])[A-Za-z\d@$!%*?&-]{8,}$/))
+        .pattern(
+          new RegExp(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&-])[A-Za-z\d@$!%*?&-]{8,}$/
+          )
+        )
         .messages({
-          'string.base': 'Password must be a string.',
-          'string.empty': 'Password is required.',
-          'string.pattern.base':
-            'Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.',
+          "string.base": "Password must be a string.",
+          "string.empty": "Password is required.",
+          "string.pattern.base":
+            "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.",
         }),
       confirmPassword: joi
         .string()
         .required()
-        .valid(joi.ref('password'))
+        .valid(joi.ref("password"))
         .messages({
-          'any.only': 'Confirm Password must match the Password.',
-          'string.empty': 'Confirm Password is required.',
+          "any.only": "Confirm Password must match the Password.",
+          "string.empty": "Confirm Password is required.",
         }),
-        mobileNumber: joi
+      mobileNumber: joi
         .string()
         .required()
         .pattern(/^\+?[1-9]\d{1,14}$/)
         .messages({
-          'string.empty': 'Mobile number is required.',
-          'string.pattern.base': 'Please enter a valid mobile number with a country code.',
+          "string.empty": "Mobile number is required.",
+          "string.pattern.base":
+            "Please enter a valid mobile number with a country code.",
         }),
     });
-  
+
     return scheme.validate(RegisterInfo, { abortEarly: false });
   }
-  
+
   return (
-    <div className="backgroundBg">
-      <div className="login-form p-4">
-        <h2 className="mb-2">Register</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="d-flex justify-content-center gap-2">
+    <>
+      <div className="backgroundBg">
+        <div className="login-form p-4">
+          <h2 className="mb-2">Register</h2>
+          <form onSubmit={sendOpt}>
+            <div className="d-flex justify-content-center gap-2">
+              <input
+                type="text"
+                placeholder="First Name"
+                name="firstName"
+                onChange={SetInfo}
+                className="form-control"
+              />
+              <input
+                type="text"
+                placeholder="Last Name"
+                name="lastName"
+                onChange={SetInfo}
+                className="form-control"
+              />
+            </div>
             <input
-              type="text"
-              placeholder="First Name"
-              name="firstName"
+              onChange={SetInfo}
+              type="email"
+              placeholder="Email"
+              name="email"
+              className="form-control"
+            />
+            <div className="phone-input-container">
+              <PhoneInput
+                country={"eg"} // Default country
+                value={phone}
+                onChange={handleOnChange}
+                inputClass="phone-input-field" // Custom class for styling the input
+                dropdownClass="country-dropdown" // Custom class for styling the dropdown
+                preferredCountries={["eg", "us", "gb"]} // List of preferred countries
+              />
+            </div>
+
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
               onChange={SetInfo}
               className="form-control"
             />
             <input
-              type="text"
-              placeholder="Last Name"
-              name="lastName"
+              type="password"
+              placeholder="Confirm Password"
+              name="confirmPassword"
               onChange={SetInfo}
               className="form-control"
             />
-          </div>
-          <input
-            onChange={SetInfo}
-            type="email"
-            placeholder="Email"
-            name="email"
-            className="form-control"
-          />
-          <div className="phone-input-container">
-            <PhoneInput
-              country={"eg"} // Default country
-              value={phone}
-              onChange={handleOnChange}
-              inputClass="phone-input-field" // Custom class for styling the input
-              dropdownClass="country-dropdown" // Custom class for styling the dropdown
-              preferredCountries={["eg", "us", "gb"]} // List of preferred countries
-            />
-          </div>
+            {errorMessage == "" ? (
+              ""
+            ) : (
+              <div className="alert text-danger">{errorMessage}</div>
+            )}
+            {errorList.length > 0
+              ? errorList.map((element) => (
+                  <div className="my-2 text-danger textSTyleForError">
+                    {element.message}
+                  </div>
+                ))
+              : ""}
+            {Loading ? (
+              <button>
+                <i className="fa solid fa-spinner fa-spin"></i>
+              </button>
+            ) : (
+              <button type="button" onClick={sendOpt}>
+                Create
+              </button>
+            )}
 
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            onChange={SetInfo}
-            className="form-control"
-          />
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            name="confirmPassword"
-            onChange={SetInfo}
-            className="form-control"
-          />
-          {errorMessage == "" ? (
-            ""
-          ) : (
-            <div className="alert text-danger">{errorMessage}</div>
-          )}
-          {errorList.length >0 ? (
-            errorList.map((element)=><div className="my-2 text-danger textSTyleForError">{element.message}</div>)
-          ) : (
-            ""
-          )}
-          {Loading ? (
-            <button>
-              <i className="fa solid fa-spinner fa-spin"></i>
-            </button>
-          ) : (
-            <button type="button" onClick={handleSubmit}>
-              Create
-            </button>
-          )}
-
-          <div className="d-flex justify-content-center mt-3">
-            <div className="styleLineBetweenItems"></div>
-          </div>
-          <div className="d-flex justify-content-center gap-2 mt-3 ">
-            <i className="fa-brands fa-google text-success sizeOfI CursorPointer"></i>
-            <i className="fa-brands fa-facebook sizeOfI CursorPointer text-primary"></i>
-          </div>
-        </form>
+            <div className="d-flex justify-content-center mt-3">
+              <div className="styleLineBetweenItems"></div>
+            </div>
+            <div className="d-flex justify-content-center gap-2 mt-3 ">
+              <i className="fa-brands fa-google text-success sizeOfI CursorPointer"></i>
+              <i className="fa-brands fa-facebook sizeOfI CursorPointer text-primary"></i>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+      <div className={classOfOtp}>
+        <div className=" bg-white shadow p-5 rounded">
+          <h3 className="text-center mb-5">
+            Please enter the One-Time Password (OTP) sent to your registered
+            email address.
+          </h3>
+          <div className="d-flex justify-content-center align-items-center gap-4 ">
+            {[...Array(6)].map((_, index) => (
+              <div key={index}>
+                <input
+                  onChange={(e) => takeNumberOfOtp(e, index)}
+                  maxLength={1}
+                  type="text"
+                  className="form-control square-input"
+                  name="otp"
+                />
+              </div>
+            ))}
+          </div>
+          <div className="w-100 d-flex justify-content-center align-items-center mt-4">
+            {LoadingForVerify?<button>
+                <i className="fa solid fa-spinner fa-spin"></i>
+              </button> :  <button className="btn btn-primary" onClick={sendVerifyOtp}>
+              Verify
+            </button>}
+          </div>
+        </div>
+      </div>
+    </>
   );
 }

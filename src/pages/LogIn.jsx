@@ -40,7 +40,7 @@ export default function LogIn({ saveUser, userRole }) {
       myUser.username = myUser.username.toLowerCase();
     }
     setUser(myUser);
-    console.log(myUser);
+    // console.log(myUser);
     
   }
   const [checked, setChecked] = useState(false);

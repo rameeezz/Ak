@@ -80,4 +80,10 @@
   .CursorPointer {
     cursor: pointer;
   }
+  .square-input {
+    width: 50px;  /* You can adjust this value */
+    height: 50px; /* Same value as width to make it square */
+    padding: 0;    /* Optional: To remove any padding inside */
+    text-align: center; /* Optional: To center the text */
+  }
   
