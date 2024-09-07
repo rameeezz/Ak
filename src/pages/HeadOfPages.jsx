@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from 'react-router-dom';
 
 export default function HeadOfPages({ user }) {
-  const isLoginPage = location.pathname === "/login" || location.pathname === "/register"
+  const isLoginPage = location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/forgetPassword"
   return (
     <>
       {/* <div className="d-flex justify-content-center position-relative bg-transparent py-3 ">
