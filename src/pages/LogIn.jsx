@@ -31,13 +31,20 @@ async function handleGoogleCallback() {
   const code = urlParams.get("code");
 
   if (code) {
-    const response = await fetch(
-      `https://freelance1-production.up.railway.app/auth/getGoogleUser?code=${code}`
-    );
-    const data = await response.json();
-    console.log("Google user data:", data);
+    try {
+      const response = await fetch(
+       `https://freelance1-production.up.railway.app/getGoogleUser?code=${code}`
+      );
 
-    // Use the user data and token as needed in your application
+      if (!response.ok) {
+        throw new Error(`Failed to fetch: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Google user data:", data);
+    } catch (error) {
+      console.error("Error during Google callback:", error.message);
+    }
   }
 }
 // async function auth() {
