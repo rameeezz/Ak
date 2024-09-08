@@ -1,19 +1,46 @@
 import React, { useEffect, useState } from "react";
 import BgForLogin from "../assets/bg/bgLogin.jpg";
 import "../css/LogIn.css";
-import { NavLink, Link, useNavigate ,Navigate} from "react-router-dom";
+import { NavLink, Link, useNavigate, Navigate } from "react-router-dom";
 import joi from "joi";
 import axios from "axios";
 
-function navigates(url) {
-  window.location.href = url
+// function navigates(url) {
+//   window.location.href = url
+// }
+// async function auth() {
+//   const response = await fetch("https://freelance1-production.up.railway.app/auth/google",{method:'post'})
+//   const data =await response.json();
+//   console.log(data);
+
+//   navigates(data.url);
+// }
+async function initiateGoogleLogin() {
+  const response = await fetch(
+    "https://freelance1-production.up.railway.app/auth/google",
+    {
+      method: "POST",
+    }
+  );
+  const { url } = await response.json();
+  window.location.href = url; // Redirect to Google login page
 }
-async function auth() {
-  const response = await fetch("https://freelance1-production.up.railway.app/auth/google",{method:'post'})
-  const data =await response.json();
-  console.log(data);
-  
-  navigates(data.url); 
+useEffect(() => {
+  handleGoogleCallback();
+}, []);
+async function handleGoogleCallback() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const code = urlParams.get("code");
+
+  if (code) {
+    const response = await fetch(
+      `https://freelance1-production.up.railway.app/auth/getGoogleUser?code=${code}`
+    );
+    const data = await response.json();
+    console.log("Google user data:", data);
+
+    // Use the user data and token as needed in your application
+  }
 }
 // async function auth() {
 //   try {
@@ -24,7 +51,6 @@ async function auth() {
 //     console.error("Error during auth:", error);
 //   }
 // }
-
 
 export default function LogIn({ saveUser, userRole }) {
   let [user, setUser] = useState({
@@ -41,7 +67,6 @@ export default function LogIn({ saveUser, userRole }) {
     }
     setUser(myUser);
     // console.log(myUser);
-    
   }
   const [checked, setChecked] = useState(false);
 
@@ -67,9 +92,9 @@ export default function LogIn({ saveUser, userRole }) {
       setErrorMessage("");
       setLoading(false);
       setUser({
-        username:"",
-        password:""
-      })
+        username: "",
+        password: "",
+      });
       // console.log(userRole.role);
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -77,35 +102,35 @@ export default function LogIn({ saveUser, userRole }) {
         setLoading(false);
       }
       if (error.response && error.response.status === 502) {
-        alert("server is down")
+        alert("server is down");
         setLoading(false);
       }
     }
   }
-  useEffect(()=>{
+  useEffect(() => {
     if (userRole?.role) {
       switch (userRole.role) {
         case "customer":
           // return <Navigate to="/home" replace />;
-          navigate("/home")
+          navigate("/home");
           break;
         case "admin1":
           // navigate("/admin1");
           // return <Navigate to="/admin1" replace />;
-          navigate("/admin1")
+          navigate("/admin1");
           break;
         case "admin2":
           // navigate("/admin1");
           // return <Navigate to="/admin1" replace />;
-          navigate("/admin2")
+          navigate("/admin2");
           break;
         default:
           // return <Navigate to="/" replace />;
-          navigate("/")
+          navigate("/");
           break;
       }
     }
-  },[userRole?.role])
+  }, [userRole?.role]);
   // function validUser() {
   //   let scheme = joi.object({
   //     username: joi
@@ -209,8 +234,11 @@ export default function LogIn({ saveUser, userRole }) {
               <div className="styleLineBetweenItems"></div>
             </div>
             <div className="d-flex justify-content-center gap-2 mt-3 ">
-              <i onClick={()=>auth()} className="fa-brands fa-google text-success sizeOfI CursorPointer"></i>
-             <i className="fa-brands fa-facebook sizeOfI CursorPointer text-primary"></i>
+              <i
+                onClick={() => initiateGoogleLogin}
+                className="fa-brands fa-google text-success sizeOfI CursorPointer"
+              ></i>
+              <i className="fa-brands fa-facebook sizeOfI CursorPointer text-primary"></i>
             </div>
           </form>
         </div>
