@@ -294,7 +294,7 @@ function LogIn({ saveUser, userRole }) {
     if (code) {
       try {
         const response = await fetch(
-          `https://freelance1-production.up.railway.app/auth/getGoogleUser?code=${code}`
+          `https://freelance1-production.up.railway.app/getGoogleUser?code=${code}`
         );
         if (!response.ok) {
           throw new Error(`Failed to fetch: ${response.status}`);
@@ -302,9 +302,11 @@ function LogIn({ saveUser, userRole }) {
         const data = await response.json();
         console.log("Google user data:", data);
 
-        // Save token to local storage if necessary
+        // Save token to local storage
         localStorage.setItem("token", data.tokens.access_token);
-        saveUser(); // If you need to save user info locally
+
+        // Optionally, save user data locally
+        saveUser(data.userData);
       } catch (error) {
         console.error("Error during Google callback:", error.message);
       }
@@ -333,7 +335,7 @@ function LogIn({ saveUser, userRole }) {
         user
       );
       localStorage.setItem("token", data.token);
-      saveUser();
+      saveUser(data.user);
       setErrorMessage("");
       setLoading(false);
       navigateBasedOnRole(userRole?.role);
