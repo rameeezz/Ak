@@ -25,9 +25,7 @@ async function initiateGoogleLogin() {
   const { url } = await response.json();
   window.location.href = url; // Redirect to Google login page
 }
-useEffect(() => {
-  handleGoogleCallback();
-}, []);
+
 async function handleGoogleCallback() {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get("code");
@@ -53,6 +51,9 @@ async function handleGoogleCallback() {
 // }
 
 export default function LogIn({ saveUser, userRole }) {
+  useEffect(() => {
+    handleGoogleCallback();
+  }, []);
   let [user, setUser] = useState({
     username: "",
     password: "",
