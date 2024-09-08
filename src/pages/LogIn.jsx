@@ -5,26 +5,26 @@ import { NavLink, Link, useNavigate, Navigate } from "react-router-dom";
 import joi from "joi";
 import axios from "axios";
 
-// function navigates(url) {
-//   window.location.href = url
-// }
-// async function auth() {
-//   const response = await fetch("https://freelance1-production.up.railway.app/auth/google",{method:'post'})
-//   const data =await response.json();
-//   console.log(data);
-
-//   navigates(data.url);
-// }
-async function initiateGoogleLogin() {
-  const response = await fetch(
-    "https://freelance1-production.up.railway.app/auth/google",
-    {
-      method: "POST",
-    }
-  );
-  const { url } = await response.json();
-  window.location.href = url; // Redirect to Google login page
+function navigates(url) {
+  window.location.href = url
 }
+async function auth() {
+  const response = await fetch("https://freelance1-production.up.railway.app/auth/google",{method:'post'})
+  const data =await response.json();
+  console.log(data);
+
+  navigates(data.url);
+}
+// async function initiateGoogleLogin() {
+//   const response = await fetch(
+//     "https://freelance1-production.up.railway.app/auth/google",
+//     {
+//       method: "POST",
+//     }
+//   );
+//   const { url } = await response.json();
+//   window.location.href = url; // Redirect to Google login page
+// }
 
 async function handleGoogleCallback() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -236,7 +236,7 @@ export default function LogIn({ saveUser, userRole }) {
             </div>
             <div className="d-flex justify-content-center gap-2 mt-3 ">
               <i
-                onClick={() => initiateGoogleLogin}
+                onClick={() => auth()}
                 className="fa-brands fa-google text-success sizeOfI CursorPointer"
               ></i>
               <i className="fa-brands fa-facebook sizeOfI CursorPointer text-primary"></i>
