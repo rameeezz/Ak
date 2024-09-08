@@ -274,8 +274,6 @@ function LogIn({ saveUser, userRole }) {
 
   // Function to initiate Google login flow
   async function auth() {
-    console.log("gvg");
-    
     try {
       const response = await fetch(
         "https://freelance1-production.up.railway.app/auth/google",
@@ -290,15 +288,13 @@ function LogIn({ saveUser, userRole }) {
 
   // Handle the callback when redirected from Google after login
   async function handleGoogleCallback() {
-    console.log("njb");
-    
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
 
     if (code) {
       try {
         const response = await fetch(
-          `https://freelance1-production.up.railway.app/getGoogleUser?code=${code}`
+          `https://freelance1-production.up.railway.app/auth/getGoogleUser?code=${code}`
         );
         if (!response.ok) {
           throw new Error(`Failed to fetch: ${response.status}`);
