@@ -620,7 +620,7 @@ export default function Home({ user }) {
               ))}
         </div>
       </div>
-      <div className="bg-[#ededed] w-100 container  py-4">
+      <div className="bg-[#ededed] w-100 py-4">
         <div className="container-xxl d-flex justify-content-center inSmallscreenForForm">
           <div className="w-50 forWidthSectionOfForm">
             <p className="text-[#323232] responsive-font-size-p">
