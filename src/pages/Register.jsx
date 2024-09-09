@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import "../css/Register.css"; // Ensure the correct path to your CSS file
+import "../css/Register.css";
 import { useNavigate } from "react-router-dom";
 import joi from "joi";
+
 export default function Register() {
   let navigate = useNavigate();
   const [RegisterInfo, setRegisterInfo] = useState({
@@ -19,25 +20,22 @@ export default function Register() {
     email: "",
     otp: "",
   });
-  // console.log(verifyOtp);
 
   const [classOfOtp, setClassOfOtp] = useState("d-none");
-  // console.log(RegisterInfo);
+
   function SetInfo(e) {
     setErrorList([]);
     let MyUser = { ...RegisterInfo };
     MyUser[e.target.name] = e.target.value;
 
-    // Convert the email to lowercase if the input name is "email"
     if (e.target.name === "email") {
       MyUser.email = MyUser.email.toLowerCase();
     }
 
-    // console.log(MyUser);
     setRegisterInfo(MyUser);
-
     setLoading(false);
   }
+
   function takeNumberOfOtp(e, index) {
     const otpArray = [...verifyOtp.otp];
     otpArray[index] = e.target.value; // Update the specific index
@@ -47,21 +45,26 @@ export default function Register() {
       ...verifyOtp,
       otp: otpValue, // Update otp in the state with the concatenated value
     });
+
+    // Focus the next input field if the current one has a value
+    if (e.target.value && index < otpRefs.current.length - 1) {
+      otpRefs.current[index + 1].focus();
+    }
   }
 
   const [phone, setPhone] = useState("");
 
   const handleOnChange = (value) => {
     setPhone(value);
-    // console.log(value);
     setRegisterInfo({ ...RegisterInfo, mobileNumber: value });
   };
+
   const [errorMessage, setErrorMessage] = useState("");
   const [errorList, setErrorList] = useState([]);
-  // console.log(errorList);
 
   const [Loading, setLoading] = useState(false);
   const [LoadingForVerify, setLoadingForVerify] = useState(false);
+
   async function sendOpt(e) {
     e.preventDefault();
     let valid = ValidData();
@@ -83,21 +86,26 @@ export default function Register() {
       setErrorList(valid.error.details);
     }
   }
+
   async function sendVerifyOtp(e) {
-    e.preventDefault()
-    setLoadingForVerify(true)
+    e.preventDefault();
+    setLoadingForVerify(true);
     try {
-      let {data} =await axios.post("https://freelance1-production.up.railway.app/auth/verifyOTP",verifyOtp)
-      console.log(data);
-      setLoadingForVerify(false)
-      handleSubmit(e)
+      let { data } = await axios.post(
+        "https://freelance1-production.up.railway.app/auth/verifyOTP",
+        verifyOtp
+      );
+      // console.log(data);
+      setLoadingForVerify(false);
+      handleSubmit(e);
     } catch (error) {
       if (error.response && error.response.status === 422) {
-        alert("The (OTP) number is wrong try again.")
-        setLoadingForVerify(false)
+        alert("The (OTP) number is wrong try again.");
+        setLoadingForVerify(false);
       }
     }
   }
+
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
@@ -107,10 +115,8 @@ export default function Register() {
         "https://freelance1-production.up.railway.app/auth/signup",
         RegisterInfo
       );
-      // console.log(data.message);
       setErrorMessage("");
       setRegisterInfo({
-        ...RegisterInfo,
         firstName: "",
         lastName: "",
         email: "",
@@ -127,14 +133,15 @@ export default function Register() {
         );
         setLoading(false);
       } else if (error.response && error.response.status === 400) {
-        console.log("user mtkrrr");
+        setClassOfOtp("d-none");
         setErrorMessage(
-          "The email address you have entered is already associated with an existing account"
+          "The email address you have entered is already associated with an existing account."
         );
         setLoading(false);
       }
     }
   }
+
   function ValidData() {
     const scheme = joi.object({
       firstName: joi.string().required().min(3).max(15).messages({
@@ -197,6 +204,9 @@ export default function Register() {
     return scheme.validate(RegisterInfo, { abortEarly: false });
   }
 
+  // Create a ref for each OTP input field
+  const otpRefs = useRef([]);
+
   return (
     <>
       <div className="backgroundBg">
@@ -251,63 +261,59 @@ export default function Register() {
               onChange={SetInfo}
               className="form-control"
             />
-            {errorMessage == "" ? (
+            {errorMessage === "" ? (
               ""
             ) : (
               <div className="alert text-danger">{errorMessage}</div>
             )}
-            {errorList.length > 0
-              ? errorList.map((element) => (
-                  <div className="my-2 text-danger textSTyleForError">
-                    {element.message}
-                  </div>
-                ))
-              : ""}
-            {Loading ? (
-              <button>
-                <i className="fa solid fa-spinner fa-spin"></i>
-              </button>
+            {errorList.length > 0 ? (
+              <ul className="alert text-danger">
+                {errorList.map((error) => (
+                  <li key={error.message}>{error.message}</li>
+                ))}
+              </ul>
             ) : (
-              <button type="button" onClick={sendOpt}>
-                Create
-              </button>
+              ""
             )}
 
-            <div className="d-flex justify-content-center mt-3">
-              <div className="styleLineBetweenItems"></div>
-            </div>
-            <div className="d-flex justify-content-center gap-2 mt-3 ">
-              <i className="fa-brands fa-google text-success sizeOfI CursorPointer"></i>
-              <i className="fa-brands fa-facebook sizeOfI CursorPointer text-primary"></i>
-            </div>
+            <button type="submit" className="btn btn-primary">
+              {Loading ? "Loading..." : "Register"}
+            </button>
           </form>
         </div>
-      </div>
-      <div className={classOfOtp}>
-        <div className=" bg-white shadow p-5 rounded">
-          <h3 className="text-center mb-5">
-            Please enter the One-Time Password (OTP) sent to your registered
-            email address.
-          </h3>
-          <div className="d-flex justify-content-center align-items-center gap-4 ">
-            {[...Array(6)].map((_, index) => (
-              <div key={index}>
-                <input
-                  onChange={(e) => takeNumberOfOtp(e, index)}
-                  maxLength={1}
-                  type="text"
-                  className="form-control square-input"
-                  name="otp"
-                />
-              </div>
-            ))}
-          </div>
-          <div className="w-100 d-flex justify-content-center align-items-center mt-4">
-            {LoadingForVerify?<button>
-                <i className="fa solid fa-spinner fa-spin"></i>
-              </button> :  <button className="btn btn-primary" onClick={sendVerifyOtp}>
-              Verify
-            </button>}
+        <div className={classOfOtp}>
+          <div className="position-relative shadow p-5 rounded">
+            <div className="otp-div p-3">
+              <h2 className="text-center mb-3">
+                Please enter the One-Time Password (OTP) sent to your registered
+                email address.
+              </h2>
+              <form onSubmit={sendVerifyOtp}>
+                <div className="d-flex justify-content-center align-items-center gap-4 ">
+                  {Array.from({ length: 6 }).map((_, index) => (
+                    <input
+                      key={index}
+                      type="text"
+                      maxLength="1"
+                      className="form-control square-input"
+                      onChange={(e) => takeNumberOfOtp(e, index)}
+                      ref={(el) => (otpRefs.current[index] = el)}
+                    />
+                  ))}
+                </div>
+                <div className="w-100 d-flex justify-content-center align-items-center mt-4">
+                  {LoadingForVerify ? (
+                    <button className="btn btn-primary px-4">
+                      <i className="fa solid fa-spinner fa-spin"></i>
+                    </button>
+                  ) : (
+                    <button className="btn btn-primary px-4" onClick={sendVerifyOtp}>
+                      Verify
+                    </button>
+                  )}
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
