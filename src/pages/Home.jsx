@@ -676,7 +676,7 @@ export default function Home({ user }) {
                 />
               </div>
               <textarea className="form-control mt-3" placeholder="Message *" id="exampleFormControlTextarea1" rows="3"></textarea>
-              <button className="btn bg-[#843e78] rounded-3 text-white d-flex mt-3 gap-2">Send Message <img src={sendMailSvg} alt="" /> </button>
+              <button className="btn bg-[#843e78] rounded-3 text-white d-flex mt-3 gap-2 hover:bg-sky-700">Send Message <img src={sendMailSvg} alt="" /> </button>
             </form>
           </div>
         </div>
