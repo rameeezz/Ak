@@ -137,7 +137,7 @@ export default function BestSellerItems({ user }) {
                     </div>
                   )}
                   <h5 className="card-title responsive-For-Card-h2-Best-Seller">
-                    {element?.name}
+                    {element?.name.slice(0, 37)}
                   </h5>
                   <p className="card-text responsive-For-Card-p">
                     {element?.description.slice(0, 37)}
@@ -206,7 +206,7 @@ export default function BestSellerItems({ user }) {
                       </div>
                     )}
                     <h5 className="card-title responsive-For-Card-h2-Best-Seller">
-                      {element?.name}
+                      {element?.name.slice(0, 37)}
                     </h5>
                     <p className="card-text responsive-For-Card-p">
                       {element?.description.slice(0, 36)}
