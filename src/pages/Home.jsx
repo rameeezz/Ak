@@ -7,6 +7,10 @@ import callSvg from "../assets/card photo/outline-email (1) - Copy.svg";
 import whatsSvg from "../assets/card photo/contact-whatsapp.svg";
 import customerSurviceSvg from "../assets/card photo/customer-service.svg";
 import sendMailSvg from "../assets/card photo/send-email-message.svg";
+import deliveryPhoto from "../assets/card photo/same-day-delivery.svg";
+import freshPhoto from "../assets/card photo/freshness.svg";
+import securePhoto from "../assets/card photo/secure-payment.svg";
+import senderPhoto from "../assets/card photo/sender-privacy.svg";
 import axios from "axios";
 export default function Home({ user }) {
   // console.log(user);
@@ -678,6 +682,26 @@ export default function Home({ user }) {
               <textarea className="form-control mt-3" placeholder="Message *" id="exampleFormControlTextarea1" rows="3"></textarea>
               <button className="btn bg-[#843e78] rounded-3 text-white d-flex mt-3 gap-2 hover:bg-sky-700">Send Message <img src={sendMailSvg} alt="" /> </button>
             </form>
+          </div>
+        </div>
+      </div>
+      <div className="bg-[#fff3fd] py-4">
+        <div className="container d-flex justify-content-around align-items-center">
+          <div className="d-flex flex-column align-items-center">
+            <img src={deliveryPhoto} alt="" className="imgForFooter"/>
+            <p className="p-for-image-for-footer">Same Day Delivery</p>
+          </div>
+          <div className="d-flex flex-column align-items-center">
+            <img src={freshPhoto} alt="" className="imgForFooter"/>
+            <p className="p-for-image-for-footer">Freshness Guarantee</p>
+          </div>
+          <div className="d-flex flex-column align-items-center">
+            <img src={securePhoto} alt="" className="imgForFooter"/>
+            <p className="p-for-image-for-footer">Secure Payment</p>
+          </div>
+          <div className="d-flex flex-column align-items-center">
+            <img src={senderPhoto} alt="" className="imgForFooter"/>
+            <p className="p-for-image-for-footer">Sender Privacy</p>
           </div>
         </div>
       </div>

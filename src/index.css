@@ -287,4 +287,13 @@ gap: 50px;
 .styleForResultSearch{
   width: 81%;
 }
+.imgForFooter{
+  width: 30%;
+  height: 26%;
+}
+.p-for-image-for-footer{
+  font-size:  0.875rem;
+  text-align: center;
+  margin-top: 5px;
+}
 }
