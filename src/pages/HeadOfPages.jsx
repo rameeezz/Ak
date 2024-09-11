@@ -19,7 +19,7 @@ export default function HeadOfPages({ user }) {
   async function getAllItems() {
     try {
       let { data } = await axios.get(
-        "http://freelance1-production.up.railway.app/customer/getItems"
+        "https://freelance1-production.up.railway.app/customer/getItems"
       );
       setAllItems(data);
     } catch (error) {
