@@ -12,7 +12,7 @@ export default function AllCategory() {
     getAllCategory();
   }, []);
   const [allCategory, setAllCategory] = useState([]);
-  console.log(allCategory);
+  // console.log(allCategory);
 
   const [loadingForCategory, setLoadingForCategory] = useState(false);
   const [errorMessageForCategory, setErrorMessageForCategory] = useState("");

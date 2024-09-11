@@ -60,7 +60,7 @@ export default function SubCategoryItems({user}) {
       let { data } = await axios.get(
         `https://freelance1-production.up.railway.app/customer/getItemsFromCategory/${id}`
       );
-      console.log(data);
+      // console.log(data);
       setLoadingAllItems(false);
       setErrorForAllItems("");
       setAllItems(data);

@@ -48,7 +48,12 @@ export default function HeadOfPages({ user }) {
     setFilteredItems([]);
     setSearchTerm("");
   }
-
+  function handleSubmitSearch(nameOfItem) {
+    // console.log(nameOfItem);
+    navigate("/result-search", { state: { itemName: nameOfItem } });
+    setFilteredItems([]);
+    setSearchTerm("");
+  }
   return (
     <>
       {user?.role === "admin1" || user?.role === "admin2" ? (
@@ -62,35 +67,43 @@ export default function HeadOfPages({ user }) {
           </span>
           {/* search work */}
           <div className="d-flex flex-column justify-content-center align-items-center w-100 ">
-            <div className="w-50 d-flex justify-content-center align-items-center gap-1 classforResponsive">
-              <input
+            <div className="w-50">
+             <form onSubmit={(e)=>{
+                e.preventDefault();
+               handleSubmitSearch(searchTerm);
+             }} className="w-100 d-flex justify-content-center align-items-center gap-1 classforResponsive">
+             <input
                 type="text"
                 className="form-control w-75"
                 placeholder="What Are You Looking For?"
                 onChange={searchFromItems}
                 value={searchTerm}
               />
-              {/* <i className="fa-solid fa-magnifying-glass responsive-for-i-head-page text-info cursorPOinter"></i> */}
+              <i
+                onClick={() => {
+                  handleSubmitSearch(searchTerm);
+                }}
+                className="fa-solid fa-magnifying-glass responsive-for-i-head-page text-info cursorPOinter"
+              ></i>
+             </form>
             </div>
             {filteredItems === null || filteredItems.length === 0 ? (
               ""
             ) : (
               <div className="styleForResultSearch d-flex justify-content-center flex-column align-items-center overflow-y-scroll position-absolute bg-white z-20">
-                {filteredItems === null || filteredItems.length === 0 ? (
-                  "Not Found"
-                ) : (
-                  filteredItems.map((element, i) => (
-                    <p
-                      onClick={() => {
-                        handleSearch(element.name);
-                      }}
-                      key={i}
-                      className="text-center text-[#323232] cursor-pointer my-1"
-                    >
-                      {element.name}
-                    </p>
-                  ))
-                )}
+                {filteredItems === null || filteredItems.length === 0
+                  ? "Not Found"
+                  : filteredItems.map((element, i) => (
+                      <p
+                        onClick={() => {
+                          handleSearch(element.name);
+                        }}
+                        key={i}
+                        className="text-center text-[#323232] cursor-pointer my-1"
+                      >
+                        {element.name}
+                      </p>
+                    ))}
               </div>
             )}
           </div>

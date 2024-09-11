@@ -16,14 +16,72 @@ export default function Home({ user }) {
   // console.log(user);
 
   let navigate = useNavigate();
-  function addToCart() {
+  // cart work
+  const [itemsArray, setItemsArray] = useState(() => {
+    // Retrieve saved items from localStorage (if any)
+    const savedItems = localStorage.getItem("cartItems");
+    return savedItems ? JSON.parse(savedItems) : [];
+  });
+  const [classForCart, setClassForCart] = useState(false);
+  const [classoFitemIsAlreadyExist, setClassoFitemIsAlreadyExist] =
+    useState(false);
+  console.log(itemsArray);
+  const customerID = user?.userId || null;
+  // Save itemsArray to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(itemsArray));
+  }, [itemsArray]);
+  const [createCartInfo, setCreateCartInfo] = useState({
+    items: itemsArray,
+    customer: customerID,
+  });
+  // console.log(createCartInfo);
+
+  function addToCart(itemID, quantity = 1) {
     if (user == null) {
-      console.log("yarab");
       navigate("/login");
     } else {
-      alert("نتمنى لكم حياة افضل ");
+      const itemExists = itemsArray.some((item) => item.itemID === itemID);
+
+      // Only add the item if it doesn't already exist
+      if (!itemExists) {
+        const newItem = { itemID, quantity };
+        setItemsArray((prevItems) => [...prevItems, newItem]);
+
+        setCreateCartInfo((prevInfo) => ({
+          ...prevInfo,
+          items: [...prevInfo.items, newItem],
+        }));
+        setClassForCart(true);
+        setClassoFitemIsAlreadyExist(false);
+      } else {
+        setClassoFitemIsAlreadyExist(true);
+        setClassForCart(true);
+      }
     }
   }
+  function closeSureBoxOFCart() {
+    setClassForCart(false);
+    setClassoFitemIsAlreadyExist(false);
+  }
+  async function handleSubmitCreateCart(e) {
+    e.preventDefault();
+    if (createCartInfo.customer == "") {
+      alert("please Login ");
+    } else {
+      try {
+        let { data } = await axios.post(
+          "https://freelance1-production.up.railway.app/customer/createCart",
+          createCartInfo
+        );
+        console.log(data);
+      } catch (error) {}
+    }
+  }
+  function goToBasket() {
+    navigate("/basket");
+  }
+  // done cart work -----------------
   function ShowItemContent(itemDetails) {
     navigate("/item-content", { state: { items: itemDetails } });
   }
@@ -169,6 +227,36 @@ export default function Home({ user }) {
   // done
   return (
     <>
+      <div
+        className={`shadow classForSureBoxOFCart rounded bg-white p-5 translate-middle ${
+          classForCart ? "active" : ""
+        }`}
+      >
+        {classoFitemIsAlreadyExist ? (
+          <p className="text-center my-3">This item is already exist.</p>
+        ) : (
+          <h3 className="text-center my-3 w-100">
+            Item added to cart successfully
+          </h3>
+        )}
+        <div className="d-flex justify-content-center align-items-center gap-3">
+          <button
+            onClick={(e) => {
+              handleSubmitCreateCart(e);
+              goToBasket();
+            }}
+            className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
+          >
+            Go To Basket
+          </button>
+          <button
+            onClick={closeSureBoxOFCart}
+            className="btn text-white bg-[#9cdce6] classForButtonForCard w-100 mt-2 me-3  hover:bg-sky-700"
+          >
+            Continue Shopping
+          </button>
+        </div>
+      </div>
       <img src={bg} alt="Ak Florist" className="classForBg" />
       <div className="container-xxl mb-5">
         {/* Best seller  */}
@@ -196,7 +284,6 @@ export default function Home({ user }) {
           ) : (
             bestSellerCategory.slice(0, 4).map((element, i) => (
               <div
-                
                 key={i}
                 className="styleForContentDiv border-2 border-[#D4B11C] rounded"
               >
@@ -221,9 +308,9 @@ export default function Home({ user }) {
 
                 <div className="upperCard">
                   <img
-                  onClick={() => {
-                    ShowItemContent(element);
-                  }}
+                    onClick={() => {
+                      ShowItemContent(element);
+                    }}
                     src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
                     alt=""
                     className="w-100 h-100 ScaleForPhoto rounded "
@@ -257,7 +344,9 @@ export default function Home({ user }) {
                   </div>
                   <div className="d-flex justify-content-center align-items-center">
                     <button
-                      onClick={addToCart}
+                      onClick={() => {
+                        addToCart(element._id);
+                      }}
                       className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
                     >
                       Add to Cart
@@ -271,7 +360,6 @@ export default function Home({ user }) {
             ? ""
             : bestSellerOccasion.slice(0, 4).map((element, i) => (
                 <div
-                 
                   key={i}
                   className="styleForContentDiv border-2 border-[#D4B11C] rounded"
                 >
@@ -296,9 +384,9 @@ export default function Home({ user }) {
 
                   <div className="upperCard">
                     <img
-                     onClick={() => {
-                      ShowItemContent(element);
-                    }}
+                      onClick={() => {
+                        ShowItemContent(element);
+                      }}
                       src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
                       alt=""
                       className="w-100 h-100 rounded ScaleForPhoto"
@@ -332,7 +420,9 @@ export default function Home({ user }) {
                     </div>
                     <div className="d-flex justify-content-center align-items-center">
                       <button
-                        onClick={addToCart}
+                        onClick={() => {
+                          addToCart(element._id);
+                        }}
                         className="btn classForButtonForCard text-white ColorButton w-100 mt-2 me-3"
                       >
                         Add to Cart
@@ -477,7 +567,6 @@ export default function Home({ user }) {
           ) : (
             specialDeals.slice(0, 4).map((element, i) => (
               <div
-                
                 key={i}
                 className="styleForContentDiv border-2 border-[#D4B11C] rounded"
               >
@@ -502,9 +591,9 @@ export default function Home({ user }) {
 
                 <div className="upperCard">
                   <img
-                  onClick={() => {
-                    ShowItemContent(element);
-                  }}
+                    onClick={() => {
+                      ShowItemContent(element);
+                    }}
                     src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
                     alt=""
                     className="w-100 h-100 ScaleForPhoto rounded "
@@ -538,7 +627,9 @@ export default function Home({ user }) {
                   </div>
                   <div className="d-flex justify-content-center align-items-center">
                     <button
-                      onClick={addToCart}
+                      onClick={() => {
+                        addToCart(element._id);
+                      }}
                       className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
                     >
                       Add to Cart
@@ -552,7 +643,6 @@ export default function Home({ user }) {
             ? ""
             : specialDealsOccasion.slice(0, 4).map((element, i) => (
                 <div
-                 
                   key={i}
                   className="styleForContentDiv border-2 border-[#D4B11C] rounded"
                 >
@@ -577,9 +667,9 @@ export default function Home({ user }) {
 
                   <div className="upperCard">
                     <img
-                     onClick={() => {
-                      ShowItemContent(element);
-                    }}
+                      onClick={() => {
+                        ShowItemContent(element);
+                      }}
                       src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
                       alt=""
                       className="w-100 h-100 ScaleForPhoto rounded "
@@ -613,7 +703,9 @@ export default function Home({ user }) {
                     </div>
                     <div className="d-flex justify-content-center align-items-center">
                       <button
-                        onClick={addToCart}
+                        onClick={() => {
+                          addToCart(element._id);
+                        }}
                         className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
                       >
                         Add to Cart
@@ -644,6 +736,16 @@ export default function Home({ user }) {
               <div className="d-flex align-items-center gap-2">
                 <img src={callSvg} alt="" />
                 salah@gmail.com
+              </div>
+              <div className="d-flex align-items-center gap-2">
+                <i className="fa-solid fa-map-location-dot fs-4"></i>
+                <a
+                  href="https://maps.app.goo.gl/7fzvCNfaM8uWJp6K9"
+                  target="_blank"
+                  className="text-primary"
+                >
+                  Ak Location
+                </a>
               </div>
             </div>
           </div>
@@ -679,8 +781,15 @@ export default function Home({ user }) {
                   placeholder="Email *"
                 />
               </div>
-              <textarea className="form-control mt-3" placeholder="Message *" id="exampleFormControlTextarea1" rows="3"></textarea>
-              <button className="btn bg-[#843e78] rounded-3 text-white d-flex mt-3 gap-2 hover:bg-sky-700">Send Message <img src={sendMailSvg} alt="" /> </button>
+              <textarea
+                className="form-control mt-3"
+                placeholder="Message *"
+                id="exampleFormControlTextarea1"
+                rows="3"
+              ></textarea>
+              <button className="btn bg-[#843e78] rounded-3 text-white d-flex mt-3 gap-2 hover:bg-sky-700">
+                Send Message <img src={sendMailSvg} alt="" />{" "}
+              </button>
             </form>
           </div>
         </div>
@@ -688,19 +797,19 @@ export default function Home({ user }) {
       <div className="bg-[#fff3fd] py-4">
         <div className="container d-flex justify-content-around align-items-center">
           <div className="d-flex flex-column align-items-center">
-            <img src={deliveryPhoto} alt="" className="imgForFooter"/>
+            <img src={deliveryPhoto} alt="" className="imgForFooter" />
             <p className="p-for-image-for-footer">Same Day Delivery</p>
           </div>
           <div className="d-flex flex-column align-items-center">
-            <img src={freshPhoto} alt="" className="imgForFooter"/>
+            <img src={freshPhoto} alt="" className="imgForFooter" />
             <p className="p-for-image-for-footer">Freshness Guarantee</p>
           </div>
           <div className="d-flex flex-column align-items-center">
-            <img src={securePhoto} alt="" className="imgForFooter"/>
+            <img src={securePhoto} alt="" className="imgForFooter" />
             <p className="p-for-image-for-footer">Secure Payment</p>
           </div>
           <div className="d-flex flex-column align-items-center">
-            <img src={senderPhoto} alt="" className="imgForFooter"/>
+            <img src={senderPhoto} alt="" className="imgForFooter" />
             <p className="p-for-image-for-footer">Sender Privacy</p>
           </div>
         </div>

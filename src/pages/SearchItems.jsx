@@ -5,6 +5,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 export default function SearchItems({ user }) {
   const location = useLocation();
   const { itemName } = location.state || {};
+  // console.log(itemName);
+  
   let navigate = useNavigate();
 
   function addToCart() {
@@ -37,14 +39,19 @@ export default function SearchItems({ user }) {
   }, [allItems, itemName]); // Run this when allItems or itemName changes
 
   async function getAllItems() {
-    try {
-      let { data } = await axios.get(
-        "https://freelance1-production.up.railway.app/customer/getItems"
-      );
-      setAllItems(data); // Set items first
-    } catch (error) {
-      if (error.response && error.response.status === 404) {
-        alert("Not Found");
+    if (itemName == undefined) {
+      console.log("wait");
+      
+    }else{
+      try {
+        let { data } = await axios.get(
+          "https://freelance1-production.up.railway.app/customer/getItems"
+        );
+        setAllItems(data); // Set items first
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          alert("Not Found");
+        }
       }
     }
   }

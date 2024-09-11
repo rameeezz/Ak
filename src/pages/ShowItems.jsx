@@ -8,6 +8,8 @@ export default function ShowItems({user}) {
 
   // Destructure `id` from location.state, or set to undefined if state is null
   const { id } = location.state || {};
+  // console.log(id);
+  
   function addToCart() {
     if (user == null) {
       navigate("/login");
@@ -64,6 +66,7 @@ export default function ShowItems({user}) {
       if (error.response && error.response.status === 404) {
         setLoadingAllItems(false);
         setErrorForAllItems("no items");
+        setSelectedOptionForSubCategory(id)
       }
     }
   }
