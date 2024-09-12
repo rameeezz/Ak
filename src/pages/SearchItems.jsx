@@ -133,7 +133,7 @@ export default function SearchItems({ user }) {
                 onClick={() => {
                   ShowItemContent(element);
                 }}
-                src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
+                src={`https://akflorist.s3.eu-north-1.amazonaws.com/${element?.images[0]}`}
                 className="card-img-top ScaleForPhoto forBestSellerPageResponsiveImage"
                 alt=""
               />

@@ -106,7 +106,7 @@ export default function ItemContent({ user }) {
               ></i>
               <img
                 onDoubleClick={openImage}
-                src={`https://freelance1-production.up.railway.app/${images[selectedIndex]}`}
+                src={`https://akflorist.s3.eu-north-1.amazonaws.com/${images[selectedIndex]}`}
                 alt=""
                 className="w-100 h-100 rounded"
               />
@@ -135,7 +135,7 @@ export default function ItemContent({ user }) {
                       }`}
                     >
                       <img
-                        src={`https://freelance1-production.up.railway.app/${image}`}
+                        src={`https://akflorist.s3.eu-north-1.amazonaws.com/${image}`}
                         alt={`Image ${index + 1}`}
                         className="img-fluid w-100 h-100 rounded"
                       />
@@ -188,7 +188,7 @@ export default function ItemContent({ user }) {
           </div>
           <div className="w-50 inSmallScreenInsideWindowImage h-100 rounded">
             <img
-              src={`https://freelance1-production.up.railway.app/${images[selectedIndex]}`}
+              src={`https://akflorist.s3.eu-north-1.amazonaws.com/${images[selectedIndex]}`}
               alt=""
               className="w-100 h-100 rounded"
             />

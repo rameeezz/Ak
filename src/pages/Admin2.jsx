@@ -1155,7 +1155,7 @@ async function submitSellerOfItemForOccasion(e, itemID) {
                     ></button>
                   </div>
                   <img
-                    src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
+                    src={`https://akflorist.s3.eu-north-1.amazonaws.com/${element?.images[0]}`}
                     className="card-img-top"
                     alt=""
                   />
@@ -1549,7 +1549,7 @@ async function submitSellerOfItemForOccasion(e, itemID) {
                     ></button>
                   </div>
                   <img
-                    src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
+                    src={`https://akflorist.s3.eu-north-1.amazonaws.com/${element?.images[0]}`}
                     className="card-img-top"
                     alt=""
                   />

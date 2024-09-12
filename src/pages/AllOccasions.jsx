@@ -71,7 +71,7 @@ export default function AllOccasions() {
                 // style={{ minWidth: "250px" }}
               >
                 <img
-                  src={`https://freelance1-production.up.railway.app/${element?.image}`}
+                  src={`https://akflorist.s3.eu-north-1.amazonaws.com/${element?.image}`}
                   alt=""
                   className="w-100 h-100 rounded"
                 />
