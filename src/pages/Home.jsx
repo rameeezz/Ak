@@ -77,7 +77,7 @@ export default function Home({ user }) {
     } else {
       try {
         let { data } = await axios.post(
-          "https://freelance1-production.up.railway.app/customer/createCart",
+          "https://akflorist.s3.eu-north-1.amazonaws.com/customer/createCart",
           createCartInfo
         );
         console.log(data);
@@ -317,7 +317,7 @@ export default function Home({ user }) {
                     onClick={() => {
                       ShowItemContent(element);
                     }}
-                    src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
+                    src={`https://akflorist.s3.eu-north-1.amazonaws.com/${element?.images[0]}`}
                     alt=""
                     className="w-100 h-100 ScaleForPhoto rounded "
                   />
@@ -393,7 +393,7 @@ export default function Home({ user }) {
                       onClick={() => {
                         ShowItemContent(element);
                       }}
-                      src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
+                      src={`https://akflorist.s3.eu-north-1.amazonaws.com/${element?.images[0]}`}
                       alt=""
                       className="w-100 h-100 rounded ScaleForPhoto"
                     />
@@ -478,7 +478,7 @@ export default function Home({ user }) {
                 >
                   <div className="h-100 w-100 position-relative">
                     <img
-                      src={`https://freelance1-production.up.railway.app/${element?.image}`}
+                      src={`https://akflorist.s3.eu-north-1.amazonaws.com/${element?.image}`}
                       alt="Category Photo"
                       className="w-100 h-100 rounded"
                     />
@@ -531,7 +531,7 @@ export default function Home({ user }) {
                 >
                   <div className="h-100 w-100 position-relative">
                     <img
-                      src={`https://freelance1-production.up.railway.app/${element?.image}`}
+                      src={`https://akflorist.s3.eu-north-1.amazonaws.com/${element?.image}`}
                       alt="Category Photo"
                       className="w-100 h-100 rounded"
                     />
@@ -600,7 +600,7 @@ export default function Home({ user }) {
                     onClick={() => {
                       ShowItemContent(element);
                     }}
-                    src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
+                    src={`https://akflorist.s3.eu-north-1.amazonaws.com/${element?.images[0]}`}
                     alt=""
                     className="w-100 h-100 ScaleForPhoto rounded "
                   />
@@ -676,7 +676,7 @@ export default function Home({ user }) {
                       onClick={() => {
                         ShowItemContent(element);
                       }}
-                      src={`https://freelance1-production.up.railway.app/${element?.images[0]}`}
+                      src={`https://akflorist.s3.eu-north-1.amazonaws.com/${element?.images[0]}`}
                       alt=""
                       className="w-100 h-100 ScaleForPhoto rounded "
                     />
