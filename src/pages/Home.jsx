@@ -14,7 +14,6 @@ import senderPhoto from "../assets/card photo/sender-privacy.svg";
 import axios from "axios";
 export default function Home({ user }) {
   // console.log(user);
-
   let navigate = useNavigate();
   // cart work
   const [itemsArray, setItemsArray] = useState(() => {
@@ -25,7 +24,7 @@ export default function Home({ user }) {
   const [classForCart, setClassForCart] = useState(false);
   const [classoFitemIsAlreadyExist, setClassoFitemIsAlreadyExist] =
     useState(false);
-  console.log(itemsArray);
+  // console.log(itemsArray);
   const customerID = user?.userId || null;
   // Save itemsArray to localStorage whenever it changes
   useEffect(() => {
@@ -35,6 +34,13 @@ export default function Home({ user }) {
     items: itemsArray,
     customer: customerID,
   });
+  useEffect(() => {
+    setCreateCartInfo((prevInfo) => ({
+      ...prevInfo,
+      customer: user?.userId || null, // Ensure customer is always up-to-date
+      items: itemsArray,
+    }));
+  }, [user, itemsArray]);
   // console.log(createCartInfo);
 
   function addToCart(itemID, quantity = 1) {
