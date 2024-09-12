@@ -66,7 +66,7 @@ export default function Home({ user }) {
   }
   async function handleSubmitCreateCart(e) {
     e.preventDefault();
-    if (createCartInfo.customer == "") {
+    if (createCartInfo.customer == null) {
       alert("please Login ");
     } else {
       try {
