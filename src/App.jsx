@@ -125,7 +125,6 @@ import ShowItemsInOccasion from "./pages/ShowItemsInOccasion";
 import AllSpecialDeals from './pages/AllSpecialDeals';
 import SubCategoryItems from './pages/SubCategoryItems';
 import ItemContent from './pages/ItemContent';
-import CartPage from './pages/CartPage';
 import SearchItems from './pages/SearchItems';
 import Basket from './pages/Basket';
 
@@ -211,7 +210,6 @@ function App() {
         { path: "all-special-deals", element: <AllSpecialDeals user={user}/> },
         { path: "best-sellers", element: <BestSellerItems user={user} /> },
         { path: "item-content", element: <ItemContent user={user} /> },
-        { path: "cart-page", element: <CartPage user={user} /> },
         {
           path: "login",
           element: <LogIn saveUser={SaveUserData} userRole={user} />,
