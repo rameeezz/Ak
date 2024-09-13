@@ -77,7 +77,7 @@ export default function Home({ user }) {
     } else {
       try {
         let { data } = await axios.post(
-          "https://akflorist.s3.eu-north-1.amazonaws.com/customer/createCart",
+          "https://freelance1-production.up.railway.app/customer/createCart",
           createCartInfo
         );
         console.log(data);
