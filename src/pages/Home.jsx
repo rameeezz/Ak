@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../css/Home.css";
 import bg from "../assets/bg/imresizer-1724329258313.jpg";
 import PHoto1 from "../assets/card photo/photoCategory.jpg";
@@ -14,22 +14,25 @@ import senderPhoto from "../assets/card photo/sender-privacy.svg";
 import axios from "axios";
 export default function Home({ user }) {
   // console.log(user);
-  let navigate = useNavigate();
-  // cart work
+  const navigate = useNavigate();
+  let location = useLocation();
+  let { cartID } = location.state || "";
+  console.log(cartID);
+  
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)
     const savedItems = localStorage.getItem("cartItems");
     return savedItems ? JSON.parse(savedItems) : [];
   });
   console.log(itemsArray);
-  
+
   const [classForCart, setClassForCart] = useState(false);
   const [classoFitemIsAlreadyExist, setClassoFitemIsAlreadyExist] =
     useState(false);
   // console.log(itemsArray);
   const customerID = user?.userId || null;
-  console.log(customerID);
-  
+  // console.log(customerID);
+
   // Save itemsArray to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(itemsArray));
@@ -85,16 +88,47 @@ export default function Home({ user }) {
           createCartInfo
         );
         console.log(data);
+        goToBasket();
       } catch (error) {
-        if (error.response && error.response.status === 422 ) {
-          
+        if (error.response && error.response.status === 409) {
+          editeCart(e)
+        }
+       
+      }
+    }
+  }
+  async function editeCart(e) {
+    e.preventDefault();
+    const cartInfo = {
+      items: itemsArray,
+      cart: cartID,
+    };
+    if (cartID === null || cartID == "") {
+    } else {
+      try {
+        let { data } = await axios.patch(
+          "https://freelance1-production.up.railway.app/customer/editCart",
+          cartInfo
+        );
+        console.log(data);
+        goToBasket();
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          goToBasket();
         }
       }
     }
   }
   function goToBasket() {
-    navigate("/basket", { state: { userId: customerID } });
+    navigate("/basket", {
+      state: { userId: customerID},
+    });
   }
+
+
+
+
+
   // done cart work -----------------
   function ShowItemContent(itemDetails) {
     navigate("/item-content", { state: { items: itemDetails } });
@@ -257,7 +291,6 @@ export default function Home({ user }) {
           <button
             onClick={(e) => {
               handleSubmitCreateCart(e);
-              goToBasket();
             }}
             className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
           >

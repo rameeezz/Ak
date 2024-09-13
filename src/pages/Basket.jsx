@@ -7,15 +7,19 @@ import axios from "axios";
 export default function Basket() {
   let location = useLocation();
   let { userId } = location.state || null;
+  
   // console.log(userId);
+  const [itemsInCart, setItemsInCart] = useState([]);
+  const [cartID, setCartId] = useState("");
+  
+  const [totalCost, setTotalCost] = useState("");
   useEffect(() => {
     getCart();
   }, []);
-  const [itemsInCart, setItemsInCart] = useState([]);
-  console.log(itemsInCart);
-  const [totalCost, setTotalCost] = useState("");
   // console.log(totalCost);
-
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(itemsInCart));
+  }, [itemsInCart]);
   const [loading, setLoading] = useState(false);
   async function getCart() {
     setLoading(true);
@@ -28,6 +32,7 @@ export default function Basket() {
         );
         setItemsInCart(data.getThisCart.items);
         setTotalCost(data.getThisCart.totalCost);
+        setCartId(data.getThisCart._id);
         setLoading(false);
       } catch (error) {
         if (error.response && error.response.status === 404) {
@@ -38,21 +43,28 @@ export default function Basket() {
   }
   let navigate = useNavigate();
   function goHome() {
-    navigate("/home");
+    navigate("/home", { state: { cartID: cartID } });
   }
-  async function deleteItem(itemID, cartID) {
-    const deleteDetails = { cart: cartID, itemID: itemID };
-    if (itemID === null || itemID == "" || cartID === null || cartID == "") {
-      alert("click on it agian.");
-    } else {
-      try {
-        let { data } = await axios.patch(
-          "https://freelance1-production.up.railway.app/customer/removeItemFromCart",
-          deleteDetails
-        );
-        console.log(data);
-      } catch (error) {}
+  async function deleteItem(itemID) {
+    if (!itemID || !cartID) {
+      alert("Invalid item or cart ID.");
+      return;
     }
+
+    const deleteDetails = { cart: cartID, itemID: itemID };
+
+    try {
+      await axios.patch(
+        "https://freelance1-production.up.railway.app/customer/removeItemFromCart",
+        deleteDetails
+      );
+      await getCart();
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
+  }
+  function clickSubmit() {
+    // localStorage.setItem("cartItems", JSON.stringify([]));
   }
   return (
     <>
@@ -152,7 +164,7 @@ export default function Basket() {
                         </p>
                         <i
                           onClick={() => {
-                            deleteItem(element?.itemID._id, element?._id);
+                            deleteItem(element?.itemID._id);
                           }}
                           className="fa-solid fa-trash-can cursorPOinter"
                         ></i>
@@ -188,7 +200,7 @@ export default function Basket() {
                 </div>
               )}
               <div className="mt-3 d-flex justify-content-center">
-                <button className="w-[80%] btn btn-primary">
+                <button onClick={clickSubmit} className="w-[80%] btn btn-primary">
                   Proceed to Shipping Details
                 </button>
               </div>
