@@ -18,7 +18,7 @@ export default function Home({ user }) {
   let location = useLocation();
   let { cartID } = location.state || "";
   console.log(cartID);
-  
+
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)
     const savedItems = localStorage.getItem("cartItems");
@@ -91,9 +91,8 @@ export default function Home({ user }) {
         goToBasket();
       } catch (error) {
         if (error.response && error.response.status === 409) {
-          editeCart(e)
+          editeCart(e);
         }
-       
       }
     }
   }
@@ -121,13 +120,9 @@ export default function Home({ user }) {
   }
   function goToBasket() {
     navigate("/basket", {
-      state: { userId: customerID},
+      state: { userId: customerID },
     });
   }
-
-
-
-
 
   // done cart work -----------------
   function ShowItemContent(itemDetails) {
