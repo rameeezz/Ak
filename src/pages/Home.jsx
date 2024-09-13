@@ -21,11 +21,15 @@ export default function Home({ user }) {
     const savedItems = localStorage.getItem("cartItems");
     return savedItems ? JSON.parse(savedItems) : [];
   });
+  console.log(itemsArray);
+  
   const [classForCart, setClassForCart] = useState(false);
   const [classoFitemIsAlreadyExist, setClassoFitemIsAlreadyExist] =
     useState(false);
   // console.log(itemsArray);
   const customerID = user?.userId || null;
+  console.log(customerID);
+  
   // Save itemsArray to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(itemsArray));
@@ -81,11 +85,15 @@ export default function Home({ user }) {
           createCartInfo
         );
         console.log(data);
-      } catch (error) {}
+      } catch (error) {
+        if (error.response && error.response.status === 422 ) {
+          
+        }
+      }
     }
   }
   function goToBasket() {
-    navigate("/basket");
+    navigate("/basket", { state: { userId: customerID } });
   }
   // done cart work -----------------
   function ShowItemContent(itemDetails) {

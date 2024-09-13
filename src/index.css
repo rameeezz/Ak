@@ -127,6 +127,16 @@
   top: 50%;
   left: 50%;
 }
+.styleOfImageInCart{
+  width: 100px;
+  height: 100%;
+  /* background-color: #D4B11C; */
+}
+
+/* .styleOftextInCart{
+  width: 70%;
+} */
+
 @media (max-width: 576px) {
   /* Small screens (sm) and below */
   .responsive-font-size-p {
@@ -316,5 +326,26 @@ gap: 50px;
 }
 .classForSureBoxOFCart{
   width: 90%;
+ }
+ .inSmallScreenBasket{
+  margin-top: 5%;
+  /* height: 20%; */
+}
+.styleOfImageInCart{
+  width: 100px;
+  height: 100%;
+}
+.textForPInCart{
+  font-size: 0.75rem;
+  white-space: nowrap;
+ }
+ .textForPInCartWithImage{
+  font-size: 0.75rem;
+ }
+ .forSmallScreenDivBasket{
+  width: 100% !important;
+ }
+ .classForButtonBasket{
+  width: 10% !important;
  }
 }
