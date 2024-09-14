@@ -27,6 +27,7 @@ export default function Home({ user }) {
   console.log(itemsArray);
 
   const [classForCart, setClassForCart] = useState(false);
+  const [loadingButtonCart, setLoadingButtonCat] = useState(false);
   const [classoFitemIsAlreadyExist, setClassoFitemIsAlreadyExist] =
     useState(false);
   // console.log(itemsArray);
@@ -50,7 +51,7 @@ export default function Home({ user }) {
   }, [user, itemsArray]);
   // console.log(createCartInfo);
 
-  function addToCart(itemID, quantity , itemType) {
+  function addToCart(itemID, quantity, itemType) {
     if (user == null) {
       navigate("/login");
     } else {
@@ -58,7 +59,7 @@ export default function Home({ user }) {
 
       // Only add the item if it doesn't already exist
       if (!itemExists) {
-        const newItem = { itemID, quantity ,itemType};
+        const newItem = { itemID, quantity, itemType };
         setItemsArray((prevItems) => [...prevItems, newItem]);
 
         setCreateCartInfo((prevInfo) => ({
@@ -78,8 +79,9 @@ export default function Home({ user }) {
     setClassoFitemIsAlreadyExist(false);
   }
   async function handleSubmitCreateCart(e) {
-    console.log(createCartInfo);
-    
+    setLoadingButtonCat(true);
+    // console.log(createCartInfo);
+
     e.preventDefault();
     if (createCartInfo.customer == null) {
       alert("please Login ");
@@ -89,7 +91,7 @@ export default function Home({ user }) {
           "https://freelance1-production.up.railway.app/customer/createCart",
           createCartInfo
         );
-        console.log(data);
+        // console.log(data);
         goToBasket();
       } catch (error) {
         if (error.response && error.response.status === 409) {
@@ -99,6 +101,7 @@ export default function Home({ user }) {
     }
   }
   async function editeCart(e) {
+    setLoadingButtonCat(true);
     e.preventDefault();
     const cartInfo = {
       items: itemsArray,
@@ -111,7 +114,7 @@ export default function Home({ user }) {
           "https://freelance1-production.up.railway.app/customer/editCart",
           cartInfo
         );
-        console.log(data);
+        // console.log(data);
         goToBasket();
       } catch (error) {
         if (error.response && error.response.status === 404) {
@@ -124,6 +127,7 @@ export default function Home({ user }) {
     navigate("/basket", {
       state: { userId: customerID },
     });
+    setLoadingButtonCat(false);
   }
 
   // done cart work -----------------
@@ -285,14 +289,21 @@ export default function Home({ user }) {
           </h3>
         )}
         <div className="d-flex justify-content-center align-items-center gap-3">
-          <button
-            onClick={(e) => {
-              handleSubmitCreateCart(e);
-            }}
-            className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
-          >
-            Go To Basket
-          </button>
+          {loadingButtonCart ? (
+            <div className="w-100 justify-content-center d-flex">
+              <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+            </div>
+          ) : (
+            <button
+              onClick={(e) => {
+                handleSubmitCreateCart(e);
+              }}
+              className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
+            >
+              Go To Basket
+            </button>
+          )}
+
           <button
             onClick={closeSureBoxOFCart}
             className="btn text-white bg-[#9cdce6] classForButtonForCard w-100 mt-2 me-3  hover:bg-sky-700"
@@ -389,7 +400,7 @@ export default function Home({ user }) {
                   <div className="d-flex justify-content-center align-items-center">
                     <button
                       onClick={() => {
-                        addToCart(element._id ,1 ,element?.type);
+                        addToCart(element._id, 1, element?.type);
                       }}
                       className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
                     >
@@ -464,9 +475,9 @@ export default function Home({ user }) {
                     </div>
                     <div className="d-flex justify-content-center align-items-center">
                       <button
-                         onClick={() => {
-                        addToCart(element._id ,1 ,element?.type);
-                      }}
+                        onClick={() => {
+                          addToCart(element._id, 1, element?.type);
+                        }}
                         className="btn classForButtonForCard text-white ColorButton w-100 mt-2 me-3"
                       >
                         Add to Cart
@@ -671,8 +682,8 @@ export default function Home({ user }) {
                   </div>
                   <div className="d-flex justify-content-center align-items-center">
                     <button
-                       onClick={() => {
-                        addToCart(element._id ,1 ,element?.type);
+                      onClick={() => {
+                        addToCart(element._id, 1, element?.type);
                       }}
                       className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
                     >
@@ -748,8 +759,8 @@ export default function Home({ user }) {
                     <div className="d-flex justify-content-center align-items-center">
                       <button
                         onClick={() => {
-                        addToCart(element._id ,1 ,element?.type);
-                      }}
+                          addToCart(element._id, 1, element?.type);
+                        }}
                         className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
                       >
                         Add to Cart
