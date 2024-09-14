@@ -50,7 +50,7 @@ export default function Home({ user }) {
   }, [user, itemsArray]);
   // console.log(createCartInfo);
 
-  function addToCart(itemID, quantity = 1) {
+  function addToCart(itemID, quantity , itemType) {
     if (user == null) {
       navigate("/login");
     } else {
@@ -58,7 +58,7 @@ export default function Home({ user }) {
 
       // Only add the item if it doesn't already exist
       if (!itemExists) {
-        const newItem = { itemID, quantity };
+        const newItem = { itemID, quantity ,itemType};
         setItemsArray((prevItems) => [...prevItems, newItem]);
 
         setCreateCartInfo((prevInfo) => ({
@@ -78,6 +78,8 @@ export default function Home({ user }) {
     setClassoFitemIsAlreadyExist(false);
   }
   async function handleSubmitCreateCart(e) {
+    console.log(createCartInfo);
+    
     e.preventDefault();
     if (createCartInfo.customer == null) {
       alert("please Login ");
@@ -387,7 +389,7 @@ export default function Home({ user }) {
                   <div className="d-flex justify-content-center align-items-center">
                     <button
                       onClick={() => {
-                        addToCart(element._id);
+                        addToCart(element._id ,1 ,element?.type);
                       }}
                       className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
                     >
@@ -462,9 +464,9 @@ export default function Home({ user }) {
                     </div>
                     <div className="d-flex justify-content-center align-items-center">
                       <button
-                        onClick={() => {
-                          addToCart(element._id);
-                        }}
+                         onClick={() => {
+                        addToCart(element._id ,1 ,element?.type);
+                      }}
                         className="btn classForButtonForCard text-white ColorButton w-100 mt-2 me-3"
                       >
                         Add to Cart
@@ -669,8 +671,8 @@ export default function Home({ user }) {
                   </div>
                   <div className="d-flex justify-content-center align-items-center">
                     <button
-                      onClick={() => {
-                        addToCart(element._id);
+                       onClick={() => {
+                        addToCart(element._id ,1 ,element?.type);
                       }}
                       className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
                     >
@@ -746,8 +748,8 @@ export default function Home({ user }) {
                     <div className="d-flex justify-content-center align-items-center">
                       <button
                         onClick={() => {
-                          addToCart(element._id);
-                        }}
+                        addToCart(element._id ,1 ,element?.type);
+                      }}
                         className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
                       >
                         Add to Cart
