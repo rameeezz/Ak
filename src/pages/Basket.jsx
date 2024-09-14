@@ -7,11 +7,10 @@ import axios from "axios";
 export default function Basket() {
   let location = useLocation();
   let { userId } = location.state || null;
-  
+
   // console.log(userId);
   const [itemsInCart, setItemsInCart] = useState([]);
   const [cartID, setCartId] = useState("");
-  
   const [totalCost, setTotalCost] = useState("");
   useEffect(() => {
     getCart();
@@ -148,7 +147,7 @@ export default function Basket() {
                 itemsInCart.map((element, i) => (
                   <div
                     key={i}
-                    className="inSmallScreenBasket  d-flex justify-content-center gap-2 w-100"
+                    className="inSmallScreenBasket  d-flex justify-content-center gap-2 w-100 mb-3"
                   >
                     <div className="styleOfImageInCart rounded">
                       <img
@@ -174,11 +173,15 @@ export default function Basket() {
                           EGP {element?.itemID?.lastPrice}
                         </p>
                         <div className="d-flex justify-content-center align-items-center gap-2">
-                          <button className="btn border classForButtonBasket">
+                          <button
+                            className="btn border classForButtonBasket"
+                          >
                             -
                           </button>
                           <p>{element?.quantity}</p>
-                          <button className="btn border classForButtonBasket">
+                          <button
+                            className="btn border classForButtonBasket"
+                          >
                             +
                           </button>
                         </div>
@@ -200,7 +203,10 @@ export default function Basket() {
                 </div>
               )}
               <div className="mt-3 d-flex justify-content-center">
-                <button onClick={clickSubmit} className="w-[80%] btn btn-primary">
+                <button
+                  onClick={clickSubmit}
+                  className="w-[80%] btn btn-primary"
+                >
                   Proceed to Shipping Details
                 </button>
               </div>
