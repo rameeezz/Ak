@@ -10,15 +10,17 @@ export default function Basket() {
 
   // console.log(userId);
   const [itemsInCart, setItemsInCart] = useState([]);
+  // console.log(itemsInCart);
+  
   const [cartID, setCartId] = useState("");
   const [totalCost, setTotalCost] = useState("");
   useEffect(() => {
     getCart();
   }, []);
   // console.log(totalCost);
-  useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(itemsInCart));
-  }, [itemsInCart]);
+  // useEffect(() => {
+  //   localStorage.setItem("cartItems", JSON.stringify(itemsInCart));
+  // }, [itemsInCart]);
   const [loading, setLoading] = useState(false);
   async function getCart() {
     setLoading(true);

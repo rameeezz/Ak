@@ -120,6 +120,9 @@ export default function Home({ user }) {
         if (error.response && error.response.status === 404) {
           goToBasket();
         }
+        if (error.response && error.response.status === 400) {
+          goToBasket();
+        }
       }
     }
   }
