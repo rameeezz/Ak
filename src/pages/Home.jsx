@@ -277,6 +277,52 @@ export default function Home({ user }) {
     }
   }
   // done
+
+  // work of text form
+  const [loadingFormData, setLoadingFormData] = useState(false);
+  const [formInfo, setFormInfo] = useState({
+    email: "",
+    subject: "",
+    text: "",
+    mobileNumber: "",
+    name: "",
+  });
+  console.log(formInfo);
+
+  function setFormDetails(e) {
+    let myFormInfo = { ...formInfo };
+    myFormInfo[e.target.name] = e.target.value;
+    setFormInfo(myFormInfo);
+  }
+  async function sendFormInfo(e) {
+    e.preventDefault();
+    if (
+      formInfo.email == "" ||
+      formInfo.mobileNumber == "" ||
+      formInfo.name == "" ||
+      formInfo.subject == "" ||
+      formInfo.text == ""
+    ) {
+      alert("Please Fill All Form");
+    } else {
+      setLoadingFormData(true);
+      try {
+        let { data } = await axios.post(
+          "https://freelance1-production.up.railway.app/customer/sendReport",
+          formInfo
+        );
+        alert("Done.");
+        setFormInfo({
+          email: "",
+          subject: "",
+          text: "",
+          mobileNumber: "",
+          name: "",
+        });
+        setLoadingFormData(false);
+      } catch (error) {}
+    }
+  }
   return (
     <>
       <div
@@ -793,7 +839,7 @@ export default function Home({ user }) {
               </div>
               <div className="d-flex align-items-center gap-2">
                 <img src={callSvg} alt="" />
-                salah@gmail.com
+                AKflorist2020@gmail.com
               </div>
               <div className="d-flex align-items-center gap-2">
                 <i className="fa-solid fa-map-location-dot fs-4"></i>
@@ -817,37 +863,61 @@ export default function Home({ user }) {
             <form>
               <div className=" d-flex justify-content-center gap-3">
                 <input
+                  onChange={setFormDetails}
                   type="text"
                   className="form-control mb-4"
                   placeholder="Name *"
+                  name="name"
+                  value={formInfo.name}
                 />
                 <input
+                  onChange={setFormDetails}
                   type="text"
                   className="form-control mb-4"
                   placeholder="Email *"
+                  name="email"
+                  value={formInfo.email}
                 />
               </div>
               <div className=" d-flex justify-content-center gap-3">
                 <input
-                  type="number"
-                  className="form-control"
-                  placeholder="Phone *"
-                />
-                <input
+                  onChange={setFormDetails}
                   type="text"
                   className="form-control"
-                  placeholder="Email *"
+                  placeholder="Phone *"
+                  name="mobileNumber"
+                  value={formInfo.mobileNumber}
+                />
+                <input
+                  onChange={setFormDetails}
+                  type="text"
+                  className="form-control"
+                  placeholder="Subject *"
+                  name="subject"
+                  value={formInfo.subject}
                 />
               </div>
               <textarea
+                onChange={setFormDetails}
                 className="form-control mt-3"
                 placeholder="Message *"
                 id="exampleFormControlTextarea1"
                 rows="3"
+                name="text"
+                value={formInfo.text}
               ></textarea>
-              <button className="btn bg-[#843e78] rounded-3 text-white d-flex mt-3 gap-2 hover:bg-sky-700">
-                Send Message <img src={sendMailSvg} alt="" />{" "}
-              </button>
+              {loadingFormData ? (
+                <div className="w-100 justify-content-left d-flex">
+                  <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+                </div>
+              ) : (
+                <button
+                  onClick={sendFormInfo}
+                  className="btn bg-[#843e78] rounded-3 text-white d-flex mt-3 gap-2 hover:bg-sky-700"
+                >
+                  Send Message <img src={sendMailSvg} alt="" />{" "}
+                </button>
+              )}
             </form>
           </div>
         </div>
