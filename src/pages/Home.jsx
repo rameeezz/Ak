@@ -17,14 +17,14 @@ export default function Home({ user }) {
   const navigate = useNavigate();
   let location = useLocation();
   let { cartID } = location.state || "";
-  console.log(cartID);
+  // console.log(cartID);
 
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)
     const savedItems = localStorage.getItem("cartItems");
     return savedItems ? JSON.parse(savedItems) : [];
   });
-  console.log(itemsArray);
+  // console.log(itemsArray);
 
   const [classForCart, setClassForCart] = useState(false);
   const [loadingButtonCart, setLoadingButtonCat] = useState(false);
