@@ -36,9 +36,9 @@ async function auth() {
 }
 
 // Step 2: Handle the callback after Google redirects back to your app
-window.onload = () => {
-  handleGoogleCallback();
-};
+useEffect(()=>{
+  handleGoogleCallback()
+},[])
 
 async function handleGoogleCallback() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -46,17 +46,14 @@ async function handleGoogleCallback() {
 
   if (code) {
     try {
-      // Encode the code before sending it to your backend
-      const encodedCode = encodeURIComponent(code);
-
-      // Send the encoded code to your backend to exchange it for user info
+      // Send the code to your backend to exchange it for user info
       const response = await fetch(
-        `https://freelance1-production.up.railway.app/getGoogleUser?code=${encodedCode}`,
-        { method: "GET" } // Optional: GET is the default method
+        `https://freelance1-production.up.railway.app/getGoogleUser?code=${code},
+        { method: "GET" } `// Optional: GET is default
       );
-
       if (!response.ok) {
         throw new Error(`Failed to fetch: ${response.status}`);
+
       }
 
       const data = await response.json();
@@ -67,9 +64,6 @@ async function handleGoogleCallback() {
 
       // Optionally save user data locally
       saveUser(data.userData);
-
-      // Redirect to a dashboard or another part of your app after login success
-      window.location.href = "/dashboard";
     } catch (error) {
       console.error("Error during Google callback:", error.message);
     }
@@ -77,9 +71,7 @@ async function handleGoogleCallback() {
     console.log("No code found in the query parameters");
   }
 }
-function saveUser(userData) {
-  console.log("User data saved:", userData);
-}
+
   // Handle form input changes
   function setUserInput(e) {
     let myUserInfo = {...user}
