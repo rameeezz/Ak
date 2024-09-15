@@ -71,7 +71,9 @@ async function handleGoogleCallback() {
     console.log("No code found in the query parameters");
   }
 }
-
+function saveUser(userData) {
+  console.log("User data saved:", userData);
+}
   // Handle form input changes
   function setUserInput(e) {
     let myUserInfo = {...user}
