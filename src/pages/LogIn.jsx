@@ -46,14 +46,17 @@ async function handleGoogleCallback() {
 
   if (code) {
     try {
-      // Send the code to your backend to exchange it for user info
+      // Encode the code before sending it to your backend
+      const encodedCode = encodeURIComponent(code);
+
+      // Send the encoded code to your backend to exchange it for user info
       const response = await fetch(
-        `https://freelance1-production.up.railway.app/getGoogleUser?code=${code},
-        { method: "GET" } `// Optional: GET is default
+        `https://freelance1-production.up.railway.app/getGoogleUser?code=${encodedCode}`,
+        { method: "GET" } // Optional: GET is the default method
       );
+
       if (!response.ok) {
         throw new Error(`Failed to fetch: ${response.status}`);
-
       }
 
       const data = await response.json();
@@ -64,6 +67,9 @@ async function handleGoogleCallback() {
 
       // Optionally save user data locally
       saveUser(data.userData);
+
+      // Redirect to a dashboard or another part of your app after login success
+      window.location.href = "/dashboard";
     } catch (error) {
       console.error("Error during Google callback:", error.message);
     }
