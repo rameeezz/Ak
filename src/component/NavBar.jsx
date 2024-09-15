@@ -5,11 +5,14 @@ import axios from "axios";
 
 export default function NavBar({ user, logOut }) {
   let navigate = useNavigate();
+  const isLoginPage = location.pathname === "/basket";
   const [activeNav, setActiveNav] = useState(false);
   const [category, setCategory] = useState([]);
   const [expandedCategory, setExpandedCategory] = useState(null); // Track which category is expanded
   const [subCategory, setSubCategory] = useState([]);
-  const [categoryWithSubCategories, setCategoryWithSubCategories] = useState({}); // Store which categories have subcategories
+  const [categoryWithSubCategories, setCategoryWithSubCategories] = useState(
+    {}
+  ); // Store which categories have subcategories
 
   const navRef = useRef(null); // Create a ref for the navbar
 
@@ -81,7 +84,9 @@ export default function NavBar({ user, logOut }) {
 
   return (
     <>
-      {user?.role === "admin1" || user?.role === "admin2" ? (
+      {isLoginPage ? (
+        ""
+      ) : user?.role === "admin1" || user?.role === "admin2" ? (
         ""
       ) : (
         <>

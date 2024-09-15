@@ -20,50 +20,57 @@ const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 const togglePasswordVisibility = () => {
   setIsPasswordVisible(!isPasswordVisible);
 };
-  // Function to initiate Google login flow
-  async function auth() {
+async function auth() {
+  try {
+    // Step 1: Initiate Google OAuth flow by making a request to your backend
+    const response = await fetch("https://freelance1-production.up.railway.app/auth/google", {
+      method: "POST",
+    });
+    const data = await response.json();
+    
+    // Redirect the user to Google's OAuth login page
+    window.location.href = data.url;
+  } catch (error) {
+    console.error("Error during auth:", error.message);
+  }
+}
+
+// Step 2: Handle the callback after Google redirects back to your app
+window.onload = () => {
+  handleGoogleCallback();
+};
+
+async function handleGoogleCallback() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const code = urlParams.get("code");
+
+  if (code) {
     try {
+      // Send the code to your backend to exchange it for user info
       const response = await fetch(
-        "https://freelance1-production.up.railway.app/auth/google",
-        { method: "POST" }
+        `https://freelance1-production.up.railway.app/getGoogleUser?code=${code},
+        { method: "GET" } `// Optional: GET is default
       );
-      const data = await response.json();
-      window.location.href = data.url; // Redirect to Google login
-    } catch (error) {
-      console.error("Error during auth:", error.message);
-    }
-  }
+      if (!response.ok) {
+        throw new Error(`Failed to fetch: ${response.status}`);
 
-  // Handle the callback when redirected from Google after login
-  async function handleGoogleCallback() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get("code");
-
-    if (code) {
-      try {
-        const response = await fetch(
-          `https://freelance1-production.up.railway.app/getGoogleUser?code=${code}`
-        );
-        if (!response.ok) {
-          throw new Error(`Failed to fetch: ${response.status}`);
-        }
-        const data = await response.json();
-        console.log("Google user data:", data);
-
-        // Save token to local storage
-        localStorage.setItem("token", data.tokens.access_token);
-
-        // Optionally, save user data locally
-        saveUser(data.userData);
-      } catch (error) {
-        console.error("Error during Google callback:", error.message);
       }
-    }
-  }
 
-  useEffect(() => {
-    handleGoogleCallback();
-  }, []);
+      const data = await response.json();
+      console.log("Google user data:", data);
+
+      // Save the access token to local storage
+      localStorage.setItem("token", data.tokens.access_token);
+
+      // Optionally save user data locally
+      saveUser(data.userData);
+    } catch (error) {
+      console.error("Error during Google callback:", error.message);
+    }
+  } else {
+    console.log("No code found in the query parameters");
+  }
+}
 
   // Handle form input changes
   function setUserInput(e) {

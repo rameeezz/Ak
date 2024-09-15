@@ -11,6 +11,8 @@ export default function Basket() {
   // console.log(userId);
   const [itemsInCart, setItemsInCart] = useState([]);
   // console.log(itemsInCart);
+  const [itemsSameHome , setItemsSameHome] = useState([])
+  console.log(itemsSameHome);
   
   const [cartID, setCartId] = useState("");
   const [totalCost, setTotalCost] = useState("");
@@ -18,9 +20,9 @@ export default function Basket() {
     getCart();
   }, []);
   // console.log(totalCost);
-  // useEffect(() => {
-  //   localStorage.setItem("cartItems", JSON.stringify(itemsInCart));
-  // }, [itemsInCart]);
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(itemsSameHome));
+  }, [itemsSameHome]);
   const [loading, setLoading] = useState(false);
   async function getCart() {
     setLoading(true);
@@ -34,6 +36,7 @@ export default function Basket() {
         setItemsInCart(data.getThisCart.items);
         setTotalCost(data.getThisCart.totalCost);
         setCartId(data.getThisCart._id);
+        setItemsSameHome(data.items)
         setLoading(false);
       } catch (error) {
         if (error.response && error.response.status === 404) {

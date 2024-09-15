@@ -24,7 +24,7 @@ export default function Home({ user }) {
     const savedItems = localStorage.getItem("cartItems");
     return savedItems ? JSON.parse(savedItems) : [];
   });
-  // console.log(itemsArray);
+  console.log(itemsArray);
 
   const [classForCart, setClassForCart] = useState(false);
   const [loadingButtonCart, setLoadingButtonCat] = useState(false);
@@ -287,7 +287,7 @@ export default function Home({ user }) {
     mobileNumber: "",
     name: "",
   });
-  console.log(formInfo);
+  // console.log(formInfo);
 
   function setFormDetails(e) {
     let myFormInfo = { ...formInfo };
