@@ -12,7 +12,7 @@ export default function Basket() {
   const [itemsInCart, setItemsInCart] = useState([]);
   // console.log(itemsInCart);
   const [itemsSameHome , setItemsSameHome] = useState([])
-  console.log(itemsSameHome);
+  // console.log(itemsSameHome);
   
   const [cartID, setCartId] = useState("");
   const [totalCost, setTotalCost] = useState("");
@@ -67,8 +67,30 @@ export default function Basket() {
       console.error("Error deleting item:", error);
     }
   }
+// change quantity
+async function changeQuantity(e ,itemID , operation ) {
+  const quantityInfo = {
+    customerID:userId,
+    itemID:itemID,
+    operation:operation
+  }
+  if (quantityInfo.customerID === null || quantityInfo.itemID == "" ||quantityInfo.operation == "") {
+    alert("Please Try Again.")
+  }else{
+    try {
+      let {data} = await axios.patch("https://freelance1-production.up.railway.app/customer/changeQuantity",quantityInfo)
+      console.log(data);
+      setTotalCost(data.cart.totalCost)
+      setItemsSameHome(data.cart.items)
+      getCart()
+    } catch (error) {
+      
+    }
+  }
+}
+
   function clickSubmit() {
-    // localStorage.setItem("cartItems", JSON.stringify([]));
+    localStorage.setItem("cartItems", JSON.stringify([]));
   }
   return (
     <>
@@ -179,12 +201,18 @@ export default function Basket() {
                         </p>
                         <div className="d-flex justify-content-center align-items-center gap-2">
                           <button
+                          onClick={(e)=>{
+                            changeQuantity(e,element?.itemID?._id,"-")
+                          }}
                             className="btn border classForButtonBasket"
                           >
                             -
                           </button>
                           <p>{element?.quantity}</p>
                           <button
+                           onClick={(e)=>{
+                            changeQuantity(e,element?.itemID?._id,"+")
+                          }}
                             className="btn border classForButtonBasket"
                           >
                             +
