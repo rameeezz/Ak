@@ -4,13 +4,134 @@ import { useNavigate } from "react-router-dom";
 
 export default function BestSellerItems({ user }) {
   let naviagte = useNavigate();
-  function addToCart() {
+
+
+
+
+  let location = useLocation();
+  let { cartID } = location.state || "";
+  // console.log(cartID);
+
+  const [itemsArray, setItemsArray] = useState(() => {
+    // Retrieve saved items from localStorage (if any)
+    const savedItems = localStorage.getItem("cartItems");
+    return savedItems ? JSON.parse(savedItems) : [];
+  });
+  // console.log(itemsArray);
+
+  const [classForCart, setClassForCart] = useState(false);
+  const [loadingButtonCart, setLoadingButtonCat] = useState(false);
+  const [classoFitemIsAlreadyExist, setClassoFitemIsAlreadyExist] =
+    useState(false);
+  // console.log(itemsArray);
+  const customerID = user?.userId || null;
+  // console.log(customerID);
+
+  // Save itemsArray to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(itemsArray));
+  }, [itemsArray]);
+  const [createCartInfo, setCreateCartInfo] = useState({
+    items: itemsArray,
+    customer: customerID,
+  });
+  useEffect(() => {
+    setCreateCartInfo((prevInfo) => ({
+      ...prevInfo,
+      customer: user?.userId || null, // Ensure customer is always up-to-date
+      items: itemsArray,
+    }));
+  }, [user, itemsArray]);
+  // console.log(createCartInfo);
+
+  function addToCart(itemID, quantity, itemType) {
     if (user == null) {
-      naviagte("/login");
+      navigate("/login");
     } else {
-      alert("نتمنى لكم حياة افضل ");
+      const itemExists = itemsArray.some((item) => item.itemID === itemID);
+
+      // Only add the item if it doesn't already exist
+      if (!itemExists) {
+        const newItem = { itemID, quantity, itemType };
+        setItemsArray((prevItems) => [...prevItems, newItem]);
+
+        setCreateCartInfo((prevInfo) => ({
+          ...prevInfo,
+          items: [...prevInfo.items, newItem],
+        }));
+        setClassForCart(true);
+        setClassoFitemIsAlreadyExist(false);
+      } else {
+        setClassoFitemIsAlreadyExist(true);
+        setClassForCart(true);
+      }
     }
   }
+  function closeSureBoxOFCart() {
+    setClassForCart(false);
+    setClassoFitemIsAlreadyExist(false);
+  }
+  async function handleSubmitCreateCart(e) {
+    setLoadingButtonCat(true);
+    // console.log(createCartInfo);
+
+    e.preventDefault();
+    if (createCartInfo.customer == null) {
+      alert("please Login ");
+    } else {
+      try {
+        let { data } = await axios.post(
+          "https://freelance1-production.up.railway.app/customer/createCart",
+          createCartInfo
+        );
+        // console.log(data);
+        goToBasket();
+      } catch (error) {
+        if (error.response && error.response.status === 409) {
+          editeCart(e);
+        }
+      }
+    }
+  }
+  async function editeCart(e) {
+    setLoadingButtonCat(true);
+    e.preventDefault();
+    const cartInfo = {
+      items: itemsArray,
+      cart: cartID,
+    };
+    if (cartID === null || cartID == "") {
+    } else {
+      try {
+        let { data } = await axios.patch(
+          "https://freelance1-production.up.railway.app/customer/editCart",
+          cartInfo
+        );
+        // console.log(data);
+        goToBasket();
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          goToBasket();
+        }
+        if (error.response && error.response.status === 400) {
+          goToBasket();
+        }
+      }
+    }
+  }
+  function goToBasket() {
+    navigate("/basket", {
+      state: { userId: customerID },
+    });
+    setLoadingButtonCat(false);
+  }
+
+
+
+
+
+
+
   function ShowItemContent(itemDetails) {
     naviagte("/item-content", { state: { items: itemDetails } });
   }
@@ -58,6 +179,42 @@ export default function BestSellerItems({ user }) {
   //   done -----------
   return (
     <>
+    <div
+        className={`shadow classForSureBoxOFCart rounded bg-white p-5 translate-middle ${
+          classForCart ? "active" : ""
+        }`}
+      >
+        {classoFitemIsAlreadyExist ? (
+          <p className="text-center my-3">This item is already exist.</p>
+        ) : (
+          <h3 className="text-center my-3 w-100">
+            Item added to cart successfully
+          </h3>
+        )}
+        <div className="d-flex justify-content-center align-items-center gap-3">
+          {loadingButtonCart ? (
+            <div className="w-100 justify-content-center d-flex">
+              <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+            </div>
+          ) : (
+            <button
+              onClick={(e) => {
+                handleSubmitCreateCart(e);
+              }}
+              className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
+            >
+              Go To Basket
+            </button>
+          )}
+
+          <button
+            onClick={closeSureBoxOFCart}
+            className="btn text-white bg-[#9cdce6] classForButtonForCard w-100 mt-2 me-3  hover:bg-sky-700"
+          >
+            Continue Shopping
+          </button>
+        </div>
+      </div>
       <div className="container mb-5">
         {/* Best seller  */}
         <div className="container-xxl ">
@@ -143,7 +300,9 @@ export default function BestSellerItems({ user }) {
                     {element?.description.slice(0, 37)}
                   </p>
                   <button
-                    onClick={addToCart}
+                    onClick={() => {
+                      addToCart(element._id, 1, element?.type);
+                    }}
                     className="btn text-white ColorButton classForButtonForCardForBestSeller w-100"
                   >
                     Add to Cart
@@ -212,7 +371,9 @@ export default function BestSellerItems({ user }) {
                       {element?.description.slice(0, 36)}
                     </p>
                     <button
-                      onClick={addToCart}
+                        onClick={() => {
+                          addToCart(element._id, 1, element?.type);
+                        }}
                       className="btn text-white ColorButton classForButtonForCardForBestSeller  w-100"
                     >
                       add to cart
