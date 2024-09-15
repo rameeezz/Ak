@@ -11,11 +11,13 @@ export default function Basket() {
   // console.log(userId);
   const [itemsInCart, setItemsInCart] = useState([]);
   // console.log(itemsInCart);
-  const [itemsSameHome , setItemsSameHome] = useState([])
+  const [itemsSameHome, setItemsSameHome] = useState([]);
   // console.log(itemsSameHome);
-  
+
   const [cartID, setCartId] = useState("");
   const [totalCost, setTotalCost] = useState("");
+  // console.log(totalCost);
+
   useEffect(() => {
     getCart();
   }, []);
@@ -36,7 +38,7 @@ export default function Basket() {
         setItemsInCart(data.getThisCart.items);
         setTotalCost(data.getThisCart.totalCost);
         setCartId(data.getThisCart._id);
-        setItemsSameHome(data.items)
+        setItemsSameHome(data.items);
         setLoading(false);
       } catch (error) {
         if (error.response && error.response.status === 404) {
@@ -58,42 +60,86 @@ export default function Basket() {
     const deleteDetails = { cart: cartID, itemID: itemID };
 
     try {
-      await axios.patch(
+      let { data } = await axios.patch(
         "https://freelance1-production.up.railway.app/customer/removeItemFromCart",
         deleteDetails
       );
       await getCart();
+      // console.log(data);
     } catch (error) {
       console.error("Error deleting item:", error);
     }
   }
-// change quantity
-async function changeQuantity(e ,itemID , operation ) {
-  const quantityInfo = {
-    customerID:userId,
-    itemID:itemID,
-    operation:operation
-  }
-  if (quantityInfo.customerID === null || quantityInfo.itemID == "" ||quantityInfo.operation == "") {
-    alert("Please Try Again.")
-  }else{
-    try {
-      let {data} = await axios.patch("https://freelance1-production.up.railway.app/customer/changeQuantity",quantityInfo)
-      console.log(data);
-      setTotalCost(data.cart.totalCost)
-      setItemsSameHome(data.cart.items)
-      getCart()
-    } catch (error) {
-      
+  // change quantity
+  async function changeQuantity(e, itemID, operation) {
+    e.preventDefault();
+    const quantityInfo = {
+      customerID: userId,
+      itemID: itemID,
+      operation: operation,
+    };
+    if (
+      quantityInfo.customerID === null ||
+      quantityInfo.itemID == "" ||
+      quantityInfo.operation == ""
+    ) {
+      alert("Please Try Again.");
+    } else {
+      try {
+        let { data } = await axios.patch(
+          "https://freelance1-production.up.railway.app/customer/changeQuantity",
+          quantityInfo
+        );
+        // console.log(data);
+        setTotalCost(data.cart.totalCost);
+        setItemsSameHome(data.cart.items);
+        getCart();
+      } catch (error) {}
     }
   }
-}
-
+  // take form details of card
+  const [cardDetails, setCardDetails] = useState({
+    to: "",
+    from: "",
+    text: "",
+  });
+  // console.log(cardDetails);
+  const [loadingCardDetaisl, setLoadingCardDetails] = useState(false);
+  const[cardID , serCardID] = useState("")
+  // console.log(cardID);
+  
+  function takeCardInfo(e) {
+    let myCard = { ...cardDetails };
+    myCard[e.target.name] = e.target.value;
+    setCardDetails(myCard);
+  }
+  async function sendCardInfo(e) {
+    setLoadingCardDetails(true);
+    e.preventDefault();
+    try {
+      let { data } = await axios.post(
+        "https://freelance1-production.up.railway.app/customer/makeCard",
+        cardDetails
+      );
+      console.log(data);
+      setCardDetails({
+        to: "",
+        from: "",
+        text: "",
+      });
+      setLoadingCardDetails(false);
+      serCardID(data?._id)
+    } catch (error) {}
+  }
+  // done
   function clickSubmit() {
-    localStorage.setItem("cartItems", JSON.stringify([]));
+    // localStorage.setItem("cartItems", JSON.stringify([]));
   }
   return (
     <>
+    <div className="position-fixed  bg-white z-[131]">
+
+    </div>
       <div className="container-xxl ">
         <div className="d-flex flex-column align-items-start justify-content-center mt-5 mb-4">
           <h2 className="responsive-font-size-h2-Home fw-bold">Basket</h2>
@@ -146,20 +192,43 @@ async function changeQuantity(e ,itemID , operation ) {
               <div>
                 <form>
                   <input
+                    onChange={takeCardInfo}
                     type="text"
                     placeholder="To"
                     className="form-control my-3 "
+                    name="to"
+                    value={cardDetails.to}
                   />
                   <textarea
+                    onChange={takeCardInfo}
                     placeholder="Card Message"
                     className="form-control mb-3"
                     rows="4" // Adjust the number of rows as needed
+                    name="text"
+                    value={cardDetails.text}
                   ></textarea>
                   <input
+                    onChange={takeCardInfo}
                     type="text"
                     placeholder="From"
                     className="form-control"
+                    name="from"
+                    value={cardDetails.from}
                   />
+                  {loadingCardDetaisl ? (
+                    <div className="w-100 justify-content-center d-flex">
+                      <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+                    </div>
+                  ) : (
+                    <div className="d-flex justify-content-center mt-3">
+                      <button
+                        onClick={sendCardInfo}
+                        className="btn btn-primary w-100"
+                      >
+                        Add your card
+                      </button>
+                    </div>
+                  )}
                 </form>
               </div>
             </div>
@@ -201,18 +270,18 @@ async function changeQuantity(e ,itemID , operation ) {
                         </p>
                         <div className="d-flex justify-content-center align-items-center gap-2">
                           <button
-                          onClick={(e)=>{
-                            changeQuantity(e,element?.itemID?._id,"-")
-                          }}
+                            onClick={(e) => {
+                              changeQuantity(e, element?.itemID?._id, "-");
+                            }}
                             className="btn border classForButtonBasket"
                           >
                             -
                           </button>
                           <p>{element?.quantity}</p>
                           <button
-                           onClick={(e)=>{
-                            changeQuantity(e,element?.itemID?._id,"+")
-                          }}
+                            onClick={(e) => {
+                              changeQuantity(e, element?.itemID?._id, "+");
+                            }}
                             className="btn border classForButtonBasket"
                           >
                             +

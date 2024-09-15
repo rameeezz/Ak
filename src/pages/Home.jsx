@@ -24,7 +24,7 @@ export default function Home({ user }) {
     const savedItems = localStorage.getItem("cartItems");
     return savedItems ? JSON.parse(savedItems) : [];
   });
-  // console.log(itemsArray);
+  console.log(itemsArray);
 
   const [classForCart, setClassForCart] = useState(false);
   const [loadingButtonCart, setLoadingButtonCat] = useState(false);
@@ -135,7 +135,7 @@ export default function Home({ user }) {
 
   // done cart work -----------------
   function ShowItemContent(itemDetails) {
-    navigate("/item-content", { state: { items: itemDetails } });
+    navigate("/item-content", { state: { items: itemDetails, cartID: cartID  } });
   }
   // get Best Seller for Category
   const [bestSellerCategory, setBestSellerCategory] = useState([]);
@@ -181,7 +181,7 @@ export default function Home({ user }) {
   }, []);
   // view more best seller
   function moveToBestSellerPage() {
-    navigate("/best-sellers");
+    navigate("/best-sellers", { state: { cartID: cartID } });
   }
   function moveToAllCategory() {
     navigate("/all-category");
@@ -190,7 +190,7 @@ export default function Home({ user }) {
     navigate("/all-occasion");
   }
   function moveToAllSpecialDeals() {
-    navigate("/all-special-deals");
+    navigate("/all-special-deals" , { state: { cartID: cartID } });
   }
 
   // done
@@ -217,7 +217,7 @@ export default function Home({ user }) {
     }
   }
   function goToItems(idOfCategory) {
-    navigate("/show-items", { state: { id: idOfCategory } });
+    navigate("/show-items", { state: { id: idOfCategory , cartID: cartID } });
   }
   // done-----------------
   // get Ocassions
@@ -245,7 +245,7 @@ export default function Home({ user }) {
     }
   }
   function goToOccasionItems(idOfCategory) {
-    navigate("/show-items-in-occasion", { state: { id: idOfCategory } });
+    navigate("/show-items-in-occasion", { state: { id: idOfCategory , cartID: cartID  } });
   }
   // done
   // special Deals

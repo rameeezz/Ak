@@ -1,17 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function AllSpecialDeals({ user }) {
   let navigate = useNavigate();
 
-
-
-
-
   let location = useLocation();
   let { cartID } = location.state || "";
-  // console.log(cartID);
+  console.log(cartID);
 
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)

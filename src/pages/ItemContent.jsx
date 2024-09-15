@@ -1,9 +1,11 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function ItemContent({ user }) {
   const location = useLocation();
   const { items } = location.state || {};
+// console.log(items);
 
   let navigate = useNavigate();
 
@@ -71,13 +73,13 @@ export default function ItemContent({ user }) {
   }
   async function handleSubmitCreateCart(e) {
     setLoadingButtonCat(true);
-    // console.log(createCartInfo);
-
+    
     e.preventDefault();
     if (createCartInfo.customer == null) {
       alert("please Login ");
     } else {
       try {
+        // console.log(createCartInfo);
         let { data } = await axios.post(
           "https://freelance1-production.up.railway.app/customer/createCart",
           createCartInfo
@@ -92,6 +94,7 @@ export default function ItemContent({ user }) {
     }
   }
   async function editeCart(e) {
+    
     setLoadingButtonCat(true);
     e.preventDefault();
     const cartInfo = {
@@ -101,6 +104,7 @@ export default function ItemContent({ user }) {
     if (cartID === null || cartID == "") {
     } else {
       try {
+        // console.log("hvhv");
         let { data } = await axios.patch(
           "https://freelance1-production.up.railway.app/customer/editCart",
           cartInfo
@@ -319,7 +323,7 @@ export default function ItemContent({ user }) {
               <div className="firstButtonInSmallScreen">
                 <button
                    onClick={() => {
-                    addToCart(element._id, 1, element?.type);
+                    addToCart(items._id, 1, items?.type);
                   }}
                   className="btn  rounded-none text-white ColorButton classForButtonForCard w-100 mt-2 me-3 p-3 buttonForSmallScreen"
                 >
