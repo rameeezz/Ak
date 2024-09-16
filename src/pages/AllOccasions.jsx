@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from "axios";
 export default function AllOccasions() {
+  let location = useLocation();
+  let { cartID } = location.state || "";
   let navigate = useNavigate();
   function goHome() {
     navigate("/home");
@@ -29,7 +31,7 @@ export default function AllOccasions() {
     }
   }
   function goToOccasionItems(idOfCategory) {
-    navigate("/show-items-in-occasion", { state: { id: idOfCategory } });
+    navigate("/show-items-in-occasion", { state: { id: idOfCategory ,cartID:cartID} });
   }
   return (
     <>

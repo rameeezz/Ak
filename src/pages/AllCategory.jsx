@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../css/Home.css";
 import PHoto1 from "../assets/card photo/2.jpeg";
 export default function AllCategory() {
+  let location = useLocation();
+  let { cartID } = location.state || "";
   let navigate = useNavigate();
   function goHome() {
     navigate("/home");
@@ -34,7 +36,7 @@ export default function AllCategory() {
   }
   // on click open the items
   function goToItems(idOfCategory) {
-    navigate("/show-items", { state: { id: idOfCategory } });
+    navigate("/show-items", { state: { id: idOfCategory , cartID :cartID} });
   }
   return (
     <>

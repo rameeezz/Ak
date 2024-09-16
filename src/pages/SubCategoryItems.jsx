@@ -24,6 +24,7 @@ export default function SubCategoryItems({ user }) {
       state: { cartID: cartID },
     }); 
   }
+  // console.log(user?.userId);
   const [classForCart, setClassForCart] = useState(false);
   const [loadingButtonCart, setLoadingButtonCat] = useState(false);
   const [classoFitemIsAlreadyExist, setClassoFitemIsAlreadyExist] =
@@ -132,7 +133,7 @@ export default function SubCategoryItems({ user }) {
   }
 
   function ShowItemContent(itemDetails) {
-    navigate("/item-content", { state: { items: itemDetails } });
+    navigate("/item-content", { state: { items: itemDetails , cartID:cartID} });
   }
   useEffect(() => {
     if (!id) {

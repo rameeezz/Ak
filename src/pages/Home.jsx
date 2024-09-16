@@ -17,7 +17,8 @@ export default function Home({ user }) {
   const navigate = useNavigate();
   let location = useLocation();
   let { cartID } = location.state || "";
-  console.log(cartID);
+  // console.log(cartID);
+// console.log(user?.userId);
 
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)
@@ -184,10 +185,10 @@ export default function Home({ user }) {
     navigate("/best-sellers", { state: { cartID: cartID } });
   }
   function moveToAllCategory() {
-    navigate("/all-category");
+    navigate("/all-category" , { state: { cartID: cartID } });
   }
   function moveToAllOccasions() {
-    navigate("/all-occasion");
+    navigate("/all-occasion" , { state: { cartID: cartID } });
   }
   function moveToAllSpecialDeals() {
     navigate("/all-special-deals" , { state: { cartID: cartID } });

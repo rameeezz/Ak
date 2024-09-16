@@ -4,7 +4,8 @@ import purpleCircle from "../assets/card photo/purple-flower.svg";
 import grayCircle from "../assets/card photo/gray-flower.svg";
 import Arrow from "../assets/card photo/guidance-arrow.svg";
 import axios from "axios";
-export default function Basket() {
+import NavBar from './../component/NavBar';
+export default function Basket({user , logOut}) {
   let location = useLocation();
   let { userId } = location.state || null;
 
@@ -48,9 +49,6 @@ export default function Basket() {
     }
   }
   let navigate = useNavigate();
-  function goHome() {
-    navigate("/home", { state: { cartID: cartID } });
-  }
   async function deleteItem(itemID) {
     if (!itemID || !cartID) {
       alert("Invalid item or cart ID.");
@@ -137,22 +135,11 @@ export default function Basket() {
   }
   return (
     <>
+    <NavBar user={user} logOut={logOut} cartID={cartID} />
+
     <div className="position-fixed  bg-white z-[131]">
 
     </div>
-      <div className="container-xxl ">
-        <div className="d-flex flex-column align-items-start justify-content-center mt-5 mb-4">
-          <h2 className="responsive-font-size-h2-Home fw-bold">Basket</h2>
-          <div className="d-flex justify-content-center gap-1 mt-1 align-items-center">
-            <i className="fa-solid fa-house-chimney text-muted"></i>
-            <p className="cursorPOinter" onClick={goHome}>
-              Home
-            </p>
-            <i className="fa-solid fa-angle-right text-muted"></i>
-            <p>Card & QR</p>
-          </div>
-        </div>
-      </div>
       <div className="container-xxl">
         <div className="w-100 d-flex justify-content-center">
           <div className="w-[90%] d-flex justify-content-center my-5 gap-4 flex-wrap">

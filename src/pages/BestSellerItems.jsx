@@ -5,11 +5,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 export default function BestSellerItems({ user }) {
   let naviagte = useNavigate();
 
+// console.log(user?.userId);
 
 
   let location = useLocation();
   let { cartID } = location.state || "";
-  console.log(cartID);
+  // console.log(cartID);
 
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)
@@ -119,7 +120,7 @@ export default function BestSellerItems({ user }) {
     }
   }
   function goToBasket() {
-    navigate("/basket", {
+    naviagte("/basket", {
       state: { userId: customerID },
     });
     setLoadingButtonCat(false);
@@ -132,7 +133,7 @@ export default function BestSellerItems({ user }) {
 
 
   function ShowItemContent(itemDetails) {
-    naviagte("/item-content", { state: { items: itemDetails } });
+    naviagte("/item-content", { state: { items: itemDetails , cartID:cartID} });
   }
   useEffect(() => {
     getCategoryBestSeller();
@@ -173,7 +174,7 @@ export default function BestSellerItems({ user }) {
     } catch (error) {}
   }
   function goHome() {
-    navigate("/home" ,{
+    naviagte("/home" ,{
       state: { cartID: cartID },
     }); 
   }

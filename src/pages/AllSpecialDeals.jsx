@@ -7,7 +7,8 @@ export default function AllSpecialDeals({ user }) {
 
   let location = useLocation();
   let { cartID } = location.state || "";
-  console.log(cartID);
+  // console.log(cartID);
+// console.log(user?.userId);
 
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)
@@ -128,17 +129,19 @@ export default function AllSpecialDeals({ user }) {
 
 
   function goHome() {
-    navigate("/home");
+    navigate("/home" ,{
+      state: { cartID: cartID },
+    }); 
   }
   function ShowItemContent(itemDetails) {
-    navigate("/item-content", { state: { items: itemDetails } });
+    navigate("/item-content", { state: { items: itemDetails , cartID:cartID} });
   }
   useEffect(() => {
     getSpecialDeals();
   }, []);
   const [SpecialDealsOccasion, setSpecialDealsOccasion] = useState([]);
   const [SpecialDealsCategory, setSpecialDealsCategory] = useState([]);
-  console.log();
+  // console.log();
 
   const [loadingSpecialDeals, setLoadingSpecialDeals] = useState(false);
   const [errorMessageForSpecialDeals, setErrorMessageForSpecialDeals] =

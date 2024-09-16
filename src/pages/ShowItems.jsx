@@ -133,7 +133,7 @@ export default function ShowItems({user}) {
 
 
   function ShowItemContent(itemDetails) {
-    navigate("/item-content", { state: { items: itemDetails } });
+    navigate("/item-content", { state: { items: itemDetails , cartID:cartID} });
   }
   useEffect(() => {
     if (!id) {
@@ -185,6 +185,7 @@ export default function ShowItems({user}) {
       }
     }
   }
+  // console.log(user?.userId);
   function goHome() {
     navigate("/home" ,{
       state: { cartID: cartID },

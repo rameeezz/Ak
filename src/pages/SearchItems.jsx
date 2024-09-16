@@ -10,7 +10,7 @@ export default function SearchItems({ user }) {
   let navigate = useNavigate();
 
   let { cartID } = location.state || "";
-  console.log(cartID);
+  // console.log(cartID);
 
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)
@@ -125,7 +125,7 @@ export default function SearchItems({ user }) {
     });
     setLoadingButtonCat(false);
   }
-
+  // console.log(user?.userId);
 
   function goHome() {
     navigate("/home" ,{
@@ -188,7 +188,7 @@ export default function SearchItems({ user }) {
     }
   };
   function ShowItemContent(itemDetails) {
-    navigate("/item-content", { state: { items: itemDetails } });
+    navigate("/item-content", { state: { items: itemDetails , cartID:cartID} });
   }
   return (
     <>

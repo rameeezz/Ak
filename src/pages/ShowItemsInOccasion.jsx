@@ -126,7 +126,7 @@ export default function ShowItemsInOccasion({user}) {
   }
 
   function ShowItemContent(itemDetails) {
-    navigate("/item-content", { state: { items: itemDetails } });
+    navigate("/item-content", { state: { items: itemDetails , cartID:cartID} });
   }
   useEffect(() => {
     if (!id) {
@@ -181,6 +181,7 @@ export default function ShowItemsInOccasion({user}) {
       state: { cartID: cartID },
     }); 
   }
+  // console.log(user?.userId);
   // dorpDownlIst
   const [selectedOption, setSelectedOption] = useState("");
   // console.log(selectedOption);

@@ -1,20 +1,22 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../css/NavBar.css";
-import { NavLink, Link, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
-export default function NavBar({ user, logOut }) {
+export default function NavBar({ user, logOut, cartID }) {
   let navigate = useNavigate();
-  const isLoginPage = location.pathname === "/basket" || location.pathname === "/item-content" ;
+  // console.log(cartID);
+  
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/item-content";
+
   const [activeNav, setActiveNav] = useState(false);
   const [category, setCategory] = useState([]);
-  const [expandedCategory, setExpandedCategory] = useState(null); // Track which category is expanded
+  const [expandedCategory, setExpandedCategory] = useState(null);
   const [subCategory, setSubCategory] = useState([]);
-  const [categoryWithSubCategories, setCategoryWithSubCategories] = useState(
-    {}
-  ); // Store which categories have subcategories
+  const [categoryWithSubCategories, setCategoryWithSubCategories] = useState({});
 
-  const navRef = useRef(null); // Create a ref for the navbar
+  const navRef = useRef(null);
 
   function openNav() {
     setActiveNav(true);
@@ -28,17 +30,14 @@ export default function NavBar({ user, logOut }) {
   useEffect(() => {
     getCategory();
 
-    // Event listener to close navbar when clicking outside
     function handleClickOutside(event) {
       if (navRef.current && !navRef.current.contains(event.target)) {
         closeNav();
       }
     }
 
-    // Add event listener
     document.addEventListener("mousedown", handleClickOutside);
 
-    // Cleanup the event listener on component unmount
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -51,7 +50,7 @@ export default function NavBar({ user, logOut }) {
       );
       setCategory(data);
     } catch (error) {
-      // Handle error if needed
+      console.error("Error fetching categories:", error);
     }
   }
 
@@ -61,26 +60,28 @@ export default function NavBar({ user, logOut }) {
         `https://freelance1-production.up.railway.app/admin1/getCategoryContent/${idOfCategory}`
       );
       if (data.subcategories && data.subcategories.length > 0) {
-        // Store that this category has subcategories
         setCategoryWithSubCategories((prev) => ({
           ...prev,
           [idOfCategory]: true,
         }));
 
-        // Toggle expanded state
         setExpandedCategory((prevCategory) =>
           prevCategory === idOfCategory ? null : idOfCategory
         );
         setSubCategory(data.subcategories);
       } else {
-        navigate("/show-items", { state: { id: idOfCategory } });
+        navigate("/show-items", { state: { id: idOfCategory, cartID: cartID } });
       }
     } catch (error) {
       if (error.response && error.response.status === 404) {
         alert("No subcategories or items found for this category");
       }
+      console.error("Error fetching subcategories:", error);
     }
   }
+
+
+  const safeCartID = cartID || "defaultCartID"; 
 
   return (
     <>
@@ -99,7 +100,7 @@ export default function NavBar({ user, logOut }) {
             <div className="styleFOrNav shadow"></div>
           </div>
           <div
-            ref={navRef} // Attach the ref to the navbar div
+            ref={navRef}
             className={`position-fixed styleOfNavToGetOut bgForNav overflow-auto ${
               activeNav ? "active" : ""
             }`}
@@ -109,7 +110,7 @@ export default function NavBar({ user, logOut }) {
               className="btn btn-close position-absolute end-5 top-5"
             ></div>
             <div className="text-[#b38e38] d-flex justify-content-center mt-5">
-              <Link to="home">Home</Link>
+              <Link to="/home" state={{ cartID: safeCartID }}>Home</Link>
             </div>
             {category.length === 0 ? (
               <p className="my-3 text-center text-black p-2">
@@ -139,22 +140,23 @@ export default function NavBar({ user, logOut }) {
                       expandedCategory === element?._id ? "expanded" : ""
                     }`}
                   >
-                    {/* Render the subcategories here */}
                     <div className="d-flex justify-content-center flex-column align-items-center">
-                      {subCategory === null || subCategory.length === 0
-                        ? ""
-                        : subCategory.map((subElement, i) => (
-                            <Link
-                              key={i}
-                              to={{
-                                pathname: "/show-items-in-sub-category",
-                              }}
-                              state={{ id: subElement?._id }} // Pass the id as state
-                              className="text-[#b38e38] text-center FontSizeForP"
-                            >
-                              {subElement?.name}
-                            </Link>
-                          ))}
+                      {subCategory && subCategory.length > 0 ? (
+                        subCategory.map((subElement, i) => (
+                          <Link
+                            key={i}
+                            to={{
+                              pathname: "/show-items-in-sub-category",
+                              state: { id: subElement?._id, cartID: safeCartID } // Pass the id and cartID as state
+                            }}
+                            className="text-[#b38e38] text-center FontSizeForP"
+                          >
+                            {subElement?.name}
+                          </Link>
+                        ))
+                      ) : (
+                        <p>No subcategories available.</p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -166,7 +168,7 @@ export default function NavBar({ user, logOut }) {
                   <div className="w-50 bg-black rounded-2 shadow HeightOfDivBeforeLogOut"></div>
                 </div>
                 <div className="d-flex justify-content-center text-[#b38e38] mb-3">
-                  <button onClick={logOut}>log out</button>
+                  <button onClick={logOut}>Log out</button>
                 </div>
               </>
             ) : (
@@ -176,7 +178,7 @@ export default function NavBar({ user, logOut }) {
                 </div>
                 <div className="d-flex flex-column justify-content-center align-items-center mb-3">
                   <NavLink
-                    to="register"
+                    to="/register"
                     className={(isActive) =>
                       isActive
                         ? "nav-link active text-[#b38e38]"
@@ -186,14 +188,14 @@ export default function NavBar({ user, logOut }) {
                     Register
                   </NavLink>
                   <NavLink
-                    to="login"
+                    to="/login"
                     className={(isActive) =>
                       isActive
                         ? "nav-link active text-[#b38e38]"
                         : "nav-link text-[#b38e38]"
                     }
                   >
-                    login
+                    Login
                   </NavLink>
                 </div>
               </>
