@@ -177,7 +177,9 @@ export default function ShowItemsInOccasion({user}) {
     }
   }
   function goHome() {
-    navigate("/home");
+    navigate("/home" ,{
+      state: { cartID: cartID },
+    }); 
   }
   // dorpDownlIst
   const [selectedOption, setSelectedOption] = useState("");

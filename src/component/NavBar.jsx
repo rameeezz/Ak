@@ -5,7 +5,7 @@ import axios from "axios";
 
 export default function NavBar({ user, logOut }) {
   let navigate = useNavigate();
-  const isLoginPage = location.pathname === "/basket";
+  const isLoginPage = location.pathname === "/basket" || location.pathname === "/item-content" ;
   const [activeNav, setActiveNav] = useState(false);
   const [category, setCategory] = useState([]);
   const [expandedCategory, setExpandedCategory] = useState(null); // Track which category is expanded

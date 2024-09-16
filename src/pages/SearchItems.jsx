@@ -10,7 +10,7 @@ export default function SearchItems({ user }) {
   let navigate = useNavigate();
 
   let { cartID } = location.state || "";
-  // console.log(cartID);
+  console.log(cartID);
 
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)
@@ -128,7 +128,9 @@ export default function SearchItems({ user }) {
 
 
   function goHome() {
-    navigate("/home");
+    navigate("/home" ,{
+      state: { cartID: cartID },
+    }); 
   }
 
   const [allItems, setAllItems] = useState([]);

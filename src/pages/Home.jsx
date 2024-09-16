@@ -17,7 +17,7 @@ export default function Home({ user }) {
   const navigate = useNavigate();
   let location = useLocation();
   let { cartID } = location.state || "";
-  // console.log(cartID);
+  console.log(cartID);
 
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)

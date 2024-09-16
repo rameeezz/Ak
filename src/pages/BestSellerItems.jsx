@@ -9,7 +9,7 @@ export default function BestSellerItems({ user }) {
 
   let location = useLocation();
   let { cartID } = location.state || "";
-  // console.log(cartID);
+  console.log(cartID);
 
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)
@@ -173,7 +173,9 @@ export default function BestSellerItems({ user }) {
     } catch (error) {}
   }
   function goHome() {
-    naviagte("/home");
+    navigate("/home" ,{
+      state: { cartID: cartID },
+    }); 
   }
   //   done -----------
   return (

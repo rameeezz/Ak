@@ -5,9 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 export default function SubCategoryItems({ user }) {
   const location = useLocation();
   const navigate = useNavigate();
-  function goHome() {
-    navigate("/home");
-  }
+ 
   // Destructure `id` from location.state, or set to undefined if state is null
   const { id } = location.state || {};
   // console.log(id);
@@ -21,7 +19,11 @@ export default function SubCategoryItems({ user }) {
     return savedItems ? JSON.parse(savedItems) : [];
   });
   // console.log(itemsArray);
-
+  function goHome() {
+    navigate("/home" ,{
+      state: { cartID: cartID },
+    }); 
+  }
   const [classForCart, setClassForCart] = useState(false);
   const [loadingButtonCart, setLoadingButtonCat] = useState(false);
   const [classoFitemIsAlreadyExist, setClassoFitemIsAlreadyExist] =

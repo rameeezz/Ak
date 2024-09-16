@@ -127,7 +127,11 @@ export default function ItemContent({ user }) {
     });
     setLoadingButtonCat(false);
   }
-
+  function goHome() {
+    navigate("/home" ,{
+      state: { cartID: cartID },
+    }); 
+  }
 
 
   
@@ -238,6 +242,21 @@ export default function ItemContent({ user }) {
           >
             Continue Shopping
           </button>
+        </div>
+      </div>
+      <div className="container-xxl ">
+        <div className="d-flex flex-column align-items-start justify-content-center mt-5 mb-4">
+          <h2 className="responsive-font-size-h2-Home fw-bold">
+            The Best Gifts To Pair With Your Bouquet
+          </h2>
+          <div className="d-flex justify-content-center gap-1 mt-1 align-items-center">
+            <i className="fa-solid fa-house-chimney text-muted"></i>
+            <p className="cursorPOinter" onClick={goHome}>
+              Home
+            </p>
+            <i className="fa-solid fa-angle-right text-muted"></i>
+            <p>Items</p>
+          </div>
         </div>
       </div>
       <div className="">
