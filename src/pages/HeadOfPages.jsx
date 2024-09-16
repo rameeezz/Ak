@@ -55,21 +55,16 @@ export default function HeadOfPages({ user }) {
     setSearchTerm("");
   }
   // cart work
-  // useEffect(()=>{
-    //   const storedCartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
-    //   setCartItems(storedCartItems)
-    // },[])
-    // console.log(cartItems.length);
-    const [cartItems, setCartItems] = useState([]);
-    const itemsArray = () => {
-      // Retrieve saved items from localStorage (if any)
-      const savedItems = localStorage.getItem("cartItems");
-      return savedItems ? JSON.parse(savedItems) : [];
-    }
-    useEffect(() => {
-      const savedItems = itemsArray(); // Call the function and get the saved items
-      setCartItems(savedItems); // Set the returned items in state
-    }, []);
+    // const [cartItems, setCartItems] = useState([]);
+    // const itemsArray = () => {
+    //   // Retrieve saved items from localStorage (if any)
+    //   const savedItems = localStorage.getItem("cartItems");
+    //   return savedItems ? JSON.parse(savedItems) : [];
+    // }
+    // useEffect(() => {
+    //   const savedItems = itemsArray(); // Call the function and get the saved items
+    //   setCartItems(savedItems); // Set the returned items in state
+    // }, []);
   // done 
   return (
     <>
@@ -79,14 +74,14 @@ export default function HeadOfPages({ user }) {
         ""
       ) : (
         <div className="d-flex justify-content-center position-relative bg-transparent py-3">
-          <span className="position-absolute end-14 top-7 responsive-font-size-p z-1">
+          {/* <span className="position-absolute end-14 top-7 responsive-font-size-p z-1">
             <i className="fa-solid fa-cart-shopping text-muted"></i>
           </span>
           <div className="position-absolute end-11 top-3 bg-[#ecd9e8] rounded-circle">
             <p className="p-1">
               {cartItems.length}
             </p>
-          </div>
+          </div> */}
           {/* search work */}
           <div className="d-flex flex-column justify-content-center align-items-center w-100 ">
             <div className="w-50">
