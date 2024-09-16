@@ -4,8 +4,8 @@ import purpleCircle from "../assets/card photo/purple-flower.svg";
 import grayCircle from "../assets/card photo/gray-flower.svg";
 import Arrow from "../assets/card photo/guidance-arrow.svg";
 import axios from "axios";
-import NavBar from './../component/NavBar';
-export default function Basket({user , logOut}) {
+import NavBar from "./../component/NavBar";
+export default function Basket({ user, logOut }) {
   let location = useLocation();
   let { userId } = location.state || null;
 
@@ -13,6 +13,8 @@ export default function Basket({user , logOut}) {
   const [itemsInCart, setItemsInCart] = useState([]);
   // console.log(itemsInCart);
   const [itemsSameHome, setItemsSameHome] = useState([]);
+  // console.log(" **************************** ");
+
   // console.log(itemsSameHome);
 
   const [cartID, setCartId] = useState("");
@@ -50,50 +52,42 @@ export default function Basket({user , logOut}) {
   }
   let navigate = useNavigate();
   async function deleteItem(itemID) {
-    if (!itemID || !cartID) {
-      alert("Invalid item or cart ID.");
-      return;
-    }
+    const filteredArray = itemsInCart.filter(
+      (element) => element?.itemID._id !== itemID
+    );
+    setItemsInCart(filteredArray);
 
-    const deleteDetails = { cart: cartID, itemID: itemID };
-
-    try {
-      let { data } = await axios.patch(
-        "https://freelance1-production.up.railway.app/customer/removeItemFromCart",
-        deleteDetails
-      );
-      await getCart();
-      // console.log(data);
-    } catch (error) {
-      console.error("Error deleting item:", error);
-    }
+    const filteredArrayLikeHome = itemsSameHome.filter(
+      (element) => element?.itemID !== itemID
+    );
+    setItemsSameHome(filteredArrayLikeHome);
   }
   // change quantity
-  async function changeQuantity(e, itemID, operation) {
-    e.preventDefault();
-    const quantityInfo = {
-      customerID: userId,
-      itemID: itemID,
-      operation: operation,
-    };
-    if (
-      quantityInfo.customerID === null ||
-      quantityInfo.itemID == "" ||
-      quantityInfo.operation == ""
-    ) {
-      alert("Please Try Again.");
-    } else {
-      try {
-        let { data } = await axios.patch(
-          "https://freelance1-production.up.railway.app/customer/changeQuantity",
-          quantityInfo
-        );
-        // console.log(data);
-        setTotalCost(data.cart.totalCost);
-        setItemsSameHome(data.cart.items);
-        getCart();
-      } catch (error) {}
-    }
+  async function changeQuantity(itemID, operation, itemPrice) {
+    const updatedItemsInCart = itemsInCart.map((element) => {
+      if (element?.itemID._id === itemID) {
+        let newQuantity =
+          operation === "+" ? element.quantity + 1 : element.quantity - 1;
+        // Ensure quantity does not go below 1
+        newQuantity = newQuantity < 1 ? 1 : newQuantity;
+        return { ...element, quantity: newQuantity };
+      }
+      return element;
+    });
+    setItemsInCart(updatedItemsInCart);
+
+    // Update itemsSameHome
+    const updatedItemsSameHome = itemsSameHome.map((element) => {
+      if (element?.itemID === itemID) {
+        let newQuantity =
+          operation === "+" ? element.quantity + 1 : element.quantity - 1;
+        // Ensure quantity does not go below 1
+        newQuantity = newQuantity < 1 ? 1 : newQuantity;
+        return { ...element, quantity: newQuantity };
+      }
+      return element;
+    });
+    setItemsSameHome(updatedItemsSameHome);
   }
   // take form details of card
   const [cardDetails, setCardDetails] = useState({
@@ -103,9 +97,10 @@ export default function Basket({user , logOut}) {
   });
   // console.log(cardDetails);
   const [loadingCardDetaisl, setLoadingCardDetails] = useState(false);
-  const[cardID , serCardID] = useState("")
+  const [LoadingButtonCat, setLoadingButtonCat] = useState(false);
+  const [cardID, serCardID] = useState("");
   // console.log(cardID);
-  
+
   function takeCardInfo(e) {
     let myCard = { ...cardDetails };
     myCard[e.target.name] = e.target.value;
@@ -126,20 +121,34 @@ export default function Basket({user , logOut}) {
         text: "",
       });
       setLoadingCardDetails(false);
-      serCardID(data?._id)
+      serCardID(data?._id);
     } catch (error) {}
   }
   // done
-  function clickSubmit() {
-    // localStorage.setItem("cartItems", JSON.stringify([]));
+  async function clickSubmit(e) {
+    setLoadingButtonCat(true);
+    e.preventDefault();
+    const cartInfo = {
+      items: itemsSameHome,
+      cart: cartID,
+    };
+    if (cartID === null || cartID == "") {
+    } else {
+      try {
+        let { data } = await axios.patch(
+          "https://freelance1-production.up.railway.app/customer/editCart",
+          cartInfo
+        );
+        setLoadingButtonCat(false)
+        getCart();
+      } catch (error) {}
+    }
   }
   return (
     <>
-    <NavBar user={user} logOut={logOut} cartID={cartID} />
+      <NavBar user={user} logOut={logOut} cartID={cartID} />
 
-    <div className="position-fixed  bg-white z-[131]">
-
-    </div>
+      <div className="position-fixed  bg-white z-[131]"></div>
       <div className="container-xxl">
         <div className="w-100 d-flex justify-content-center">
           <div className="w-[90%] d-flex justify-content-center my-5 gap-4 flex-wrap">
@@ -257,8 +266,12 @@ export default function Basket({user , logOut}) {
                         </p>
                         <div className="d-flex justify-content-center align-items-center gap-2">
                           <button
-                            onClick={(e) => {
-                              changeQuantity(e, element?.itemID?._id, "-");
+                            onClick={() => {
+                              changeQuantity(
+                                element?.itemID?._id,
+                                "-",
+                                element?.itemID?.lastPrice
+                              );
                             }}
                             className="btn border classForButtonBasket"
                           >
@@ -267,7 +280,11 @@ export default function Basket({user , logOut}) {
                           <p>{element?.quantity}</p>
                           <button
                             onClick={(e) => {
-                              changeQuantity(e, element?.itemID?._id, "+");
+                              changeQuantity(
+                                element?.itemID?._id,
+                                "+",
+                                element?.itemID?.lastPrice
+                              );
                             }}
                             className="btn border classForButtonBasket"
                           >
@@ -280,7 +297,7 @@ export default function Basket({user , logOut}) {
                 ))
               )}
 
-              {itemsInCart === null || itemsInCart.length === 0 ? (
+              {/* {itemsInCart === null || itemsInCart.length === 0 ? (
                 ""
               ) : (
                 <div>
@@ -290,15 +307,21 @@ export default function Basket({user , logOut}) {
                     <p>EGP {totalCost}</p>
                   </div>
                 </div>
+              )} */}
+              {LoadingButtonCat ? (
+                <div className="w-100 mt-3 justify-content-center d-flex">
+                  <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+                </div>
+              ) : (
+                <div className="mt-3 d-flex justify-content-center">
+                  <button
+                    onClick={clickSubmit}
+                    className="w-[80%] btn btn-primary"
+                  >
+                    Proceed to Shipping Details
+                  </button>
+                </div>
               )}
-              <div className="mt-3 d-flex justify-content-center">
-                <button
-                  onClick={clickSubmit}
-                  className="w-[80%] btn btn-primary"
-                >
-                  Proceed to Shipping Details
-                </button>
-              </div>
             </div>
           </div>
         </div>
