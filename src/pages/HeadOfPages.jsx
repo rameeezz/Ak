@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export default function HeadOfPages({ user , cartID , itemsArray}) {
+export default function HeadOfPages({ user, cartID, itemsArray }) {
   let navigate = useNavigate();
   const isLoginPage =
     location.pathname === "/login" ||
@@ -55,12 +55,63 @@ export default function HeadOfPages({ user , cartID , itemsArray}) {
     setSearchTerm("");
   }
   // cart work
-  const userID = user?.userId
-  const cartIds = cartID
-  const itemsArrays = itemsArray
-  useEffect(() => {
+  const userID = user?.userId;
+  const cartIds = cartID;
+  const itemsArrays = itemsArray;
+  const createCartInfo = {
+    items: itemsArrays,
+    customer: userID,
+  };
 
-  }, []);
+  async function handleSubmitCreateCart(e) {
+    e.preventDefault();
+    if (userID == null) {
+      alert("please Login ");
+    } else {
+      try {
+        let { data } = await axios.post(
+          "https://freelance1-production.up.railway.app/customer/createCart",
+          createCartInfo
+        );
+        // console.log(data);
+        goToBasket();
+      } catch (error) {
+        if (error.response && error.response.status === 409) {
+          editeCart(e);
+        }
+      }
+    }
+  }
+  async function editeCart(e) {
+    e.preventDefault();
+    const cartInfo = {
+      items: itemsArrays,
+      cart: cartIds,
+    };
+    if (cartIds === null || cartIds == "") {
+    } else {
+      try {
+        let { data } = await axios.patch(
+          "https://freelance1-production.up.railway.app/customer/editCart",
+          cartInfo
+        );
+        // console.log(data);
+        goToBasket();
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          goToBasket();
+        }
+        if (error.response && error.response.status === 400) {
+          goToBasket();
+        }
+      }
+    }
+  }
+  function goToBasket() {
+    navigate("/basket", {
+      state: { userId: userID },
+    })
+  }
   // done
   return (
     <>
@@ -70,13 +121,14 @@ export default function HeadOfPages({ user , cartID , itemsArray}) {
         ""
       ) : (
         <div className="d-flex justify-content-center position-relative bg-transparent py-3">
-          <span className="position-absolute cursorPOinter end-14 top-7 responsive-font-size-p z-1">
+          <span
+            onClick={handleSubmitCreateCart}
+            className="position-absolute cursorPOinter end-14 top-7 responsive-font-size-p z-1"
+          >
             <i className="fa-solid fa-cart-shopping text-muted"></i>
           </span>
           <div className="position-absolute end-11 top-3 bg-[#ecd9e8] rounded-circle">
-            <p className="p-1">
-              {itemsArrays.length}
-            </p>
+            <p className="p-1">{itemsArrays.length}</p>
           </div>
           {/* search work */}
           <div className="d-flex flex-column justify-content-center align-items-center w-100 ">
