@@ -1,15 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import HeadOfPages from "./HeadOfPages";
 
 export default function AllSpecialDeals({ user }) {
   let navigate = useNavigate();
 
   let location = useLocation();
-  let { cartID } = location.state || "";
-  // console.log(cartID);
-// console.log(user?.userId);
-
+  const parsedCartID = localStorage.getItem("cartID");
+  const cartID = parsedCartID ? JSON.parse(parsedCartID) : "";
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)
     const savedItems = localStorage.getItem("cartItems");
@@ -124,17 +123,15 @@ export default function AllSpecialDeals({ user }) {
     setLoadingButtonCat(false);
   }
 
-
-
-
-
   function goHome() {
-    navigate("/home" ,{
+    navigate("/home", {
       state: { cartID: cartID },
-    }); 
+    });
   }
   function ShowItemContent(itemDetails) {
-    navigate("/item-content", { state: { items: itemDetails , cartID:cartID} });
+    navigate("/item-content", {
+      state: { items: itemDetails, cartID: cartID },
+    });
   }
   useEffect(() => {
     getSpecialDeals();
@@ -166,7 +163,8 @@ export default function AllSpecialDeals({ user }) {
   }
   return (
     <>
-    <div
+      <HeadOfPages user={user} cartID={cartID} itemsArray={itemsArray} />
+      <div
         className={`shadow classForSureBoxOFCart rounded bg-white p-5 translate-middle ${
           classForCart ? "active" : ""
         }`}
@@ -229,7 +227,6 @@ export default function AllSpecialDeals({ user }) {
           ) : (
             SpecialDealsCategory.map((element, i) => (
               <div
-                
                 key={i}
                 className="card widthOfHomeCard forBestSellerPageResponsive position-relative"
               >
@@ -254,9 +251,9 @@ export default function AllSpecialDeals({ user }) {
                 )}
 
                 <img
-                onClick={() => {
-                  ShowItemContent(element);
-                }}
+                  onClick={() => {
+                    ShowItemContent(element);
+                  }}
                   src={`https://akflorist.s3.eu-north-1.amazonaws.com/${element?.images[0]}`}
                   className="card-img-top ScaleForPhoto forBestSellerPageResponsiveImage"
                   alt=""
@@ -287,7 +284,7 @@ export default function AllSpecialDeals({ user }) {
                     {element?.description.slice(0, 37)}
                   </p>
                   <button
-                     onClick={() => {
+                    onClick={() => {
                       addToCart(element._id, 1, element?.type);
                     }}
                     className="btn text-white ColorButton classForButtonForCardForBestSeller w-100"
@@ -303,7 +300,6 @@ export default function AllSpecialDeals({ user }) {
             ? ""
             : SpecialDealsOccasion.map((element, i) => (
                 <div
-                  
                   key={i}
                   className="card forBestSellerPageResponsive widthOfHomeCard position-relative"
                 >
@@ -327,9 +323,9 @@ export default function AllSpecialDeals({ user }) {
                     </div>
                   )}
                   <img
-                  onClick={() => {
-                    ShowItemContent(element);
-                  }}
+                    onClick={() => {
+                      ShowItemContent(element);
+                    }}
                     src={`https://akflorist.s3.eu-north-1.amazonaws.com/${element?.images[0]}`}
                     className="card-img-top forBestSellerPageResponsiveImage ScaleForPhoto "
                     alt=""
@@ -359,9 +355,9 @@ export default function AllSpecialDeals({ user }) {
                       {element?.description.slice(0, 36)}
                     </p>
                     <button
-                        onClick={() => {
-                          addToCart(element._id, 1, element?.type);
-                        }}
+                      onClick={() => {
+                        addToCart(element._id, 1, element?.type);
+                      }}
                       className="btn text-white ColorButton classForButtonForCardForBestSeller  w-100"
                     >
                       add to cart

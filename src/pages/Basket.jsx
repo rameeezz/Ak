@@ -5,6 +5,7 @@ import grayCircle from "../assets/card photo/gray-flower.svg";
 import Arrow from "../assets/card photo/guidance-arrow.svg";
 import axios from "axios";
 import NavBar from "./../component/NavBar";
+import HeadOfPages from "./HeadOfPages";
 export default function Basket({ user, logOut }) {
   let location = useLocation();
   let { userId } = location.state || null;
@@ -28,6 +29,9 @@ export default function Basket({ user, logOut }) {
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(itemsSameHome));
   }, [itemsSameHome]);
+  useEffect(()=>{
+    localStorage.setItem("cartID" ,JSON.stringify(cartID))
+  },[cartID])
   const [loading, setLoading] = useState(false);
   async function getCart() {
     setLoading(true);
@@ -61,6 +65,8 @@ export default function Basket({ user, logOut }) {
       (element) => element?.itemID !== itemID
     );
     setItemsSameHome(filteredArrayLikeHome);
+    console.log(filteredArray);
+    
   }
   // change quantity
   async function changeQuantity(itemID, operation, itemPrice) {
@@ -139,7 +145,7 @@ export default function Basket({ user, logOut }) {
           "https://freelance1-production.up.railway.app/customer/editCart",
           cartInfo
         );
-        setLoadingButtonCat(false)
+        setLoadingButtonCat(false);
         getCart();
       } catch (error) {}
     }
@@ -147,7 +153,7 @@ export default function Basket({ user, logOut }) {
   return (
     <>
       <NavBar user={user} logOut={logOut} cartID={cartID} />
-
+      <HeadOfPages user={user} cartID={cartID} itemsArray={itemsSameHome} />
       <div className="position-fixed  bg-white z-[131]"></div>
       <div className="container-xxl">
         <div className="w-100 d-flex justify-content-center">

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import  axios  from 'axios';
+import axios from "axios";
+import HeadOfPages from "./HeadOfPages";
 
-export default function ShowItemsInOccasion({user}) {
+export default function ShowItemsInOccasion({ user }) {
   const location = useLocation();
   const navigate = useNavigate();
   // Destructure `id` from location.state, or set to undefined if state is null
   const { id } = location.state || {};
 
-  let { cartID } = location.state || "";
-  // console.log(cartID);
+  const parsedCartID = localStorage.getItem("cartID");
+  const cartID = parsedCartID ? JSON.parse(parsedCartID) : "";
 
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)
@@ -126,7 +127,9 @@ export default function ShowItemsInOccasion({user}) {
   }
 
   function ShowItemContent(itemDetails) {
-    navigate("/item-content", { state: { items: itemDetails , cartID:cartID} });
+    navigate("/item-content", {
+      state: { items: itemDetails, cartID: cartID },
+    });
   }
   useEffect(() => {
     if (!id) {
@@ -177,9 +180,9 @@ export default function ShowItemsInOccasion({user}) {
     }
   }
   function goHome() {
-    navigate("/home" ,{
+    navigate("/home", {
       state: { cartID: cartID },
-    }); 
+    });
   }
   // console.log(user?.userId);
   // dorpDownlIst
@@ -217,7 +220,8 @@ export default function ShowItemsInOccasion({user}) {
   };
   return (
     <>
-    <div
+      <HeadOfPages user={user} cartID={cartID} itemsArray={itemsArray} />
+      <div
         className={`shadow classForSureBoxOFCart rounded bg-white p-5 translate-middle ${
           classForCart ? "active" : ""
         }`}
@@ -305,7 +309,6 @@ export default function ShowItemsInOccasion({user}) {
               ) : (
                 currentItem.map((element, i) => (
                   <div
-                 
                     key={i}
                     className="card widthOfHomeCard forBestSellerPageResponsive position-relative"
                   >
@@ -330,9 +333,9 @@ export default function ShowItemsInOccasion({user}) {
                     )}
 
                     <img
-                     onClick={() => {
-                      ShowItemContent(element);
-                    }}
+                      onClick={() => {
+                        ShowItemContent(element);
+                      }}
                       src={`https://akflorist.s3.eu-north-1.amazonaws.com/${element?.images[0]}`}
                       className="card-img-top ScaleForPhoto forBestSellerPageResponsiveImage"
                       alt=""
@@ -363,7 +366,7 @@ export default function ShowItemsInOccasion({user}) {
                         {element?.description.slice(0, 37)}
                       </p>
                       <button
-                         onClick={() => {
+                        onClick={() => {
                           addToCart(element._id, 1, element?.type);
                         }}
                         className="btn text-white ColorButton classForButtonForCardForBestSeller w-100"

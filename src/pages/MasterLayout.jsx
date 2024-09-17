@@ -24,7 +24,7 @@ export default function MasterLayout({ user, logOut }) {
   return (
     <>
       <NavBar user={user} logOut={logOut} />
-      <HeadOfPages user={user}/>
+      {/* <HeadOfPages user={user}/> */}
       <TransitionWrapper>
         <Outlet />
       </TransitionWrapper>

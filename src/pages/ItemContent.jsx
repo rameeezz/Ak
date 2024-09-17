@@ -1,16 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import HeadOfPages from "./HeadOfPages";
 
 export default function ItemContent({ user }) {
   const location = useLocation();
   const { items } = location.state || {};
-// console.log(items);
+  // console.log(items);
 
   let navigate = useNavigate();
 
-  let { cartID } = location.state || "";
-  // console.log(cartID);
+  const parsedCartID = localStorage.getItem("cartID");
+  const cartID = parsedCartID ? JSON.parse(parsedCartID) : "";
 
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)
@@ -73,7 +74,7 @@ export default function ItemContent({ user }) {
   }
   async function handleSubmitCreateCart(e) {
     setLoadingButtonCat(true);
-    
+
     e.preventDefault();
     if (createCartInfo.customer == null) {
       alert("please Login ");
@@ -94,7 +95,6 @@ export default function ItemContent({ user }) {
     }
   }
   async function editeCart(e) {
-    
     setLoadingButtonCat(true);
     e.preventDefault();
     const cartInfo = {
@@ -128,13 +128,12 @@ export default function ItemContent({ user }) {
     setLoadingButtonCat(false);
   }
   function goHome() {
-    navigate("/home" ,{
+    navigate("/home", {
       state: { cartID: cartID },
-    }); 
+    });
   }
   // console.log(user?.userId);
 
-  
   const images = items.images;
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -208,7 +207,8 @@ export default function ItemContent({ user }) {
   }
   return (
     <>
-    <div
+      <HeadOfPages user={user} cartID={cartID} itemsArray={itemsArray} />
+      <div
         className={`shadow classForSureBoxOFCart rounded bg-white p-5 translate-middle ${
           classForCart ? "active" : ""
         }`}
@@ -315,13 +315,13 @@ export default function ItemContent({ user }) {
                   ))}
             </div>
             <div className="w-100 d-flex justify-content-center mb-3 mt-2 responsive-font-size-p-items">
-          <p className="text-center text-muted ">
-              {" "}
-              Note: Double tab to open image larger
-            </p>
+              <p className="text-center text-muted ">
+                {" "}
+                Note: Double tab to open image larger
+              </p>
+            </div>
           </div>
-          </div>
-         
+
           <div className="d-flex flex-column justify-content-start align-items-center w-50 my-5 cardOfContentInSmallScreen gap-3">
             <div className="mb-3 mt-5 forSmallScreenDiv">
               <h2 className="responsive-font-size-h1 text-center">
@@ -341,7 +341,7 @@ export default function ItemContent({ user }) {
               </div>
               <div className="firstButtonInSmallScreen">
                 <button
-                   onClick={() => {
+                  onClick={() => {
                     addToCart(items._id, 1, items?.type);
                   }}
                   className="btn  rounded-none text-white ColorButton classForButtonForCard w-100 mt-2 me-3 p-3 buttonForSmallScreen"
@@ -353,7 +353,6 @@ export default function ItemContent({ user }) {
             {/* <div className="d-flex flex-row justify-content-start">
             <p>Pay in installments with:</p>
           </div> */}
-            
           </div>
         </div>
         <div className={classToShowImage}>

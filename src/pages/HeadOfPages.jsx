@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export default function HeadOfPages({ user }) {
+export default function HeadOfPages({ user , cartID , itemsArray}) {
   let navigate = useNavigate();
   const isLoginPage =
     location.pathname === "/login" ||
@@ -55,17 +55,13 @@ export default function HeadOfPages({ user }) {
     setSearchTerm("");
   }
   // cart work
-    // const [cartItems, setCartItems] = useState([]);
-    // const itemsArray = () => {
-    //   // Retrieve saved items from localStorage (if any)
-    //   const savedItems = localStorage.getItem("cartItems");
-    //   return savedItems ? JSON.parse(savedItems) : [];
-    // }
-    // useEffect(() => {
-    //   const savedItems = itemsArray(); // Call the function and get the saved items
-    //   setCartItems(savedItems); // Set the returned items in state
-    // }, []);
-  // done 
+  const userID = user?.userId
+  const cartIds = cartID
+  const itemsArrays = itemsArray
+  useEffect(() => {
+
+  }, []);
+  // done
   return (
     <>
       {user?.role === "admin1" || user?.role === "admin2" ? (
@@ -74,35 +70,38 @@ export default function HeadOfPages({ user }) {
         ""
       ) : (
         <div className="d-flex justify-content-center position-relative bg-transparent py-3">
-          {/* <span className="position-absolute end-14 top-7 responsive-font-size-p z-1">
+          <span className="position-absolute cursorPOinter end-14 top-7 responsive-font-size-p z-1">
             <i className="fa-solid fa-cart-shopping text-muted"></i>
           </span>
           <div className="position-absolute end-11 top-3 bg-[#ecd9e8] rounded-circle">
             <p className="p-1">
-              {cartItems.length}
+              {itemsArrays.length}
             </p>
-          </div> */}
+          </div>
           {/* search work */}
           <div className="d-flex flex-column justify-content-center align-items-center w-100 ">
             <div className="w-50">
-             <form onSubmit={(e)=>{
-                e.preventDefault();
-               handleSubmitSearch(searchTerm);
-             }} className="w-100 d-flex justify-content-center align-items-center gap-1 classforResponsive">
-             <input
-                type="text"
-                className="form-control w-75"
-                placeholder="What Are You Looking For?"
-                onChange={searchFromItems}
-                value={searchTerm}
-              />
-              <i
-                onClick={() => {
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
                   handleSubmitSearch(searchTerm);
                 }}
-                className="fa-solid fa-magnifying-glass responsive-for-i-head-page text-info cursorPOinter"
-              ></i>
-             </form>
+                className="w-100 d-flex justify-content-center align-items-center gap-1 classforResponsive"
+              >
+                <input
+                  type="text"
+                  className="form-control w-75"
+                  placeholder="What Are You Looking For?"
+                  onChange={searchFromItems}
+                  value={searchTerm}
+                />
+                <i
+                  onClick={() => {
+                    handleSubmitSearch(searchTerm);
+                  }}
+                  className="fa-solid fa-magnifying-glass responsive-for-i-head-page text-info cursorPOinter"
+                ></i>
+              </form>
             </div>
             {filteredItems === null || filteredItems.length === 0 ? (
               ""

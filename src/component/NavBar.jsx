@@ -64,7 +64,6 @@ export default function NavBar({ user, logOut, cartID }) {
           ...prev,
           [idOfCategory]: true,
         }));
-
         setExpandedCategory((prevCategory) =>
           prevCategory === idOfCategory ? null : idOfCategory
         );

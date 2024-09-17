@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import HeadOfPages from "./HeadOfPages";
 export default function AllOccasions() {
   let location = useLocation();
-  let { cartID } = location.state || "";
+  const parsedCartID = localStorage.getItem("cartID");
+  const cartID = parsedCartID ? JSON.parse(parsedCartID) : "";
   let navigate = useNavigate();
   function goHome() {
     navigate("/home");
   }
-  useEffect(()=>{
-    getAllOccasion()
-  },[])
+  useEffect(() => {
+    getAllOccasion();
+  }, []);
   const [allOccasion, setAllOccasion] = useState([]);
   const [loadingForOccasion, setLoadingForOcassion] = useState(false);
   const [errorMessageForOccasion, setErrorMessageForOccasion] = useState("");
@@ -31,11 +33,13 @@ export default function AllOccasions() {
     }
   }
   function goToOccasionItems(idOfCategory) {
-    navigate("/show-items-in-occasion", { state: { id: idOfCategory ,cartID:cartID} });
+    navigate("/show-items-in-occasion", {
+      state: { id: idOfCategory, cartID: cartID },
+    });
   }
   return (
     <>
-
+      <HeadOfPages user={user} cartID={cartID} itemsArray={itemsArray} />
       <div className="container-xxl ">
         <div className="d-flex flex-column align-items-start justify-content-center mt-5 mb-4">
           <h2 className="responsive-font-size-h2-Home fw-bold">
@@ -87,5 +91,5 @@ export default function AllOccasions() {
         </div>
       </div>
     </>
-  )
+  );
 }

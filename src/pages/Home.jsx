@@ -12,13 +12,13 @@ import freshPhoto from "../assets/card photo/freshness.svg";
 import securePhoto from "../assets/card photo/secure-payment.svg";
 import senderPhoto from "../assets/card photo/sender-privacy.svg";
 import axios from "axios";
+import HeadOfPages from "./HeadOfPages";
 export default function Home({ user }) {
   // console.log(user);
   const navigate = useNavigate();
   let location = useLocation();
-  let { cartID } = location.state || "";
-  // console.log(cartID);
-// console.log(user?.userId);
+  const parsedCartID = localStorage.getItem("cartID");
+  const cartID = parsedCartID ? JSON.parse(parsedCartID) : "";
 
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)
@@ -136,7 +136,9 @@ export default function Home({ user }) {
 
   // done cart work -----------------
   function ShowItemContent(itemDetails) {
-    navigate("/item-content", { state: { items: itemDetails, cartID: cartID  } });
+    navigate("/item-content", {
+      state: { items: itemDetails, cartID: cartID },
+    });
   }
   // get Best Seller for Category
   const [bestSellerCategory, setBestSellerCategory] = useState([]);
@@ -185,13 +187,13 @@ export default function Home({ user }) {
     navigate("/best-sellers", { state: { cartID: cartID } });
   }
   function moveToAllCategory() {
-    navigate("/all-category" , { state: { cartID: cartID } });
+    navigate("/all-category", { state: { cartID: cartID } });
   }
   function moveToAllOccasions() {
-    navigate("/all-occasion" , { state: { cartID: cartID } });
+    navigate("/all-occasion", { state: { cartID: cartID } });
   }
   function moveToAllSpecialDeals() {
-    navigate("/all-special-deals" , { state: { cartID: cartID } });
+    navigate("/all-special-deals", { state: { cartID: cartID } });
   }
 
   // done
@@ -218,7 +220,7 @@ export default function Home({ user }) {
     }
   }
   function goToItems(idOfCategory) {
-    navigate("/show-items", { state: { id: idOfCategory , cartID: cartID } });
+    navigate("/show-items", { state: { id: idOfCategory, cartID: cartID } });
   }
   // done-----------------
   // get Ocassions
@@ -246,7 +248,9 @@ export default function Home({ user }) {
     }
   }
   function goToOccasionItems(idOfCategory) {
-    navigate("/show-items-in-occasion", { state: { id: idOfCategory , cartID: cartID  } });
+    navigate("/show-items-in-occasion", {
+      state: { id: idOfCategory, cartID: cartID },
+    });
   }
   // done
   // special Deals
@@ -326,6 +330,7 @@ export default function Home({ user }) {
   }
   return (
     <>
+      <HeadOfPages user={user} cartID={cartID} itemsArray={itemsArray} />
       <div
         className={`shadow classForSureBoxOFCart rounded bg-white p-5 translate-middle ${
           classForCart ? "active" : ""

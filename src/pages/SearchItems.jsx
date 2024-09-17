@@ -1,16 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import HeadOfPages from "./HeadOfPages";
 
 export default function SearchItems({ user }) {
   const location = useLocation();
   const { itemName } = location.state || {};
   // console.log(itemName);
-  
+
   let navigate = useNavigate();
 
-  let { cartID } = location.state || "";
-  // console.log(cartID);
+  const  parsedCartID= localStorage.getItem("cartID");
+  const cartID = parsedCartID ? JSON.parse(parsedCartID) : "";
 
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)
@@ -128,9 +129,9 @@ export default function SearchItems({ user }) {
   // console.log(user?.userId);
 
   function goHome() {
-    navigate("/home" ,{
+    navigate("/home", {
       state: { cartID: cartID },
-    }); 
+    });
   }
 
   const [allItems, setAllItems] = useState([]);
@@ -141,19 +142,18 @@ export default function SearchItems({ user }) {
   }, []);
 
   useEffect(() => {
-    setLoadingAllItems(true)
+    setLoadingAllItems(true);
     // Filter items after allItems is set and itemName is available
     if (allItems.length > 0 && itemName) {
       searchFromItems();
-      setLoadingAllItems(false)
+      setLoadingAllItems(false);
     }
   }, [allItems, itemName]); // Run this when allItems or itemName changes
 
   async function getAllItems() {
     if (itemName == undefined) {
       console.log("wait");
-      
-    }else{
+    } else {
       try {
         let { data } = await axios.get(
           "https://freelance1-production.up.railway.app/customer/getItems"
@@ -188,11 +188,14 @@ export default function SearchItems({ user }) {
     }
   };
   function ShowItemContent(itemDetails) {
-    navigate("/item-content", { state: { items: itemDetails , cartID:cartID} });
+    navigate("/item-content", {
+      state: { items: itemDetails, cartID: cartID },
+    });
   }
   return (
     <>
-    <div
+      <HeadOfPages user={user} cartID={cartID} itemsArray={itemsArray} />
+      <div
         className={`shadow classForSureBoxOFCart rounded bg-white p-5 translate-middle ${
           classForCart ? "active" : ""
         }`}
@@ -310,9 +313,9 @@ export default function SearchItems({ user }) {
                   {element?.description.slice(0, 37)}
                 </p>
                 <button
-                    onClick={() => {
-                      addToCart(element._id, 1, element?.type);
-                    }}
+                  onClick={() => {
+                    addToCart(element._id, 1, element?.type);
+                  }}
                   className="btn text-white ColorButton classForButtonForCardForBestSeller w-100"
                 >
                   Add to Cart

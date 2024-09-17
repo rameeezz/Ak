@@ -1,17 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import HeadOfPages from "./HeadOfPages";
 
 export default function SubCategoryItems({ user }) {
   const location = useLocation();
   const navigate = useNavigate();
- 
+
   // Destructure `id` from location.state, or set to undefined if state is null
   const { id } = location.state || {};
   // console.log(id);
 
-  let { cartID } = location.state || "";
-  // console.log(cartID);
+  const parsedCartID = localStorage.getItem("cartID");
+  const cartID = parsedCartID ? JSON.parse(parsedCartID) : "";
 
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)
@@ -20,9 +21,9 @@ export default function SubCategoryItems({ user }) {
   });
   // console.log(itemsArray);
   function goHome() {
-    navigate("/home" ,{
+    navigate("/home", {
       state: { cartID: cartID },
-    }); 
+    });
   }
   // console.log(user?.userId);
   const [classForCart, setClassForCart] = useState(false);
@@ -133,7 +134,9 @@ export default function SubCategoryItems({ user }) {
   }
 
   function ShowItemContent(itemDetails) {
-    navigate("/item-content", { state: { items: itemDetails , cartID:cartID} });
+    navigate("/item-content", {
+      state: { items: itemDetails, cartID: cartID },
+    });
   }
   useEffect(() => {
     if (!id) {
@@ -217,6 +220,7 @@ export default function SubCategoryItems({ user }) {
 
   return (
     <>
+      <HeadOfPages user={user} cartID={cartID} itemsArray={itemsArray} />
       <div
         className={`shadow classForSureBoxOFCart rounded bg-white p-5 translate-middle ${
           classForCart ? "active" : ""
@@ -366,9 +370,9 @@ export default function SubCategoryItems({ user }) {
                   {element?.description.slice(0, 37)}
                 </p>
                 <button
-                    onClick={() => {
-                      addToCart(element._id, 1, element?.type);
-                    }}
+                  onClick={() => {
+                    addToCart(element._id, 1, element?.type);
+                  }}
                   className="btn text-white ColorButton classForButtonForCardForBestSeller w-100"
                 >
                   Add to Cart

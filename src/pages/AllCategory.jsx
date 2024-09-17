@@ -3,9 +3,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../css/Home.css";
 import PHoto1 from "../assets/card photo/2.jpeg";
+import HeadOfPages from "./HeadOfPages";
 export default function AllCategory() {
   let location = useLocation();
-  let { cartID } = location.state || "";
+  const  parsedCartID= localStorage.getItem("cartID");
+  const cartID = parsedCartID ? JSON.parse(parsedCartID) : "";
   let navigate = useNavigate();
   function goHome() {
     navigate("/home");
@@ -36,11 +38,11 @@ export default function AllCategory() {
   }
   // on click open the items
   function goToItems(idOfCategory) {
-    navigate("/show-items", { state: { id: idOfCategory , cartID :cartID} });
+    navigate("/show-items", { state: { id: idOfCategory, cartID: cartID } });
   }
   return (
     <>
-
+      <HeadOfPages user={user} cartID={cartID} itemsArray={itemsArray} />
       <div className="container-xxl ">
         <div className="d-flex flex-column align-items-start justify-content-center mt-5 mb-4">
           <h2 className="responsive-font-size-h2-Home fw-bold">

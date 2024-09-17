@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import HeadOfPages from "./HeadOfPages";
 
 export default function BestSellerItems({ user }) {
   let naviagte = useNavigate();
 
-// console.log(user?.userId);
-
+  // console.log(user?.userId);
 
   let location = useLocation();
-  let { cartID } = location.state || "";
-  // console.log(cartID);
+  const parsedCartID = localStorage.getItem("cartID");
+  const cartID = parsedCartID ? JSON.parse(parsedCartID) : "";
 
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)
@@ -126,14 +126,10 @@ export default function BestSellerItems({ user }) {
     setLoadingButtonCat(false);
   }
 
-
-
-
-
-
-
   function ShowItemContent(itemDetails) {
-    naviagte("/item-content", { state: { items: itemDetails , cartID:cartID} });
+    naviagte("/item-content", {
+      state: { items: itemDetails, cartID: cartID },
+    });
   }
   useEffect(() => {
     getCategoryBestSeller();
@@ -174,14 +170,15 @@ export default function BestSellerItems({ user }) {
     } catch (error) {}
   }
   function goHome() {
-    naviagte("/home" ,{
+    naviagte("/home", {
       state: { cartID: cartID },
-    }); 
+    });
   }
   //   done -----------
   return (
     <>
-    <div
+      <HeadOfPages user={user} cartID={cartID} itemsArray={itemsArray} />
+      <div
         className={`shadow classForSureBoxOFCart rounded bg-white p-5 translate-middle ${
           classForCart ? "active" : ""
         }`}
@@ -373,9 +370,9 @@ export default function BestSellerItems({ user }) {
                       {element?.description.slice(0, 36)}
                     </p>
                     <button
-                        onClick={() => {
-                          addToCart(element._id, 1, element?.type);
-                        }}
+                      onClick={() => {
+                        addToCart(element._id, 1, element?.type);
+                      }}
                       className="btn text-white ColorButton classForButtonForCardForBestSeller  w-100"
                     >
                       add to cart
