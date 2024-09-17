@@ -19,7 +19,7 @@ export default function Home({ user }) {
   let location = useLocation();
   const parsedCartID = localStorage.getItem("cartID");
   const cartID = parsedCartID ? JSON.parse(parsedCartID) : "";
-
+  console.log(cartID);
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)
     const savedItems = localStorage.getItem("cartItems");
@@ -38,7 +38,28 @@ export default function Home({ user }) {
   // Save itemsArray to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(itemsArray));
+    localStorage.setItem("cartTimestamp", new Date().getTime());
   }, [itemsArray]);
+  useEffect(() => {
+    checkCartExpiration();
+  }, []);
+  const checkCartExpiration = () => {
+    const savedTimestamp = localStorage.getItem("cartTimestamp");
+// console.log(savedTimestamp);
+
+    if (savedTimestamp) {
+      const currentTime = new Date().getTime();
+      const timeElapsed = currentTime - savedTimestamp;;
+      const sixHours = 6 * 60 * 60 * 1000;
+
+      // If more than 1 day has passed, reset cartItems to an empty array
+      if (timeElapsed > sixHours) {
+        setItemsArray([]); // Clear the itemsArray state
+        localStorage.setItem("cartItems", JSON.stringify([])); // Clear cartItems in localStorage
+        localStorage.removeItem("cartTimestamp"); // Remove the timestamp
+      }
+    }
+  };
   const [createCartInfo, setCreateCartInfo] = useState({
     items: itemsArray,
     customer: customerID,
