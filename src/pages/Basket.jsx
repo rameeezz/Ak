@@ -150,6 +150,24 @@ export default function Basket({ user, logOut }) {
       } catch (error) {}
     }
   }
+  // cards type work
+
+  // done
+  
+  // adress form
+  
+  const [addressInfo , setAddressInfo ] = useState({
+    customerID:userId,
+    apartment:"",
+    floor:"",
+    building:"",
+    state:"",
+    street:"",
+    area:""
+  })
+
+  
+  // done
   return (
     <>
       <NavBar user={user} logOut={logOut} cartID={cartID} />

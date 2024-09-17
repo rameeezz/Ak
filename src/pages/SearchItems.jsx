@@ -152,13 +152,13 @@ export default function SearchItems({ user }) {
 
   async function getAllItems() {
     if (itemName == undefined) {
-      console.log("wait");
+      // console.log("wait");
     } else {
       try {
         let { data } = await axios.get(
           "https://freelance1-production.up.railway.app/customer/getItems"
         );
-        setAllItems(data); // Set items first
+        setAllItems(data);
       } catch (error) {
         if (error.response && error.response.status === 404) {
           alert("Not Found");
