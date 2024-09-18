@@ -47,6 +47,7 @@ export default function Basket({ user, logOut }) {
         setItemsInCart(data.getThisCart.items);
         setTotalCost(data.getThisCart.totalCost);
         setCartId(data.getThisCart._id);
+        setOrderInfo({ ...orderInfo, cart: data.getThisCart._id });
         setItemsSameHome(data.items);
         setLoading(false);
       } catch (error) {
@@ -128,6 +129,7 @@ export default function Basket({ user, logOut }) {
       });
       setLoadingCardDetails(false);
       serCardID(data?._id);
+      setOrderInfo({ ...orderInfo, card: data?._id });
     } catch (error) {}
   }
   // done
@@ -196,7 +198,7 @@ export default function Basket({ user, logOut }) {
   const [takeState, setTakeState] = useState("");
   const [takeArea, setTakeArea] = useState("");
   const [addressID, setAddressId] = useState("");
-  const[orderClass , setOrderClass] = useState("d-none")
+  const [orderClass, setOrderClass] = useState("d-none");
   // console.log(addressID);
 
   const [addressInfo, setAddressInfo] = useState({
@@ -217,10 +219,72 @@ export default function Basket({ user, logOut }) {
   }, [takeState, takeArea]);
   function selectArea(value) {
     setTakeArea(value);
+    // console.log(value);
+
+    let shippingCost = 0;
+
+    if (value === "منوف" || value === "الباجور") {
+      shippingCost = 120;
+    } else if (value === "كوم الضبع") {
+      shippingCost = 80;
+    } else if (value === "سرس الليان" || value === "بئر العرب") {
+      shippingCost = 140;
+    } else if (value === "قويسنا") {
+      shippingCost = 120;
+    } else if (value === "بركه السبع") {
+      shippingCost = 110;
+    } else if (value === "شبراباص") {
+      shippingCost = 70;
+    } else if (value === "كفر طنبدي") {
+      shippingCost = 30;
+    } else if (value === "اصطباري") {
+      shippingCost = 100;
+    } else if (value === "تلا") {
+      shippingCost = 130;
+    } else if (value === "اشمون" || value === "السادات") {
+      shippingCost = 250;
+    } else if (value === "الشهداء") {
+      shippingCost = 90;
+    } else if (value === "شبين الكوم") {
+      shippingCost = 25;
+    } else if (
+      value === "مليج" ||
+      value === "الراهب" ||
+      value === "الماي" ||
+      value === "شنوان" ||
+      value === "الكوم الاخضر" ||
+      value === "البتانون" ||
+      value === "ميت خلف" ||
+      value === "كفر البتانون" ||
+      value === "الدلاتون" ||
+      value === "منشاء عصام"
+    ) {
+      shippingCost = 60;
+    } else if (value === "Cairo") {
+      shippingCost = 250;
+    } else if (value === "Giza") {
+      shippingCost = 350;
+    } else if (value === "October") {
+      shippingCost = 300;
+    } else if (value === "Helwan") {
+      shippingCost = 400;
+    } else if (value === "Alexandria") {
+      shippingCost = 400;
+    }
+
+    setOrderInfo({ ...orderInfo, shippingCost });
   }
+
   function selectState(value) {
     setTakeState(value);
   }
+  function dateOfOrder(e) {
+    setOrderInfo({ ...orderInfo, date: e.target.value });
+  }
+function timeOfOrder(value) {
+  console.log(value);
+  setOrderInfo({ ...orderInfo, time:value });
+}
   function takeContentOFAddress(e) {
     let myAddress = { ...addressInfo };
     myAddress[e.target.name] = e.target.value;
@@ -236,18 +300,31 @@ export default function Basket({ user, logOut }) {
       );
       // console.log(data);
       setAddressId(data._id);
+      setOrderInfo({...orderInfo , address :data._id })
       setLoadingButtonCat(false);
-      setOrderClass("")
+      setOrderClass("");
+      setFlowerNumber(3);
+      setOrderClass("");
     } catch (error) {}
   }
   const [orderInfo, setOrderInfo] = useState({
-    cart: cartID,
+    cart: "",
     address: addressID,
     time: "",
-    data: "",
-    shippingCost: "",
+    date: "",
+    shippingCost: 0,
     card: cardID,
   });
+  console.log(orderInfo);
+async function sendOrder(e) {
+  e.preventDefault()
+  setLoadingButtonCat(true)
+  try {
+    let {data} = await axios.post("")
+  } catch (error) {
+    
+  }
+}
   // done
   return (
     <>
@@ -306,6 +383,123 @@ export default function Basket({ user, logOut }) {
                 </div>
               </div>
               <p className="mt-3">Type Your Feelings....</p>
+             
+              {orderClass === "d-none" ? (
+                classForAddress == "d-none" ? (
+                  <div>
+                    <form>
+                      <div className="d-flex justify-content-center gap-2 my-3">
+                        <select
+                          className="form-control"
+                          onChange={(e) => selectState(e.target.value)}
+                        >
+                          <option value="" disabled selected>
+                            Select State
+                          </option>
+                          <option value="Cairo">Cairo </option>
+                          <option value="Alexandria">Alexandria </option>
+                          <option value="Elmonofia">Elmonofia</option>
+                        </select>
+                        <select
+                          className="form-control"
+                          onChange={(e) => selectArea(e.target.value)}
+                        >
+                          <option value="" disabled selected>
+                            Select Area
+                          </option>
+                          {takeState === "Cairo" && (
+                            <>
+                              <option value="Cairo">Cairo</option>
+                              <option value="Giza">Giza</option>
+                              <option value="Helwan">Helwan</option>
+                              <option value="October">October</option>
+                            </>
+                          )}
+                          {takeState === "Elmonofia" && (
+                            <>
+                              <option value="منوف ">منوف </option>
+                              <option value="الباجور">الباجور </option>
+                              <option value="كوم الضبع">كوم الضبع</option>
+                              <option value="سرس الليان">سرس الليان</option>
+                              <option value="بئر العرب">بئر العرب</option>
+                              <option value="قويسنا">قويسنا</option>
+                              <option value="بركه السبع">بركه السبع</option>
+                              <option value="مليج">مليج</option>
+                              <option value="الراهب">الراهب</option>
+                              <option value="الماي">الماي</option>
+                              <option value="شنوان">شنوان</option>
+                              <option value="شبراباص">شبراباص</option>
+                              <option value="كفر طنبدي">كفر طنبدي</option>
+                              <option value="الكوم الاخضر">الكوم الاخضر</option>
+                              <option value="البتانون">البتانون</option>
+                              <option value="ميت خلف">ميت خلف</option>
+                              <option value="اصطباري">اصطباري</option>
+                              <option value="كفر البتانون">
+                                كفر البتانون{" "}
+                              </option>
+                              <option value="الدلاتون">الدلاتون</option>
+                              <option value="الشهداء">الشهداء</option>
+                              <option value="تلا">تلا </option>
+                              <option value="منشاء عصام">منشاء عصام</option>
+                              <option value="اشمون">اشمون</option>
+                              <option value="السادات">السادات</option>
+                              <option value="شبين الكوم">شبين الكوم</option>
+                            </>
+                          )}
+                          {takeState === "Alexandria" && (
+                            <>
+                              <option value="Alexandria">Alexandria</option>
+                            </>
+                          )}
+                        </select>
+                      </div>
+                      <div className="w-100">
+                        <input
+                          type="text"
+                          className="w-100 form-control"
+                          placeholder="Street *"
+                          name="street"
+                          onChange={takeContentOFAddress}
+                          value={addressInfo.street}
+                        />
+                      </div>
+                      <div className="d-flex justify-content-center gap-2 my-3">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Bulding *"
+                          name="building"
+                          onChange={takeContentOFAddress}
+                          value={addressInfo.building}
+                        />
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Floor *"
+                          name="floor"
+                          onChange={takeContentOFAddress}
+                          value={addressInfo.floor}
+                        />
+                      </div>
+                      <div className="d-flex justify-content-start">
+                        <input
+                          type="text"
+                          className="form-control w-50"
+                          placeholder="Apartment"
+                          name="apartment"
+                          onChange={takeContentOFAddress}
+                          value={addressInfo.apartment}
+                        />
+                      </div>
+                    </form>
+                  </div>
+                ) : (
+                  ""
+                )
+              ) : (
+                ""
+              )}
+
               <div className={classForAddress}>
                 <form>
                   <input
@@ -348,115 +542,76 @@ export default function Basket({ user, logOut }) {
                   )}
                 </form>
               </div>
-              {classForAddress == "d-none" ? (
-                <div>
-                  <form>
-                    <div className="d-flex justify-content-center gap-2 my-3">
+          {flowerNumber == 2 ? <div>
+                <form>
+                  {takeState === "Alexandria" && (
+                    <div>
+                      <input
+                        type="date"
+                        onChange={ dateOfOrder }
+                        name="date"
+                        className="form-control my-3"
+                        placeholder="Date"
+                      />
                       <select
                         className="form-control"
-                        onChange={(e) => selectState(e.target.value)}
+                        onChange={(e) => timeOfOrder(e.target.value)}
                       >
-                        <option value="" disabled selected>
-                          Select State
+                        <option value="" disabled>
+                          Select Time
                         </option>
-                        <option value="Cairo">Cairo </option>
-                        <option value="Alexandria">Alexandria </option>
-                        <option value="Elmonofia">Elmonofia</option>
+                        <option value="Between 5pm  -  9pm">Between 5pm  -  9pm </option>
                       </select>
+                    </div>
+                  )}
+                  {takeState === "Elmonofia" && (
+                    <div>
+                      <input
+                        type="date"
+                        onChange={ dateOfOrder }
+                        name="date"
+                        className="form-control my-3"
+                        placeholder="Date"
+                      />
                       <select
                         className="form-control"
-                        onChange={(e) => selectArea(e.target.value)}
+                        onChange={(e) => timeOfOrder(e.target.value)}
                       >
-                        <option value="" disabled selected>
-                          Select Area
+                        <option value="" disabled>
+                          Select Time
                         </option>
-                        {takeState === "Cairo" && (
-                          <>
-                            <option value="Cairo">Cairo</option>
-                            <option value="Giza">Giza</option>
-                            <option value="Helwan">Helwan</option>
-                            <option value="October">October</option>
-                          </>
-                        )}
-                        {takeState === "Elmonofia" && (
-                          <>
-                            <option value="منوف ">منوف </option>
-                            <option value="الباجور">الباجور </option>
-                            <option value="كوم الضبع">كوم الضبع</option>
-                            <option value="سرس الليان">سرس الليان</option>
-                            <option value="بئر العرب">بئر العرب</option>
-                            <option value="قويسنا">قويسنا</option>
-                            <option value="بركه السبع">بركه السبع</option>
-                            <option value="مليج">مليج</option>
-                            <option value="الراهب">الراهب</option>
-                            <option value="الماي">الماي</option>
-                            <option value="شنوان">شنوان</option>
-                            <option value="شبراباص">شبراباص</option>
-                            <option value="كفر طنبدي">كفر طنبدي</option>
-                            <option value="الكوم الاخضر">الكوم الاخضر</option>
-                            <option value="البتانون">البتانون</option>
-                            <option value="ميت خلف">ميت خلف</option>
-                            <option value="اصطباري">اصطباري</option>
-                            <option value="كفر البتانون">كفر البتانون </option>
-                            <option value="الدلاتون">الدلاتون</option>
-                            <option value="الشهداء">الشهداء</option>
-                            <option value="تلا">تلا </option>
-                            <option value="منشاء عصام">منشاء عصام</option>
-                            <option value="اشمون">اشمون</option>
-                            <option value="السادات">السادات</option>
-                            <option value="شبين الكوم">شبين الكوم</option>
-                          </>
-                        )}
-                        {takeState === "Alexandria" && (
-                          <>
-                            <option value="Alexandria">Alexandria</option>
-                          </>
-                        )}
+                        <option value="Between 11am  -  1pm">Between 11am  -  1pm </option>
+                        <option value="Between 1pm - 3pm">Between 1pm - 3pm</option>
+                        <option value="Between 3pm - 5pm">Between 3pm - 5pm</option>
+                        <option value="Between 5pm - 7pm">Between 5pm - 7pm</option>
+                        <option value="Between 7pm - 9pm">Between 7pm - 9pm</option>
+                        <option value="Between 9pm - 11pm">Between 9pm - 11pm</option>
                       </select>
                     </div>
-                    <div className="w-100">
+                  )}
+                  {takeState === "Cairo" && (
+                    <div>
                       <input
-                        type="text"
-                        className="w-100 form-control"
-                        placeholder="Street *"
-                        name="street"
-                        onChange={takeContentOFAddress}
-                        value={addressInfo.street}
+                        type="date"
+                        onChange={ dateOfOrder }
+                        name="date"
+                        className="form-control my-3"
+                        placeholder="Date"
                       />
-                    </div>
-                    <div className="d-flex justify-content-center gap-2 my-3">
-                      <input
-                        type="text"
+                      <select
                         className="form-control"
-                        placeholder="Bulding *"
-                        name="building"
-                        onChange={takeContentOFAddress}
-                        value={addressInfo.building}
-                      />
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Floor *"
-                        name="floor"
-                        onChange={takeContentOFAddress}
-                        value={addressInfo.floor}
-                      />
+                        onChange={(e) => timeOfOrder(e.target.value)}
+                      >
+                        <option value="" disabled>
+                          Select Time
+                        </option>
+                        <option value="Between 2pm  -  6pm">Between 2pm  -  6pm </option>
+                        <option value="Between 7pm - 11pm">Between 7pm - 11pm</option>
+                      </select>
                     </div>
-                    <div className="d-flex justify-content-start">
-                      <input
-                        type="text"
-                        className="form-control w-50"
-                        placeholder="Apartment"
-                        name="apartment"
-                        onChange={takeContentOFAddress}
-                        value={addressInfo.apartment}
-                      />
-                    </div>
-                  </form>
-                </div>
-              ) : (
-                ""
-              )}
+                  )}
+                </form>
+              </div> : ""}
             </div>
             <div className="d-flex forSmallScreenDivBasket justify-content-start flex-column w-50 ">
               {loading ? (
