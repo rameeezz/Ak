@@ -281,10 +281,10 @@ export default function Basket({ user, logOut }) {
   function dateOfOrder(e) {
     setOrderInfo({ ...orderInfo, date: e.target.value });
   }
-function timeOfOrder(value) {
-  console.log(value);
-  setOrderInfo({ ...orderInfo, time:value });
-}
+  function timeOfOrder(value) {
+    console.log(value);
+    setOrderInfo({ ...orderInfo, time: value });
+  }
   function takeContentOFAddress(e) {
     let myAddress = { ...addressInfo };
     myAddress[e.target.name] = e.target.value;
@@ -300,7 +300,7 @@ function timeOfOrder(value) {
       );
       // console.log(data);
       setAddressId(data._id);
-      setOrderInfo({...orderInfo , address :data._id })
+      setOrderInfo({ ...orderInfo, address: data._id });
       setLoadingButtonCat(false);
       setOrderClass("");
       setFlowerNumber(3);
@@ -316,15 +316,13 @@ function timeOfOrder(value) {
     card: cardID,
   });
   console.log(orderInfo);
-async function sendOrder(e) {
-  e.preventDefault()
-  setLoadingButtonCat(true)
-  try {
-    let {data} = await axios.post("")
-  } catch (error) {
-    
+  async function sendOrder(e) {
+    e.preventDefault();
+    setLoadingButtonCat(true);
+    try {
+      let { data } = await axios.post("");
+    } catch (error) {}
   }
-}
   // done
   return (
     <>
@@ -383,7 +381,7 @@ async function sendOrder(e) {
                 </div>
               </div>
               <p className="mt-3">Type Your Feelings....</p>
-             
+
               {orderClass === "d-none" ? (
                 classForAddress == "d-none" ? (
                   <div>
@@ -542,76 +540,98 @@ async function sendOrder(e) {
                   )}
                 </form>
               </div>
-          {flowerNumber == 2 ? <div>
-                <form>
-                  {takeState === "Alexandria" && (
-                    <div>
-                      <input
-                        type="date"
-                        onChange={ dateOfOrder }
-                        name="date"
-                        className="form-control my-3"
-                        placeholder="Date"
-                      />
-                      <select
-                        className="form-control"
-                        onChange={(e) => timeOfOrder(e.target.value)}
-                      >
-                        <option value="" disabled>
-                          Select Time
-                        </option>
-                        <option value="Between 5pm  -  9pm">Between 5pm  -  9pm </option>
-                      </select>
-                    </div>
-                  )}
-                  {takeState === "Elmonofia" && (
-                    <div>
-                      <input
-                        type="date"
-                        onChange={ dateOfOrder }
-                        name="date"
-                        className="form-control my-3"
-                        placeholder="Date"
-                      />
-                      <select
-                        className="form-control"
-                        onChange={(e) => timeOfOrder(e.target.value)}
-                      >
-                        <option value="" disabled>
-                          Select Time
-                        </option>
-                        <option value="Between 11am  -  1pm">Between 11am  -  1pm </option>
-                        <option value="Between 1pm - 3pm">Between 1pm - 3pm</option>
-                        <option value="Between 3pm - 5pm">Between 3pm - 5pm</option>
-                        <option value="Between 5pm - 7pm">Between 5pm - 7pm</option>
-                        <option value="Between 7pm - 9pm">Between 7pm - 9pm</option>
-                        <option value="Between 9pm - 11pm">Between 9pm - 11pm</option>
-                      </select>
-                    </div>
-                  )}
-                  {takeState === "Cairo" && (
-                    <div>
-                      <input
-                        type="date"
-                        onChange={ dateOfOrder }
-                        name="date"
-                        className="form-control my-3"
-                        placeholder="Date"
-                      />
-                      <select
-                        className="form-control"
-                        onChange={(e) => timeOfOrder(e.target.value)}
-                      >
-                        <option value="" disabled>
-                          Select Time
-                        </option>
-                        <option value="Between 2pm  -  6pm">Between 2pm  -  6pm </option>
-                        <option value="Between 7pm - 11pm">Between 7pm - 11pm</option>
-                      </select>
-                    </div>
-                  )}
-                </form>
-              </div> : ""}
+              {flowerNumber == 2 ? (
+                <div>
+                  <form>
+                    {takeState === "Alexandria" && (
+                      <div>
+                        <input
+                          type="date"
+                          onChange={dateOfOrder}
+                          name="date"
+                          className="form-control my-3"
+                          placeholder="Date"
+                        />
+                        <select
+                          className="form-control"
+                          onChange={(e) => timeOfOrder(e.target.value)}
+                        >
+                          <option value="" disabled>
+                            Select Time
+                          </option>
+                          <option value="Between 5pm  -  9pm">
+                            Between 5pm - 9pm{" "}
+                          </option>
+                        </select>
+                      </div>
+                    )}
+                    {takeState === "Elmonofia" && (
+                      <div>
+                        <input
+                          type="date"
+                          onChange={dateOfOrder}
+                          name="date"
+                          className="form-control my-3"
+                          placeholder="Date"
+                        />
+                        <select
+                          className="form-control"
+                          onChange={(e) => timeOfOrder(e.target.value)}
+                        >
+                          <option value="" disabled>
+                            Select Time
+                          </option>
+                          <option value="Between 11am  -  1pm">
+                            Between 11am - 1pm{" "}
+                          </option>
+                          <option value="Between 1pm - 3pm">
+                            Between 1pm - 3pm
+                          </option>
+                          <option value="Between 3pm - 5pm">
+                            Between 3pm - 5pm
+                          </option>
+                          <option value="Between 5pm - 7pm">
+                            Between 5pm - 7pm
+                          </option>
+                          <option value="Between 7pm - 9pm">
+                            Between 7pm - 9pm
+                          </option>
+                          <option value="Between 9pm - 11pm">
+                            Between 9pm - 11pm
+                          </option>
+                        </select>
+                      </div>
+                    )}
+                    {takeState === "Cairo" && (
+                      <div>
+                        <input
+                          type="date"
+                          onChange={dateOfOrder}
+                          name="date"
+                          className="form-control my-3"
+                          placeholder="Date"
+                        />
+                        <select
+                          className="form-control"
+                          onChange={(e) => timeOfOrder(e.target.value)}
+                        >
+                          <option value="" disabled>
+                            Select Time
+                          </option>
+                          <option value="Between 2pm  -  6pm">
+                            Between 2pm - 6pm{" "}
+                          </option>
+                          <option value="Between 7pm - 11pm">
+                            Between 7pm - 11pm
+                          </option>
+                        </select>
+                      </div>
+                    )}
+                  </form>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
             <div className="d-flex forSmallScreenDivBasket justify-content-start flex-column w-50 ">
               {loading ? (
