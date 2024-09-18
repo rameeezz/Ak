@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import purpleCircle from "../assets/card photo/purple-flower.svg";
 import grayCircle from "../assets/card photo/gray-flower.svg";
 import Arrow from "../assets/card photo/guidance-arrow.svg";
+import doneCircle from "../assets/card photo/completed-phase.svg";
+import cardItemImg from "../assets/card photo/2.jpg";
 import axios from "axios";
 import NavBar from "./../component/NavBar";
 import HeadOfPages from "./HeadOfPages";
@@ -29,9 +31,9 @@ export default function Basket({ user, logOut }) {
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(itemsSameHome));
   }, [itemsSameHome]);
-  useEffect(()=>{
-    localStorage.setItem("cartID" ,JSON.stringify(cartID))
-  },[cartID])
+  useEffect(() => {
+    localStorage.setItem("cartID", JSON.stringify(cartID));
+  }, [cartID]);
   const [loading, setLoading] = useState(false);
   async function getCart() {
     setLoading(true);
@@ -54,7 +56,6 @@ export default function Basket({ user, logOut }) {
       }
     }
   }
-  let navigate = useNavigate();
   async function deleteItem(itemID) {
     const filteredArray = itemsInCart.filter(
       (element) => element?.itemID._id !== itemID
@@ -66,7 +67,6 @@ export default function Basket({ user, logOut }) {
     );
     setItemsSameHome(filteredArrayLikeHome);
     console.log(filteredArray);
-    
   }
   // change quantity
   async function changeQuantity(itemID, operation, itemPrice) {
@@ -131,6 +131,7 @@ export default function Basket({ user, logOut }) {
     } catch (error) {}
   }
   // done
+  const [classForAddress, setClassForAddress] = useState("");
   async function clickSubmit(e) {
     setLoadingButtonCat(true);
     e.preventDefault();
@@ -147,32 +148,111 @@ export default function Basket({ user, logOut }) {
         );
         setLoadingButtonCat(false);
         getCart();
+        setClassForAddress("d-none");
+        setFlowerNumber(2);
       } catch (error) {}
     }
   }
+  const [flowerNumber, setFlowerNumber] = useState(1);
   // cards type work
+  // const [getAllItems, setGetAllItems] = useState([]);
+  // const [cardItems, setCardItems] = useState([]);
+  // console.log(cardItems);
+
+  // const [loadingCardItems, setLoadingCardItems] = useState(false);
+  // useEffect(() => {
+  //   allItems();
+  // }, []);
+
+  // useEffect(() => {
+  //   if (getAllItems.length > 0) {
+  //     setLoadingCardItems(true);
+  //     filterItems(); // Call filterItems when getAllItems has been updated
+  //   }
+  // }, [getAllItems]);
+  // async function allItems() {
+  //   try {
+  //     let { data } = await axios.get(
+  //       "http://freelance1-production.up.railway.app/customer/getItems"
+  //     );
+  //     setGetAllItems(data); // Update state with fetched data
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+
+  // function filterItems() {
+  //   let newItems = getAllItems.filter((element) => {
+  //     return element.category.includes("66eb01faabe2d8434b90b4f3");
+  //   });
+
+  //   setCardItems(newItems);
+  //   setLoadingCardItems(false);
+  // }
 
   // done
-  
-  // adress form
-  
-  const [addressInfo , setAddressInfo ] = useState({
-    customerID:userId,
-    apartment:"",
-    floor:"",
-    building:"",
-    state:"",
-    street:"",
-    area:""
-  })
 
-  
+  // adress form
+  const [takeState, setTakeState] = useState("");
+  const [takeArea, setTakeArea] = useState("");
+  const [addressID, setAddressId] = useState("");
+  const[orderClass , setOrderClass] = useState("d-none")
+  // console.log(addressID);
+
+  const [addressInfo, setAddressInfo] = useState({
+    customerID: userId,
+    apartment: "",
+    floor: "",
+    building: "",
+    state: "",
+    street: "",
+    area: "",
+  });
+  useEffect(() => {
+    setAddressInfo((prevInfo) => ({
+      ...prevInfo,
+      state: takeState,
+      area: takeArea,
+    }));
+  }, [takeState, takeArea]);
+  function selectArea(value) {
+    setTakeArea(value);
+  }
+  function selectState(value) {
+    setTakeState(value);
+  }
+  function takeContentOFAddress(e) {
+    let myAddress = { ...addressInfo };
+    myAddress[e.target.name] = e.target.value;
+    setAddressInfo(myAddress);
+  }
+  async function sendAddress(e) {
+    setLoadingButtonCat(true);
+    e.preventDefault();
+    try {
+      let { data } = await axios.post(
+        "https://freelance1-production.up.railway.app/customer/addAddress",
+        addressInfo
+      );
+      // console.log(data);
+      setAddressId(data._id);
+      setLoadingButtonCat(false);
+      setOrderClass("")
+    } catch (error) {}
+  }
+  const [orderInfo, setOrderInfo] = useState({
+    cart: cartID,
+    address: addressID,
+    time: "",
+    data: "",
+    shippingCost: "",
+    card: cardID,
+  });
   // done
   return (
     <>
       <NavBar user={user} logOut={logOut} cartID={cartID} />
       <HeadOfPages user={user} cartID={cartID} itemsArray={itemsSameHome} />
-      <div className="position-fixed  bg-white z-[131]"></div>
       <div className="container-xxl">
         <div className="w-100 d-flex justify-content-center">
           <div className="w-[90%] d-flex justify-content-center my-5 gap-4 flex-wrap">
@@ -180,7 +260,12 @@ export default function Basket({ user, logOut }) {
               <div className="d-flex justify-content-center gap-2 align-items-center ">
                 <div className="d-flex flex-column align-items-center gap-2">
                   <div className="position-relative">
-                    <img src={purpleCircle} alt="" />
+                    {flowerNumber == 1 ? (
+                      <img src={purpleCircle} alt="" />
+                    ) : (
+                      <img src={doneCircle} alt="" />
+                    )}
+
                     <p className="position-absolute start-50 top-50 translate-middle">
                       1
                     </p>
@@ -190,7 +275,14 @@ export default function Basket({ user, logOut }) {
                 <img src={Arrow} alt="" />
                 <div className="d-flex flex-column align-items-center gap-2">
                   <div className="position-relative ">
-                    <img src={grayCircle} alt="" />
+                    {flowerNumber == 3 ? (
+                      <img src={doneCircle} alt="" />
+                    ) : flowerNumber == 2 ? (
+                      <img src={purpleCircle} alt="" />
+                    ) : (
+                      <img src={grayCircle} alt="" />
+                    )}
+
                     <p className="position-absolute start-50 top-50 translate-middle">
                       2
                     </p>
@@ -200,7 +292,12 @@ export default function Basket({ user, logOut }) {
                 <img src={Arrow} alt="" />
                 <div className="d-flex flex-column align-items-center gap-2">
                   <div className="position-relative ">
-                    <img src={grayCircle} alt="" />
+                    {flowerNumber == 3 ? (
+                      <img src={purpleCircle} alt="" />
+                    ) : (
+                      <img src={grayCircle} alt="" />
+                    )}
+
                     <p className="position-absolute start-50 top-50 translate-middle">
                       3
                     </p>
@@ -209,7 +306,7 @@ export default function Basket({ user, logOut }) {
                 </div>
               </div>
               <p className="mt-3">Type Your Feelings....</p>
-              <div>
+              <div className={classForAddress}>
                 <form>
                   <input
                     onChange={takeCardInfo}
@@ -251,6 +348,115 @@ export default function Basket({ user, logOut }) {
                   )}
                 </form>
               </div>
+              {classForAddress == "d-none" ? (
+                <div>
+                  <form>
+                    <div className="d-flex justify-content-center gap-2 my-3">
+                      <select
+                        className="form-control"
+                        onChange={(e) => selectState(e.target.value)}
+                      >
+                        <option value="" disabled selected>
+                          Select State
+                        </option>
+                        <option value="Cairo">Cairo </option>
+                        <option value="Alexandria">Alexandria </option>
+                        <option value="Elmonofia">Elmonofia</option>
+                      </select>
+                      <select
+                        className="form-control"
+                        onChange={(e) => selectArea(e.target.value)}
+                      >
+                        <option value="" disabled selected>
+                          Select Area
+                        </option>
+                        {takeState === "Cairo" && (
+                          <>
+                            <option value="Cairo">Cairo</option>
+                            <option value="Giza">Giza</option>
+                            <option value="Helwan">Helwan</option>
+                            <option value="October">October</option>
+                          </>
+                        )}
+                        {takeState === "Elmonofia" && (
+                          <>
+                            <option value="منوف ">منوف </option>
+                            <option value="الباجور">الباجور </option>
+                            <option value="كوم الضبع">كوم الضبع</option>
+                            <option value="سرس الليان">سرس الليان</option>
+                            <option value="بئر العرب">بئر العرب</option>
+                            <option value="قويسنا">قويسنا</option>
+                            <option value="بركه السبع">بركه السبع</option>
+                            <option value="مليج">مليج</option>
+                            <option value="الراهب">الراهب</option>
+                            <option value="الماي">الماي</option>
+                            <option value="شنوان">شنوان</option>
+                            <option value="شبراباص">شبراباص</option>
+                            <option value="كفر طنبدي">كفر طنبدي</option>
+                            <option value="الكوم الاخضر">الكوم الاخضر</option>
+                            <option value="البتانون">البتانون</option>
+                            <option value="ميت خلف">ميت خلف</option>
+                            <option value="اصطباري">اصطباري</option>
+                            <option value="كفر البتانون">كفر البتانون </option>
+                            <option value="الدلاتون">الدلاتون</option>
+                            <option value="الشهداء">الشهداء</option>
+                            <option value="تلا">تلا </option>
+                            <option value="منشاء عصام">منشاء عصام</option>
+                            <option value="اشمون">اشمون</option>
+                            <option value="السادات">السادات</option>
+                            <option value="شبين الكوم">شبين الكوم</option>
+                          </>
+                        )}
+                        {takeState === "Alexandria" && (
+                          <>
+                            <option value="Alexandria">Alexandria</option>
+                          </>
+                        )}
+                      </select>
+                    </div>
+                    <div className="w-100">
+                      <input
+                        type="text"
+                        className="w-100 form-control"
+                        placeholder="Street *"
+                        name="street"
+                        onChange={takeContentOFAddress}
+                        value={addressInfo.street}
+                      />
+                    </div>
+                    <div className="d-flex justify-content-center gap-2 my-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Bulding *"
+                        name="building"
+                        onChange={takeContentOFAddress}
+                        value={addressInfo.building}
+                      />
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Floor *"
+                        name="floor"
+                        onChange={takeContentOFAddress}
+                        value={addressInfo.floor}
+                      />
+                    </div>
+                    <div className="d-flex justify-content-start">
+                      <input
+                        type="text"
+                        className="form-control w-50"
+                        placeholder="Apartment"
+                        name="apartment"
+                        onChange={takeContentOFAddress}
+                        value={addressInfo.apartment}
+                      />
+                    </div>
+                  </form>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
             <div className="d-flex forSmallScreenDivBasket justify-content-start flex-column w-50 ">
               {loading ? (
@@ -303,7 +509,7 @@ export default function Basket({ user, logOut }) {
                           </button>
                           <p>{element?.quantity}</p>
                           <button
-                            onClick={(e) => {
+                            onClick={() => {
                               changeQuantity(
                                 element?.itemID?._id,
                                 "+",
@@ -320,30 +526,43 @@ export default function Basket({ user, logOut }) {
                   </div>
                 ))
               )}
-
-              {/* {itemsInCart === null || itemsInCart.length === 0 ? (
-                ""
-              ) : (
-                <div>
-                  <p className="ms-4 mb-3 mt-4"> Summary</p>
-                  <div className="w-100 d-flex justify-content-between px-4 mb-5">
-                    <p>Total</p>
-                    <p>EGP {totalCost}</p>
+              {flowerNumber == 2 ? (
+                itemsInCart === null || itemsInCart.length === 0 ? (
+                  ""
+                ) : (
+                  <div>
+                    <p className="ms-4 mb-3 mt-4"> Summary</p>
+                    <div className="w-100 d-flex justify-content-between px-4 mb-5">
+                      <p>Total</p>
+                      <p>EGP {totalCost}</p>
+                    </div>
                   </div>
-                </div>
-              )} */}
+                )
+              ) : (
+                ""
+              )}
+
               {LoadingButtonCat ? (
                 <div className="w-100 mt-3 justify-content-center d-flex">
                   <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
                 </div>
               ) : (
                 <div className="mt-3 d-flex justify-content-center">
-                  <button
-                    onClick={clickSubmit}
-                    className="w-[80%] btn btn-primary"
-                  >
-                    Proceed to Shipping Details
-                  </button>
+                  {flowerNumber == 2 ? (
+                    <button
+                      onClick={sendAddress}
+                      className="w-[80%] btn btn-primary"
+                    >
+                      Continue Shopping
+                    </button>
+                  ) : (
+                    <button
+                      onClick={clickSubmit}
+                      className="w-[80%] btn btn-primary"
+                    >
+                      Proceed to Shipping Details
+                    </button>
+                  )}
                 </div>
               )}
             </div>

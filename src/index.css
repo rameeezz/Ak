@@ -136,7 +136,9 @@
 /* .styleOftextInCart{
   width: 70%;
 } */
-
+.forCardView{
+  height: 280px;
+}
 @media (max-width: 576px) {
   /* Small screens (sm) and below */
   .responsive-font-size-p {
@@ -348,4 +350,7 @@ gap: 50px;
  .classForButtonBasket{
   width: 10% !important;
  }
+ .forCardView{
+  height: 200px;
+}
 }
