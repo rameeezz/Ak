@@ -4,6 +4,7 @@ import axios from "axios";
 
 export default function HeadOfPages({ user, cartID, itemsArray }) {
   let navigate = useNavigate();
+  const customerID = user?.userId || null;
   const isLoginPage =
     location.pathname === "/login" ||
     location.pathname === "/register" ||
