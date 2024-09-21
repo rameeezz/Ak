@@ -64,7 +64,7 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
   };
 
   async function handleSubmitCreateCart(e) {
-    setLoadingButtonCat(true);
+    // setLoadingButtonCat(true);
     // console.log(createCartInfo);
 
     e.preventDefault();
