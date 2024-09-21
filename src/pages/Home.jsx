@@ -45,11 +45,11 @@ export default function Home({ user }) {
   }, []);
   const checkCartExpiration = () => {
     const savedTimestamp = localStorage.getItem("cartTimestamp");
-// console.log(savedTimestamp);
+    // console.log(savedTimestamp);
 
     if (savedTimestamp) {
       const currentTime = new Date().getTime();
-      const timeElapsed = currentTime - savedTimestamp;;
+      const timeElapsed = currentTime - savedTimestamp;
       const sixHours = 6 * 60 * 60 * 1000;
 
       // If more than 1 day has passed, reset cartItems to an empty array
@@ -117,11 +117,41 @@ export default function Home({ user }) {
         goToBasket();
       } catch (error) {
         if (error.response && error.response.status === 409) {
-          editeCart(e);
+          if (cartID === null || cartID === "") {
+            console.log("sas");
+            alert("sa");
+            const deleteCartId = {
+              customerID: customerID,
+            };
+            deleteCartUser(e, deleteCartId);
+            handleSubmitCreateCart(e)
+            setLoadingButtonCat(false);
+          } else {
+            editeCart(e);
+          }
         }
       }
     }
   }
+  async function deleteCartUser(e, userID) {
+    e.preventDefault()
+    try {
+      let { data } = await axios.delete(
+        "https://freelance1-production.up.railway.app/customer/deleteCart",
+        {
+          data: userID, // Pass customerID in the body of the request
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(data);
+      // handleSubmitCreateCart(e)
+    } catch (error) {
+      console.error("Error deleting cart:", error);
+    }
+  }
+
   async function editeCart(e) {
     setLoadingButtonCat(true);
     e.preventDefault();
@@ -129,7 +159,9 @@ export default function Home({ user }) {
       items: itemsArray,
       cart: cartID,
     };
-    if (cartID === null || cartID == "") {
+    if (cartInfo.cart === null || cartInfo.cart === "") {
+      alert("wait");
+      setLoadingButtonCat(false);
     } else {
       try {
         let { data } = await axios.patch(

@@ -320,7 +320,10 @@ export default function Basket({ user, logOut }) {
     e.preventDefault();
     setLoadingButtonCat(true);
     try {
-      let { data } = await axios.post("");
+      let { data } = await axios.post(
+        "https://freelance1-production.up.railway.app/payment/",
+        orderInfo
+      );
     } catch (error) {}
   }
   // done
@@ -729,6 +732,13 @@ export default function Basket({ user, logOut }) {
                       className="w-[80%] btn btn-primary"
                     >
                       Continue Shopping
+                    </button>
+                  ) : flowerNumber === 3 ? (
+                    <button
+                      onClick={sendOrder}
+                      className="w-[80%] btn btn-primary"
+                    >
+                      Payment
                     </button>
                   ) : (
                     <button

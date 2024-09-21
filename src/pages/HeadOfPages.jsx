@@ -64,8 +64,11 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
   };
 
   async function handleSubmitCreateCart(e) {
+    setLoadingButtonCat(true);
+    // console.log(createCartInfo);
+
     e.preventDefault();
-    if (userID == null) {
+    if (createCartInfo.customer == null) {
       alert("please Login ");
     } else {
       try {
@@ -77,11 +80,41 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
         goToBasket();
       } catch (error) {
         if (error.response && error.response.status === 409) {
-          editeCart(e);
+          if (cartID === null || cartID === "") {
+            console.log("sas");
+            alert("sa");
+            const deleteCartId = {
+              customerID: customerID,
+            };
+            deleteCartUser(e, deleteCartId);
+            handleSubmitCreateCart(e)
+            setLoadingButtonCat(false);
+          } else {
+            editeCart(e);
+          }
         }
       }
     }
   }
+  async function deleteCartUser(e, userID) {
+    e.preventDefault()
+    try {
+      let { data } = await axios.delete(
+        "https://freelance1-production.up.railway.app/customer/deleteCart",
+        {
+          data: userID, // Pass customerID in the body of the request
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(data);
+      // handleSubmitCreateCart(e)
+    } catch (error) {
+      console.error("Error deleting cart:", error);
+    }
+  }
+
   async function editeCart(e) {
     e.preventDefault();
     const cartInfo = {

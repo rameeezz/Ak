@@ -43,7 +43,8 @@ useEffect(()=>{
 async function handleGoogleCallback() {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get("code");
-
+  console.log(code);
+  
   if (code) {
     try {
       // Send the code to your backend to exchange it for user info

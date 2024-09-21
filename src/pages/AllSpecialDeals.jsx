@@ -85,11 +85,41 @@ export default function AllSpecialDeals({ user }) {
         goToBasket();
       } catch (error) {
         if (error.response && error.response.status === 409) {
-          editeCart(e);
+          if (cartID === null || cartID === "") {
+            console.log("sas");
+            alert("sa");
+            const deleteCartId = {
+              customerID: customerID,
+            };
+            deleteCartUser(e, deleteCartId);
+            handleSubmitCreateCart(e)
+            setLoadingButtonCat(false);
+          } else {
+            editeCart(e);
+          }
         }
       }
     }
   }
+  async function deleteCartUser(e, userID) {
+    e.preventDefault()
+    try {
+      let { data } = await axios.delete(
+        "https://freelance1-production.up.railway.app/customer/deleteCart",
+        {
+          data: userID, // Pass customerID in the body of the request
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(data);
+      // handleSubmitCreateCart(e)
+    } catch (error) {
+      console.error("Error deleting cart:", error);
+    }
+  }
+
   async function editeCart(e) {
     setLoadingButtonCat(true);
     e.preventDefault();

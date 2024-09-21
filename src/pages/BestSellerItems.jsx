@@ -46,7 +46,7 @@ export default function BestSellerItems({ user }) {
 
   function addToCart(itemID, quantity, itemType) {
     if (user == null) {
-      navigate("/login");
+      naviagte("/login");
     } else {
       const itemExists = itemsArray.some((item) => item.itemID === itemID);
 
