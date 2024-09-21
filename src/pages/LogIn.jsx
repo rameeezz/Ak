@@ -9,78 +9,83 @@ function LogIn({ saveUser, userRole }) {
     username: "",
     password: "",
   });
-  
+
   const [checked, setChecked] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
-// State for toggling password visibility
-const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  // State for toggling password visibility
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-// Function to toggle password visibility
-const togglePasswordVisibility = () => {
-  setIsPasswordVisible(!isPasswordVisible);
-};
-async function auth() {
-  try {
-    // Step 1: Initiate Google OAuth flow by making a request to your backend
-    const response = await fetch("https://freelance1-production.up.railway.app/auth/google", {
-      method: "POST",
-    });
-    const data = await response.json();
-    
-    // Redirect the user to Google's OAuth login page
-    window.location.href = data.url;
-  } catch (error) {
-    console.error("Error during auth:", error.message);
-  }
-}
-
-// Step 2: Handle the callback after Google redirects back to your app
-useEffect(()=>{
-  handleGoogleCallback()
-},[])
-
-async function handleGoogleCallback() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const code = urlParams.get("code");
-  console.log(code);
-  
-  if (code) {
+  // Function to toggle password visibility
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
+  // Step 1: Initiate Google OAuth flow
+  async function auth() {
     try {
-      // Send the code to your backend to exchange it for user info
+      // Initiate Google OAuth flow by making a request to your backend
       const response = await fetch(
-        `https://freelance1-production.up.railway.app/getGoogleUser?code=${code},
-        { method: "GET" } `// Optional: GET is default
+        "https://freelance1-production.up.railway.app/auth/google",
+        {
+          method: "POST",
+        }
       );
-      if (!response.ok) {
-        throw new Error(`Failed to fetch: ${response.status}`);
-
-      }
-
       const data = await response.json();
-      console.log("Google user data:", data);
 
-      // Save the access token to local storage
-      localStorage.setItem("token", data.tokens.access_token);
-
-      // Optionally save user data locally
-      saveUser(data.userData);
+      // Redirect the user to Google's OAuth login page
+      window.location.href = data.url;
     } catch (error) {
-      console.error("Error during Google callback:", error.message);
+      console.error("Error during auth:", error.message);
     }
-  } else {
-    console.log("No code found in the query parameters");
   }
-}
+
+  // Step 2: Handle the callback after Google redirects back to your app
+  useEffect(() => {
+    handleGoogleCallback();
+  }, []);
+
+  async function handleGoogleCallback() {
+    // Extract the code parameter from the URL after Google redirects back
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get("code"); // Ensure correct extraction of 'code'
+    console.log(code);
+
+    if (code) {
+      try {
+        // Send the code to your backend to exchange it for user info
+        const response = await fetch(
+          `https://freelance1-production.up.railway.app/getGoogleUser?code=${code}`,
+          { method: "GET" }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Google user data:", data);
+
+        // Save the access token to local storage
+        localStorage.setItem("token", data.tokens.access_token);
+
+        // Optionally save user data locally
+        saveUser(data.userData);
+      } catch (error) {
+        console.error("Error during Google callback:", error.message);
+      }
+    } else {
+      console.log("No code found in the query parameters");
+    }
+  }
 
   // Handle form input changes
   function setUserInput(e) {
-    let myUserInfo = {...user}
-    myUserInfo[e.target.name] = e.target.value
-   if (e.target.name === "username") {
-    myUserInfo.username = myUserInfo.username.toLowerCase();
-   }
-   setUser(myUserInfo)
+    let myUserInfo = { ...user };
+    myUserInfo[e.target.name] = e.target.value;
+    if (e.target.name === "username") {
+      myUserInfo.username = myUserInfo.username.toLowerCase();
+    }
+    setUser(myUserInfo);
   }
 
   // Handle form submission
@@ -93,24 +98,23 @@ async function handleGoogleCallback() {
         user
       );
       localStorage.setItem("token", data.token);
-  
+
       // Update the user and role locally before navigating
       saveUser(data.user);
       setErrorMessage("");
-  
+
       // Wait until user role is available before navigating
       if (data.user?.role) {
-        navigateBasedOnRole(data.user.role);  // Use the role from the response
+        navigateBasedOnRole(data.user.role); // Use the role from the response
       } else {
         setErrorMessage("Unable to determine user role.");
       }
-  
+
       setLoading(false);
     } catch (error) {
       handleError(error);
     }
   }
-  
 
   function navigateBasedOnRole(role) {
     if (role) {
@@ -144,7 +148,7 @@ async function handleGoogleCallback() {
       navigateBasedOnRole(userRole.role);
     }
   }, [userRole]);
-  
+
   return (
     <div className="background">
       <div className="login-form">
@@ -158,23 +162,27 @@ async function handleGoogleCallback() {
             onChange={setUserInput}
             className="form-control"
           />
-           <div className="input-group">
-                <input
-                  type={isPasswordVisible ? "text" : "password"} // Toggle between text and password
-                  placeholder="Password"
-                  name="password"
-                  value={user.password}
-                  onChange={setUserInput}
-                  className="form-control"
-                />
-                <button
-                  type="button"
-                  className="btn bg-white text-muted h-50 w-25"
-                  onClick={togglePasswordVisibility}
-                >
-                  <i className={`fa ${isPasswordVisible ? "fa-eye-slash" : "fa-eye"}`}></i>
-                </button>
-              </div>
+          <div className="input-group">
+            <input
+              type={isPasswordVisible ? "text" : "password"} // Toggle between text and password
+              placeholder="Password"
+              name="password"
+              value={user.password}
+              onChange={setUserInput}
+              className="form-control"
+            />
+            <button
+              type="button"
+              className="btn bg-white text-muted h-50 w-25"
+              onClick={togglePasswordVisibility}
+            >
+              <i
+                className={`fa ${
+                  isPasswordVisible ? "fa-eye-slash" : "fa-eye"
+                }`}
+              ></i>
+            </button>
+          </div>
           {/* <input
             type="password"
             placeholder="Password"
@@ -192,7 +200,9 @@ async function handleGoogleCallback() {
             </div>
             <label className="checkbox-label">Remember Me</label>
           </div>
-          {errorMessage && <div className="my-3 text-danger">{errorMessage}</div>}
+          {errorMessage && (
+            <div className="my-3 text-danger">{errorMessage}</div>
+          )}
           {loading ? (
             <button disabled>
               <i className="fa solid fa-spinner fa-spin"></i>

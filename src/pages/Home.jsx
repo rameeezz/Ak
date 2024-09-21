@@ -50,10 +50,10 @@ export default function Home({ user }) {
     if (savedTimestamp) {
       const currentTime = new Date().getTime();
       const timeElapsed = currentTime - savedTimestamp;
-      const sixHours = 6 * 60 * 60 * 1000;
+      const twentyFourHours = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
       // If more than 1 day has passed, reset cartItems to an empty array
-      if (timeElapsed > sixHours) {
+      if (timeElapsed > twentyFourHours) {
         setItemsArray([]); // Clear the itemsArray state
         localStorage.setItem("cartItems", JSON.stringify([])); // Clear cartItems in localStorage
         localStorage.removeItem("cartTimestamp"); // Remove the timestamp
@@ -124,7 +124,7 @@ export default function Home({ user }) {
               customerID: customerID,
             };
             deleteCartUser(e, deleteCartId);
-            handleSubmitCreateCart(e)
+            handleSubmitCreateCart(e);
             setLoadingButtonCat(false);
           } else {
             editeCart(e);
@@ -134,7 +134,7 @@ export default function Home({ user }) {
     }
   }
   async function deleteCartUser(e, userID) {
-    e.preventDefault()
+    e.preventDefault();
     try {
       let { data } = await axios.delete(
         "https://freelance1-production.up.railway.app/customer/deleteCart",
