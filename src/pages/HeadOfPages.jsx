@@ -100,13 +100,13 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
     e.preventDefault()
     try {
       let { data } = await axios.delete(
-        "https://freelance1-production.up.railway.app/customer/deleteCart",
-        {
-          data: userID, // Pass customerID in the body of the request
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        "https://freelance1-production.up.railway.app/customer/deleteCart",userID
+        // {
+        //   data: , // Pass customerID in the body of the request
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        // }
       );
       console.log(data);
       // handleSubmitCreateCart(e)
