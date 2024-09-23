@@ -31,25 +31,32 @@ function LogIn({ saveUser, userRole }) {
         }
       );
       const data = await response.json();
-
+  
       // Redirect the user to Google's OAuth login page
-      window.location.href = data.url;
+      window.location.href = data.url; // This should point to the Google OAuth login page
     } catch (error) {
-      // console.error("Error during auth:", error.message);
+      console.error("Error during auth:", error.message);
     }
   }
 
   // Step 2: Handle the callback after Google redirects back to your app
   useEffect(() => {
-    handleGoogleCallback();
+    // Check for 'code' parameter in URL after redirection from Google
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get("code");
+
+    if (code) {
+      handleGoogleCallback(); // Only run this if 'code' is present
+    } else {
+      console.log("No code found in the URL");
+    }
   }, []);
 
   async function handleGoogleCallback() {
     // Extract the code parameter from the URL after Google redirects back
     const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get("code"); // Ensure correct extraction of 'code'
-    console.log(code);
-
+    const code = urlParams.get("code");
+  
     if (code) {
       try {
         // Send the code to your backend to exchange it for user info
@@ -57,27 +64,27 @@ function LogIn({ saveUser, userRole }) {
           `https://akflorist-production.up.railway.app/getGoogleUser?code=${code}`,
           { method: "GET" }
         );
-        console.log(response);
-        
+  
         if (!response.ok) {
           throw new Error(`Failed to fetch: ${response.status}`);
         }
-
+  
         const data = await response.json();
         console.log("Google user data:", data);
-
+  
         // Save the access token to local storage
         localStorage.setItem("token", data.tokens.access_token);
-
+  
         // Optionally save user data locally
         saveUser(data.userData);
       } catch (error) {
         console.error("Error during Google callback:", error.message);
       }
     } else {
-      // console.log("No code found in the query parameters");
+      console.log("No code found in the URL parameters");
     }
   }
+  
 
   // Handle form input changes
   function setUserInput(e) {
