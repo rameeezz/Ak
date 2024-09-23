@@ -101,7 +101,11 @@ export default function ForgetPassword() {
         );
         setLoadingForResetForm(false);
         navigate("/login")
-      } catch (error) {}
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          alert("this email not found.")
+        }
+      }
     } else {
       setErrorList(valid.error.details || []);
     }
