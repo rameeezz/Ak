@@ -238,10 +238,10 @@ function LogIn({ saveUser, userRole }) {
             <div className="styleLineBetweenItems"></div>
           </div>
           <div className="d-flex justify-content-center gap-2 mt-3 ">
-            <i
+            {/* <i
               onClick={auth}
               className="fa-brands fa-google text-success sizeOfI CursorPointer"
-            ></i>
+            ></i> */}
             <i className="fa-brands fa-facebook sizeOfI CursorPointer text-primary"></i>
           </div>
         </form>
