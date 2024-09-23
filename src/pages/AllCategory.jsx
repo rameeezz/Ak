@@ -29,7 +29,7 @@ export default function AllCategory({user}) {
     setLoadingForCategory(true);
     try {
       let { data } = await axios.get(
-        "https://freelance1-production.up.railway.app/customer/getCategory"
+        "https://akflorist-production.up.railway.app/customer/getCategory"
       );
       setAllCategory(data.getCategory);
       setLoadingForCategory(false);

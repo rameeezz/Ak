@@ -78,7 +78,7 @@ export default function AllSpecialDeals({ user }) {
     } else {
       try {
         let { data } = await axios.post(
-          "https://freelance1-production.up.railway.app/customer/createCart",
+          "https://akflorist-production.up.railway.app/customer/createCart",
           createCartInfo
         );
         // console.log(data);
@@ -86,8 +86,6 @@ export default function AllSpecialDeals({ user }) {
       } catch (error) {
         if (error.response && error.response.status === 409) {
           if (cartID === null || cartID === "") {
-            console.log("sas");
-            alert("sa");
             const deleteCartId = {
               customerID: customerID,
             };
@@ -105,7 +103,7 @@ export default function AllSpecialDeals({ user }) {
     e.preventDefault()
     try {
       let { data } = await axios.delete(
-        "https://freelance1-production.up.railway.app/customer/deleteCart",
+        "https://akflorist-production.up.railway.app/customer/deleteCart",
         {
           data: userID, // Pass customerID in the body of the request
           headers: {
@@ -131,7 +129,7 @@ export default function AllSpecialDeals({ user }) {
     } else {
       try {
         let { data } = await axios.patch(
-          "https://freelance1-production.up.railway.app/customer/editCart",
+          "https://akflorist-production.up.railway.app/customer/editCart",
           cartInfo
         );
         // console.log(data);
@@ -177,7 +175,7 @@ export default function AllSpecialDeals({ user }) {
     setLoadingSpecialDeals(true);
     try {
       let { data } = await axios.get(
-        "https://freelance1-production.up.railway.app/customer/getDiscounts"
+        "https://akflorist-production.up.railway.app/customer/getDiscounts"
       );
       setSpecialDealsOccasion(data.itemsOfOccasions);
       setSpecialDealsCategory(data.items);

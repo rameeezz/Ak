@@ -19,7 +19,7 @@ export default function Admin2({ logOut }) {
   async function getCategory() {
     try {
       let { data } = await axios.get(
-        "https://freelance1-production.up.railway.app/admin1/getCategories"
+        "https://akflorist-production.up.railway.app/admin1/getCategories"
       );
       // console.log(data);
       setShowCategory(data);
@@ -63,7 +63,7 @@ export default function Admin2({ logOut }) {
     setLoadingForSub(IdOfCategory);
     try {
       let { data } = await axios.get(
-        `https://freelance1-production.up.railway.app/admin1/getCategoryContent/${IdOfCategory}`
+        `https://akflorist-production.up.railway.app/admin1/getCategoryContent/${IdOfCategory}`
       );
       setLoadingForSub(null);
       if (data.subcategories == undefined) {
@@ -155,7 +155,7 @@ export default function Admin2({ logOut }) {
     } else {
       try {
         let { data } = await axios.post(
-          "https://freelance1-production.up.railway.app/admin1/additems",
+          "https://akflorist-production.up.railway.app/admin1/additems",
           formData,
           {
             headers: {
@@ -244,7 +244,7 @@ export default function Admin2({ logOut }) {
     e.preventDefault();
     try {
       let { data } = await axios.get(
-        `https://freelance1-production.up.railway.app/admin1/getCategoryContent/${idOfParentCateg}`
+        `https://akflorist-production.up.railway.app/admin1/getCategoryContent/${idOfParentCateg}`
       );
       // console.log(data.subcategories);
       setGetSubCategorys(data.subcategories);
@@ -273,7 +273,7 @@ export default function Admin2({ logOut }) {
     setIdForOneItem(itemID);
     try {
       let { data } = await axios.get(
-        `https://freelance1-production.up.railway.app/admin1/getItems/${itemID}`
+        `https://akflorist-production.up.railway.app/admin1/getItems/${itemID}`
       );
       // console.log(data);
       setLoadingForItems(false);
@@ -325,7 +325,7 @@ export default function Admin2({ logOut }) {
     e.preventDefault();
     try {
       let { data } = await axios.delete(
-        `https://freelance1-production.up.railway.app/admin1/deleteItem/${itemIDForDelete}`
+        `https://akflorist-production.up.railway.app/admin1/deleteItem/${itemIDForDelete}`
       );
       // console.log(data);
       setSureDeleteItem("d-none");
@@ -338,7 +338,7 @@ export default function Admin2({ logOut }) {
     setStatusLoading(true);
     try {
       let { data } = await axios.patch(
-        `https://freelance1-production.up.railway.app/admin1/changeStatus/${idOfItem}`
+        `https://akflorist-production.up.railway.app/admin1/changeStatus/${idOfItem}`
       );
       setStatusLoading(false);
       // console.log(data);
@@ -365,7 +365,7 @@ export default function Admin2({ logOut }) {
     } else {
       try {
         let { data } = await axios.patch(
-          "https://freelance1-production.up.railway.app/admin1/bestSeller",
+          "https://akflorist-production.up.railway.app/admin1/bestSeller",
           { itemID: `${itemID}` }
         );
         setSellerLoading(false);
@@ -407,7 +407,7 @@ export default function Admin2({ logOut }) {
     } else {
       try {
         let { data } = await axios.patch(
-          "https://freelance1-production.up.railway.app/admin1/sale",
+          "https://akflorist-production.up.railway.app/admin1/sale",
           salePercent
         );
         // console.log(data);
@@ -455,7 +455,7 @@ export default function Admin2({ logOut }) {
     } else {
       try {
         let { data } = await axios.patch(
-          "https://freelance1-production.up.railway.app/admin1/removeOneCategory",
+          "https://akflorist-production.up.railway.app/admin1/removeOneCategory",
           categroryId
         );
         showAlertMessage();
@@ -475,7 +475,7 @@ const [showCategoryForOccasion, setShowCategoryForOccasion] = useState([]);
 async function getCategoryForOccasions() {
   try {
     let { data } = await axios.get(
-      "https://freelance1-production.up.railway.app/admin1/getOccasions"
+      "https://akflorist-production.up.railway.app/admin1/getOccasions"
     );
     // console.log(data);
     setShowCategoryForOccasion(data);
@@ -613,7 +613,7 @@ async function sendItemDetailForOccasion(e) {
   } else {
     try {
       let { data } = await axios.post(
-        "https://freelance1-production.up.railway.app/admin1/additemsOfOccasions",
+        "https://akflorist-production.up.railway.app/admin1/additemsOfOccasions",
         formData,
         {
           headers: {
@@ -717,7 +717,7 @@ async function getItemsForOccasions(e, categoryId) {
   setLoadingForItemsForOccasion(true);
   try {
     let { data } = await axios.get(
-      `https://freelance1-production.up.railway.app/admin1/getItemOfOccasion/${categoryId}`
+      `https://akflorist-production.up.railway.app/admin1/getItemOfOccasion/${categoryId}`
     );
     // console.log(data);
     setLoadingForItemsForOccasion(false);
@@ -756,7 +756,7 @@ async function putStatusOfItemForOccasion(e, idOfItem) {
   setStatusLoadingForOccasion(true);
   try {
     let { data } = await axios.patch(
-      `https://freelance1-production.up.railway.app/admin1/changeItemOfOccasionStatus/${idOfItem}`
+      `https://akflorist-production.up.railway.app/admin1/changeItemOfOccasionStatus/${idOfItem}`
     );
     setStatusLoadingForOccasion(false);
     getItemsForOccasions(e, categroryIdForOccasion.categoryId);
@@ -821,7 +821,7 @@ async function submitSalePercentForOccasion(e) {
   } else {
     try {
       let { data } = await axios.patch(
-        "https://freelance1-production.up.railway.app/admin1/occasionSale",
+        "https://akflorist-production.up.railway.app/admin1/occasionSale",
         salePercentForOccasion
       );
       // console.log(data);
@@ -847,7 +847,7 @@ async function deleteItemForOccasion(e) {
   e.preventDefault();
   try {
     let { data } = await axios.delete(
-      `https://freelance1-production.up.railway.app/admin1/deleteItemOfOccasion/${itemIDForDeleteForOccasion}`
+      `https://akflorist-production.up.railway.app/admin1/deleteItemOfOccasion/${itemIDForDeleteForOccasion}`
     );
     // console.log(data);
     setSureDeleteItemForOccasion("d-none");
@@ -866,7 +866,7 @@ async function deleteItemFromOneOccasion(e) {
   } else {
     try {
       let { data } = await axios.patch(
-        "https://freelance1-production.up.railway.app/admin1/removeOneOccasion",
+        "https://akflorist-production.up.railway.app/admin1/removeOneOccasion",
         categroryIdForOccasion
       );
       showAlertMessage();
@@ -891,7 +891,7 @@ async function submitSellerOfItemForOccasion(e, itemID) {
   } else {
     try {
       let { data } = await axios.patch(
-        "https://freelance1-production.up.railway.app/admin1/bestSellerOccasion",
+        "https://akflorist-production.up.railway.app/admin1/bestSellerOccasion",
         { itemID: `${itemID}` }
       );
       setSellerLoadingForOccasion(false);

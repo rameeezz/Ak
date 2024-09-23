@@ -25,7 +25,7 @@ function LogIn({ saveUser, userRole }) {
     try {
       // Initiate Google OAuth flow by making a request to your backend
       const response = await fetch(
-        "https://freelance1-production.up.railway.app/auth/google",
+        "https://akflorist-production.up.railway.app/auth/google",
         {
           method: "POST",
         }
@@ -54,7 +54,7 @@ function LogIn({ saveUser, userRole }) {
       try {
         // Send the code to your backend to exchange it for user info
         const response = await fetch(
-          `https://freelance1-production.up.railway.app/getGoogleUser?code=${code}`,
+          `https://akflorist-production.up.railway.app/getGoogleUser?code=${code}`,
           { method: "GET" }
         );
         console.log(response);
@@ -95,7 +95,7 @@ function LogIn({ saveUser, userRole }) {
     setLoading(true);
     try {
       let { data } = await axios.post(
-        "https://freelance1-production.up.railway.app/auth/login",
+        "https://akflorist-production.up.railway.app/auth/login",
         user
       );
       localStorage.setItem("token", data.token);

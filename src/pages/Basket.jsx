@@ -42,7 +42,7 @@ export default function Basket({ user, logOut }) {
     } else {
       try {
         let { data } = await axios.get(
-          `https://freelance1-production.up.railway.app/customer/getCart/${userId}`
+          `https://akflorist-production.up.railway.app/customer/getCart/${userId}`
         );
         setItemsInCart(data.getThisCart.items);
         setTotalCost(data.getThisCart.totalCost);
@@ -118,7 +118,7 @@ export default function Basket({ user, logOut }) {
     e.preventDefault();
     try {
       let { data } = await axios.post(
-        "https://freelance1-production.up.railway.app/customer/makeCard",
+        "https://akflorist-production.up.railway.app/customer/makeCard",
         cardDetails
       );
       console.log(data);
@@ -145,7 +145,7 @@ export default function Basket({ user, logOut }) {
     } else {
       try {
         let { data } = await axios.patch(
-          "https://freelance1-production.up.railway.app/customer/editCart",
+          "https://akflorist-production.up.railway.app/customer/editCart",
           cartInfo
         );
         setLoadingButtonCat(false);
@@ -295,7 +295,7 @@ export default function Basket({ user, logOut }) {
     e.preventDefault();
     try {
       let { data } = await axios.post(
-        "https://freelance1-production.up.railway.app/customer/addAddress",
+        "https://akflorist-production.up.railway.app/customer/addAddress",
         addressInfo
       );
       // console.log(data);
@@ -322,7 +322,7 @@ export default function Basket({ user, logOut }) {
     if (numberOfPay == 1) {
       try {
         let { data } = await axios.post(
-          "https://freelance1-production.up.railway.app/payment/offlinePayment",
+          "https://akflorist-production.up.railway.app/payment/offlinePayment",
           orderInfo
         );
         console.log(data);
@@ -331,7 +331,7 @@ export default function Basket({ user, logOut }) {
     } else if (numberOfPay == 2) {
       try {
         let { data } = await axios.post(
-          "https://freelance1-production.up.railway.app/payment/",
+          "https://akflorist-production.up.railway.app/payment/",
           orderInfo
         );
         setLoadingButtonCat(false);

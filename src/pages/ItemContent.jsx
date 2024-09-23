@@ -82,7 +82,7 @@ export default function ItemContent({ user }) {
     } else {
       try {
         let { data } = await axios.post(
-          "https://freelance1-production.up.railway.app/customer/createCart",
+          "https://akflorist-production.up.railway.app/customer/createCart",
           createCartInfo
         );
         // console.log(data);
@@ -90,8 +90,6 @@ export default function ItemContent({ user }) {
       } catch (error) {
         if (error.response && error.response.status === 409) {
           if (cartID === null || cartID === "") {
-            console.log("sas");
-            alert("sa");
             const deleteCartId = {
               customerID: customerID,
             };
@@ -109,7 +107,7 @@ export default function ItemContent({ user }) {
     e.preventDefault()
     try {
       let { data } = await axios.delete(
-        "https://freelance1-production.up.railway.app/customer/deleteCart",
+        "https://akflorist-production.up.railway.app/customer/deleteCart",
         {
           data: userID, // Pass customerID in the body of the request
           headers: {
@@ -136,7 +134,7 @@ export default function ItemContent({ user }) {
       try {
         // console.log("hvhv");
         let { data } = await axios.patch(
-          "https://freelance1-production.up.railway.app/customer/editCart",
+          "https://akflorist-production.up.railway.app/customer/editCart",
           cartInfo
         );
         // console.log(data);

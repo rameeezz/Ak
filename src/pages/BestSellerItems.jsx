@@ -81,16 +81,43 @@ export default function BestSellerItems({ user }) {
     } else {
       try {
         let { data } = await axios.post(
-          "https://freelance1-production.up.railway.app/customer/createCart",
+          "https://akflorist-production.up.railway.app/customer/createCart",
           createCartInfo
         );
         // console.log(data);
         goToBasket();
       } catch (error) {
         if (error.response && error.response.status === 409) {
-          editeCart(e);
+          if (cartID === null || cartID === "") {
+            const deleteCartId = {
+              customerID: customerID,
+            };
+            deleteCartUser(e, deleteCartId);
+            handleSubmitCreateCart(e)
+            setLoadingButtonCat(false);
+          } else {
+            editeCart(e);
+          }
         }
       }
+    }
+  }
+  async function deleteCartUser(e, userID) {
+    e.preventDefault()
+    try {
+      let { data } = await axios.delete(
+        "https://akflorist-production.up.railway.app/customer/deleteCart",
+        {
+          data: userID, // Pass customerID in the body of the request
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(data);
+      // handleSubmitCreateCart(e)
+    } catch (error) {
+      console.error("Error deleting cart:", error);
     }
   }
   async function editeCart(e) {
@@ -104,7 +131,7 @@ export default function BestSellerItems({ user }) {
     } else {
       try {
         let { data } = await axios.patch(
-          "https://freelance1-production.up.railway.app/customer/editCart",
+          "https://akflorist-production.up.railway.app/customer/editCart",
           cartInfo
         );
         // console.log(data);
@@ -144,7 +171,7 @@ export default function BestSellerItems({ user }) {
     setLoadingBestSellerCategroy(true);
     try {
       let { data } = await axios.get(
-        "https://freelance1-production.up.railway.app/admin1/getBestSeller"
+        "https://akflorist-production.up.railway.app/admin1/getBestSeller"
       );
       setBestSellerCategory(data);
       //   console.log(data);
@@ -162,7 +189,7 @@ export default function BestSellerItems({ user }) {
   async function getOccasionBestSeller() {
     try {
       let { data } = await axios.get(
-        "https://freelance1-production.up.railway.app/admin1/getBestSellerOccasion"
+        "https://akflorist-production.up.railway.app/admin1/getBestSellerOccasion"
       );
       setBestSellerOccasion(data);
       setErrorMessageForGetCategory("");

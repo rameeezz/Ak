@@ -25,7 +25,7 @@ export default function AllOccasions( {user}) {
     setLoadingForOcassion(true);
     try {
       let { data } = await axios.get(
-        "https://freelance1-production.up.railway.app/customer/getOccasions"
+        "https://akflorist-production.up.railway.app/customer/getOccasions"
       );
       setAllOccasion(data);
       setLoadingForOcassion(false);

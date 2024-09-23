@@ -46,7 +46,7 @@ export default function NavBar({ user, logOut, cartID }) {
   async function getCategory() {
     try {
       let { data } = await axios.get(
-        "https://freelance1-production.up.railway.app/admin1/getCategories"
+        "https://akflorist-production.up.railway.app/admin1/getCategories"
       );
       setCategory(data);
     } catch (error) {
@@ -57,7 +57,7 @@ export default function NavBar({ user, logOut, cartID }) {
   async function getSubCategory(idOfCategory) {
     try {
       let { data } = await axios.get(
-        `https://freelance1-production.up.railway.app/admin1/getCategoryContent/${idOfCategory}`
+        `https://akflorist-production.up.railway.app/admin1/getCategoryContent/${idOfCategory}`
       );
       if (data.subcategories && data.subcategories.length > 0) {
         setCategoryWithSubCategories((prev) => ({

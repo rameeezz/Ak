@@ -20,7 +20,7 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
   async function getAllItems() {
     try {
       let { data } = await axios.get(
-        "https://freelance1-production.up.railway.app/customer/getItems"
+        "https://akflorist-production.up.railway.app/customer/getItems"
       );
       setAllItems(data);
     } catch (error) {
@@ -74,7 +74,7 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
     } else {
       try {
         let { data } = await axios.post(
-          "https://freelance1-production.up.railway.app/customer/createCart",
+          "https://akflorist-production.up.railway.app/customer/createCart",
           createCartInfo
         );
         // console.log(data);
@@ -82,8 +82,6 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
       } catch (error) {
         if (error.response && error.response.status === 409) {
           if (cartID === null || cartID === "") {
-            console.log("sas");
-            alert("sa");
             const deleteCartId = {
               customerID: customerID,
             };
@@ -101,7 +99,7 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
     e.preventDefault()
     try {
       let { data } = await axios.delete(
-        "https://freelance1-production.up.railway.app/customer/deleteCart",userID
+        "https://akflorist-production.up.railway.app/customer/deleteCart",userID
         // {
         //   data: , // Pass customerID in the body of the request
         //   headers: {
@@ -109,7 +107,7 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
         //   },
         // }
       );
-      console.log(data);
+      // console.log(data);
       // handleSubmitCreateCart(e)
     } catch (error) {
       console.error("Error deleting cart:", error);
@@ -126,7 +124,7 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
     } else {
       try {
         let { data } = await axios.patch(
-          "https://freelance1-production.up.railway.app/customer/editCart",
+          "https://akflorist-production.up.railway.app/customer/editCart",
           cartInfo
         );
         // console.log(data);

@@ -73,7 +73,7 @@ export default function Register() {
       setErrorList([]);
       try {
         let { data } = await axios.post(
-          "https://freelance1-production.up.railway.app/auth/sendOTP",
+          "https://akflorist-production.up.railway.app/auth/sendOTP",
           { email: RegisterInfo.email }
         );
         setClassOfOtp(
@@ -92,7 +92,7 @@ export default function Register() {
     setLoadingForVerify(true);
     try {
       let { data } = await axios.post(
-        "https://freelance1-production.up.railway.app/auth/verifyOTP",
+        "https://akflorist-production.up.railway.app/auth/verifyOTP",
         verifyOtp
       );
       // console.log(data);
@@ -112,7 +112,7 @@ export default function Register() {
     setErrorList([]);
     try {
       let { data } = await axios.post(
-        "https://freelance1-production.up.railway.app/auth/signup",
+        "https://akflorist-production.up.railway.app/auth/signup",
         RegisterInfo
       );
       setErrorMessage("");

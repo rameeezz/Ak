@@ -51,7 +51,7 @@ export default function ForgetPassword() {
       setLoading(true);
       try {
         let { data } = await axios.post(
-          "https://freelance1-production.up.railway.app/auth/sendResetPasswordOTP",
+          "https://akflorist-production.up.railway.app/auth/sendResetPasswordOTP",
           email
         );
         // console.log(data);
@@ -63,6 +63,10 @@ export default function ForgetPassword() {
         if (error.response && error.response.status === 404) {
           setLoading(false);
           alert("Not Found");
+        }
+        if (error.response && error.response.status === 400) {
+          alert("this email not found.")
+          setLoading(false);
         }
       }
     }
@@ -96,7 +100,7 @@ export default function ForgetPassword() {
       setErrorList([]);
       try {
         let { data } = await axios.post(
-          "https://freelance1-production.up.railway.app/auth/resetPassword",
+          "https://akflorist-production.up.railway.app/auth/resetPassword",
           resetPasswordInfo
         );
         setLoadingForResetForm(false);
@@ -104,6 +108,7 @@ export default function ForgetPassword() {
       } catch (error) {
         if (error.response && error.response.status === 400) {
           alert("this email not found.")
+          setLoadingForResetForm(false);
         }
       }
     } else {

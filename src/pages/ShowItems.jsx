@@ -83,7 +83,7 @@ export default function ShowItems({ user }) {
     } else {
       try {
         let { data } = await axios.post(
-          "https://freelance1-production.up.railway.app/customer/createCart",
+          "https://akflorist-production.up.railway.app/customer/createCart",
           createCartInfo
         );
         // console.log(data);
@@ -110,7 +110,7 @@ export default function ShowItems({ user }) {
     e.preventDefault()
     try {
       let { data } = await axios.delete(
-        "https://freelance1-production.up.railway.app/customer/deleteCart",
+        "https://akflorist-production.up.railway.app/customer/deleteCart",
         {
           data: userID, // Pass customerID in the body of the request
           headers: {
@@ -118,7 +118,7 @@ export default function ShowItems({ user }) {
           },
         }
       );
-      console.log(data);
+      // console.log(data);
       // handleSubmitCreateCart(e)
     } catch (error) {
       console.error("Error deleting cart:", error);
@@ -136,7 +136,7 @@ export default function ShowItems({ user }) {
     } else {
       try {
         let { data } = await axios.patch(
-          "https://freelance1-production.up.railway.app/customer/editCart",
+          "https://akflorist-production.up.railway.app/customer/editCart",
           cartInfo
         );
         // console.log(data);
@@ -199,7 +199,7 @@ export default function ShowItems({ user }) {
     setLoadingAllItems(true);
     try {
       let { data } = await axios.get(
-        `https://freelance1-production.up.railway.app/customer/getItemFromMainCategory/${id}`
+        `https://akflorist-production.up.railway.app/customer/getItemFromMainCategory/${id}`
       );
       // console.log(data.items);
       setLoadingAllItems(false);
@@ -258,7 +258,7 @@ export default function ShowItems({ user }) {
   async function getSubCategories() {
     try {
       let { data } = await axios.get(
-        `https://freelance1-production.up.railway.app/customer/getSubCategories/${id}`
+        `https://akflorist-production.up.railway.app/customer/getSubCategories/${id}`
       );
       // console.log(data.getCategory);
       setAllSubCategories(data.getCategory);
@@ -287,7 +287,7 @@ export default function ShowItems({ user }) {
   async function itemsInSubCategory() {
     try {
       let { data } = await axios.get(
-        `https://freelance1-production.up.railway.app/customer/getItemsFromCategory/${selectedOptionForSubCategory}`
+        `https://akflorist-production.up.railway.app/customer/getItemsFromCategory/${selectedOptionForSubCategory}`
       );
       // console.log(data);
       setAllItems(data);
