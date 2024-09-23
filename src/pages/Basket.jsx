@@ -391,6 +391,7 @@ export default function Basket({ user, logOut }) {
                     <form>
                       <div className="d-flex justify-content-center gap-2 my-3">
                         <select
+                        required
                           className="form-control"
                           onChange={(e) => selectState(e.target.value)}
                         >
@@ -402,6 +403,7 @@ export default function Basket({ user, logOut }) {
                           <option value="Elmonofia">Elmonofia</option>
                         </select>
                         <select
+                        required
                           className="form-control"
                           onChange={(e) => selectArea(e.target.value)}
                         >
@@ -456,6 +458,7 @@ export default function Basket({ user, logOut }) {
                       </div>
                       <div className="w-100">
                         <input
+                        required
                           type="text"
                           className="w-100 form-control"
                           placeholder="Street *"
@@ -466,6 +469,7 @@ export default function Basket({ user, logOut }) {
                       </div>
                       <div className="d-flex justify-content-center gap-2 my-3">
                         <input
+                        required
                           type="text"
                           className="form-control"
                           placeholder="Bulding *"
@@ -474,6 +478,7 @@ export default function Basket({ user, logOut }) {
                           value={addressInfo.building}
                         />
                         <input
+                        required
                           type="text"
                           className="form-control"
                           placeholder="Floor *"
@@ -484,6 +489,7 @@ export default function Basket({ user, logOut }) {
                       </div>
                       <div className="d-flex justify-content-start">
                         <input
+                        required
                           type="text"
                           className="form-control w-50"
                           placeholder="Apartment"
@@ -551,12 +557,14 @@ export default function Basket({ user, logOut }) {
                         <input
                           type="date"
                           onChange={dateOfOrder}
+                          required
                           name="date"
                           className="form-control my-3"
                           placeholder="Date"
                         />
                         <select
                           className="form-control"
+                          required
                           onChange={(e) => timeOfOrder(e.target.value)}
                         >
                           <option value="" disabled>
@@ -571,6 +579,7 @@ export default function Basket({ user, logOut }) {
                     {takeState === "Elmonofia" && (
                       <div>
                         <input
+                        required
                           type="date"
                           onChange={dateOfOrder}
                           name="date"
@@ -578,6 +587,7 @@ export default function Basket({ user, logOut }) {
                           placeholder="Date"
                         />
                         <select
+                        required
                           className="form-control"
                           onChange={(e) => timeOfOrder(e.target.value)}
                         >
@@ -608,6 +618,7 @@ export default function Basket({ user, logOut }) {
                     {takeState === "Cairo" && (
                       <div>
                         <input
+                        required
                           type="date"
                           onChange={dateOfOrder}
                           name="date"
@@ -615,6 +626,7 @@ export default function Basket({ user, logOut }) {
                           placeholder="Date"
                         />
                         <select
+                        required
                           className="form-control"
                           onChange={(e) => timeOfOrder(e.target.value)}
                         >

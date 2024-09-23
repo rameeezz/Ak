@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import HeadOfPages from "./HeadOfPages";
-export default function AllOccasions() {
+export default function AllOccasions( {user}) {
   let location = useLocation();
   const parsedCartID = localStorage.getItem("cartID");
   const cartID = parsedCartID ? JSON.parse(parsedCartID) : "";
+  const [itemsArray, setItemsArray] = useState(() => {
+    // Retrieve saved items from localStorage (if any)
+    const savedItems = localStorage.getItem("cartItems");
+    return savedItems ? JSON.parse(savedItems) : [];
+  });
   let navigate = useNavigate();
   function goHome() {
     navigate("/home");

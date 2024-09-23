@@ -4,8 +4,13 @@ import axios from "axios";
 import "../css/Home.css";
 import PHoto1 from "../assets/card photo/2.jpeg";
 import HeadOfPages from "./HeadOfPages";
-export default function AllCategory() {
+export default function AllCategory({user}) {
   let location = useLocation();
+  const [itemsArray, setItemsArray] = useState(() => {
+    // Retrieve saved items from localStorage (if any)
+    const savedItems = localStorage.getItem("cartItems");
+    return savedItems ? JSON.parse(savedItems) : [];
+  });
   const  parsedCartID= localStorage.getItem("cartID");
   const cartID = parsedCartID ? JSON.parse(parsedCartID) : "";
   let navigate = useNavigate();

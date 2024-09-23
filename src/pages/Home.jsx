@@ -910,6 +910,34 @@ export default function Home({ user }) {
                   Ak Location
                 </a>
               </div>
+              <div className="mt-3 d-flex justify-content-start flex-wrap">
+                <h3 className=" font-medium text-lg  mb-1 responsive-font-size-p w-100 text-start">
+                  Follow Us
+                </h3>
+                <div className="d-flex justify-content-start">
+                  <a
+                    className="moveForIcons"
+                    href="https://www.facebook.com/ByAseelKamal"
+                    target="_blank"
+                  >
+                    <i className="fa-brands fa-facebook-f text-xl text-blue-900"></i>
+                  </a>
+                  <a
+                    className="moveForIcons"
+                    href="https://www.instagram.com/ak_byaseelkamal?igshid=YmMyMTA2M2Y%3D&fbclid=IwY2xjawER8KxleHRuA2FlbQIxMAABHamKXnEIEwbf3nVKRaTcPFzOGqPnhmc9Tem5Q4TUlQm4-Vqi6Hh0DWD5og_aem_KXlJIj7Z09I5LtkE7onq8Q"
+                    target="_blank"
+                  >
+                    <i className="fa-brands fa-instagram text-xl mx-3 bgForInstaIcon"></i>
+                  </a>
+                  <a
+                    href="https://www.tiktok.com/@akflorist2020?_t=8oNJ3QDHDAj&_r=1"
+                    target="_blank"
+                    className="moveForIcons"
+                  >
+                    <i className="fa-brands fa-tiktok text-black text-xl"></i>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
           <div className="shadow-lg bg-white p-3 w-50 rounded-3 forWidthSectionOfForm">
