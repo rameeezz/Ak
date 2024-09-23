@@ -23,7 +23,7 @@ export default function Basket({ user, logOut }) {
   const [cartID, setCartId] = useState("");
   const [totalCost, setTotalCost] = useState("");
   // console.log(totalCost);
-
+  const [numberOfPay, setNumberOfPay] = useState(0);
   useEffect(() => {
     getCart();
   }, []);
@@ -315,18 +315,38 @@ export default function Basket({ user, logOut }) {
     shippingCost: 0,
     card: cardID,
   });
-  console.log(orderInfo);
+  // console.log(orderInfo);
   async function sendOrder(e) {
     e.preventDefault();
     setLoadingButtonCat(true);
-    try {
-      let { data } = await axios.post(
-        "https://freelance1-production.up.railway.app/payment/",
-        orderInfo
-      );
-    } catch (error) {}
+    if (numberOfPay == 1) {
+      try {
+        let { data } = await axios.post(
+          "https://freelance1-production.up.railway.app/payment/offlinePayment",
+          orderInfo
+        );
+        console.log(data);
+        setLoadingButtonCat(false);
+      } catch (error) {}
+    } else if (numberOfPay == 2) {
+      try {
+        let { data } = await axios.post(
+          "https://freelance1-production.up.railway.app/payment/",
+          orderInfo
+        );
+        setLoadingButtonCat(false);
+      } catch (error) {}
+    }else{
+      alert("Please select a payment method.")
+    }
   }
   // done
+  function setHowPayOnDeliver() {
+    setNumberOfPay(1);
+  }
+  function setHowPayOnLine() {
+    setNumberOfPay(2);
+  }
   return (
     <>
       <NavBar user={user} logOut={logOut} cartID={cartID} />
@@ -391,7 +411,7 @@ export default function Basket({ user, logOut }) {
                     <form>
                       <div className="d-flex justify-content-center gap-2 my-3">
                         <select
-                        required
+                          required
                           className="form-control"
                           onChange={(e) => selectState(e.target.value)}
                         >
@@ -403,7 +423,7 @@ export default function Basket({ user, logOut }) {
                           <option value="Elmonofia">Elmonofia</option>
                         </select>
                         <select
-                        required
+                          required
                           className="form-control"
                           onChange={(e) => selectArea(e.target.value)}
                         >
@@ -458,7 +478,7 @@ export default function Basket({ user, logOut }) {
                       </div>
                       <div className="w-100">
                         <input
-                        required
+                          required
                           type="text"
                           className="w-100 form-control"
                           placeholder="Street *"
@@ -469,7 +489,7 @@ export default function Basket({ user, logOut }) {
                       </div>
                       <div className="d-flex justify-content-center gap-2 my-3">
                         <input
-                        required
+                          required
                           type="text"
                           className="form-control"
                           placeholder="Bulding *"
@@ -478,7 +498,7 @@ export default function Basket({ user, logOut }) {
                           value={addressInfo.building}
                         />
                         <input
-                        required
+                          required
                           type="text"
                           className="form-control"
                           placeholder="Floor *"
@@ -489,7 +509,7 @@ export default function Basket({ user, logOut }) {
                       </div>
                       <div className="d-flex justify-content-start">
                         <input
-                        required
+                          required
                           type="text"
                           className="form-control w-50"
                           placeholder="Apartment"
@@ -504,7 +524,24 @@ export default function Basket({ user, logOut }) {
                   ""
                 )
               ) : (
-                ""
+                <div className="d-flex justify-content-center flex-wrap">
+                  <div className="w-100 d-flex justify-content-center mt-3">
+                    <button
+                      onClick={setHowPayOnDeliver}
+                      className={`p-3 cursorPOinter btn btn-info w-[80%] ${numberOfPay == 1 ? "border border-primary border-2 bg-white" : ""}`}
+                    >
+                      Payment Upon Delivery
+                    </button>
+                  </div>
+                  <div className="w-100 d-flex justify-content-center mt-3">
+                    <button
+                      onClick={setHowPayOnLine}
+                      className={`p-3 cursorPOinter btn btn-info w-[80%] ${numberOfPay == 2 ? "border border-primary border-2 bg-white" : ""}`}
+                    >
+                      Visa
+                    </button>
+                  </div>
+                </div>
               )}
 
               <div className={classForAddress}>
@@ -579,7 +616,7 @@ export default function Basket({ user, logOut }) {
                     {takeState === "Elmonofia" && (
                       <div>
                         <input
-                        required
+                          required
                           type="date"
                           onChange={dateOfOrder}
                           name="date"
@@ -587,7 +624,7 @@ export default function Basket({ user, logOut }) {
                           placeholder="Date"
                         />
                         <select
-                        required
+                          required
                           className="form-control"
                           onChange={(e) => timeOfOrder(e.target.value)}
                         >
@@ -618,7 +655,7 @@ export default function Basket({ user, logOut }) {
                     {takeState === "Cairo" && (
                       <div>
                         <input
-                        required
+                          required
                           type="date"
                           onChange={dateOfOrder}
                           name="date"
@@ -626,7 +663,7 @@ export default function Basket({ user, logOut }) {
                           placeholder="Date"
                         />
                         <select
-                        required
+                          required
                           className="form-control"
                           onChange={(e) => timeOfOrder(e.target.value)}
                         >

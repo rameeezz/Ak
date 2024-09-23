@@ -19,7 +19,7 @@ export default function Home({ user }) {
   let location = useLocation();
   const parsedCartID = localStorage.getItem("cartID");
   const cartID = parsedCartID ? JSON.parse(parsedCartID) : "";
-  console.log(cartID);
+  // console.log(cartID);
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)
     const savedItems = localStorage.getItem("cartItems");
