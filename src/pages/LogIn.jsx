@@ -48,7 +48,7 @@ function LogIn({ saveUser, userRole }) {
     // Extract the code parameter from the URL after Google redirects back
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code"); // Ensure correct extraction of 'code'
-    // console.log(code);
+    console.log(code);
 
     if (code) {
       try {
@@ -75,7 +75,7 @@ function LogIn({ saveUser, userRole }) {
         console.error("Error during Google callback:", error.message);
       }
     } else {
-      console.log("No code found in the query parameters");
+      // console.log("No code found in the query parameters");
     }
   }
 
