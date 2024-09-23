@@ -598,7 +598,7 @@ export default function Home({ user }) {
         {/* DOne Best Sellet  */}
       </div>
       <div className="container-xxl mb-5">
-        <div className="d-flex flex-column align-items-center justify-content-center mt-5 mb-4">
+        <div id="category" className="d-flex flex-column align-items-center justify-content-center mt-5 mb-4">
           <h2 className="responsive-font-size-h2-Home fw-bold">Categories</h2>
           <div className="w-100 d-flex justify-content-center position-relative">
             <p>| Discover Blooms Beyond Compare |</p>
@@ -651,11 +651,11 @@ export default function Home({ user }) {
           </div>
         </div>
         {/* occasions */}
-        <div className="d-flex flex-column align-items-center justify-content-center mt-5 mb-4">
+        <div id="occasions" className="d-flex flex-column align-items-center justify-content-center mt-5 mb-4">
           <h2 className="responsive-font-size-h2-Home fw-bold">Occasions</h2>
           <div className="w-100 d-flex justify-content-center position-relative">
             <p>| Unveil the Beauty of Gifted Blooms |</p>
-            <div
+            <div  
               onClick={moveToAllOccasions}
               className=" d-flex justify-content-center cursorPOinter position-absolute end-[120px] forDivViewMore"
             >

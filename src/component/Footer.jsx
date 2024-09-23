@@ -20,12 +20,28 @@ export function Footer({ user }) {
                 <p className="moveOfPInFooter text-white">Privacy policy</p>
               </div>
 
-              <div className="text-center">
+              <div className="text-center d-flex flex-column">
                 <h3 className="text-white font-medium text-lg  mb-1 responsive-font-size-p">
                   Navigation
                 </h3>
-                <p className="moveOfPInFooter text-white">Categories</p>
-                <p className="moveOfPInFooter text-white">Occasions</p>
+                <a
+                  href="#category"
+                  onClick={() => {
+                    document.getElementById("category")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="moveOfPInFooter text-white"
+                >
+                  Category
+                </a>
+                <a
+                  href="#occasion"
+                  onClick={() => {
+                    document.getElementById("occasions")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="moveOfPInFooter text-white"
+                >
+                  Occasions
+                </a>
               </div>
 
               <div className="text-center">
