@@ -35,7 +35,7 @@ function LogIn({ saveUser, userRole }) {
       // Redirect the user to Google's OAuth login page
       window.location.href = data.url;
     } catch (error) {
-      console.error("Error during auth:", error.message);
+      // console.error("Error during auth:", error.message);
     }
   }
 
@@ -48,7 +48,7 @@ function LogIn({ saveUser, userRole }) {
     // Extract the code parameter from the URL after Google redirects back
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code"); // Ensure correct extraction of 'code'
-    console.log(code);
+    // console.log(code);
 
     if (code) {
       try {

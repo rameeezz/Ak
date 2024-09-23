@@ -54,7 +54,7 @@ export default function ForgetPassword() {
           "https://freelance1-production.up.railway.app/auth/sendResetPasswordOTP",
           email
         );
-        console.log(data);
+        // console.log(data);
 
         setLoading(false);
         setClassOfEmail("d-none");
