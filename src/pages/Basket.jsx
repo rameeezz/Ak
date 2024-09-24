@@ -12,7 +12,10 @@ export default function Basket({ user, logOut }) {
   let location = useLocation();
   let userId = location && location.state ? location.state.userId : null;
 
+useEffect(()=>{
+console.log(userId);
 
+},[userId])
   // console.log(userId);
   const [itemsInCart, setItemsInCart] = useState([]);
   // console.log(itemsInCart);
@@ -39,6 +42,8 @@ export default function Basket({ user, logOut }) {
   async function getCart() {
     setLoading(true);
     if (userId === null) {
+      console.log("se");
+      
     } else {
       try {
         let { data } = await axios.get(
