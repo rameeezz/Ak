@@ -42,7 +42,9 @@ export default function Basket({ user, logOut }) {
     setLoading(true);
     if (userId == null) {
       setLoading(false);
-      navigate("/basket")
+      // navigate("/basket")
+      console.log("sa");
+      
     } else {
       try {
         let { data } = await axios.get(
