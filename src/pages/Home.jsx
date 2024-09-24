@@ -145,7 +145,7 @@ export default function Home({ user }) {
           },
         }
       );
-      console.log(data);
+      // console.log(data);
       // handleSubmitCreateCart(e)
     } catch (error) {
       console.error("Error deleting cart:", error);
