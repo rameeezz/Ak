@@ -766,7 +766,7 @@ export default function Basket({ user, logOut }) {
                           {flowerNumber == 2 || flowerNumber == 3 ? (
                             ""
                           ) : (
-                            <div>
+                            <div className="d-flex justify-content-center gap-3 align-items-center">
                               <button
                                 onClick={() => {
                                   changeQuantity(
