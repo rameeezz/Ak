@@ -40,8 +40,7 @@ export default function Basket({ user, logOut }) {
   async function getCart() {
     setLoading(true);
     if (userId === null) {
-      setLoading(false)  
-      
+      setLoading(false);
     } else {
       try {
         let { data } = await axios.get(
@@ -296,19 +295,33 @@ export default function Basket({ user, logOut }) {
   async function sendAddress(e) {
     setLoadingButtonCat(true);
     e.preventDefault();
-    try {
-      let { data } = await axios.post(
-        "https://akflorist-production.up.railway.app/customer/addAddress",
-        addressInfo
+    if (
+      addressInfo.apartment == "" ||
+      addressInfo.area == "" ||
+      addressInfo.building == "" ||
+      addressInfo.customerID == "" ||
+      addressInfo.floor == "" ||
+      addressInfo.state == "" ||
+      addressInfo.street == ""
+    ) {
+      alert(
+        "Please ensure all required fields are filled out correctly before proceeding."
       );
-      // console.log(data);
-      setAddressId(data._id);
-      setOrderInfo({ ...orderInfo, address: data._id });
-      setLoadingButtonCat(false);
-      setOrderClass("");
-      setFlowerNumber(3);
-      setOrderClass("");
-    } catch (error) {}
+    } else {
+      try {
+        let { data } = await axios.post(
+          "https://akflorist-production.up.railway.app/customer/addAddress",
+          addressInfo
+        );
+        // console.log(data);
+        setAddressId(data._id);
+        setOrderInfo({ ...orderInfo, address: data._id });
+        setLoadingButtonCat(false);
+        setOrderClass("");
+        setFlowerNumber(3);
+        setOrderClass("");
+      } catch (error) {}
+    }
   }
   const [orderInfo, setOrderInfo] = useState({
     cart: "",
@@ -322,25 +335,38 @@ export default function Basket({ user, logOut }) {
   async function sendOrder(e) {
     e.preventDefault();
     setLoadingButtonCat(true);
-    if (numberOfPay == 1) {
-      try {
-        let { data } = await axios.post(
-          "https://akflorist-production.up.railway.app/payment/offlinePayment",
-          orderInfo
-        );
-        console.log(data);
-        setLoadingButtonCat(false);
-      } catch (error) {}
-    } else if (numberOfPay == 2) {
-      try {
-        let { data } = await axios.post(
-          "https://akflorist-production.up.railway.app/payment/",
-          orderInfo
-        );
-        setLoadingButtonCat(false);
-      } catch (error) {}
-    }else{
-      alert("Please select a payment method.")
+    if (
+      orderInfo.address == "" ||
+      orderInfo.card == "" ||
+      orderInfo.cart == "" ||
+      orderInfo.date == "" ||
+      orderInfo.shippingCost == null ||
+      orderInfo.time == ""
+    ) {
+      alert(
+        "Please ensure all required fields are filled out correctly before proceeding."
+      );
+    } else {
+      if (numberOfPay == 1) {
+        try {
+          let { data } = await axios.post(
+            "https://akflorist-production.up.railway.app/payment/offlinePayment",
+            orderInfo
+          );
+          console.log(data);
+          setLoadingButtonCat(false);
+        } catch (error) {}
+      } else if (numberOfPay == 2) {
+        try {
+          let { data } = await axios.post(
+            "https://akflorist-production.up.railway.app/payment/",
+            orderInfo
+          );
+          setLoadingButtonCat(false);
+        } catch (error) {}
+      } else {
+        alert("Please select a payment method.");
+      }
     }
   }
   // done
@@ -531,7 +557,11 @@ export default function Basket({ user, logOut }) {
                   <div className="w-100 d-flex justify-content-center mt-3">
                     <button
                       onClick={setHowPayOnDeliver}
-                      className={`p-3 cursorPOinter btn btn-info w-[80%] ${numberOfPay == 1 ? "border border-primary border-2 bg-white" : ""}`}
+                      className={`p-3 cursorPOinter btn btn-info w-[80%] ${
+                        numberOfPay == 1
+                          ? "border border-primary border-2 bg-white"
+                          : ""
+                      }`}
                     >
                       Payment Upon Delivery
                     </button>
@@ -539,7 +569,11 @@ export default function Basket({ user, logOut }) {
                   <div className="w-100 d-flex justify-content-center mt-3">
                     <button
                       onClick={setHowPayOnLine}
-                      className={`p-3 cursorPOinter btn btn-info w-[80%] ${numberOfPay == 2 ? "border border-primary border-2 bg-white" : ""}`}
+                      className={`p-3 cursorPOinter btn btn-info w-[80%] ${
+                        numberOfPay == 2
+                          ? "border border-primary border-2 bg-white"
+                          : ""
+                      }`}
                     >
                       Visa
                     </button>
@@ -713,43 +747,53 @@ export default function Basket({ user, logOut }) {
                         <p className="textForPInCartWithImage">
                           {element?.itemID?.name}
                         </p>
-                        <i
-                          onClick={() => {
-                            deleteItem(element?.itemID._id);
-                          }}
-                          className="fa-solid fa-trash-can cursorPOinter"
-                        ></i>
+                        {flowerNumber == 2 || flowerNumber == 3 ? (
+                          ""
+                        ) : (
+                          <i
+                            onClick={() => {
+                              deleteItem(element?.itemID._id);
+                            }}
+                            className="fa-solid fa-trash-can cursorPOinter"
+                          ></i>
+                        )}
                       </div>
                       <div className="d-flex justify-content-between align-items-center">
                         <p className="textForPInCartWithImage">
                           EGP {element?.itemID?.lastPrice}
                         </p>
                         <div className="d-flex justify-content-center align-items-center gap-2">
-                          <button
-                            onClick={() => {
-                              changeQuantity(
-                                element?.itemID?._id,
-                                "-",
-                                element?.itemID?.lastPrice
-                              );
-                            }}
-                            className="btn border classForButtonBasket"
-                          >
-                            -
-                          </button>
-                          <p>{element?.quantity}</p>
-                          <button
-                            onClick={() => {
-                              changeQuantity(
-                                element?.itemID?._id,
-                                "+",
-                                element?.itemID?.lastPrice
-                              );
-                            }}
-                            className="btn border classForButtonBasket"
-                          >
-                            +
-                          </button>
+                          {flowerNumber == 2 || flowerNumber == 3 ? (
+                            ""
+                          ) : (
+                            <div>
+                              <button
+                                onClick={() => {
+                                  changeQuantity(
+                                    element?.itemID?._id,
+                                    "-",
+                                    element?.itemID?.lastPrice
+                                  );
+                                }}
+                                className="btn border classForButtonBasket"
+                              >
+                                -
+                              </button>
+                              <p>{element?.quantity}</p>
+                              <button
+                                onClick={() => {
+                                  changeQuantity(
+                                    element?.itemID?._id,
+                                    "+",
+                                    element?.itemID?.lastPrice
+                                  );
+                                }}
+                                className="btn border classForButtonBasket"
+                              >
+                                +
+                              </button>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
