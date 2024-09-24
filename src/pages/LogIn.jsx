@@ -30,55 +30,52 @@ function LogIn({ saveUser, userRole }) {
           method: "POST",
         }
       );
-      const data = await response.json();
   
-      
+      if (!response.ok) {
+        throw new Error(`Failed to initiate OAuth: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      // Redirect to the Google OAuth URL
       window.location.href = data.url;
     } catch (error) {
       console.error("Error during auth:", error.message);
+      alert("Authentication failed. Please try again."); // User-friendly message
     }
   }
-
+  
   // Step 2: Handle the callback after Google redirects back to your app
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
-    console.log(urlParams);
+  
     if (code) {
-      handleGoogleCallback(); 
+      handleGoogleCallback(code); 
     } else {
       console.log("No code found in the URL");
     }
   }, []);
-
-  async function handleGoogleCallback() {
-    const urlParams = new URLSearchParams(window.location.search);
-    console.log(urlParams);
-    
-    const code = urlParams.get("code");
   
-    if (code) {
-      try {
-        const response = await fetch(
-          `https://akflorist-production.up.railway.app/getGoogleUser?code=${code}`,
-          { method: "GET" }
-        );
+  async function handleGoogleCallback(code) {
+    try {
+      const response = await fetch(
+        `https://akflorist-production.up.railway.app/getGoogleUser?code=${code}`,
+        { method: "GET" }
+      );
   
-        if (!response.ok) {
-          throw new Error(`Failed to fetch: ${response.status}`);
-        }
-  
-        const data = await response.json();
-        console.log("Google user data:", data);
-  
-        localStorage.setItem("token", data.tokens.access_token);
-  
-        saveUser(data.userData);
-      } catch (error) {
-        console.error("Error during Google callback:", error.message);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch user data: ${response.status}`);
       }
-    } else {
-      console.log("No code found in the URL parameters");
+  
+      const data = await response.json();
+      console.log("Google user data:", data);
+  
+      // Save token and user data to local storage
+      localStorage.setItem("token", data.tokens.access_token);
+      saveUser(data.userData); // Assuming saveUser is a function to manage user data
+    } catch (error) {
+      console.error("Error during Google callback:", error.message);
+      alert("Failed to retrieve user data. Please try again."); // User-friendly message
     }
   }
   
