@@ -329,7 +329,7 @@ export default function ShowItemsInOccasion({ user }) {
                 </div>
               </div>
             </div>
-            <div className="d-flex justify-content-center  gap-4 flex-wrap mb-5">
+            <div className="d-flex justify-content-center  gap-4 flex-wrap mb-5 mt-5">
               {currentItem === null || currentItem.length === 0 ? (
                 loadingAllItems ? (
                   <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
