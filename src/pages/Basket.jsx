@@ -10,7 +10,7 @@ import NavBar from "./../component/NavBar";
 import HeadOfPages from "./HeadOfPages";
 export default function Basket({ user, logOut }) {
   let location = useLocation();
-  let navigate = useNavigate()
+  let navigate = useNavigate();
   let userId = location && location.state ? location.state.userId : null;
 
   // console.log(userId);
@@ -26,7 +26,7 @@ export default function Basket({ user, logOut }) {
   // console.log(totalCost);
   const [numberOfPay, setNumberOfPay] = useState(0);
   useEffect(() => {
-    getCart()
+    getCart();
   }, []);
   // console.log(totalCost);
   useEffect(() => {
@@ -36,16 +36,14 @@ export default function Basket({ user, logOut }) {
     localStorage.setItem("cartID", JSON.stringify(cartID));
   }, [cartID]);
   const [loading, setLoading] = useState(false);
-  
-  
+
   async function getCart() {
     setLoading(true);
     if (userId == null) {
       setLoading(false);
       // navigate("/basket")
       console.log("sa");
-      
-    } else {
+    } else if (userId != null) {
       try {
         let { data } = await axios.get(
           `https://akflorist-production.up.railway.app/customer/getCart/${userId}`
