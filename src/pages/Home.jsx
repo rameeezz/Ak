@@ -901,7 +901,7 @@ export default function Home({ user }) {
               <div className="d-flex align-items-center gap-2">
                 <img src={whatsSvg} alt="" />
                 <a
-                  href="https://wa.me/send?phone=201022317881"
+                  href="https://wa.me/send?phone=2001022317881"
                   target="_blank"
                   className="text-primary"
                 >
