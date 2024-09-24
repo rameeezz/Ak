@@ -21,69 +21,64 @@ function LogIn({ saveUser, userRole }) {
     setIsPasswordVisible(!isPasswordVisible);
   };
   // Step 1: Initiate Google OAuth flow
-  // async function auth() {
-  //   try {
-  //     // Initiate Google OAuth flow by making a request to your backend
-  //     const response = await fetch(
-  //       "https://akflorist-production.up.railway.app/auth/google",
-  //       {
-  //         method: "POST",
-  //       }
-  //     );
-  //     const data = await response.json();
+  async function auth() {
+    try {
+      // Initiate Google OAuth flow by making a request to your backend
+      const response = await fetch(
+        "https://akflorist-production.up.railway.app/auth/google",
+        {
+          method: "POST",
+        }
+      );
+      const data = await response.json();
   
-  //     // Redirect the user to Google's OAuth login page
-  //     window.location.href = data.url; // This should point to the Google OAuth login page
-  //   } catch (error) {
-  //     console.error("Error during auth:", error.message);
-  //   }
-  // }
+      
+      window.location.href = data.url;
+    } catch (error) {
+      console.error("Error during auth:", error.message);
+    }
+  }
 
-  // // Step 2: Handle the callback after Google redirects back to your app
-  // useEffect(() => {
-  //   // Check for 'code' parameter in URL after redirection from Google
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   const code = urlParams.get("code");
+  // Step 2: Handle the callback after Google redirects back to your app
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get("code");
 
-  //   if (code) {
-  //     handleGoogleCallback(); // Only run this if 'code' is present
-  //   } else {
-  //     console.log("No code found in the URL");
-  //   }
-  // }, []);
+    if (code) {
+      handleGoogleCallback(); 
+    } else {
+      console.log("No code found in the URL");
+    }
+  }, []);
 
-  // async function handleGoogleCallback() {
-  //   // Extract the code parameter from the URL after Google redirects back
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   const code = urlParams.get("code");
+  async function handleGoogleCallback() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get("code");
   
-  //   if (code) {
-  //     try {
-  //       // Send the code to your backend to exchange it for user info
-  //       const response = await fetch(
-  //         `https://akflorist-production.up.railway.app/getGoogleUser?code=${code}`,
-  //         { method: "GET" }
-  //       );
+    if (code) {
+      try {
+        const response = await fetch(
+          `https://akflorist-production.up.railway.app/getGoogleUser?code=${code}`,
+          { method: "GET" }
+        );
   
-  //       if (!response.ok) {
-  //         throw new Error(`Failed to fetch: ${response.status}`);
-  //       }
+        if (!response.ok) {
+          throw new Error(`Failed to fetch: ${response.status}`);
+        }
   
-  //       const data = await response.json();
-  //       console.log("Google user data:", data);
+        const data = await response.json();
+        console.log("Google user data:", data);
   
-  //       // Save the access token to local storage
-  //       localStorage.setItem("token", data.tokens.access_token);
+        localStorage.setItem("token", data.tokens.access_token);
   
-  //       // Optionally save user data locally
-  //       saveUser(data.userData);
-  //     } catch (error) {
-  //       console.error("Error during Google callback:", error.message);
-  //     }
-  //   } else {
-  //     console.log("No code found in the URL parameters");
-  //   }
-  // }
+        saveUser(data.userData);
+      } catch (error) {
+        console.error("Error during Google callback:", error.message);
+      }
+    } else {
+      console.log("No code found in the URL parameters");
+    }
+  }
   
 
   // Handle form input changes
@@ -238,11 +233,10 @@ function LogIn({ saveUser, userRole }) {
             <div className="styleLineBetweenItems"></div>
           </div>
           <div className="d-flex justify-content-center gap-2 mt-3 ">
-            {/* <i
+            <i
               onClick={auth}
               className="fa-brands fa-google text-success sizeOfI CursorPointer"
-            ></i> */}
-            <i className="fa-brands fa-facebook sizeOfI CursorPointer text-primary"></i>
+            ></i>
           </div>
         </form>
       </div>
