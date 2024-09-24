@@ -38,7 +38,11 @@ export default function Basket({ user, logOut }) {
   async function getCart() {
     setLoading(true);
     if (userId === null) {
-      getCart()
+      // getCart()
+      console.log("sa");
+      console.log(userId);
+      
+      
     } else {
       try {
         let { data } = await axios.get(
