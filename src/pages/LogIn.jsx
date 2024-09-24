@@ -43,7 +43,7 @@ function LogIn({ saveUser, userRole }) {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
-
+    console.log(urlParams);
     if (code) {
       handleGoogleCallback(); 
     } else {
@@ -53,6 +53,8 @@ function LogIn({ saveUser, userRole }) {
 
   async function handleGoogleCallback() {
     const urlParams = new URLSearchParams(window.location.search);
+    console.log(urlParams);
+    
     const code = urlParams.get("code");
   
     if (code) {
