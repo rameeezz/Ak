@@ -10,6 +10,7 @@ import NavBar from "./../component/NavBar";
 import HeadOfPages from "./HeadOfPages";
 export default function Basket({ user, logOut }) {
   let location = useLocation();
+  let navigate = useNavigate()
   let userId = location && location.state ? location.state.userId : null;
 
   // console.log(userId);
@@ -25,10 +26,8 @@ export default function Basket({ user, logOut }) {
   // console.log(totalCost);
   const [numberOfPay, setNumberOfPay] = useState(0);
   useEffect(() => {
-    if (userId) {
-      getCart();
-    }
-  }, [userId]);
+    getCart()
+  }, []);
   // console.log(totalCost);
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(itemsSameHome));
@@ -43,6 +42,7 @@ export default function Basket({ user, logOut }) {
     setLoading(true);
     if (userId == null) {
       setLoading(false);
+      navigate("/basket")
     } else {
       try {
         let { data } = await axios.get(
