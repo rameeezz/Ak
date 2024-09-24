@@ -448,7 +448,7 @@ export default function Home({ user }) {
             bestSellerCategory.slice(0, 4).map((element, i) => (
               <div
                 key={i}
-                className="styleForContentDiv border-2 border-[#D4B11C] rounded"
+                className="styleForContentDiv position-relative border-2 border-[#D4B11C] rounded"
               >
                 {element?.status === "in stock" ? (
                   ""
@@ -505,12 +505,12 @@ export default function Home({ user }) {
                       {element?.description.slice(0, 32)}
                     </h2> */}
                   </div>
-                  <div className="d-flex justify-content-center align-items-center">
+                  <div className="d-flex justify-content-center align-items-center position-absolute bottom-0 start-50 translate-middle-x w-[100%]">
                     <button
                       onClick={() => {
                         addToCart(element._id, 1, element?.type);
                       }}
-                      className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
+                      className="btn text-white ColorButton classForButtonForCard w-100"
                     >
                       Add to Cart
                     </button>
@@ -524,7 +524,7 @@ export default function Home({ user }) {
             : bestSellerOccasion.slice(0, 4).map((element, i) => (
                 <div
                   key={i}
-                  className="styleForContentDiv border-2 border-[#D4B11C] rounded"
+                  className="styleForContentDiv border-2 border-[#D4B11C] rounded position-relative"
                 >
                   {element?.status === "in stock" ? (
                     ""
@@ -581,12 +581,12 @@ export default function Home({ user }) {
                         {element?.description.slice(0, 25)}
                       </h2> */}
                     </div>
-                    <div className="d-flex justify-content-center align-items-center">
+                    <div className="d-flex justify-content-center align-items-center position-absolute bottom-0 start-50 translate-middle-x w-[100%]">
                       <button
                         onClick={() => {
                           addToCart(element._id, 1, element?.type);
                         }}
-                        className="btn classForButtonForCard text-white ColorButton w-100 mt-2 me-3"
+                        className="btn text-white ColorButton classForButtonForCard w-100"
                       >
                         Add to Cart
                       </button>
@@ -598,7 +598,10 @@ export default function Home({ user }) {
         {/* DOne Best Sellet  */}
       </div>
       <div className="container-xxl mb-5">
-        <div id="category" className="d-flex flex-column align-items-center justify-content-center mt-5 mb-4">
+        <div
+          id="category"
+          className="d-flex flex-column align-items-center justify-content-center mt-5 mb-4"
+        >
           <h2 className="responsive-font-size-h2-Home fw-bold">Categories</h2>
           <div className="w-100 d-flex justify-content-center position-relative">
             <p>| Discover Blooms Beyond Compare |</p>
@@ -651,11 +654,14 @@ export default function Home({ user }) {
           </div>
         </div>
         {/* occasions */}
-        <div id="occasions" className="d-flex flex-column align-items-center justify-content-center mt-5 mb-4">
+        <div
+          id="occasions"
+          className="d-flex flex-column align-items-center justify-content-center mt-5 mb-4"
+        >
           <h2 className="responsive-font-size-h2-Home fw-bold">Occasions</h2>
           <div className="w-100 d-flex justify-content-center position-relative">
             <p>| Unveil the Beauty of Gifted Blooms |</p>
-            <div  
+            <div
               onClick={moveToAllOccasions}
               className=" d-flex justify-content-center cursorPOinter position-absolute end-[120px] forDivViewMore"
             >
@@ -731,7 +737,7 @@ export default function Home({ user }) {
             specialDeals.slice(0, 4).map((element, i) => (
               <div
                 key={i}
-                className="styleForContentDiv border-2 border-[#D4B11C] rounded"
+                className="styleForContentDiv border-2 border-[#D4B11C] rounded position-relative"
               >
                 {element?.status === "in stock" ? (
                   ""
@@ -788,12 +794,12 @@ export default function Home({ user }) {
                       {element?.description.slice(0, 32)}
                     </h2> */}
                   </div>
-                  <div className="d-flex justify-content-center align-items-center">
+                  <div className="d-flex justify-content-center align-items-center position-absolute bottom-0 start-50 translate-middle-x w-[100%]">
                     <button
                       onClick={() => {
                         addToCart(element._id, 1, element?.type);
                       }}
-                      className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
+                      className="btn text-white ColorButton classForButtonForCard w-100"
                     >
                       Add to Cart
                     </button>
@@ -807,7 +813,7 @@ export default function Home({ user }) {
             : specialDealsOccasion.slice(0, 4).map((element, i) => (
                 <div
                   key={i}
-                  className="styleForContentDiv border-2 border-[#D4B11C] rounded"
+                  className="styleForContentDiv border-2 border-[#D4B11C] rounded position-relative"
                 >
                   {element?.status === "in stock" ? (
                     ""
@@ -864,12 +870,12 @@ export default function Home({ user }) {
                         {element?.description.slice(0, 32)}
                       </h2> */}
                     </div>
-                    <div className="d-flex justify-content-center align-items-center">
+                    <div className="d-flex justify-content-center align-items-center position-absolute bottom-0 start-50 translate-middle-x w-[100%]">
                       <button
                         onClick={() => {
                           addToCart(element._id, 1, element?.type);
                         }}
-                        className="btn text-white ColorButton classForButtonForCard w-100 mt-2 me-3"
+                        className="btn text-white ColorButton classForButtonForCard w-100"
                       >
                         Add to Cart
                       </button>
@@ -894,7 +900,13 @@ export default function Home({ user }) {
               </div>
               <div className="d-flex align-items-center gap-2">
                 <img src={whatsSvg} alt="" />
-                <a href="https://wa.me/send?phone=201022317881" target="_blank" className="text-primary">Whatsapp</a>
+                <a
+                  href="https://wa.me/send?phone=201022317881"
+                  target="_blank"
+                  className="text-primary"
+                >
+                  Whatsapp
+                </a>
               </div>
               <div className="d-flex align-items-center gap-2">
                 <img src={callSvg} alt="" />

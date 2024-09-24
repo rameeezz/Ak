@@ -311,14 +311,16 @@ export default function AllSpecialDeals({ user }) {
                   <p className="card-text responsive-For-Card-p">
                     {element?.description.slice(0, 37)}
                   </p>
-                  <button
-                    onClick={() => {
-                      addToCart(element._id, 1, element?.type);
-                    }}
-                    className="btn text-white ColorButton classForButtonForCardForBestSeller w-100"
-                  >
-                    Add to Cart
-                  </button>
+                  <div className="d-flex justify-content-center align-items-center position-absolute bottom-0 start-50 translate-middle-x w-[100%]">
+                    <button
+                      onClick={() => {
+                        addToCart(element._id, 1, element?.type);
+                      }}
+                      className="btn text-white ColorButton classForButtonForCard w-100"
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
                 </div>
               </div>
             ))
@@ -382,14 +384,16 @@ export default function AllSpecialDeals({ user }) {
                     <p className="card-text responsive-For-Card-p">
                       {element?.description.slice(0, 36)}
                     </p>
+                    <div className="d-flex justify-content-center align-items-center position-absolute bottom-0 start-50 translate-middle-x w-[100%]">
                     <button
                       onClick={() => {
                         addToCart(element._id, 1, element?.type);
                       }}
-                      className="btn text-white ColorButton classForButtonForCardForBestSeller  w-100"
+                      className="btn text-white ColorButton classForButtonForCard w-100"
                     >
-                      add to cart
+                      Add to Cart
                     </button>
+                  </div>
                   </div>
                 </div>
               ))}
