@@ -39,26 +39,54 @@ export default function Basket({ user, logOut }) {
   const [loading, setLoading] = useState(false);
   async function getCart() {
     setLoading(true);
-    if (userId === null) {
+    if (!userId) {
       setLoading(false);
-    } else {
-      try {
-        let { data } = await axios.get(
-          `https://akflorist-production.up.railway.app/customer/getCart/${userId}`
-        );
-        setItemsInCart(data.getThisCart.items);
-        setTotalCost(data.getThisCart.totalCost);
-        setCartId(data.getThisCart._id);
-        setOrderInfo({ ...orderInfo, cart: data.getThisCart._id });
-        setItemsSameHome(data.items);
-        setLoading(false);
-      } catch (error) {
-        if (error.response && error.response.status === 404) {
-          alert("No Items");
-        }
+      return; // Early return if userId is null
+    }
+  
+    try {
+      let { data } = await axios.get(
+        `https://akflorist-production.up.railway.app/customer/getCart/${userId}`
+      );
+      setItemsInCart(data.getThisCart.items);
+      setTotalCost(data.getThisCart.totalCost);
+      setCartId(data.getThisCart._id);
+      setItemsSameHome(data.items);
+    } catch (error) {
+      setLoading(false); // Ensure loading is set to false
+      console.error("Error fetching cart:", error); // Log full error
+      if (error.response && error.response.status === 404) {
+        alert("No Items Found"); // User-friendly alert
+      } else {
+        alert("An error occurred while fetching the cart."); // Generic alert for other errors
       }
+    } finally {
+      setLoading(false); // Ensure loading is false in all cases
     }
   }
+  
+  // async function getCart() {
+  //   setLoading(true);
+  //   if (userId === null) {
+  //     setLoading(false);
+  //   } else {
+  //     try {
+  //       let { data } = await axios.get(
+  //         `https://akflorist-production.up.railway.app/customer/getCart/${userId}`
+  //       );
+  //       setItemsInCart(data.getThisCart.items);
+  //       setTotalCost(data.getThisCart.totalCost);
+  //       setCartId(data.getThisCart._id);
+  //       setOrderInfo({ ...orderInfo, cart: data.getThisCart._id });
+  //       setItemsSameHome(data.items);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       if (error.response && error.response.status === 404) {
+  //         alert("No Items");
+  //       }
+  //     }
+  //   }
+  // }
   async function deleteItem(itemID) {
     const filteredArray = itemsInCart.filter(
       (element) => element?.itemID._id !== itemID
