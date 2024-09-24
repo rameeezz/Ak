@@ -89,8 +89,6 @@ export default function ShowItemsInOccasion({ user }) {
       } catch (error) {
         if (error.response && error.response.status === 409) {
           if (cartID === null || cartID === "") {
-            console.log("sas");
-            alert("sa");
             const deleteCartId = {
               customerID: customerID,
             };
