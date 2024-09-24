@@ -25,8 +25,10 @@ export default function Basket({ user, logOut }) {
   // console.log(totalCost);
   const [numberOfPay, setNumberOfPay] = useState(0);
   useEffect(() => {
-    getCart();
-  }, []);
+    if (userId) {
+      getCart();
+    }
+  }, [userId]);
   // console.log(totalCost);
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(itemsSameHome));
@@ -38,10 +40,7 @@ export default function Basket({ user, logOut }) {
   async function getCart() {
     setLoading(true);
     if (userId === null) {
-      // getCart()
-      console.log("sa");
-      console.log(userId);
-      
+      setLoading(false)  
       
     } else {
       try {
