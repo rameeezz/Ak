@@ -206,6 +206,7 @@ function App() {
         { path: "all-category", element: <AllCategory  user={user}/> },
         { path: "all-occasion", element: <AllOccasions  user={user}/> },
         { path: "basket", element: <Basket user={user} logOut={logOut}/> },
+        { path: "/basket/", element: <Basket />}
         { path: "result-search", element: <SearchItems  user={user}/> },
         { path: "all-special-deals", element: <AllSpecialDeals user={user}/> },
         { path: "best-sellers", element: <BestSellerItems user={user} /> },
