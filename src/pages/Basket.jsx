@@ -10,7 +10,8 @@ import NavBar from "./../component/NavBar";
 import HeadOfPages from "./HeadOfPages";
 export default function Basket({ user, logOut }) {
   let location = useLocation();
-  let { userId } = location.state || null;
+  let userId = location && location.state ? location.state.userId : null;
+
 
   // console.log(userId);
   const [itemsInCart, setItemsInCart] = useState([]);
@@ -38,7 +39,6 @@ export default function Basket({ user, logOut }) {
   async function getCart() {
     setLoading(true);
     if (userId === null) {
-      alert("Go To Home Page.");
     } else {
       try {
         let { data } = await axios.get(
