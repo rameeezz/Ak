@@ -26,8 +26,10 @@ export default function Basket({ user, logOut }) {
   // console.log(totalCost);
   const [numberOfPay, setNumberOfPay] = useState(0);
   useEffect(() => {
-    getCart();
-  }, []);
+    if (userId) {
+      getCart();
+    }
+  }, [userId]);
   // console.log(totalCost);
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(itemsSameHome));
@@ -36,31 +38,50 @@ export default function Basket({ user, logOut }) {
     localStorage.setItem("cartID", JSON.stringify(cartID));
   }, [cartID]);
   const [loading, setLoading] = useState(false);
-
   async function getCart() {
     setLoading(true);
-    if (userId == null) {
-      setLoading(false);
-      // navigate("/basket")
-      console.log("sa");
-    } else if (userId != null) {
-      try {
-        let { data } = await axios.get(
-          `https://akflorist-production.up.railway.app/customer/getCart/${userId}`
-        );
-        setItemsInCart(data.getThisCart.items);
-        setTotalCost(data.getThisCart.totalCost);
-        setCartId(data.getThisCart._id);
-        setOrderInfo({ ...orderInfo, cart: data.getThisCart._id });
-        setItemsSameHome(data.items);
-        setLoading(false);
-      } catch (error) {
-        if (error.response && error.response.status === 404) {
-          alert("No Items");
-        }
+    try {
+      const { data } = await axios.get(
+        `https://akflorist-production.up.railway.app/customer/getCart/${userId}`
+      );
+      setItemsInCart(data.getThisCart.items);
+      setTotalCost(data.getThisCart.totalCost);
+      setCartId(data.getThisCart._id);
+      setItemsSameHome(data.items);
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        alert("No Items");
+      } else {
+        console.error("Error fetching cart:", error.message);
       }
+    } finally {
+      setLoading(false); // Ensure loading is set to false regardless of outcome
     }
   }
+  // async function getCart() {
+  //   setLoading(true);
+  //   if (userId == null) {
+  //     setLoading(false);
+  //     // navigate("/basket")
+  //     console.log("sa");
+  //   } else if (userId != null) {
+  //     try {
+  //       let { data } = await axios.get(
+  //         `https://akflorist-production.up.railway.app/customer/getCart/${userId}`
+  //       );
+  //       setItemsInCart(data.getThisCart.items);
+  //       setTotalCost(data.getThisCart.totalCost);
+  //       setCartId(data.getThisCart._id);
+  //       setOrderInfo({ ...orderInfo, cart: data.getThisCart._id });
+  //       setItemsSameHome(data.items);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       if (error.response && error.response.status === 404) {
+  //         alert("No Items");
+  //       }
+  //     }
+  //   }
+  // }
   async function deleteItem(itemID) {
     const filteredArray = itemsInCart.filter(
       (element) => element?.itemID._id !== itemID
