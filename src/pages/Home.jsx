@@ -124,8 +124,6 @@ export default function Home({ user }) {
               customerID: customerID,
             };
             deleteCartUser(e, deleteCartId);
-            handleSubmitCreateCart(e);
-            setLoadingButtonCat(false);
           } else {
             editeCart(e);
           }
@@ -146,7 +144,7 @@ export default function Home({ user }) {
         }
       );
       // console.log(data);
-      // handleSubmitCreateCart(e)
+      handleSubmitCreateCart(e)
     } catch (error) {
       console.error("Error deleting cart:", error);
     }

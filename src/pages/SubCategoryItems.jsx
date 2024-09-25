@@ -96,12 +96,12 @@ export default function SubCategoryItems({ user }) {
       } catch (error) {
         if (error.response && error.response.status === 409) {
           if (cartID === null || cartID === "") {
+            // console.log("sas");
+            // alert("sa");
             const deleteCartId = {
               customerID: customerID,
             };
             deleteCartUser(e, deleteCartId);
-            handleSubmitCreateCart(e)
-            setLoadingButtonCat(false);
           } else {
             editeCart(e);
           }
@@ -110,7 +110,7 @@ export default function SubCategoryItems({ user }) {
     }
   }
   async function deleteCartUser(e, userID) {
-    e.preventDefault()
+    e.preventDefault();
     try {
       let { data } = await axios.delete(
         "https://akflorist-production.up.railway.app/customer/deleteCart",
@@ -122,11 +122,12 @@ export default function SubCategoryItems({ user }) {
         }
       );
       // console.log(data);
-      // handleSubmitCreateCart(e)
+      handleSubmitCreateCart(e)
     } catch (error) {
       console.error("Error deleting cart:", error);
     }
   }
+
 
   async function editeCart(e) {
     setLoadingButtonCat(true);

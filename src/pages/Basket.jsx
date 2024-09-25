@@ -21,7 +21,7 @@ export default function Basket({ user, logOut }) {
 
   // console.log(itemsSameHome);
 
-  const [cartID, setCartId] = useState("");
+  const [cartID, setCartId] = useState("");  
   const [totalCost, setTotalCost] = useState("");
   // console.log(totalCost);
   const [numberOfPay, setNumberOfPay] = useState(0);
@@ -37,6 +37,8 @@ export default function Basket({ user, logOut }) {
   useEffect(() => {
     localStorage.setItem("cartID", JSON.stringify(cartID));
   }, [cartID]);
+  // console.log(cartID);
+  
   const [loading, setLoading] = useState(false);
   async function getCart() {
     setLoading(true);
@@ -47,6 +49,7 @@ export default function Basket({ user, logOut }) {
       setItemsInCart(data.getThisCart.items);
       setTotalCost(data.getThisCart.totalCost);
       setCartId(data.getThisCart._id);
+      setOrderInfo({ ...orderInfo, cart: data?.getThisCart?._id });
       setItemsSameHome(data.items);
     } catch (error) {
       if (error.response && error.response.status === 404) {
@@ -58,6 +61,7 @@ export default function Basket({ user, logOut }) {
       setLoading(false); // Ensure loading is set to false regardless of outcome
     }
   }
+  
   // async function getCart() {
   //   setLoading(true);
   //   if (userId == null) {
@@ -146,7 +150,7 @@ export default function Basket({ user, logOut }) {
         "https://akflorist-production.up.railway.app/customer/makeCard",
         cardDetails
       );
-      console.log(data);
+      // console.log(data);
       setCardDetails({
         to: "",
         from: "",
@@ -330,6 +334,7 @@ export default function Basket({ user, logOut }) {
       alert(
         "Please ensure all required fields are filled out correctly before proceeding."
       );
+      setLoadingButtonCat(false)
     } else {
       try {
         let { data } = await axios.post(
@@ -354,42 +359,31 @@ export default function Basket({ user, logOut }) {
     shippingCost: 0,
     card: cardID,
   });
-  // console.log(orderInfo);
+  console.log(orderInfo);
   async function sendOrder(e) {
     e.preventDefault();
     setLoadingButtonCat(true);
-    if (
-      orderInfo.address == "" ||
-      orderInfo.card == "" ||
-      orderInfo.cart == "" ||
-      orderInfo.date == "" ||
-      orderInfo.shippingCost == null ||
-      orderInfo.time == ""
-    ) {
-      alert(
-        "Please ensure all required fields are filled out correctly before proceeding."
-      );
+
+    if (numberOfPay == 1) {
+      try {
+        let { data } = await axios.post(
+          "https://akflorist-production.up.railway.app/payment/offlinePayment",
+          orderInfo
+        );
+        // console.log(data);
+        setLoadingButtonCat(false);
+        // make the array = null and show to the user message with done and navigate to home 
+      } catch (error) {}
+    } else if (numberOfPay == 2) {
+      try {
+        let { data } = await axios.post(
+          "https://akflorist-production.up.railway.app/payment/",
+          orderInfo
+        );
+        setLoadingButtonCat(false);
+      } catch (error) {}
     } else {
-      if (numberOfPay == 1) {
-        try {
-          let { data } = await axios.post(
-            "https://akflorist-production.up.railway.app/payment/offlinePayment",
-            orderInfo
-          );
-          console.log(data);
-          setLoadingButtonCat(false);
-        } catch (error) {}
-      } else if (numberOfPay == 2) {
-        try {
-          let { data } = await axios.post(
-            "https://akflorist-production.up.railway.app/payment/",
-            orderInfo
-          );
-          setLoadingButtonCat(false);
-        } catch (error) {}
-      } else {
-        alert("Please select a payment method.");
-      }
+      alert("Please select a payment method.");
     }
   }
   // done
