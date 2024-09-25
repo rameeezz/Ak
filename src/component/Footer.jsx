@@ -3,9 +3,13 @@ import "../css/Footer.css";
 import Visa from "../assets/png payment/visa.png";
 import { Link } from "react-router-dom";
 export function Footer({ user }) {
+  const isLoginPage =
+    location.pathname === "/login" || location.pathname === "/register";
   return (
     <>
-      {user?.role == "admin1" || user?.role == "admin2" ? (
+      {isLoginPage ? (
+        ""
+      ) : user?.role == "admin1" || user?.role == "admin2" ? (
         ""
       ) : (
         <footer className="bg-[#b38e38]">
@@ -27,7 +31,9 @@ export function Footer({ user }) {
                 <a
                   href="#category"
                   onClick={() => {
-                    document.getElementById("category")?.scrollIntoView({ behavior: "smooth" });
+                    document
+                      .getElementById("category")
+                      ?.scrollIntoView({ behavior: "smooth" });
                   }}
                   className="moveOfPInFooter text-white"
                 >
@@ -36,7 +42,9 @@ export function Footer({ user }) {
                 <a
                   href="#occasion"
                   onClick={() => {
-                    document.getElementById("occasions")?.scrollIntoView({ behavior: "smooth" });
+                    document
+                      .getElementById("occasions")
+                      ?.scrollIntoView({ behavior: "smooth" });
                   }}
                   className="moveOfPInFooter text-white"
                 >
