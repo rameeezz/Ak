@@ -180,10 +180,6 @@ function App() {
           element: <Home user={user} />, // Public route
         },
         {
-          path: "/index.html",
-          element: <Home user={user} />, // Public route
-        },
-        {
           path: "home",
           element: <Home user={user} />, // Public route
         },
