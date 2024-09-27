@@ -49,15 +49,14 @@ function LogIn({ saveUser, userRole }) {
     const urlParams = new URLSearchParams(getLocation);
     console.log(urlParams);
 
-    const urlInfo = urlParams.getAll();
-    const code = urlInfo.code
-    console.log(urlInfo);
+    const code = urlParams.getAll("code");
+    console.log(code);
 
-    // if (code) {
-    //   handleGoogleCallback(code);
-    // } else {
-    //   console.log("No code found in the URL");
-    // }
+    if (code) {
+      handleGoogleCallback(code);
+    } else {
+      console.log("No code found in the URL");
+    }
   }, []);
 
   async function handleGoogleCallback(code) {
