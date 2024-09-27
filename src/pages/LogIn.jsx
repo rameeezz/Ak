@@ -49,7 +49,7 @@ function LogIn({ saveUser, userRole }) {
     const urlParams = new URLSearchParams(getLocation);
     console.log(urlParams);
 
-    const code = urlParams.getAll("code");
+    const code = urlParams.get("code");
     console.log(code);
 
     if (code) {
