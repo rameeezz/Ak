@@ -47,6 +47,7 @@ function LogIn({ saveUser, userRole }) {
   // Step 2: Handle the callback after Google redirects back to your app
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
+    localStorage.setItem("urlParams", urlParams);
     console.log(urlParams);
     
     // const code = urlParams.get("code");

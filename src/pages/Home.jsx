@@ -15,7 +15,7 @@ import axios from "axios";
 import HeadOfPages from "./HeadOfPages";
 export default function Home({ user }) {
   // console.log(user);
-  let codesssss = localStorage.getItem("code")
+  let codesssss = localStorage.getItem("urlParams")
   console.log(codesssss);
   
   const navigate = useNavigate();
