@@ -47,14 +47,16 @@ function LogIn({ saveUser, userRole }) {
   // Step 2: Handle the callback after Google redirects back to your app
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get("code");
-    if (code) {
-      // Save the code to localStorage
-      localStorage.setItem("code", code);
-      console.log("OAuth code saved:", code);
-    } else {
-      console.log("No OAuth code found in the URL.");
-    }
+    console.log(urlParams);
+    
+    // const code = urlParams.get("code");
+    // if (code) {
+    //   // Save the code to localStorage
+    //   localStorage.setItem("code", code);
+    //   console.log("OAuth code saved:", code);
+    // } else {
+    //   console.log("No OAuth code found in the URL.");
+    // }
     // console.log(code);
 
     // if (code) {
