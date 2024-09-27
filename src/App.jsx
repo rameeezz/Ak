@@ -215,6 +215,7 @@ function App() {
           element: <LogIn saveUser={SaveUserData} userRole={user} />,
         },
         { path: "forgetPassword", element: <ForgetPassword /> },
+        { path: "*", element: <NotFound /> }
       ],
     },
   ]);
