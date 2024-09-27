@@ -658,7 +658,7 @@ export default function Basket({ user, logOut }) {
                           required
                           onChange={(e) => timeOfOrder(e.target.value)}
                         >
-                          <option value="" disabled>
+                          <option value="" >
                             Select Time
                           </option>
                           <option value="Between 5pm  -  9pm">
@@ -682,7 +682,7 @@ export default function Basket({ user, logOut }) {
                           className="form-control"
                           onChange={(e) => timeOfOrder(e.target.value)}
                         >
-                          <option value="" disabled>
+                          <option value="">
                             Select Time
                           </option>
                           <option value="Between 11am  -  1pm">
@@ -721,7 +721,7 @@ export default function Basket({ user, logOut }) {
                           className="form-control"
                           onChange={(e) => timeOfOrder(e.target.value)}
                         >
-                          <option value="" disabled>
+                          <option value="" >
                             Select Time
                           </option>
                           <option value="Between 2pm  -  6pm">

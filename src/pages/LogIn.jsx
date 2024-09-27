@@ -59,6 +59,8 @@ function LogIn({ saveUser, userRole }) {
   }, []);
   
   async function handleGoogleCallback(code) {
+    console.log(code);
+    
     try {
       const response = await fetch(
         `https://akflorist-production.up.railway.app/getGoogleUser?code=${code}`,
