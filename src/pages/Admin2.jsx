@@ -462,448 +462,461 @@ export default function Admin2({ logOut }) {
         setSureDeleteItemFromOneCategory("d-none");
         getItems(e, categroryId.categoryId);
       } catch (error) {
-        if (error.response && error.response.status === 404 ) {
-          alert("delete it from X button")
+        if (error.response && error.response.status === 404) {
+          alert("delete it from X button");
         }
       }
     }
   }
   // **********************************
 
-// show occasion
-const [showCategoryForOccasion, setShowCategoryForOccasion] = useState([]);
-async function getCategoryForOccasions() {
-  try {
-    let { data } = await axios.get(
-      "https://akflorist-production.up.railway.app/admin1/getOccasions"
-    );
-    // console.log(data);
-    setShowCategoryForOccasion(data);
-  } catch (error) {
-    if (error.response && error.response.status === 502) {
-      alert("server is down try again later");
-    }
-    if (error.response && error.response.status === 404) {
-      setShowCategoryForOccasion([]);
-    }
-  }
-}
-
-useEffect(() => {
-  getCategoryForOccasions();
-}, []);
-// **************************
-
-// add items in Occasions
-const [AllCategoryNameForOccasion, setAllCategoryNameForOccasion] = useState(
-  []
-);
-const [AllCategoryIdForOccasion, setAllCategoryIdForOccasion] = useState([]);
-const [isLoadingForOccasion, setIsLoadingForOccasion] = useState(false);
-const imageInputRefForOccasion = useRef(null);
-const [imagePreviewsForOccasion, setImagePreviewsForOccasion] = useState([]);
-const [errorMessageForItemForOccasion, setErrorMessageForItemForOccasion] =
-  useState("");
-const [itemsDetailsForOccasion, setItemsDetailsForOccasion] = useState({
-  name: "",
-  description: "",
-  price: 0,
-  occasions: [],
-  images: [],
-});
-function handleCategorySelection(categoryID, categoryName) {
-  setItemsDetailsForOccasion((prevDetails) => {
-    // Only update if the categoryID is not already in the occasions array
-    if (!prevDetails.occasions.includes(categoryID)) {
-      return {
-        ...prevDetails,
-        occasions: [...prevDetails.occasions, categoryID],
-      };
-    }
-    return prevDetails;
-  });
-
-  setAllCategoryIdForOccasion((prevIds) => {
-    if (!prevIds.includes(categoryID)) {
-      return [...prevIds, categoryID];
-    }
-    return prevIds;
-  });
-
-  setAllCategoryNameForOccasion((prevNames) => {
-    if (!prevNames.includes(categoryName)) {
-      return [...prevNames, categoryName];
-    }
-    return prevNames;
-  });
-}
-
-function removeCategoryIdForOccasion(categoryID, categoryName) {
-  setItemsDetailsForOccasion((prevDetails) => {
-    // Only update if the categoryID is in the occasions array
-    if (prevDetails.occasions.includes(categoryID)) {
-      return {
-        ...prevDetails,
-        occasions: prevDetails.occasions.filter((id) => id !== categoryID),
-      };
-    }
-    return prevDetails;
-  });
-
-  setAllCategoryIdForOccasion((prevIds) =>
-    prevIds.includes(categoryID)
-      ? prevIds.filter((id) => id !== categoryID)
-      : prevIds
-  );
-
-  setAllCategoryNameForOccasion((prevNames) =>
-    prevNames.includes(categoryName)
-      ? prevNames.filter((name) => name !== categoryName)
-      : prevNames
-  );
-}
-
-function putItemInfoForOccasion(e) {
-  let myItem = { ...itemsDetailsForOccasion };
-  myItem[e.target.name] = e.target.value;
-  setItemsDetailsForOccasion(myItem);
-  if (myItem[e.target.name] == "name") {
-    setErrorMessageForItemForOccasion("");
-  }
-}
-function handleImageOnChangeForOccasion(event) {
-  const files = Array.from(event.target.files); // Convert FileList to Array
-  // Create image preview URLs
-  const imageUrls = files.map((file) => URL.createObjectURL(file));
-  setItemsDetailsForOccasion((prev) => ({
-    ...prev,
-    images: [...prev.images, ...files], // Append new files to the existing array
-  }));
-  setImagePreviewsForOccasion((prev) => [...prev, ...imageUrls]);
-}
-
-const closeShowItemsForOccasion = () => {
-  setItemsDetailsForOccasion({ ...itemsDetails, images: [] });
-  setImagePreviewsForOccasion([]);
-};
-async function sendItemDetailForOccasion(e) {
-  e.preventDefault();
-  setIsLoadingForOccasion(true);
-  const formData = new FormData();
-
-  formData.append("name", itemsDetailsForOccasion.name);
-  formData.append("description", itemsDetailsForOccasion.description);
-  formData.append("price", itemsDetailsForOccasion.price);
-
-  // Append each image in the array
-  itemsDetailsForOccasion.images.forEach((image, index) => {
-    formData.append("images", image);
-  });
-
-  // Safely iterate over the occasions array
-  if (Array.isArray(itemsDetailsForOccasion.occasions)) {
-    itemsDetailsForOccasion.occasions.forEach((categoryID) => {
-      formData.append("occasions", categoryID);
-    });
-  }
-
-  if (itemsDetailsForOccasion.images.length >= 10) {
-    alert("max number of images 10");
-    setIsLoadingForOccasion(false);
-  } else {
+  // show occasion
+  const [showCategoryForOccasion, setShowCategoryForOccasion] = useState([]);
+  async function getCategoryForOccasions() {
     try {
-      let { data } = await axios.post(
-        "https://akflorist-production.up.railway.app/admin1/additemsOfOccasions",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+      let { data } = await axios.get(
+        "https://akflorist-production.up.railway.app/admin1/getOccasions"
       );
-
-      // Reset the form or perform other actions
-      setItemsDetailsForOccasion({
-        name: "",
-        description: "",
-        price: 0,
-        occasions: [], // Reset to an empty array
-        images: [],
-      });
-      setImagePreviewsForOccasion([]);
-      setIsLoadingForOccasion(false);
-      setErrorMessageForItemForOccasion("");
-      setAllCategoryNameForOccasion([]);
-      setAllCategoryIdForOccasion([]);
-      showAlertMessage();
+      // console.log(data);
+      setShowCategoryForOccasion(data);
     } catch (error) {
-      if (error.response && error.response.status === 422) {
-        setErrorMessageForItemForOccasion("you should choose occasion.");
-      } else if (error.response && error.response.status === 404) {
-        alert("name is already exist.");
-      } else if (error.response && error.response.status === 500) {
-        alert("max number of images 10");
-      } else if (error.response && error.response.status === 400) {
-        alert("please add name and description");
+      if (error.response && error.response.status === 502) {
+        alert("server is down try again later");
       }
-      setIsLoadingForOccasion(false);
+      if (error.response && error.response.status === 404) {
+        setShowCategoryForOccasion([]);
+      }
     }
   }
-}
 
-// ----------------------
-// show items in occasion and delete and status and discount
-const [loadingForItemsForOccasion, setLoadingForItemsForOccasion] =
-  useState(false);
-const [classForItemsForOccasion, setClassForItemsForOccasion] =
-  useState("d-none");
-const [statusLoadingForOccasion, setStatusLoadingForOccasion] =
-  useState(false);
-const [itemsInCategoryForOccasion, setItemInCategoryForOccasion] = useState(
-  []
-);
-const [itemIDForDeleteForOccasion, setItemIdForDeleteForOccasion] = useState({
-  itemID: "",
-});
-// console.log(itemIDForDeleteForOccasion);
+  useEffect(() => {
+    getCategoryForOccasions();
+  }, []);
+  // **************************
 
-const [sureDeleteItemForOccasion, setSureDeleteItemForOccasion] =
-  useState("d-none");
-const [sellerLoadingForOccasion, setSellerLoadingForOccasion] =
-  useState(false);
-const [categroryIdForOccasion, setCategoryIDForOccasion] = useState({
-  categoryId: "",
-  itemID: "",
-});
-const [salePercentForOccasion, setSalePercentForOccasion] = useState({
-  itemID: "",
-  discount: 0,
-});
-const [salePuttedForOccasion, setSaleputtedForOccasion] = useState(false);
-const [salePuttedItemIdForOccasion, setSalePuttedItemIdForOccasion] =
-  useState(null);
-const [sureBoxForCancelperForOcccasion, setSureBoxForCAncelPerForOccasion] =
-  useState(false);
-const [loadForPercentForOccasion, setLoadForPercentForOccasion] =
-  useState(false);
-const [sureDeleteItemFromOneOccasion, setSureDeleteItemFromOccasion] =
-  useState("d-none");
-// pagination
-const [currentPageForOccasion, setCurrentPageForOccasion] = useState(1);
-const itemsPerPageForOccasion = 6;
-const totalPagesForOccasion = Math.ceil(
-  itemsInCategoryForOccasion.length / itemsPerPageForOccasion
-);
-const indexOfLastItemForOccasion =
-  currentPageForOccasion * itemsPerPageForOccasion;
-const indexOfFirstItemForOcassion =
-  indexOfLastItemForOccasion - itemsPerPageForOccasion;
-const currentItemForOccasion = itemsInCategoryForOccasion.slice(
-  indexOfFirstItemForOcassion,
-  indexOfLastItemForOccasion
-);
-// console.log(currentItem);
-
-const paginateForOccasion = (pageNumber) => {
-  if (pageNumber > 0 && pageNumber <= totalPagesForOccasion) {
-    setCurrentPageForOccasion(pageNumber);
-  }
-};
-const [classOfArrowForOccasion, setClassOFArrowForOccasion] =
-  useState("d-none");
-// end of pagination
-async function getItemsForOccasions(e, categoryId) {
-  e.preventDefault();
-  setLoadingForItemsForOccasion(true);
-  try {
-    let { data } = await axios.get(
-      `https://akflorist-production.up.railway.app/admin1/getItemOfOccasion/${categoryId}`
-    );
-    // console.log(data);
-    setLoadingForItemsForOccasion(false);
-    setItemInCategoryForOccasion(data);
-    setCategoryIDForOccasion({
-      ...categroryIdForOccasion,
-      categoryId: categoryId,
-    });
-    setClassForItemsForOccasion(
-      "d-flex justify-content-center gap-3 flex-wrap position-relative"
-    );
-    setClassOFArrowForOccasion(
-      "pagination-controls my-4 d-flex justify-content-center "
-    );
-  } catch (error) {
-    if (error.response && error.response.status === 404) {
-      setLoadingForItemsForOccasion(false);
-      setItemInCategoryForOccasion([]);
-      alert("no items in this occasion");
-    }
-  }
-}
-
-function putItemIdForOccasion(itemID) {
-  setItemIdForDeleteForOccasion(itemID);
-  // console.log(itemID);
-
-  setSureDeleteItemForOccasion(
-    "position-fixed top-50 start-50 translate-middle z-3 bg-white shadow rounded-3  text-black p-5"
+  // add items in Occasions
+  const [AllCategoryNameForOccasion, setAllCategoryNameForOccasion] = useState(
+    []
   );
-}
-async function putStatusOfItemForOccasion(e, idOfItem) {
-  console.log(idOfItem);
+  const [AllCategoryIdForOccasion, setAllCategoryIdForOccasion] = useState([]);
+  const [isLoadingForOccasion, setIsLoadingForOccasion] = useState(false);
+  const imageInputRefForOccasion = useRef(null);
+  const [imagePreviewsForOccasion, setImagePreviewsForOccasion] = useState([]);
+  const [errorMessageForItemForOccasion, setErrorMessageForItemForOccasion] =
+    useState("");
+  const [itemsDetailsForOccasion, setItemsDetailsForOccasion] = useState({
+    name: "",
+    description: "",
+    price: 0,
+    occasions: [],
+    images: [],
+  });
+  function handleCategorySelection(categoryID, categoryName) {
+    setItemsDetailsForOccasion((prevDetails) => {
+      // Only update if the categoryID is not already in the occasions array
+      if (!prevDetails.occasions.includes(categoryID)) {
+        return {
+          ...prevDetails,
+          occasions: [...prevDetails.occasions, categoryID],
+        };
+      }
+      return prevDetails;
+    });
 
-  e.preventDefault();
-  setStatusLoadingForOccasion(true);
-  try {
-    let { data } = await axios.patch(
-      `https://akflorist-production.up.railway.app/admin1/changeItemOfOccasionStatus/${idOfItem}`
+    setAllCategoryIdForOccasion((prevIds) => {
+      if (!prevIds.includes(categoryID)) {
+        return [...prevIds, categoryID];
+      }
+      return prevIds;
+    });
+
+    setAllCategoryNameForOccasion((prevNames) => {
+      if (!prevNames.includes(categoryName)) {
+        return [...prevNames, categoryName];
+      }
+      return prevNames;
+    });
+  }
+
+  function removeCategoryIdForOccasion(categoryID, categoryName) {
+    setItemsDetailsForOccasion((prevDetails) => {
+      // Only update if the categoryID is in the occasions array
+      if (prevDetails.occasions.includes(categoryID)) {
+        return {
+          ...prevDetails,
+          occasions: prevDetails.occasions.filter((id) => id !== categoryID),
+        };
+      }
+      return prevDetails;
+    });
+
+    setAllCategoryIdForOccasion((prevIds) =>
+      prevIds.includes(categoryID)
+        ? prevIds.filter((id) => id !== categoryID)
+        : prevIds
     );
-    setStatusLoadingForOccasion(false);
-    getItemsForOccasions(e, categroryIdForOccasion.categoryId);
-  } catch (error) {
-    if (error.response && error.response.status === 404) {
-      setStatusLoadingForOccasion(false);
+
+    setAllCategoryNameForOccasion((prevNames) =>
+      prevNames.includes(categoryName)
+        ? prevNames.filter((name) => name !== categoryName)
+        : prevNames
+    );
+  }
+
+  function putItemInfoForOccasion(e) {
+    let myItem = { ...itemsDetailsForOccasion };
+    myItem[e.target.name] = e.target.value;
+    setItemsDetailsForOccasion(myItem);
+    if (myItem[e.target.name] == "name") {
+      setErrorMessageForItemForOccasion("");
     }
   }
-}
+  function handleImageOnChangeForOccasion(event) {
+    const files = Array.from(event.target.files); // Convert FileList to Array
+    // Create image preview URLs
+    const imageUrls = files.map((file) => URL.createObjectURL(file));
+    setItemsDetailsForOccasion((prev) => ({
+      ...prev,
+      images: [...prev.images, ...files], // Append new files to the existing array
+    }));
+    setImagePreviewsForOccasion((prev) => [...prev, ...imageUrls]);
+  }
 
-function handleSellerButtonClickForOccasion(e, idOfItem) {
-  // Call submitSellerOfItem with the correct itemID
-  submitSellerOfItemForOccasion(e, idOfItem);
-  // console.log(idOfItem);
-}
-function putSalePercentForOccasion(e) {
-  setSalePercentForOccasion({
-    ...salePercentForOccasion,
-    discount: e.target.value,
+  const closeShowItemsForOccasion = () => {
+    setItemsDetailsForOccasion({ ...itemsDetails, images: [] });
+    setImagePreviewsForOccasion([]);
+  };
+  async function sendItemDetailForOccasion(e) {
+    e.preventDefault();
+    setIsLoadingForOccasion(true);
+    const formData = new FormData();
+
+    formData.append("name", itemsDetailsForOccasion.name);
+    formData.append("description", itemsDetailsForOccasion.description);
+    formData.append("price", itemsDetailsForOccasion.price);
+
+    // Append each image in the array
+    itemsDetailsForOccasion.images.forEach((image, index) => {
+      formData.append("images", image);
+    });
+
+    // Safely iterate over the occasions array
+    if (Array.isArray(itemsDetailsForOccasion.occasions)) {
+      itemsDetailsForOccasion.occasions.forEach((categoryID) => {
+        formData.append("occasions", categoryID);
+      });
+    }
+
+    if (itemsDetailsForOccasion.images.length >= 10) {
+      alert("max number of images 10");
+      setIsLoadingForOccasion(false);
+    } else {
+      try {
+        let { data } = await axios.post(
+          "https://akflorist-production.up.railway.app/admin1/additemsOfOccasions",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        // Reset the form or perform other actions
+        setItemsDetailsForOccasion({
+          name: "",
+          description: "",
+          price: 0,
+          occasions: [], // Reset to an empty array
+          images: [],
+        });
+        setImagePreviewsForOccasion([]);
+        setIsLoadingForOccasion(false);
+        setErrorMessageForItemForOccasion("");
+        setAllCategoryNameForOccasion([]);
+        setAllCategoryIdForOccasion([]);
+        showAlertMessage();
+      } catch (error) {
+        if (error.response && error.response.status === 422) {
+          setErrorMessageForItemForOccasion("you should choose occasion.");
+        } else if (error.response && error.response.status === 404) {
+          alert("name is already exist.");
+        } else if (error.response && error.response.status === 500) {
+          alert("max number of images 10");
+        } else if (error.response && error.response.status === 400) {
+          alert("please add name and description");
+        }
+        setIsLoadingForOccasion(false);
+      }
+    }
+  }
+
+  // ----------------------
+  // show items in occasion and delete and status and discount
+  const [loadingForItemsForOccasion, setLoadingForItemsForOccasion] =
+    useState(false);
+  const [classForItemsForOccasion, setClassForItemsForOccasion] =
+    useState("d-none");
+  const [statusLoadingForOccasion, setStatusLoadingForOccasion] =
+    useState(false);
+  const [itemsInCategoryForOccasion, setItemInCategoryForOccasion] = useState(
+    []
+  );
+  const [itemIDForDeleteForOccasion, setItemIdForDeleteForOccasion] = useState({
+    itemID: "",
   });
-  setSaleputtedForOccasion(false);
-}
-function CloseItemsInCategoryForOccasion() {
-  setClassForItemsForOccasion("d-none");
-  setSaleputtedForOccasion(false);
-  setSalePercentForOccasion({
+  // console.log(itemIDForDeleteForOccasion);
+
+  const [sureDeleteItemForOccasion, setSureDeleteItemForOccasion] =
+    useState("d-none");
+  const [sellerLoadingForOccasion, setSellerLoadingForOccasion] =
+    useState(false);
+  const [categroryIdForOccasion, setCategoryIDForOccasion] = useState({
+    categoryId: "",
+    itemID: "",
+  });
+  const [salePercentForOccasion, setSalePercentForOccasion] = useState({
     itemID: "",
     discount: 0,
   });
+  const [salePuttedForOccasion, setSaleputtedForOccasion] = useState(false);
+  const [salePuttedItemIdForOccasion, setSalePuttedItemIdForOccasion] =
+    useState(null);
+  const [sureBoxForCancelperForOcccasion, setSureBoxForCAncelPerForOccasion] =
+    useState(false);
+  const [loadForPercentForOccasion, setLoadForPercentForOccasion] =
+    useState(false);
+  const [sureDeleteItemFromOneOccasion, setSureDeleteItemFromOccasion] =
+    useState("d-none");
+  // pagination
+  const [currentPageForOccasion, setCurrentPageForOccasion] = useState(1);
+  const itemsPerPageForOccasion = 6;
+  const totalPagesForOccasion = Math.ceil(
+    itemsInCategoryForOccasion.length / itemsPerPageForOccasion
+  );
+  const indexOfLastItemForOccasion =
+    currentPageForOccasion * itemsPerPageForOccasion;
+  const indexOfFirstItemForOcassion =
+    indexOfLastItemForOccasion - itemsPerPageForOccasion;
+  const currentItemForOccasion = itemsInCategoryForOccasion.slice(
+    indexOfFirstItemForOcassion,
+    indexOfLastItemForOccasion
+  );
+  // console.log(currentItem);
 
-  setClassOFArrowForOccasion("d-none ");
-}
-function putSalePercentItemIdForOccasion(itemID) {
-  setSalePercentForOccasion({ ...salePercentForOccasion, itemID: itemID });
-  setSaleputtedForOccasion(true);
-  setSalePuttedItemIdForOccasion(itemID);
-}
-function cancelSaleForOccasion(idOFOneItem) {
-  setSalePercentForOccasion({
-    itemID: idOFOneItem,
-    discount: 0,
-  });
-  setSureBoxForCAncelPerForOccasion(true);
-}
-function closeSureBoxForCancelPerForOccasion() {
-  setSureBoxForCAncelPerForOccasion(false);
-}
-function submitCancelPercentForOccasion(e) {
-  submitSalePercentForOccasion(e);
-}
-async function submitSalePercentForOccasion(e) {
-  e.preventDefault();
-  setLoadForPercentForOccasion(true);
-  if (
-    !salePercentForOccasion.itemID ||
-    salePercentForOccasion.discount === null ||
-    salePercentForOccasion.discount === undefined ||
-    salePercentForOccasion.itemID === undefined
-  ) {
-    alert("Please Put Percent Before You Clicked.");
-    setLoadForPercentForOccasion(false);
-  } else {
+  const paginateForOccasion = (pageNumber) => {
+    if (pageNumber > 0 && pageNumber <= totalPagesForOccasion) {
+      setCurrentPageForOccasion(pageNumber);
+    }
+  };
+  const [classOfArrowForOccasion, setClassOFArrowForOccasion] =
+    useState("d-none");
+  // end of pagination
+  async function getItemsForOccasions(e, categoryId) {
+    e.preventDefault();
+    setLoadingForItemsForOccasion(true);
     try {
-      let { data } = await axios.patch(
-        "https://akflorist-production.up.railway.app/admin1/occasionSale",
-        salePercentForOccasion
+      let { data } = await axios.get(
+        `https://akflorist-production.up.railway.app/admin1/getItemOfOccasion/${categoryId}`
       );
       // console.log(data);
-      getItemsForOccasions(e, categroryIdForOccasion.categoryId);
-      setSaleputtedForOccasion(false);
-      setSalePercentForOccasion({ itemID: "", discount: 0 });
-      showAlertMessage();
-      setLoadForPercentForOccasion(false);
-      setSureBoxForCAncelPerForOccasion(false);
-    } catch (error) {}
-  }
-}
-function putIdOFItemDeletItForOccasion(itemID) {
-  setCategoryIDForOccasion({ ...categroryIdForOccasion, itemID: itemID });
-  setSureDeleteItemFromOccasion(
-    "position-fixed top-50 start-50 translate-middle z-3 bg-white shadow rounded-3  text-black p-5"
-  );
-}
-function closeSureBoxForOccasion() {
-  setSureDeleteItemForOccasion("d-none");
-}
-async function deleteItemForOccasion(e) {
-  e.preventDefault();
-  try {
-    let { data } = await axios.delete(
-      `https://akflorist-production.up.railway.app/admin1/deleteItemOfOccasion/${itemIDForDeleteForOccasion}`
-    );
-    // console.log(data);
-    setSureDeleteItemForOccasion("d-none");
-    getItemsForOccasions(e, categroryIdForOccasion.categoryId);
-    showAlertMessage();
-  } catch (error) {}
-}
-async function deleteItemFromOneOccasion(e) {
-  // console.log(itemID);
-  e.preventDefault();
-  if (
-    categroryIdForOccasion.itemID == "" ||
-    categroryIdForOccasion.categoryId == ""
-  ) {
-    alert("click on delete again please");
-  } else {
-    try {
-      let { data } = await axios.patch(
-        "https://akflorist-production.up.railway.app/admin1/removeOneOccasion",
-        categroryIdForOccasion
+      setLoadingForItemsForOccasion(false);
+      setItemInCategoryForOccasion(data);
+      setCategoryIDForOccasion({
+        ...categroryIdForOccasion,
+        categoryId: categoryId,
+      });
+      setClassForItemsForOccasion(
+        "d-flex justify-content-center gap-3 flex-wrap position-relative"
       );
-      showAlertMessage();
-      setSureDeleteItemFromOccasion("d-none");
-      getItemsForOccasions(e, categroryIdForOccasion.categoryId);
+      setClassOFArrowForOccasion(
+        "pagination-controls my-4 d-flex justify-content-center "
+      );
     } catch (error) {
-      if (error.response && error.response.status === 404 ) {
-        alert("delete it from X button")
+      if (error.response && error.response.status === 404) {
+        setLoadingForItemsForOccasion(false);
+        setItemInCategoryForOccasion([]);
+        alert("no items in this occasion");
       }
     }
   }
-}
-function closeSureBoxOFitemForOccasion() {
-  setSureDeleteItemFromOccasion("d-none");
-}
-async function submitSellerOfItemForOccasion(e, itemID) {
-  e.preventDefault();
-  setSellerLoadingForOccasion(true);
-  //  console.log(itemID);
-  if (itemID === "") {
-    alert("try again later");
-  } else {
+
+  function putItemIdForOccasion(itemID) {
+    setItemIdForDeleteForOccasion(itemID);
+    // console.log(itemID);
+
+    setSureDeleteItemForOccasion(
+      "position-fixed top-50 start-50 translate-middle z-3 bg-white shadow rounded-3  text-black p-5"
+    );
+  }
+  async function putStatusOfItemForOccasion(e, idOfItem) {
+    console.log(idOfItem);
+
+    e.preventDefault();
+    setStatusLoadingForOccasion(true);
     try {
       let { data } = await axios.patch(
-        "https://akflorist-production.up.railway.app/admin1/bestSellerOccasion",
-        { itemID: `${itemID}` }
+        `https://akflorist-production.up.railway.app/admin1/changeItemOfOccasionStatus/${idOfItem}`
       );
-      setSellerLoadingForOccasion(false);
+      setStatusLoadingForOccasion(false);
       getItemsForOccasions(e, categroryIdForOccasion.categoryId);
-      showAlertMessage();
     } catch (error) {
-      setSellerLoadingForOccasion(false);
-      console.error("Error updating best seller:", error);
+      if (error.response && error.response.status === 404) {
+        setStatusLoadingForOccasion(false);
+      }
     }
   }
-}
-// -------------------------------------------------------
+
+  function handleSellerButtonClickForOccasion(e, idOfItem) {
+    // Call submitSellerOfItem with the correct itemID
+    submitSellerOfItemForOccasion(e, idOfItem);
+    // console.log(idOfItem);
+  }
+  function putSalePercentForOccasion(e) {
+    setSalePercentForOccasion({
+      ...salePercentForOccasion,
+      discount: e.target.value,
+    });
+    setSaleputtedForOccasion(false);
+  }
+  function CloseItemsInCategoryForOccasion() {
+    setClassForItemsForOccasion("d-none");
+    setSaleputtedForOccasion(false);
+    setSalePercentForOccasion({
+      itemID: "",
+      discount: 0,
+    });
+
+    setClassOFArrowForOccasion("d-none ");
+  }
+  function putSalePercentItemIdForOccasion(itemID) {
+    setSalePercentForOccasion({ ...salePercentForOccasion, itemID: itemID });
+    setSaleputtedForOccasion(true);
+    setSalePuttedItemIdForOccasion(itemID);
+  }
+  function cancelSaleForOccasion(idOFOneItem) {
+    setSalePercentForOccasion({
+      itemID: idOFOneItem,
+      discount: 0,
+    });
+    setSureBoxForCAncelPerForOccasion(true);
+  }
+  function closeSureBoxForCancelPerForOccasion() {
+    setSureBoxForCAncelPerForOccasion(false);
+  }
+  function submitCancelPercentForOccasion(e) {
+    submitSalePercentForOccasion(e);
+  }
+  async function submitSalePercentForOccasion(e) {
+    e.preventDefault();
+    setLoadForPercentForOccasion(true);
+    if (
+      !salePercentForOccasion.itemID ||
+      salePercentForOccasion.discount === null ||
+      salePercentForOccasion.discount === undefined ||
+      salePercentForOccasion.itemID === undefined
+    ) {
+      alert("Please Put Percent Before You Clicked.");
+      setLoadForPercentForOccasion(false);
+    } else {
+      try {
+        let { data } = await axios.patch(
+          "https://akflorist-production.up.railway.app/admin1/occasionSale",
+          salePercentForOccasion
+        );
+        // console.log(data);
+        getItemsForOccasions(e, categroryIdForOccasion.categoryId);
+        setSaleputtedForOccasion(false);
+        setSalePercentForOccasion({ itemID: "", discount: 0 });
+        showAlertMessage();
+        setLoadForPercentForOccasion(false);
+        setSureBoxForCAncelPerForOccasion(false);
+      } catch (error) {}
+    }
+  }
+  function putIdOFItemDeletItForOccasion(itemID) {
+    setCategoryIDForOccasion({ ...categroryIdForOccasion, itemID: itemID });
+    setSureDeleteItemFromOccasion(
+      "position-fixed top-50 start-50 translate-middle z-3 bg-white shadow rounded-3  text-black p-5"
+    );
+  }
+  function closeSureBoxForOccasion() {
+    setSureDeleteItemForOccasion("d-none");
+  }
+  async function deleteItemForOccasion(e) {
+    e.preventDefault();
+    try {
+      let { data } = await axios.delete(
+        `https://akflorist-production.up.railway.app/admin1/deleteItemOfOccasion/${itemIDForDeleteForOccasion}`
+      );
+      // console.log(data);
+      setSureDeleteItemForOccasion("d-none");
+      getItemsForOccasions(e, categroryIdForOccasion.categoryId);
+      showAlertMessage();
+    } catch (error) {}
+  }
+  async function deleteItemFromOneOccasion(e) {
+    // console.log(itemID);
+    e.preventDefault();
+    if (
+      categroryIdForOccasion.itemID == "" ||
+      categroryIdForOccasion.categoryId == ""
+    ) {
+      alert("click on delete again please");
+    } else {
+      try {
+        let { data } = await axios.patch(
+          "https://akflorist-production.up.railway.app/admin1/removeOneOccasion",
+          categroryIdForOccasion
+        );
+        showAlertMessage();
+        setSureDeleteItemFromOccasion("d-none");
+        getItemsForOccasions(e, categroryIdForOccasion.categoryId);
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          alert("delete it from X button");
+        }
+      }
+    }
+  }
+  function closeSureBoxOFitemForOccasion() {
+    setSureDeleteItemFromOccasion("d-none");
+  }
+  async function submitSellerOfItemForOccasion(e, itemID) {
+    e.preventDefault();
+    setSellerLoadingForOccasion(true);
+    //  console.log(itemID);
+    if (itemID === "") {
+      alert("try again later");
+    } else {
+      try {
+        let { data } = await axios.patch(
+          "https://akflorist-production.up.railway.app/admin1/bestSellerOccasion",
+          { itemID: `${itemID}` }
+        );
+        setSellerLoadingForOccasion(false);
+        getItemsForOccasions(e, categroryIdForOccasion.categoryId);
+        showAlertMessage();
+      } catch (error) {
+        setSellerLoadingForOccasion(false);
+        console.error("Error updating best seller:", error);
+      }
+    }
+  }
+  // -------------------------------------------------------
+  const [allOrders, setAllOrders] = useState([]);
+  async function getAllOrders() {
+    try {
+      let { data } = await axios.get(
+        "https://akflorist-production.up.railway.app/admin2/getAllOrders"
+      );
+      console.log(data.orders);
+      setAllOrders(data.orders);
+    } catch (error) {}
+  }
+  useEffect(() => {
+    getAllOrders();
+  }, []);
   return (
     <>
       <div className=" position-fixed end-2 rounded-circle bg-danger top-5">
@@ -914,12 +927,26 @@ async function submitSellerOfItemForOccasion(e, itemID) {
       <div className={showAlert}>
         <div className="custom-alert text-center">Done</div>
       </div>
+      {/* orders  */}
+      <h3 className="text-center py-3 responsive-font-size-h3 text-[#7E96C4]"> Orders Of The Day </h3>
+      <div className="d-flex justify-content-center gap-3 flex-wrap">
+        {allOrders == null || allOrders.length === 0
+          ? "No orders Found "
+          : allOrders.map((element , i) => (
+              <div key={i} className="p-2 rounded border border-2 border-danger d-flex flex-column justify-content-end align-items-center w-[30%]">
+                <p className="w-100 text-start"><span className="fw-bold">Name :</span> <span className="text-muted">{element?.customer?.firstName} {element?.customer?.lastName}</span> </p>
+                <p className="w-100 text-start"><span className="fw-bold">Address : </span><span>{element?.customer?.firstName} {element?.customer?.lastName}</span> </p>
+              </div>
+            ))}
+      </div>
+      {/* done */}
       {/* add items in category */}
       <h3 className="responsive-font-size-h3 mt-3 colorForTitles text-center">
         Add Items In Category
       </h3>
 
       {/* add itmes in categories  */}
+      
       <div className="d-flex justify-content-center flex-wrap gap-3 mt-5">
         <div className="d-flex border-3 border-secondary rounded pt-3 flex-column gap-3">
           <div className="d-flex justify-content-center gap-3 flex-wrap">
@@ -1353,144 +1380,141 @@ async function submitSellerOfItemForOccasion(e, itemID) {
       {/* end of status  ****************************----*/}
       {/* add itmes in occasions  */}
       <div className="d-flex justify-content-center flex-wrap gap-3 mt-5">
-            <div className="d-flex border-3 border-secondary rounded pt-3 flex-column gap-3">
-              <div className="d-flex justify-content-center gap-3 flex-wrap">
-                {showCategoryForOccasion === null ||
-                showCategoryForOccasion.length === 0 ? (
-                  <p className="text-center text-danger">
-                    "There are no categories"
-                  </p>
-                ) : (
-                  showCategoryForOccasion.map((element, i) => (
-                    <div key={i}>
-                      <button
-                        onClick={() => {
-                          handleCategorySelection(element._id, element.name);
-                        }}
-                        className="btn btn-secondary text-white"
-                      >
-                        {element?.name}
-                      </button>
-                    </div>
-                  ))
-                )}
-              </div>
-              <div className="d-flex justify-content-center border-3 border-secondary gap-3 flex-wrap p-2 overflow-auto">
-                {AllCategoryNameForOccasion === null ||
-                AllCategoryNameForOccasion.length === 0
-                  ? "Here, you will find the categories you have selected. This section provides a clear and organized view of your chosen categories, ensuring that you can easily track and manage your selections."
-                  : AllCategoryNameForOccasion.map((element, i) => (
-                      <div
-                        key={i}
-                        className="d-flex justify-content-center gap-1"
-                      >
-                        <button className="btn btn-light text-dark">
-                          {element}
-                        </button>
-                        <button
-                          onClick={() => {
-                            const categoryID = AllCategoryIdForOccasion[i]; // This assumes names and IDs are in the same order
-                            removeCategoryIdForOccasion(categoryID, element);
-                          }}
-                          className="btn btn-close"
-                        ></button>
-                      </div>
-                    ))}
-              </div>
-            </div>
-            {/* form ---------------------- */}
-            <div className="container border-3 border-secondary rounded d-flex align-items-center flex-column p-3 position-relative ">
-              <div
-                onClick={closeShowItemsForOccasion}
-                className="position-absolute end-4 top-50"
-              >
-                <button className="btn btn-close"></button>
-              </div>
-              <form className="w-50">
-                <div className="mb-3">
-                  <label htmlFor="name" className="form-label">
-                    item name
-                  </label>
-                  <input
-                    onChange={putItemInfoForOccasion}
-                    type="text"
-                    className="form-control"
-                    id="itemNameForOccasion" // Unique id
-                    aria-describedby="emailHelp"
-                    name="name"
-                    value={itemsDetailsForOccasion.name}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="description" className="form-label">
-                    description
-                  </label>
-                  <input
-                    onChange={putItemInfoForOccasion}
-                    type="text"
-                    className="form-control"
-                    id="itemDescriptionForOccasion" // Unique id
-                    name="description"
-                    value={itemsDetailsForOccasion.description}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label className="form-label" htmlFor="price">
-                    {" "}
-                    {/* Changed id */}
-                    price
-                  </label>
-                  <input
-                    onChange={putItemInfoForOccasion}
-                    type="number"
-                    className="form-control"
-                    id="itemPrice1ForOccasion" // Unique id
-                    name="price"
-                    value={itemsDetailsForOccasion.price}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label className="form-label" htmlFor="images">
-                    image
-                  </label>
-                  <input
-                    onChange={handleImageOnChangeForOccasion}
-                    ref={imageInputRefForOccasion}
-                    multiple
-                    type="file"
-                    className="form-control"
-                    id="itemImages" // Unique id
-                    name="images"
-                    accept="image/*"
-                  />
-                </div>
-                <div className="image-preview-container d-flex gap-3">
-                  {imagePreviewsForOccasion.length > 0 &&
-                    imagePreviewsForOccasion.map((image, index) => (
-                      <div key={index} className="image-preview">
-                        <img src={image} alt={`Preview ${index}`} width="100" />
-                      </div>
-                    ))}
-                </div>
-                {errorMessageForItemForOccasion === ""
-                  ? ""
-                  : errorMessageForItemForOccasion}
-                {isLoadingForOccasion ? (
-                  <button disabled className=" btn btn-primary px-4">
-                    <i className="fa solid fa-spinner fa-spin "></i>
-                  </button>
-                ) : (
+        <div className="d-flex border-3 border-secondary rounded pt-3 flex-column gap-3">
+          <div className="d-flex justify-content-center gap-3 flex-wrap">
+            {showCategoryForOccasion === null ||
+            showCategoryForOccasion.length === 0 ? (
+              <p className="text-center text-danger">
+                "There are no categories"
+              </p>
+            ) : (
+              showCategoryForOccasion.map((element, i) => (
+                <div key={i}>
                   <button
-                    onClick={sendItemDetailForOccasion}
-                    type="submit"
-                    className="btn btn-primary"
+                    onClick={() => {
+                      handleCategorySelection(element._id, element.name);
+                    }}
+                    className="btn btn-secondary text-white"
                   >
-                    Submit
+                    {element?.name}
                   </button>
-                )}
-              </form>
-            </div>
+                </div>
+              ))
+            )}
           </div>
+          <div className="d-flex justify-content-center border-3 border-secondary gap-3 flex-wrap p-2 overflow-auto">
+            {AllCategoryNameForOccasion === null ||
+            AllCategoryNameForOccasion.length === 0
+              ? "Here, you will find the categories you have selected. This section provides a clear and organized view of your chosen categories, ensuring that you can easily track and manage your selections."
+              : AllCategoryNameForOccasion.map((element, i) => (
+                  <div key={i} className="d-flex justify-content-center gap-1">
+                    <button className="btn btn-light text-dark">
+                      {element}
+                    </button>
+                    <button
+                      onClick={() => {
+                        const categoryID = AllCategoryIdForOccasion[i]; // This assumes names and IDs are in the same order
+                        removeCategoryIdForOccasion(categoryID, element);
+                      }}
+                      className="btn btn-close"
+                    ></button>
+                  </div>
+                ))}
+          </div>
+        </div>
+        {/* form ---------------------- */}
+        <div className="container border-3 border-secondary rounded d-flex align-items-center flex-column p-3 position-relative ">
+          <div
+            onClick={closeShowItemsForOccasion}
+            className="position-absolute end-4 top-50"
+          >
+            <button className="btn btn-close"></button>
+          </div>
+          <form className="w-50">
+            <div className="mb-3">
+              <label htmlFor="name" className="form-label">
+                item name
+              </label>
+              <input
+                onChange={putItemInfoForOccasion}
+                type="text"
+                className="form-control"
+                id="itemNameForOccasion" // Unique id
+                aria-describedby="emailHelp"
+                name="name"
+                value={itemsDetailsForOccasion.name}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="description" className="form-label">
+                description
+              </label>
+              <input
+                onChange={putItemInfoForOccasion}
+                type="text"
+                className="form-control"
+                id="itemDescriptionForOccasion" // Unique id
+                name="description"
+                value={itemsDetailsForOccasion.description}
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label" htmlFor="price">
+                {" "}
+                {/* Changed id */}
+                price
+              </label>
+              <input
+                onChange={putItemInfoForOccasion}
+                type="number"
+                className="form-control"
+                id="itemPrice1ForOccasion" // Unique id
+                name="price"
+                value={itemsDetailsForOccasion.price}
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label" htmlFor="images">
+                image
+              </label>
+              <input
+                onChange={handleImageOnChangeForOccasion}
+                ref={imageInputRefForOccasion}
+                multiple
+                type="file"
+                className="form-control"
+                id="itemImages" // Unique id
+                name="images"
+                accept="image/*"
+              />
+            </div>
+            <div className="image-preview-container d-flex gap-3">
+              {imagePreviewsForOccasion.length > 0 &&
+                imagePreviewsForOccasion.map((image, index) => (
+                  <div key={index} className="image-preview">
+                    <img src={image} alt={`Preview ${index}`} width="100" />
+                  </div>
+                ))}
+            </div>
+            {errorMessageForItemForOccasion === ""
+              ? ""
+              : errorMessageForItemForOccasion}
+            {isLoadingForOccasion ? (
+              <button disabled className=" btn btn-primary px-4">
+                <i className="fa solid fa-spinner fa-spin "></i>
+              </button>
+            ) : (
+              <button
+                onClick={sendItemDetailForOccasion}
+                type="submit"
+                className="btn btn-primary"
+              >
+                Submit
+              </button>
+            )}
+          </form>
+        </div>
+      </div>
       {/* done add items in occasion ***************** */}
       {/* add status for each item IN stock or out  */}
       <h3 className="responsive-font-size-h3 mt-3 colorForTitles text-center">
