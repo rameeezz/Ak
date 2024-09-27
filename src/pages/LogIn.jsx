@@ -39,10 +39,10 @@ function LogIn({ saveUser, userRole }) {
       const data = await response.json();
       // Redirect to the Google OAuth URL
       // window.location.href = data.url;
-      console.log(window.location.search);
+      // console.log(window.location.search);
       
-      // const urlParams = new URLSearchParams(window.location.search);
-      // console.log(urlParams);
+      const urlParams = new URLSearchParams(window.location.search);
+      console.log(urlParams);
     } catch (error) {
       console.error("Error during auth:", error.message);
       alert("Authentication failed. Please try again."); // User-friendly message
