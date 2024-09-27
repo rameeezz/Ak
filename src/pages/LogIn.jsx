@@ -37,6 +37,8 @@ function LogIn({ saveUser, userRole }) {
       const data = await response.json();
       // Redirect to the Google OAuth URL
       window.location.href = data.url;
+      console.log(window.location.href = data.url;);
+      
     } catch (error) {
       console.error("Error during auth:", error.message);
       alert("Authentication failed. Please try again."); // User-friendly message
