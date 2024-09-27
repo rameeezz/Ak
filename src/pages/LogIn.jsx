@@ -20,6 +20,8 @@ function LogIn({ saveUser, userRole }) {
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
+
+  // Step 1: Initiate Google OAuth flow
   async function auth() {
     try {
       // Initiate Google OAuth flow by making a request to your backend
@@ -37,8 +39,6 @@ function LogIn({ saveUser, userRole }) {
       const data = await response.json();
       // Redirect to the Google OAuth URL
       window.location.href = data.url;
-      console.log(window.location.href = data.url);
-      
     } catch (error) {
       console.error("Error during auth:", error.message);
       alert("Authentication failed. Please try again."); // User-friendly message
@@ -47,12 +47,10 @@ function LogIn({ saveUser, userRole }) {
 
   // Step 2: Handle the callback after Google redirects back to your app
   useEffect(() => {
-    const getLocation = window.location.search
-    const urlParams = new URLSearchParams(getLocation);
+    const urlParams = new URLSearchParams(window.location.search);
     console.log(urlParams);
 
     const code = urlParams.get("code");
-    console.log(code);
 
     if (code) {
       handleGoogleCallback(code);
@@ -80,77 +78,11 @@ function LogIn({ saveUser, userRole }) {
       // Save token and user data to local storage
       localStorage.setItem("token", data.tokens.access_token);
       saveUser(data.userData); // Assuming saveUser is a function to manage user data
-
-      // Redirect to the home page after successful authentication
-      window.location.href = "/home"; // Change this if your home path is different
     } catch (error) {
       console.error("Error during Google callback:", error.message);
       alert("Failed to retrieve user data. Please try again."); // User-friendly message
     }
   }
-
-  // Step 1: Initiate Google OAuth flow
-  // async function auth() {
-  //   try {
-  //     // Initiate Google OAuth flow by making a request to your backend
-  //     const response = await fetch(
-  //       "https://akflorist-production.up.railway.app/auth/google",
-  //       {
-  //         method: "POST",
-  //       }
-  //     );
-
-  //     if (!response.ok) {
-  //       throw new Error(`Failed to initiate OAuth: ${response.status}`);
-  //     }
-
-  //     const data = await response.json();
-  //     // Redirect to the Google OAuth URL
-  //     window.location.href = data.url;
-  //   } catch (error) {
-  //     console.error("Error during auth:", error.message);
-  //     alert("Authentication failed. Please try again."); // User-friendly message
-  //   }
-  // }
-
-  // // Step 2: Handle the callback after Google redirects back to your app
-  // useEffect(() => {
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   console.log(urlParams);
-
-  //   const code = urlParams.get("code");
-
-  //   if (code) {
-  //     handleGoogleCallback(code);
-  //   } else {
-  //     console.log("No code found in the URL");
-  //   }
-  // }, []);
-
-  // async function handleGoogleCallback(code) {
-  //   console.log(code);
-
-  //   try {
-  //     const response = await fetch(
-  //       `https://akflorist-production.up.railway.app/getGoogleUser?code=${code}`,
-  //       { method: "GET" }
-  //     );
-
-  //     if (!response.ok) {
-  //       throw new Error(`Failed to fetch user data: ${response.status}`);
-  //     }
-
-  //     const data = await response.json();
-  //     console.log("Google user data:", data);
-
-  //     // Save token and user data to local storage
-  //     localStorage.setItem("token", data.tokens.access_token);
-  //     saveUser(data.userData); // Assuming saveUser is a function to manage user data
-  //   } catch (error) {
-  //     console.error("Error during Google callback:", error.message);
-  //     alert("Failed to retrieve user data. Please try again."); // User-friendly message
-  //   }
-  // }
 
   // Handle form input changes
   function setUserInput(e) {
