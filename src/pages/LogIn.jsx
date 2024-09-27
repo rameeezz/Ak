@@ -37,7 +37,7 @@ function LogIn({ saveUser, userRole }) {
       }
 
       const data = await response.json();
-      console.log(data);
+      console.log(data.url);
       
       // Redirect to the Google OAuth URL
       // window.location.href = data.url;
