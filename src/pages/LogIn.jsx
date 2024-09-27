@@ -37,12 +37,7 @@ function LogIn({ saveUser, userRole }) {
       }
 
       const data = await response.json();
-      // Redirect to the Google OAuth URL
-      // window.location.href = data.url;
-      // console.log(window.location.search);
-      
-      const urlParams = new URLSearchParams(window.location.search);
-      console.log(urlParams);
+      window.location.href = data.url;
     } catch (error) {
       console.error("Error during auth:", error.message);
       alert("Authentication failed. Please try again."); // User-friendly message
@@ -50,17 +45,19 @@ function LogIn({ saveUser, userRole }) {
   }
 
   // Step 2: Handle the callback after Google redirects back to your app
-  // useEffect(() => {
-   
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get("code");
 
-  //   const code = urlParams.get("code");
-
-  //   if (code) {
-  //     handleGoogleCallback(code);
-  //   } else {
-  //     console.log("No code found in the URL");
-  //   }
-  // }, []);
+    console.log(code);
+    
+    // if (code) {
+    //   console.log("Google auth code:", code);
+    //   handleGoogleCallback(code);
+    // } else {
+    //   console.log("No code found in the URL");
+    // }
+  }, []);
 
   async function handleGoogleCallback(code) {
     console.log(code);
