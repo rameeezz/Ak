@@ -48,7 +48,13 @@ function LogIn({ saveUser, userRole }) {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
-    localStorage.setItem("code", code);
+    if (code) {
+      // Save the code to localStorage
+      localStorage.setItem("code", code);
+      console.log("OAuth code saved:", code);
+    } else {
+      console.log("No OAuth code found in the URL.");
+    }
     // console.log(code);
 
     // if (code) {
