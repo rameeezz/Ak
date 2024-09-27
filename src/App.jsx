@@ -1,11 +1,6 @@
-// import { useEffect, useState } from "react";
-// import "./App.css";
-// import {
-//   createBrowserRouter,
-//   RouterProvider,
-//   Navigate,
-// } from "react-router-dom";
-// import {jwtDecode} from "jwt-decode"; // Fixed import for jwtDecode
+// import React, { useEffect, useState } from "react";
+// import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+// import { jwtDecode } from "jwt-decode";
 // import Home from "./pages/Home";
 // import MasterLayout from "./pages/MasterLayout";
 // import NotFound from "./pages/NotFound";
@@ -16,6 +11,14 @@
 // import Admin2 from './pages/Admin2';
 // import ShowItems from './pages/ShowItems';
 // import BestSellerItems from './pages/BestSellerItems';
+// import AllCategory from './pages/AllCategory';
+// import AllOccasions from './pages/AllOccasions';
+// import ShowItemsInOccasion from "./pages/ShowItemsInOccasion";
+// import AllSpecialDeals from './pages/AllSpecialDeals';
+// import SubCategoryItems from './pages/SubCategoryItems';
+// import ItemContent from './pages/ItemContent';
+// import SearchItems from './pages/SearchItems';
+// import Basket from './pages/Basket';
 
 // function App() {
 //   const [user, setUser] = useState(null);
@@ -57,7 +60,7 @@
 
 //     return children;
 //   }
-  
+
 //   const router = createBrowserRouter([
 //     {
 //       path: "/",
@@ -65,7 +68,7 @@
 //       errorElement: <NotFound />,
 //       children: [
 //         {
-//           path: "",
+//           path: "/",
 //           element: <Home user={user} />, // Public route
 //         },
 //         {
@@ -89,23 +92,31 @@
 //           ),
 //         },
 //         { path: "register", element: <Register /> },
-//         { path: "showItems", element: <ShowItems/>},
-//         { path: "best-sellers", element: <BestSellerItems user={user}/>},
+//         { path: "show-items", element: <ShowItems user={user}/> },
+//         { path: "show-items-in-sub-category", element: <SubCategoryItems user={user}/> },
+//         { path: "show-items-in-occasion", element: <ShowItemsInOccasion user={user}/> },
+//         { path: "all-category", element: <AllCategory  user={user}/> },
+//         { path: "all-occasion", element: <AllOccasions  user={user}/> },
+//         { path: "basket", element: <Basket user={user} logOut={logOut}/> },
+//         { path: "result-search", element: <SearchItems  user={user}/> },
+//         { path: "all-special-deals", element: <AllSpecialDeals user={user}/> },
+//         { path: "best-sellers", element: <BestSellerItems user={user} /> },
+//         { path: "item-content", element: <ItemContent user={user} /> },
 //         {
 //           path: "login",
 //           element: <LogIn saveUser={SaveUserData} userRole={user} />,
 //         },
 //         { path: "forgetPassword", element: <ForgetPassword /> },
+//         { path: "*", element: <NotFound /> }
 //       ],
 //     },
 //   ]);
 
-//   return (
-//     <RouterProvider router={router} />
-//   );
+//   return <RouterProvider router={router} />;
 // }
 
 // export default App;
+
 import React, { useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
@@ -177,11 +188,11 @@ function App() {
       children: [
         {
           path: "",
-          element: <Home user={user} />, // Public route
+          element: <Navigate to="/home" replace />,  // Redirect to /home when root path is accessed
         },
         {
           path: "home",
-          element: <Home user={user} />, // Public route
+          element: <Home user={user} />,  // Public route
         },
         {
           path: "admin1",
@@ -224,4 +235,3 @@ function App() {
 }
 
 export default App;
-
