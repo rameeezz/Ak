@@ -29,11 +29,11 @@ function LogIn({ saveUser, userRole }) {
           method: "POST",
         }
       );
-  
+
       if (!response.ok) {
         throw new Error(`Failed to initiate OAuth: ${response.status}`);
       }
-  
+
       const data = await response.json();
       // Redirect to the Google OAuth URL
       window.location.href = data.url;
@@ -42,41 +42,44 @@ function LogIn({ saveUser, userRole }) {
       alert("Authentication failed. Please try again."); // User-friendly message
     }
   }
-  
+
   // Step 2: Handle the callback after Google redirects back to your app
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
+    const getLocation = window.location.search
+    const urlParams = new URLSearchParams(getLocation);
     console.log(urlParams);
-  
-    const code = urlParams.get("code");
-  
-    if (code) {
-      handleGoogleCallback(code);
-    } else {
-      console.log("No code found in the URL");
-    }
+
+    const urlInfo = urlParams.getAll();
+    const code = urlInfo.code
+    console.log(urlInfo);
+
+    // if (code) {
+    //   handleGoogleCallback(code);
+    // } else {
+    //   console.log("No code found in the URL");
+    // }
   }, []);
-  
+
   async function handleGoogleCallback(code) {
     console.log(code);
-  
+
     try {
       const response = await fetch(
         `https://akflorist-production.up.railway.app/getGoogleUser?code=${code}`,
         { method: "GET" }
       );
-  
+
       if (!response.ok) {
         throw new Error(`Failed to fetch user data: ${response.status}`);
       }
-  
+
       const data = await response.json();
       console.log("Google user data:", data);
-  
+
       // Save token and user data to local storage
       localStorage.setItem("token", data.tokens.access_token);
       saveUser(data.userData); // Assuming saveUser is a function to manage user data
-  
+
       // Redirect to the home page after successful authentication
       window.location.href = "/home"; // Change this if your home path is different
     } catch (error) {
@@ -84,7 +87,7 @@ function LogIn({ saveUser, userRole }) {
       alert("Failed to retrieve user data. Please try again."); // User-friendly message
     }
   }
-  
+
   // Step 1: Initiate Google OAuth flow
   // async function auth() {
   //   try {
@@ -95,11 +98,11 @@ function LogIn({ saveUser, userRole }) {
   //         method: "POST",
   //       }
   //     );
-  
+
   //     if (!response.ok) {
   //       throw new Error(`Failed to initiate OAuth: ${response.status}`);
   //     }
-  
+
   //     const data = await response.json();
   //     // Redirect to the Google OAuth URL
   //     window.location.href = data.url;
@@ -108,37 +111,37 @@ function LogIn({ saveUser, userRole }) {
   //     alert("Authentication failed. Please try again."); // User-friendly message
   //   }
   // }
-  
+
   // // Step 2: Handle the callback after Google redirects back to your app
   // useEffect(() => {
   //   const urlParams = new URLSearchParams(window.location.search);
   //   console.log(urlParams);
-    
+
   //   const code = urlParams.get("code");
-  
+
   //   if (code) {
-  //     handleGoogleCallback(code); 
+  //     handleGoogleCallback(code);
   //   } else {
   //     console.log("No code found in the URL");
   //   }
   // }, []);
-  
+
   // async function handleGoogleCallback(code) {
   //   console.log(code);
-    
+
   //   try {
   //     const response = await fetch(
   //       `https://akflorist-production.up.railway.app/getGoogleUser?code=${code}`,
   //       { method: "GET" }
   //     );
-  
+
   //     if (!response.ok) {
   //       throw new Error(`Failed to fetch user data: ${response.status}`);
   //     }
-  
+
   //     const data = await response.json();
   //     console.log("Google user data:", data);
-  
+
   //     // Save token and user data to local storage
   //     localStorage.setItem("token", data.tokens.access_token);
   //     saveUser(data.userData); // Assuming saveUser is a function to manage user data
@@ -147,7 +150,6 @@ function LogIn({ saveUser, userRole }) {
   //     alert("Failed to retrieve user data. Please try again."); // User-friendly message
   //   }
   // }
-  
 
   // Handle form input changes
   function setUserInput(e) {
