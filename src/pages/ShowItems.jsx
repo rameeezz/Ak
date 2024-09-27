@@ -298,6 +298,14 @@ export default function ShowItems({ user }) {
       }
     }
   }
+  useEffect(() => {
+    const { id } = location.state || {};
+    if (id) {
+      getAllItems();
+      itemsInSubCategory()
+    }
+  }, [location]);
+  
   return (
     <>
       <HeadOfPages user={user} cartID={cartID} itemsArray={itemsArray} />

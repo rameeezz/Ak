@@ -56,9 +56,13 @@ export default function NavBar({ user, logOut, cartID }) {
 
   async function getSubCategory(idOfCategory) {
     try {
+      // Reset subCategory when a new category is clicked
+      setSubCategory([]);
+  
       let { data } = await axios.get(
         `https://akflorist-production.up.railway.app/admin1/getCategoryContent/${idOfCategory}`
       );
+  
       if (data.subcategories && data.subcategories.length > 0) {
         setCategoryWithSubCategories((prev) => ({
           ...prev,
@@ -78,6 +82,7 @@ export default function NavBar({ user, logOut, cartID }) {
       console.error("Error fetching subcategories:", error);
     }
   }
+  
 
 
   const safeCartID = cartID || "defaultCartID"; 
