@@ -48,9 +48,9 @@ function LogIn({ saveUser, userRole }) {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
+    localStorage.setItem("code", code);
+    // console.log(code);
 
-    console.log(code);
-    
     // if (code) {
     //   console.log("Google auth code:", code);
     //   handleGoogleCallback(code);
