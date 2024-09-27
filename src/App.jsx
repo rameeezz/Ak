@@ -187,6 +187,10 @@ function App() {
       errorElement: <NotFound />,
       children: [
         {
+          path: "/",
+          element: <Navigate to="/home" replace />,  // Redirect to /home when root path is accessed
+        },
+        {
           path: "",
           element: <Navigate to="/home" replace />,  // Redirect to /home when root path is accessed
         },
