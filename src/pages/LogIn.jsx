@@ -23,11 +23,11 @@ function LogIn({ saveUser, userRole }) {
     setIsPasswordVisible(!isPasswordVisible);
   };
   const handleGoogleLoginSuccess = (credentialResponse) => {
-    const token = credentialResponse;
-    console.log(token);
+    const token = credentialResponse?.credential;
+    // console.log(token);
     
     if (token) {
-      // localStorage.setItem("token", token);
+      localStorage.setItem("token", token);
 
       // Send the token to the backend
       fetch("https://akflorist-production.up.railway.app/auth/google", {
