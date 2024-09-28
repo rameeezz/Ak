@@ -36,8 +36,6 @@ function LogIn({ saveUser, userRole }) {
     // console.log(credentialResponse);
 
     if (token) {
-      console.log(jwtDecode(token));
-
       localStorage.setItem("token", token);
       // Send the token to the backend
       fetch("https://akflorist-production.up.railway.app/auth/google", {
@@ -51,7 +49,6 @@ function LogIn({ saveUser, userRole }) {
         .then((data) => {
           const userData = data.user;
           console.log("from api :  ", userData);
-          saveUser(userData);
           setNumberDetails({ ...NumberDetails, userID: userData?._id });
           // Redirect to home page or handle accordingly
           // navigate("/home");
@@ -69,6 +66,7 @@ function LogIn({ saveUser, userRole }) {
             console.log("dasdsada");
             
           }
+          saveUser(userData);
         })
         .catch((error) => console.error("Error:", error));
     } else {
