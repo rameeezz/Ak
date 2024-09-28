@@ -28,8 +28,9 @@ function LogIn({ saveUser, userRole }) {
     // console.log(credentialResponse);
 
     if (token) {
+      localStorage.setItem("token",token);
       // Send the token to the backend
-      const { data } = fetch(
+       fetch(
         "https://akflorist-production.up.railway.app/auth/google",
         {
           method: "POST",
@@ -41,11 +42,11 @@ function LogIn({ saveUser, userRole }) {
       )
         .then((res) => res.json())
         .then((data) => {
+          saveUser(data.user);
           // Redirect to home page or handle accordingly
-          // navigate("/home");
+          navigate("/home");
         })
         .catch((error) => console.error("Error:", error));
-      console.log("ramez :      ", data);
     } else {
       alert("Failed to retrieve login credentials.");
     }
@@ -140,6 +141,8 @@ function LogIn({ saveUser, userRole }) {
         "https://akflorist-production.up.railway.app/auth/login",
         user
       );
+      console.log(data);
+      
       localStorage.setItem("token", data.token);
 
       // Update the user and role locally before navigating
