@@ -25,7 +25,7 @@ function LogIn({ saveUser, userRole }) {
   };
   const handleGoogleLoginSuccess = (credentialResponse) => {
     const token = credentialResponse?.credential;
-    console.log(credentialResponse);
+    // console.log(credentialResponse);
 
     if (token) {
       // Send the token to the backend
@@ -278,7 +278,7 @@ function LogIn({ saveUser, userRole }) {
               onError={() => {
                 alert("Login Failed");
               }}
-              scope="https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/user.phonenumbers.read"
+              // scope="https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/user.phonenumbers.read"
             />
           </div>
         </form>
