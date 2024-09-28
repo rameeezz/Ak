@@ -42,7 +42,7 @@ function LogIn({ saveUser, userRole }) {
       )
         .then((res) => res.json())
         .then((data) => {
-          console.log("from api :  ", data);
+          console.log("from api :  ", data.user);
           
           // saveUser(data.user);
           // Redirect to home page or handle accordingly
