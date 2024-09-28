@@ -25,7 +25,7 @@ function LogIn({ saveUser, userRole }) {
   };
   const handleGoogleLoginSuccess = (credentialResponse) => {
     const token = credentialResponse?.credential;
-    // console.log(token);
+    console.log(token);
     
     if (token) {
       // Send the token to the backend
