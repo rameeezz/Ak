@@ -22,7 +22,7 @@ import Basket from './pages/Basket';
 
 function App() {
   const [user, setUser] = useState(null);
-console.log(user);
+console.log("appp log" ,user);
 
   useEffect(() => {
     if (localStorage.getItem("token") != null) {

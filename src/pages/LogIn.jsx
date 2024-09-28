@@ -141,8 +141,6 @@ function LogIn({ saveUser, userRole }) {
         "https://akflorist-production.up.railway.app/auth/login",
         user
       );
-      console.log(data);
-      
       localStorage.setItem("token", data.token);
 
       // Update the user and role locally before navigating
