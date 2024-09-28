@@ -44,7 +44,7 @@ function LogIn({ saveUser, userRole }) {
         .then((data) => {
           const userData = data.user;
           console.log("from api :  ", userData);
-          // saveUser(data.user);
+          saveUser(userData);
           // Redirect to home page or handle accordingly
           navigate("/home");
         })

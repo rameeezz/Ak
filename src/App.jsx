@@ -30,7 +30,9 @@ console.log("appp log" ,user);
     }
   }, []);
 
-  function SaveUserData() {
+  function SaveUserData(userInfo) {
+    console.log(userInfo);
+    
     const token = localStorage.getItem("token");
     const data = jwtDecode(token);
     setUser(data);
