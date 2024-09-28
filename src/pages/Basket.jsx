@@ -11,7 +11,7 @@ import HeadOfPages from "./HeadOfPages";
 export default function Basket({ user, logOut }) {
   let location = useLocation();
   let navigate = useNavigate();
-  let userId = location && location.state ? location.state._id : null;
+  let userId = user?._id || null;
 
   // console.log(userId);
   const [itemsInCart, setItemsInCart] = useState([]);
