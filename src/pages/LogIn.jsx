@@ -28,18 +28,15 @@ function LogIn({ saveUser, userRole }) {
     // console.log(credentialResponse);
 
     if (token) {
-      localStorage.setItem("token",token);
+      localStorage.setItem("token", token);
       // Send the token to the backend
-       fetch(
-        "https://akflorist-production.up.railway.app/auth/google",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ token }), // Send token to the backend
-        }
-      )
+      fetch("https://akflorist-production.up.railway.app/auth/google", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token }), // Send token to the backend
+      })
         .then((res) => res.json())
         .then((data) => {
           const userData = data.user;
@@ -276,13 +273,23 @@ function LogIn({ saveUser, userRole }) {
             <div className="styleLineBetweenItems"></div>
           </div>
           <div className="d-flex justify-content-center gap-2 mt-3 ">
-            <GoogleLogin
+            {/* <GoogleLogin
               onSuccess={handleGoogleLoginSuccess}
               onError={() => {
                 alert("Login Failed");
               }}
               // scope="https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/user.phonenumbers.read"
-            />
+            /> */}
+            <button
+              onError={() => {
+                alert("Login Failed");
+              }}
+              onClick={() => handleGoogleLoginSuccess()}
+              className="custom-google-button"
+            >
+              <img src="/path-to-google-icon.png" alt="Google icon" />
+              Login with Google
+            </button>
           </div>
         </form>
       </div>

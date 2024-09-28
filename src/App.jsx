@@ -42,7 +42,6 @@ console.log("appp log id" ,user?._id);
   function logOut() {
     localStorage.removeItem("token");
     setUser(null);
-    setIsAuthenticated(false);
   }
 
   function ProtectRouter({ children, requiredRole }) {
