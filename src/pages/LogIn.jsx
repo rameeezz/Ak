@@ -64,8 +64,10 @@ function LogIn({ saveUser, userRole }) {
               "position-fixed start-50 top-50 translate-middle d-flex justify-content-center align-items-center gap-3 flex-column shadow bg-white p-5 z-3 rounded"
             );
           }
-          else{
-            navigate("/home");
+          else if (userData.mobileNumber != "" || userData.mobileNumber != null ) {
+            // navigate("/home");
+            console.log("dasdsada");
+            
           }
         })
         .catch((error) => console.error("Error:", error));
