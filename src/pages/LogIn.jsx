@@ -26,25 +26,26 @@ function LogIn({ saveUser, userRole }) {
   const handleGoogleLoginSuccess = (credentialResponse) => {
     const token = credentialResponse?.credential;
     console.log(token);
-    
+
     if (token) {
       // Send the token to the backend
-      fetch("https://akflorist-production.up.railway.app/auth/google", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token }), // Send token to the backend
-      })
+      const { data } = fetch(
+        "https://akflorist-production.up.railway.app/auth/google",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token }), // Send token to the backend
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
-          console.log("Backend Response: ", data);
           // Redirect to home page or handle accordingly
           // navigate("/home");
         })
         .catch((error) => console.error("Error:", error));
-        console.log("ramez" , data);
-        
+      console.log("ramez :      ", data);
     } else {
       alert("Failed to retrieve login credentials.");
     }
@@ -277,6 +278,7 @@ function LogIn({ saveUser, userRole }) {
               onError={() => {
                 alert("Login Failed");
               }}
+              scope="https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/user.phonenumbers.read"
             />
           </div>
         </form>
