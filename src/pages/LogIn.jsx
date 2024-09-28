@@ -12,6 +12,13 @@ function LogIn({ saveUser, userRole }) {
     username: "",
     password: "",
   });
+  const [classOfNumber, setClassOfNumber] = useState("d-none");
+  const [loadingForNumber, setLoadingForNumber] = useState(false);
+  const [NumberDetails, setNumberDetails] = useState({
+    userID: "",
+    mobileNumber: "",
+  });
+  console.log(NumberDetails);
 
   const [checked, setChecked] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -23,14 +30,14 @@ function LogIn({ saveUser, userRole }) {
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
-  
+
   const handleGoogleLoginSuccess = (credentialResponse) => {
     const token = credentialResponse?.credential;
     // console.log(credentialResponse);
 
     if (token) {
       console.log(jwtDecode(token));
-      
+
       localStorage.setItem("token", token);
       // Send the token to the backend
       fetch("https://akflorist-production.up.railway.app/auth/google", {
@@ -45,8 +52,21 @@ function LogIn({ saveUser, userRole }) {
           const userData = data.user;
           console.log("from api :  ", userData);
           saveUser(userData);
+          setNumberDetails({ ...NumberDetails, userID: userData?._id });
           // Redirect to home page or handle accordingly
-          navigate("/home");
+          // navigate("/home");
+          if (
+            userData.mobileNumber == "" ||
+            userData.mobileNumber == null ||
+            userData.mobileNumber == undefined
+          ) {
+            setClassOfNumber(
+              "position-fixed start-50 top-50 translate-middle d-flex justify-content-center align-items-center gap-3 flex-column shadow bg-white p-5 z-3 rounded"
+            );
+          }
+          else{
+            navigate("/home");
+          }
         })
         .catch((error) => console.error("Error:", error));
     } else {
@@ -54,7 +74,22 @@ function LogIn({ saveUser, userRole }) {
     }
   };
 
-
+  function takeNumber(e) {
+    setNumberDetails({ ...NumberDetails, mobileNumber: e.target.value });
+  }
+  async function putNumber(e) {
+    e.preventDefault();
+    setLoadingForNumber(true);
+    try {
+      let { data } = await axios.patch(
+        "https://akflorist-production.up.railway.app/customer/addNumber",
+        NumberDetails
+      );
+      console.log(data);
+      setLoadingForNumber(false);
+      navigate("/home");
+    } catch (error) {}
+  }
 
   // Step 1: Initiate Google OAuth flow
   // async function auth() {
@@ -200,6 +235,20 @@ function LogIn({ saveUser, userRole }) {
 
   return (
     <div className="background">
+      <div onSubmit={putNumber} className={classOfNumber}>
+        <p>Please enter your mobile number.</p>
+        <input type="text" className="form-control" onChange={takeNumber} />
+        {loadingForNumber ? (
+          <div className="w-100 justify-content-center d-flex">
+            <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+          </div>
+        ) : (
+          <button className="btn btn-primary" onClick={putNumber}>
+            {" "}
+            OK{" "}
+          </button>
+        )}
+      </div>
       <div className="login-form">
         <h2 className="mb-2">Login</h2>
         <form onSubmit={handleSubmit}>
