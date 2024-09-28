@@ -239,7 +239,7 @@ export default function Basket({ user, logOut }) {
     street: "",
     area: "",
   });
-  console.log(addressInfo);
+  // console.log(addressInfo);
   
   useEffect(() => {
     setAddressInfo((prevInfo) => ({
@@ -734,7 +734,7 @@ export default function Basket({ user, logOut }) {
                         </select>
                       </div>
                     )}
-                    {user?.mobileNumber == "" || user?.mobileNumber == undefined ? <input type="text" className="form-control" placeholder="Please enter your number...." required onChange={mobileNumberIfNotHave}/> : ""}
+                    {user?.mobileNumber == "" || user?.mobileNumber == undefined ? <input type="text" className="form-control my-3" placeholder="Please enter your number...." required onChange={mobileNumberIfNotHave}/> : ""}
                   </form>
                 </div>
               ) : (
