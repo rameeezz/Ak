@@ -29,7 +29,7 @@ function LogIn({ saveUser, userRole }) {
     // console.log(credentialResponse);
 
     if (token) {
-      console.log(token);
+      console.log(jwtDecode(token));
       
       localStorage.setItem("token", token);
       // Send the token to the backend
