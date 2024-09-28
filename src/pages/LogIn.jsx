@@ -89,6 +89,7 @@ function LogIn({ saveUser, userRole }) {
       );
       console.log(data);
       setLoadingForNumber(false);
+      setClassOfNumber("d-none");
       navigate("/home");
     } catch (error) {}
   }
