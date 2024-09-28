@@ -360,6 +360,7 @@ export default function Basket({ user, logOut }) {
     date: "",
     shippingCost: 0,
     card: cardID,
+    mobileNumber:""
   });
   // console.log(orderInfo);
   async function sendOrder(e) {
@@ -730,6 +731,7 @@ export default function Basket({ user, logOut }) {
                         </select>
                       </div>
                     )}
+                    {user?.mobileNumber == "" || user?.mobileNumber == undefined ? <input type="text" className="form-control" placeholder="Please enter your number...." required/> : ""}
                   </form>
                 </div>
               ) : (
