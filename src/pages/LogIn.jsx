@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { GoogleLogin } from "@react-oauth/google";
+// import { GoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 import "../css/LogIn.css";
 import { jwtDecode } from "jwt-decode";
 import { date } from "joi";
@@ -23,33 +24,62 @@ function LogIn({ saveUser, userRole }) {
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
-  const handleGoogleLoginSuccess = (credentialResponse) => {
-    const token = credentialResponse?.credential;
-    // console.log(credentialResponse);
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      const token = tokenResponse?.credential;
+      // console.log(credentialResponse);
 
-    if (token) {
-      localStorage.setItem("token", token);
-      // Send the token to the backend
-      fetch("https://akflorist-production.up.railway.app/auth/google", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token }), // Send token to the backend
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          const userData = data.user;
-          console.log("from api :  ", userData);
-          saveUser(userData);
-          // Redirect to home page or handle accordingly
-          navigate("/home");
+      if (token) {
+        localStorage.setItem("token", token);
+        // Send the token to the backend
+        fetch("https://akflorist-production.up.railway.app/auth/google", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token }), // Send token to the backend
         })
-        .catch((error) => console.error("Error:", error));
-    } else {
-      alert("Failed to retrieve login credentials.");
-    }
-  };
+          .then((res) => res.json())
+          .then((data) => {
+            const userData = data.user;
+            console.log("from api :  ", userData);
+            saveUser(userData);
+            // Redirect to home page or handle accordingly
+            navigate("/home");
+          })
+          .catch((error) => console.error("Error:", error));
+      } else {
+        alert("Failed to retrieve login credentials.");
+      }
+    },
+  });
+  // const handleGoogleLoginSuccess = (credentialResponse) => {
+  //   const token = credentialResponse?.credential;
+  //   // console.log(credentialResponse);
+
+  //   if (token) {
+  //     localStorage.setItem("token", token);
+  //     // Send the token to the backend
+  //     fetch("https://akflorist-production.up.railway.app/auth/google", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ token }), // Send token to the backend
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         const userData = data.user;
+  //         console.log("from api :  ", userData);
+  //         saveUser(userData);
+  //         // Redirect to home page or handle accordingly
+  //         navigate("/home");
+  //       })
+  //       .catch((error) => console.error("Error:", error));
+  //   } else {
+  //     alert("Failed to retrieve login credentials.");
+  //   }
+  // };
   // Step 1: Initiate Google OAuth flow
   // async function auth() {
   //   try {
@@ -273,13 +303,17 @@ function LogIn({ saveUser, userRole }) {
             <div className="styleLineBetweenItems"></div>
           </div>
           <div className="d-flex justify-content-center gap-2 mt-3 ">
-            <GoogleLogin
+            {/* <GoogleLogin
               onSuccess={handleGoogleLoginSuccess}
               onError={() => {
                 alert("Login Failed");
               }}
               // scope="https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/user.phonenumbers.read"
-            />
+            /> */}
+            <MyCustomButton onClick={() => login()}>
+              Sign in with Google 🚀
+            </MyCustomButton>
+            ;
           </div>
         </form>
       </div>
