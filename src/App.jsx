@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { googleLogout } from '@react-oauth/google';
 import Home from "./pages/Home";
 import MasterLayout from "./pages/MasterLayout";
 import NotFound from "./pages/NotFound";
@@ -42,6 +43,7 @@ console.log("appp log id" ,user?._id);
   function logOut() {
     localStorage.removeItem("token");
     setUser(null);
+    googleLogout();
   }
 
   function ProtectRouter({ children, requiredRole }) {
