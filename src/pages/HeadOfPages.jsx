@@ -56,7 +56,7 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
     setSearchTerm("");
   }
   // cart work
-  const userID = user?.userId;
+  const userID = user?._id;
   const cartIds = cartID;
   const itemsArrays = itemsArray;
   const createCartInfo = {

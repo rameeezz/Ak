@@ -25,7 +25,7 @@ export default function ItemContent({ user }) {
   const [classoFitemIsAlreadyExist, setClassoFitemIsAlreadyExist] =
     useState(false);
   // console.log(itemsArray);
-  const customerID = user?.userId || null;
+  const customerID = user?._id|| null;
   // console.log(customerID);
 
   // Save itemsArray to localStorage whenever it changes
@@ -39,7 +39,7 @@ export default function ItemContent({ user }) {
   useEffect(() => {
     setCreateCartInfo((prevInfo) => ({
       ...prevInfo,
-      customer: user?.userId || null, // Ensure customer is always up-to-date
+      customer: user?._id || null, // Ensure customer is always up-to-date
       items: itemsArray,
     }));
   }, [user, itemsArray]);

@@ -32,7 +32,7 @@ console.log("appp log id" ,user?._id);
   }, []);
 
   function SaveUserData(userInfo) {
-    console.log(userInfo);
+    // console.log(userInfo);
     
     // const token = localStorage.getItem("token");
     // const data = jwtDecode(token);
