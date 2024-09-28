@@ -29,6 +29,8 @@ function LogIn({ saveUser, userRole }) {
     // console.log(credentialResponse);
 
     if (token) {
+      console.log(token);
+      
       localStorage.setItem("token", token);
       // Send the token to the backend
       fetch("https://akflorist-production.up.railway.app/auth/google", {

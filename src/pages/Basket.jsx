@@ -312,9 +312,9 @@ export default function Basket({ user, logOut }) {
   function dateOfOrder(e) {
     setOrderInfo({ ...orderInfo, date: e.target.value });
   }
-  function mobileNumberIfNotHave(e) {
-    setOrderInfo({ ...orderInfo, mobileNumber: e.target.value });
-  }
+  // function mobileNumberIfNotHave(e) {
+  //   setOrderInfo({ ...orderInfo, mobileNumber: e.target.value });
+  // }
   function timeOfOrder(value) {
     // console.log(value);
     setOrderInfo({ ...orderInfo, time: value });
@@ -363,7 +363,7 @@ export default function Basket({ user, logOut }) {
     date: "",
     shippingCost: 0,
     card: cardID,
-    mobileNumber:""
+    // mobileNumber:""
   });
   // console.log(orderInfo);
   async function sendOrder(e) {
@@ -734,7 +734,7 @@ export default function Basket({ user, logOut }) {
                         </select>
                       </div>
                     )}
-                    {user?.mobileNumber == "" || user?.mobileNumber == undefined ? <input type="text" className="form-control my-3" placeholder="Please enter your number...." required onChange={mobileNumberIfNotHave}/> : ""}
+                    {/* {user?.mobileNumber == "" || user?.mobileNumber == undefined ? <input type="text" className="form-control my-3" placeholder="Please enter your number...." required onChange={mobileNumberIfNotHave}/> : ""} */}
                   </form>
                 </div>
               ) : (
