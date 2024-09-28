@@ -4,6 +4,7 @@ import axios from "axios";
 import { GoogleLogin } from "@react-oauth/google";
 import "../css/LogIn.css";
 import { jwtDecode } from "jwt-decode";
+import { date } from "joi";
 
 function LogIn({ saveUser, userRole }) {
   const navigate = useNavigate();
@@ -27,8 +28,6 @@ function LogIn({ saveUser, userRole }) {
     // console.log(token);
     
     if (token) {
-      localStorage.setItem("token", token);
-
       // Send the token to the backend
       fetch("https://akflorist-production.up.railway.app/auth/google", {
         method: "POST",
@@ -44,6 +43,8 @@ function LogIn({ saveUser, userRole }) {
           // navigate("/home");
         })
         .catch((error) => console.error("Error:", error));
+        console.log("ramez" , data);
+        
     } else {
       alert("Failed to retrieve login credentials.");
     }
