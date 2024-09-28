@@ -312,8 +312,11 @@ export default function Basket({ user, logOut }) {
   function dateOfOrder(e) {
     setOrderInfo({ ...orderInfo, date: e.target.value });
   }
+  function mobileNumberIfNotHave(e) {
+    setOrderInfo({ ...orderInfo, mobileNumber: e.target.value });
+  }
   function timeOfOrder(value) {
-    console.log(value);
+    // console.log(value);
     setOrderInfo({ ...orderInfo, time: value });
   }
   function takeContentOFAddress(e) {
@@ -731,7 +734,7 @@ export default function Basket({ user, logOut }) {
                         </select>
                       </div>
                     )}
-                    {user?.mobileNumber == "" || user?.mobileNumber == undefined ? <input type="text" className="form-control" placeholder="Please enter your number...." required/> : ""}
+                    {user?.mobileNumber == "" || user?.mobileNumber == undefined ? <input type="text" className="form-control" placeholder="Please enter your number...." required onChange={mobileNumberIfNotHave}/> : ""}
                   </form>
                 </div>
               ) : (
