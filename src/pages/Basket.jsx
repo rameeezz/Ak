@@ -21,7 +21,7 @@ export default function Basket({ user, logOut }) {
 
   // console.log(itemsSameHome);
 
-  const [cartID, setCartId] = useState("");  
+  const [cartID, setCartId] = useState("");
   const [totalCost, setTotalCost] = useState("");
   // console.log(totalCost);
   const [numberOfPay, setNumberOfPay] = useState(0);
@@ -38,7 +38,7 @@ export default function Basket({ user, logOut }) {
     localStorage.setItem("cartID", JSON.stringify(cartID));
   }, [cartID]);
   // console.log(cartID);
-  
+
   const [loading, setLoading] = useState(false);
   async function getCart() {
     setLoading(true);
@@ -61,7 +61,7 @@ export default function Basket({ user, logOut }) {
       setLoading(false); // Ensure loading is set to false regardless of outcome
     }
   }
-  
+
   // async function getCart() {
   //   setLoading(true);
   //   if (userId == null) {
@@ -239,6 +239,8 @@ export default function Basket({ user, logOut }) {
     street: "",
     area: "",
   });
+  console.log(addressInfo);
+  
   useEffect(() => {
     setAddressInfo((prevInfo) => ({
       ...prevInfo,
@@ -334,7 +336,7 @@ export default function Basket({ user, logOut }) {
       alert(
         "Please ensure all required fields are filled out correctly before proceeding."
       );
-      setLoadingButtonCat(false)
+      setLoadingButtonCat(false);
     } else {
       try {
         let { data } = await axios.post(
@@ -359,7 +361,7 @@ export default function Basket({ user, logOut }) {
     shippingCost: 0,
     card: cardID,
   });
-  console.log(orderInfo);
+  // console.log(orderInfo);
   async function sendOrder(e) {
     e.preventDefault();
     setLoadingButtonCat(true);
@@ -372,7 +374,7 @@ export default function Basket({ user, logOut }) {
         );
         // console.log(data);
         setLoadingButtonCat(false);
-        // make the array = null and show to the user message with done and navigate to home 
+        // make the array = null and show to the user message with done and navigate to home
       } catch (error) {}
     } else if (numberOfPay == 2) {
       try {
@@ -641,7 +643,8 @@ export default function Basket({ user, logOut }) {
                 </form>
               </div>
               {flowerNumber == 2 ? (
-                <div>
+                <div className="border p-4 mb-3 mt-4 rounded">
+                  <p className="">Shipping Methods</p>
                   <form>
                     {takeState === "Alexandria" && (
                       <div>
@@ -658,9 +661,7 @@ export default function Basket({ user, logOut }) {
                           required
                           onChange={(e) => timeOfOrder(e.target.value)}
                         >
-                          <option value="" >
-                            Select Time
-                          </option>
+                          <option value="">Select Time</option>
                           <option value="Between 5pm  -  9pm">
                             Between 5pm - 9pm{" "}
                           </option>
@@ -682,9 +683,7 @@ export default function Basket({ user, logOut }) {
                           className="form-control"
                           onChange={(e) => timeOfOrder(e.target.value)}
                         >
-                          <option value="">
-                            Select Time
-                          </option>
+                          <option value="">Select Time</option>
                           <option value="Between 11am  -  1pm">
                             Between 11am - 1pm{" "}
                           </option>
@@ -721,9 +720,7 @@ export default function Basket({ user, logOut }) {
                           className="form-control"
                           onChange={(e) => timeOfOrder(e.target.value)}
                         >
-                          <option value="" >
-                            Select Time
-                          </option>
+                          <option value="">Select Time</option>
                           <option value="Between 2pm  -  6pm">
                             Between 2pm - 6pm{" "}
                           </option>
