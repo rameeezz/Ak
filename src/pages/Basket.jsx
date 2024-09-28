@@ -309,12 +309,25 @@ export default function Basket({ user, logOut }) {
   function selectState(value) {
     setTakeState(value);
   }
+  const [NumberDetails, setNumberDetails] = useState({
+    userID: user?._id,
+    mobileNumber: "",
+  });
   function dateOfOrder(e) {
     setOrderInfo({ ...orderInfo, date: e.target.value });
   }
-  // function mobileNumberIfNotHave(e) {
-  //   setOrderInfo({ ...orderInfo, mobileNumber: e.target.value });
-  // }
+  function takeNumber(e) {
+    setNumberDetails({ ...NumberDetails, mobileNumber: e.target.value });
+  }
+  async function putNumber(e) {
+    e.preventDefault();
+    try {
+      let { data } = await axios.patch(
+        "https://akflorist-production.up.railway.app/customer/addNumber",
+        NumberDetails
+      );
+    } catch (error) {}
+  }
   function timeOfOrder(value) {
     // console.log(value);
     setOrderInfo({ ...orderInfo, time: value });
@@ -353,6 +366,7 @@ export default function Basket({ user, logOut }) {
         setOrderClass("");
         setFlowerNumber(3);
         setOrderClass("");
+        putNumber(e)
       } catch (error) {}
     }
   }
@@ -734,7 +748,7 @@ export default function Basket({ user, logOut }) {
                         </select>
                       </div>
                     )}
-                    {/* {user?.mobileNumber == "" || user?.mobileNumber == undefined ? <input type="text" className="form-control my-3" placeholder="Please enter your number...." required onChange={mobileNumberIfNotHave}/> : ""} */}
+                    {user?.mobileNumber == "" || user?.mobileNumber == undefined ? <input type="text" className="form-control my-3" onChange={takeNumber} required placeholder="Please enter your mobile number"/> : ""}
                   </form>
                 </div>
               ) : (
