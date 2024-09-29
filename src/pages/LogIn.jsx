@@ -30,7 +30,6 @@ function LogIn({ saveUser, userRole }) {
 
     if (token) {
       localStorage.setItem("token", token);
-      console.log(" user mn googel .... : ", jwtDecode(token));
       
       // Send the token to the backend
       fetch("https://akflorist-production.up.railway.app/auth/google", {
@@ -43,7 +42,6 @@ function LogIn({ saveUser, userRole }) {
         .then((res) => res.json())
         .then((data) => {
           const userData = data.user;
-          console.log("from api :  ", userData);
           // Redirect to home page or handle accordingly
           saveUser(userData);
           navigate("/home");
@@ -145,8 +143,6 @@ function LogIn({ saveUser, userRole }) {
         user
       );
       localStorage.setItem("token", data.token);
-      console.log(" tkoen bta3 login 3ady ", data.token);
-      
       // Update the user and role locally before navigating
       saveUser(data.user);
       setErrorMessage("");

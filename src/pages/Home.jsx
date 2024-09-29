@@ -144,13 +144,13 @@ export default function Home({ user }) {
       }
     }
   }
-  async function deleteCartUser(e, userID) {
+  async function deleteCartUser(e, cartID) {
     e.preventDefault();
     try {
       let { data } = await axios.delete(
         "https://akflorist-production.up.railway.app/customer/deleteCart",
         {
-          data: userID, // Pass customerID in the body of the request
+          data: cartID, // Pass customerID in the body of the request
           headers: {
             "Content-Type": "application/json",
           },

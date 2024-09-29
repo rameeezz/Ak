@@ -23,8 +23,6 @@ import Basket from './pages/Basket';
 
 function App() {
   const [user, setUser] = useState(null);
-console.log("appp log" ,user);
-console.log("appp log id" ,user?._id);
 
   useEffect(() => {
     if (localStorage.getItem("token") != null) {
@@ -35,9 +33,11 @@ console.log("appp log id" ,user?._id);
   function SaveUserData(userInfo) {
     // console.log(userInfo);
     
-    // const token = localStorage.getItem("token");
-    // const data = jwtDecode(token);
-    setUser(userInfo);
+    const token = localStorage.getItem("token");
+    const data = jwtDecode(token);
+    console.log("data b3d ma fk t4fer" ,data);
+    
+    // setUser(userInfo);
   }
 
   function logOut() {
