@@ -29,20 +29,25 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    if (localStorage.getItem("token") != null) {
-      SaveUserData(user);
+    // Check if the token exists in localStorage
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      try {
+        // Decode the token and restore user data
+        const decodedData = jwtDecode(token);
+        setUser(decodedData);
+      } catch (error) {
+        console.error("Failed to decode token:", error);
+        localStorage.removeItem("token"); // Clear invalid token
+      }
     }
-  }, []);
+  }, []); // Runs only once when the component mounts
 
   function SaveUserData(userInfo) {
-    // console.log(userInfo);
-
     const token = localStorage.getItem("token");
     const data = jwtDecode(token);
-    // console.log("data b3d ma fk t4fer" ,data);
-    console.log(userInfo);
-
-    setUser(userInfo);
+    setUser(userInfo); // Set the user state with the provided user data
   }
 
   function logOut() {
