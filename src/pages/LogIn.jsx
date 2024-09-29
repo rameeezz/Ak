@@ -29,13 +29,13 @@ function LogIn({ saveUser, userRole }) {
     // console.log(credentialResponse);
 
     if (token) {
-      // localStorage.setItem("token", token);
+      localStorage.setItem("token", token);
       try {
         let { data } = await axios.post(
           "https://akflorist-production.up.railway.app/auth/google",
           { token }
         );
-        console.log(data);
+        saveUser(data.user);
       } catch (error) {
         console.error("Error:", error);
       }
@@ -62,78 +62,7 @@ function LogIn({ saveUser, userRole }) {
     }
   };
 
-  // Step 1: Initiate Google OAuth flow
-  // async function auth() {
-  //   try {
-  //     // Initiate Google OAuth flow by making a request to your backend
-  //     const response = await fetch(
-  //       "https://akflorist-production.up.railway.app/auth/google",
-  //       {
-  //         method: "POST",
-  //       }
-  //     );
-
-  //     if (!response.ok) {
-  //       throw new Error(`Failed to initiate OAuth: ${response.status}`);
-  //     }
-
-  //     const data = await response.json();
-  //     window.location.href = data.url;
-  //   } catch (error) {
-  //     console.error("Error during auth:", error.message);
-  //     alert("Authentication failed. Please try again."); // User-friendly message
-  //   }
-  // }
-
-  // // Step 2: Handle the callback after Google redirects back to your app
-  // useEffect(() => {
-  //   console.log(window.location.search);
-
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   // const code = urlParams.get("code");
-  //   // if (code) {
-  //   //   // Save the code to localStorage
-  //   //   localStorage.setItem("code", code);
-  //   //   console.log("OAuth code saved:", code);
-  //   // } else {
-  //   //   console.log("No OAuth code found in the URL.");
-  //   // }
-  //   // console.log(code);
-
-  //   // if (code) {
-  //   //   console.log("Google auth code:", code);
-  //   //   handleGoogleCallback(code);
-  //   // } else {
-  //   //   console.log("No code found in the URL");
-  //   // }
-  // }, []);
-
-  // async function handleGoogleCallback(code) {
-  //   console.log(code);
-
-  //   try {
-  //     const response = await fetch(
-  //       `https://akflorist-production.up.railway.app/getGoogleUser?code=${code}`,
-  //       { method: "GET" }
-  //     );
-
-  //     if (!response.ok) {
-  //       throw new Error(`Failed to fetch user data: ${response.status}`);
-  //     }
-
-  //     const data = await response.json();
-  //     console.log("Google user data:", data);
-
-  //     // Save token and user data to local storage
-  //     localStorage.setItem("token", data.tokens.access_token);
-  //     saveUser(data.userData); // Assuming saveUser is a function to manage user data
-  //   } catch (error) {
-  //     console.error("Error during Google callback:", error.message);
-  //     alert("Failed to retrieve user data. Please try again."); // User-friendly message
-  //   }
-  // }
-
-  // Handle form input changes
+  
   function setUserInput(e) {
     let myUserInfo = { ...user };
     myUserInfo[e.target.name] = e.target.value;
@@ -152,6 +81,8 @@ function LogIn({ saveUser, userRole }) {
         "https://akflorist-production.up.railway.app/auth/login",
         user
       );
+      // console.log(data);
+      
       localStorage.setItem("token", data.token);
       // Update the user and role locally before navigating
       saveUser(data.user);
