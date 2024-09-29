@@ -33,33 +33,31 @@ function LogIn({ saveUser, userRole }) {
       try {
         let { data } = await axios.post(
           "https://akflorist-production.up.railway.app/auth/google",
-          token
+          { token }
         );
         console.log(data);
-        
       } catch (error) {
         console.error("Error:", error);
       }
       // Send the token to the backend
-    //   fetch("https://akflorist-production.up.railway.app/auth/google", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ token }), // Send token to the backend
-    //   })
-    //     .then((res) => res.json())
-    //     .then((data) => {
-    //       const userData = data.user;
-    //       // Redirect to home page or handle accordingly
-    //       saveUser(userData);
-    //       console.log(userData);
+      //   fetch("https://akflorist-production.up.railway.app/auth/google", {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({ token }), // Send token to the backend
+      //   })
+      //     .then((res) => res.json())
+      //     .then((data) => {
+      //       const userData = data.user;
+      //       // Redirect to home page or handle accordingly
+      //       saveUser(userData);
+      //       console.log(userData);
 
-    //       navigate("/home");
-    //     })
-    //     .catch((error) => console.error("Error:", error));
-     }
-     else {
+      //       navigate("/home");
+      //     })
+      //     .catch((error) => console.error("Error:", error));
+    } else {
       alert("Failed to retrieve login credentials.");
     }
   };
