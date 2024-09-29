@@ -140,7 +140,7 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-import jwtDecode from "jwt-decode"; // Adjust this import if needed
+import {jwtDecode} from "jwt-decode"; // Adjust this import if needed
 import { googleLogout } from "@react-oauth/google";
 import Home from "./pages/Home";
 import MasterLayout from "./pages/MasterLayout";
