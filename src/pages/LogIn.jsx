@@ -24,32 +24,42 @@ function LogIn({ saveUser, userRole }) {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  const handleGoogleLoginSuccess = (credentialResponse) => {
+  const handleGoogleLoginSuccess = async (credentialResponse) => {
     const token = credentialResponse?.credential;
     // console.log(credentialResponse);
 
     if (token) {
-      localStorage.setItem("token", token);
-      
+      // localStorage.setItem("token", token);
+      try {
+        let { data } = await axios.post(
+          "https://akflorist-production.up.railway.app/auth/google",
+          token
+        );
+        console.log(data);
+        
+      } catch (error) {
+        console.error("Error:", error);
+      }
       // Send the token to the backend
-      fetch("https://akflorist-production.up.railway.app/auth/google", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token }), // Send token to the backend
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          const userData = data.user;
-          // Redirect to home page or handle accordingly
-          saveUser(userData);
-          console.log(userData);
-          
-          navigate("/home");
-        })
-        .catch((error) => console.error("Error:", error));
-    } else {
+    //   fetch("https://akflorist-production.up.railway.app/auth/google", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({ token }), // Send token to the backend
+    //   })
+    //     .then((res) => res.json())
+    //     .then((data) => {
+    //       const userData = data.user;
+    //       // Redirect to home page or handle accordingly
+    //       saveUser(userData);
+    //       console.log(userData);
+
+    //       navigate("/home");
+    //     })
+    //     .catch((error) => console.error("Error:", error));
+     }
+     else {
       alert("Failed to retrieve login credentials.");
     }
   };
