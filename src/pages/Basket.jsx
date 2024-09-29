@@ -9,9 +9,12 @@ import axios from "axios";
 import NavBar from "./../component/NavBar";
 import HeadOfPages from "./HeadOfPages";
 export default function Basket({ user, logOut }) {
+  console.log(user);
+
   let location = useLocation();
   let navigate = useNavigate();
-  let userId = user?.role == "customer" ? user?.userId || null : user?.id || null;
+  let userId =
+    user?.role == "customer" ? user?.userId || null : user?.id || null;
   const customerRolee = user?.role || null;
   // console.log(userId);
   const [itemsInCart, setItemsInCart] = useState([]);
@@ -19,7 +22,7 @@ export default function Basket({ user, logOut }) {
   const [itemsSameHome, setItemsSameHome] = useState([]);
   // console.log(" **************************** ");
 
-  // console.log(itemsSameHome);
+  console.log(itemsSameHome);
 
   const [cartID, setCartId] = useState("");
   const [totalCost, setTotalCost] = useState("");
@@ -51,6 +54,7 @@ export default function Basket({ user, logOut }) {
       setCartId(data.getThisCart._id);
       setOrderInfo({ ...orderInfo, cart: data?.getThisCart?._id });
       setItemsSameHome(data.items);
+      console.log(data.items);
     } catch (error) {
       if (error.response && error.response.status === 404) {
         alert("No Items");
@@ -245,7 +249,7 @@ export default function Basket({ user, logOut }) {
     area: "",
   });
   // console.log(addressInfo);
-  
+
   useEffect(() => {
     setAddressInfo((prevInfo) => ({
       ...prevInfo,
@@ -371,7 +375,7 @@ export default function Basket({ user, logOut }) {
         setOrderClass("");
         setFlowerNumber(3);
         setOrderClass("");
-        putNumber(e)
+        putNumber(e);
       } catch (error) {}
     }
   }
@@ -753,7 +757,17 @@ export default function Basket({ user, logOut }) {
                         </select>
                       </div>
                     )}
-                    {user?.mobileNumber == "" || user?.mobileNumber == undefined ? <input type="text" className="form-control my-3" onChange={takeNumber} required placeholder="Please enter your mobile number"/> : ""}
+                    {user?.role == "customer" ? (
+                      ""
+                    ) : (
+                      <input
+                        type="text"
+                        className="form-control my-3"
+                        onChange={takeNumber}
+                        required
+                        placeholder="Please enter your mobile number"
+                      />
+                    )}
                   </form>
                 </div>
               ) : (
