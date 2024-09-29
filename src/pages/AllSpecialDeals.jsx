@@ -5,7 +5,7 @@ import HeadOfPages from "./HeadOfPages";
 
 export default function AllSpecialDeals({ user }) {
   let navigate = useNavigate();
-
+  const customerRolee = user?.role || null;
   let location = useLocation();
   const parsedCartID = localStorage.getItem("cartID");
   const cartID = parsedCartID ? JSON.parse(parsedCartID) : "";
@@ -30,16 +30,25 @@ export default function AllSpecialDeals({ user }) {
   }, [itemsArray]);
   const [createCartInfo, setCreateCartInfo] = useState({
     items: itemsArray,
-    customer: customerID,
+    customer: [
+      {
+        customerID: customerID,
+        customerRole: customerRolee,
+      },
+    ],
   });
   useEffect(() => {
     setCreateCartInfo((prevInfo) => ({
       ...prevInfo,
-      customer: user?._id || null, // Ensure customer is always up-to-date
+      customer: [
+        {
+          customerID: user?._id || null,
+          customerRole: customerRolee,
+        },
+      ], // Ensure customer is always up-to-date
       items: itemsArray,
     }));
   }, [user, itemsArray]);
-  // console.log(createCartInfo);
 
   function addToCart(itemID, quantity, itemType) {
     if (user == null) {
@@ -112,12 +121,11 @@ export default function AllSpecialDeals({ user }) {
         }
       );
       // console.log(data);
-      handleSubmitCreateCart(e)
+      handleSubmitCreateCart(e);
     } catch (error) {
       console.error("Error deleting cart:", error);
     }
   }
-
 
   async function editeCart(e) {
     setLoadingButtonCat(true);
@@ -386,15 +394,15 @@ export default function AllSpecialDeals({ user }) {
                       {element?.description.slice(0, 36)}
                     </p>
                     <div className="d-flex justify-content-center align-items-center position-absolute bottom-0 start-50 translate-middle-x w-[100%]">
-                    <button
-                      onClick={() => {
-                        addToCart(element._id, 1, element?.type);
-                      }}
-                      className="btn text-white ColorButton classForButtonForCard w-100"
-                    >
-                      Add to Cart
-                    </button>
-                  </div>
+                      <button
+                        onClick={() => {
+                          addToCart(element._id, 1, element?.type);
+                        }}
+                        className="btn text-white ColorButton classForButtonForCard w-100"
+                      >
+                        Add to Cart
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}

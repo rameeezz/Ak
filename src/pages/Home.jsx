@@ -15,9 +15,11 @@ import axios from "axios";
 import HeadOfPages from "./HeadOfPages";
 export default function Home({ user }) {
   // console.log(user);
-  
+
   const navigate = useNavigate();
   let location = useLocation();
+  const customerRolee = user?.role || null;
+
   const parsedCartID = localStorage.getItem("cartID");
   const cartID = parsedCartID ? JSON.parse(parsedCartID) : "";
   // console.log(cartID);
@@ -33,7 +35,7 @@ export default function Home({ user }) {
   const [classoFitemIsAlreadyExist, setClassoFitemIsAlreadyExist] =
     useState(false);
   // console.log(itemsArray);
-  const customerID =user?._id || null;
+  const customerID = user?._id || null;
   // console.log(customerID);
 
   // Save itemsArray to localStorage whenever it changes
@@ -63,12 +65,22 @@ export default function Home({ user }) {
   };
   const [createCartInfo, setCreateCartInfo] = useState({
     items: itemsArray,
-    customer: customerID,
+    customer: [
+      {
+        customerID: customerID,
+        customerRole: customerRolee,
+      },
+    ],
   });
   useEffect(() => {
     setCreateCartInfo((prevInfo) => ({
       ...prevInfo,
-      customer: user?._id || null, // Ensure customer is always up-to-date
+      customer: [
+        {
+          customerID: user?._id || null,
+          customerRole: customerRolee,
+        },
+      ], // Ensure customer is always up-to-date
       items: itemsArray,
     }));
   }, [user, itemsArray]);
@@ -145,7 +157,7 @@ export default function Home({ user }) {
         }
       );
       // console.log(data);
-      handleSubmitCreateCart(e)
+      handleSubmitCreateCart(e);
     } catch (error) {
       console.error("Error deleting cart:", error);
     }
@@ -899,8 +911,13 @@ export default function Home({ user }) {
               </div>
               <div className="d-flex align-items-center gap-2">
                 <img src={whatsSvg} alt="" />
-                <a href="https://api.whatsapp.com/send?phone=201022317881" className="text-primary" target="_blank">Whatsapp</a>
-
+                <a
+                  href="https://api.whatsapp.com/send?phone=201022317881"
+                  className="text-primary"
+                  target="_blank"
+                >
+                  Whatsapp
+                </a>
               </div>
               <div className="d-flex align-items-center gap-2">
                 <img src={callSvg} alt="" />

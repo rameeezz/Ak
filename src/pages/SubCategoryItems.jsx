@@ -6,7 +6,7 @@ import HeadOfPages from "./HeadOfPages";
 export default function SubCategoryItems({ user }) {
   const location = useLocation();
   const navigate = useNavigate();
-
+  const customerRolee = user?.role || null;
   // Destructure `id` from location.state, or set to undefined if state is null
   const { id } = location.state || {};
   // console.log(id);
@@ -40,16 +40,25 @@ export default function SubCategoryItems({ user }) {
   }, [itemsArray]);
   const [createCartInfo, setCreateCartInfo] = useState({
     items: itemsArray,
-    customer: customerID,
+    customer: [
+      {
+        customerID: customerID,
+        customerRole: customerRolee,
+      },
+    ],
   });
   useEffect(() => {
     setCreateCartInfo((prevInfo) => ({
       ...prevInfo,
-      customer: user?._id || null, // Ensure customer is always up-to-date
+      customer: [
+        {
+          customerID: user?._id || null,
+          customerRole: customerRolee,
+        },
+      ], // Ensure customer is always up-to-date
       items: itemsArray,
     }));
   }, [user, itemsArray]);
-  // console.log(createCartInfo);
 
   function addToCart(itemID, quantity, itemType) {
     if (user == null) {

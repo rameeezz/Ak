@@ -12,7 +12,7 @@ export default function Basket({ user, logOut }) {
   let location = useLocation();
   let navigate = useNavigate();
   let userId = user?._id || null;
-
+  const customerRolee = user?.role || null;
   // console.log(userId);
   const [itemsInCart, setItemsInCart] = useState([]);
   // console.log(itemsInCart);
@@ -231,7 +231,12 @@ export default function Basket({ user, logOut }) {
   // console.log(addressID);
 
   const [addressInfo, setAddressInfo] = useState({
-    customerID: userId,
+    customer: [
+      {
+        customerID: userId,
+        customerRole: customerRolee,
+      },
+    ],
     apartment: "",
     floor: "",
     building: "",

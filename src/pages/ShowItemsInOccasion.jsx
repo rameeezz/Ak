@@ -8,7 +8,7 @@ export default function ShowItemsInOccasion({ user }) {
   const navigate = useNavigate();
   // Destructure `id` from location.state, or set to undefined if state is null
   const { id } = location.state || {};
-
+  const customerRolee = user?.role || null;
   const parsedCartID = localStorage.getItem("cartID");
   const cartID = parsedCartID ? JSON.parse(parsedCartID) : "";
 
@@ -33,17 +33,25 @@ export default function ShowItemsInOccasion({ user }) {
   }, [itemsArray]);
   const [createCartInfo, setCreateCartInfo] = useState({
     items: itemsArray,
-    customer: customerID,
+    customer: [
+      {
+        customerID: customerID,
+        customerRole: customerRolee,
+      },
+    ],
   });
   useEffect(() => {
     setCreateCartInfo((prevInfo) => ({
       ...prevInfo,
-      customer: user?._id || null, // Ensure customer is always up-to-date
+      customer: [
+        {
+          customerID: user?._id || null,
+          customerRole: customerRolee,
+        },
+      ], // Ensure customer is always up-to-date
       items: itemsArray,
     }));
   }, [user, itemsArray]);
-  // console.log(createCartInfo);
-
   function addToCart(itemID, quantity, itemType) {
     if (user == null) {
       navigate("/login");

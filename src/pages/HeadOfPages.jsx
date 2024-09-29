@@ -5,6 +5,7 @@ import axios from "axios";
 export default function HeadOfPages({ user, cartID, itemsArray }) {
   let navigate = useNavigate();
   const customerID = user?.userId || null;
+  const customerRolee = user?.role || null;
   const isLoginPage =
     location.pathname === "/login" ||
     location.pathname === "/register" ||
@@ -59,11 +60,15 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
   const userID = user?._id;
   const cartIds = cartID;
   const itemsArrays = itemsArray;
-  const createCartInfo = {
-    items: itemsArrays,
-    customer: userID,
-  };
-
+  const [createCartInfo, setCreateCartInfo] = useState({
+    items: itemsArray,
+    customer: [
+      {
+        customerID: customerID,
+        customerRole: customerRolee,
+      },
+    ],
+  });
   async function handleSubmitCreateCart(e) {
     // setLoadingButtonCat(true);
     // console.log(createCartInfo);

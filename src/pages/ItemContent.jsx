@@ -6,6 +6,7 @@ import HeadOfPages from "./HeadOfPages";
 export default function ItemContent({ user }) {
   const location = useLocation();
   const { items } = location.state || {};
+  const customerRolee = user?.role || null;
   // console.log(items);
 
   let navigate = useNavigate();
@@ -34,16 +35,25 @@ export default function ItemContent({ user }) {
   }, [itemsArray]);
   const [createCartInfo, setCreateCartInfo] = useState({
     items: itemsArray,
-    customer: customerID,
+    customer: [
+      {
+        customerID: customerID,
+        customerRole: customerRolee,
+      },
+    ],
   });
   useEffect(() => {
     setCreateCartInfo((prevInfo) => ({
       ...prevInfo,
-      customer: user?._id || null, // Ensure customer is always up-to-date
+      customer: [
+        {
+          customerID: user?._id || null,
+          customerRole: customerRolee,
+        },
+      ], // Ensure customer is always up-to-date
       items: itemsArray,
     }));
-  }, [user, itemsArray]);
-  // console.log(createCartInfo);
+  }, [user, itemsArray]);;
 
   function addToCart(itemID, quantity, itemType) {
     if (user == null) {
