@@ -36,7 +36,7 @@ export default function Home({ user }) {
     useState(false);
   // console.log(itemsArray);
   const customerID = user?._id || null;
-  // console.log(customerID);
+  console.log(customerID);
 
   // Save itemsArray to localStorage whenever it changes
   useEffect(() => {
