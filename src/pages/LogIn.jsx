@@ -42,7 +42,8 @@ function LogIn({ saveUser, userRole }) {
         // Store the token from the response (if provided by your backend)
         if (response.data.token) {
           localStorage.setItem("token", response.data.token);
-          saveUser();  // Call this to decode and save the user data
+          saveUser(); 
+          navigate("/home") // Call this to decode and save the user data
         } else {
           console.error("No token in the response from the server.");
         }
