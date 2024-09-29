@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import { googleLogout } from '@react-oauth/google';
+import { googleLogout } from "@react-oauth/google";
 import Home from "./pages/Home";
 import MasterLayout from "./pages/MasterLayout";
 import NotFound from "./pages/NotFound";
@@ -9,17 +13,17 @@ import Admin1 from "./pages/Admin1";
 import Register from "./pages/Register";
 import LogIn from "./pages/LogIn";
 import ForgetPassword from "./pages/ForgetPassword";
-import Admin2 from './pages/Admin2';
-import ShowItems from './pages/ShowItems';
-import BestSellerItems from './pages/BestSellerItems';
-import AllCategory from './pages/AllCategory';
-import AllOccasions from './pages/AllOccasions';
+import Admin2 from "./pages/Admin2";
+import ShowItems from "./pages/ShowItems";
+import BestSellerItems from "./pages/BestSellerItems";
+import AllCategory from "./pages/AllCategory";
+import AllOccasions from "./pages/AllOccasions";
 import ShowItemsInOccasion from "./pages/ShowItemsInOccasion";
-import AllSpecialDeals from './pages/AllSpecialDeals';
-import SubCategoryItems from './pages/SubCategoryItems';
-import ItemContent from './pages/ItemContent';
-import SearchItems from './pages/SearchItems';
-import Basket from './pages/Basket';
+import AllSpecialDeals from "./pages/AllSpecialDeals";
+import SubCategoryItems from "./pages/SubCategoryItems";
+import ItemContent from "./pages/ItemContent";
+import SearchItems from "./pages/SearchItems";
+import Basket from "./pages/Basket";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -32,12 +36,13 @@ function App() {
 
   function SaveUserData(userInfo) {
     // console.log(userInfo);
-    
+
     const token = localStorage.getItem("token");
     const data = jwtDecode(token);
-    console.log("data b3d ma fk t4fer" ,data);
-    
-    // setUser(userInfo);
+    // console.log("data b3d ma fk t4fer" ,data);
+    console.log(userInfo);
+
+    setUser(userInfo);
   }
 
   function logOut() {
@@ -98,14 +103,20 @@ function App() {
           ),
         },
         { path: "register", element: <Register /> },
-        { path: "show-items", element: <ShowItems user={user}/> },
-        { path: "show-items-in-sub-category", element: <SubCategoryItems user={user}/> },
-        { path: "show-items-in-occasion", element: <ShowItemsInOccasion user={user}/> },
-        { path: "all-category", element: <AllCategory  user={user}/> },
-        { path: "all-occasion", element: <AllOccasions  user={user}/> },
-        { path: "basket", element: <Basket user={user} logOut={logOut}/> },
-        { path: "result-search", element: <SearchItems  user={user}/> },
-        { path: "all-special-deals", element: <AllSpecialDeals user={user}/> },
+        { path: "show-items", element: <ShowItems user={user} /> },
+        {
+          path: "show-items-in-sub-category",
+          element: <SubCategoryItems user={user} />,
+        },
+        {
+          path: "show-items-in-occasion",
+          element: <ShowItemsInOccasion user={user} />,
+        },
+        { path: "all-category", element: <AllCategory user={user} /> },
+        { path: "all-occasion", element: <AllOccasions user={user} /> },
+        { path: "basket", element: <Basket user={user} logOut={logOut} /> },
+        { path: "result-search", element: <SearchItems user={user} /> },
+        { path: "all-special-deals", element: <AllSpecialDeals user={user} /> },
         { path: "best-sellers", element: <BestSellerItems user={user} /> },
         { path: "item-content", element: <ItemContent user={user} /> },
         {
@@ -113,7 +124,7 @@ function App() {
           element: <LogIn saveUser={SaveUserData} userRole={user} />,
         },
         { path: "forgetPassword", element: <ForgetPassword /> },
-        { path: "*", element: <NotFound /> }
+        { path: "*", element: <NotFound /> },
       ],
     },
   ]);
