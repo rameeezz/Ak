@@ -30,7 +30,7 @@ function App() {
 
   useEffect(() => {
     if (localStorage.getItem("token") != null) {
-      SaveUserData();
+      SaveUserData(user);
     }
   }, []);
 
