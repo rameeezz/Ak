@@ -26,7 +26,7 @@ export default function ShowItems({ user }) {
   const [classoFitemIsAlreadyExist, setClassoFitemIsAlreadyExist] =
     useState(false);
   // console.log(itemsArray);
-  const customerID = user?.role == "customer" ? user?.userId || null : user?._id || null;
+  const customerID = user?.role == "customer" ? user?.userId || null : user?.id || null;
   // console.log(customerID);
 
   // Save itemsArray to localStorage whenever it changes
@@ -47,7 +47,7 @@ export default function ShowItems({ user }) {
       ...prevInfo,
       customer: [
         {
-          customerID: user?.role == "customer" ? user?.userId || null : user?._id || null,
+          customerID: user?.role == "customer" ? user?.userId || null : user?.id || null,
           customerRole: customerRolee,
         },
       ], // Ensure customer is always up-to-date
