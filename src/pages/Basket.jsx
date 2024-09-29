@@ -11,7 +11,7 @@ import HeadOfPages from "./HeadOfPages";
 export default function Basket({ user, logOut }) {
   let location = useLocation();
   let navigate = useNavigate();
-  let userId = user?._id || null;
+  let userId = user?.role == "customer" ? user?.userId || null : user?._id || null;
   const customerRolee = user?.role || null;
   // console.log(userId);
   const [itemsInCart, setItemsInCart] = useState([]);
@@ -315,7 +315,7 @@ export default function Basket({ user, logOut }) {
     setTakeState(value);
   }
   const [NumberDetails, setNumberDetails] = useState({
-    userID: user?._id,
+    userID: user?.role == "customer" ? user?.userId || null : user?._id || null,
     mobileNumber: "",
   });
   function dateOfOrder(e) {

@@ -35,7 +35,7 @@ export default function Home({ user }) {
   const [classoFitemIsAlreadyExist, setClassoFitemIsAlreadyExist] =
     useState(false);
   // console.log(itemsArray);
-  const customerID = user?._id || null;
+  const customerID = user?.role == "customer" ? user?.userId || null : user?._id || null;
   console.log(customerID);
 
   // Save itemsArray to localStorage whenever it changes
@@ -77,7 +77,7 @@ export default function Home({ user }) {
       ...prevInfo,
       customer: [
         {
-          customerID: user?._id || null,
+          customerID: user?.role == "customer" ? user?.userId || null : user?._id || null,
           customerRole: customerRolee,
         },
       ], // Ensure customer is always up-to-date
@@ -144,13 +144,13 @@ export default function Home({ user }) {
       }
     }
   }
-  async function deleteCartUser(e, cartID) {
+  async function deleteCartUser(e, userID) {
     e.preventDefault();
     try {
       let { data } = await axios.delete(
         "https://akflorist-production.up.railway.app/customer/deleteCart",
         {
-          data: cartID, // Pass customerID in the body of the request
+          data: userID, // Pass customerID in the body of the request
           headers: {
             "Content-Type": "application/json",
           },
