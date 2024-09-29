@@ -176,6 +176,8 @@ function App() {
     try {
       const decodedUser = jwtDecode(token); // Decode the JWT token to get user data
       setUser(decodedUser);
+      console.log(decodedUser);
+      
     } catch (error) {
       console.error("Failed to decode token", error);
     }
