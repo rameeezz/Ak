@@ -34,16 +34,19 @@ function App() {
     }
   }, []);
 
-  function SaveUserData(userInfo) {
-    // console.log(userInfo);
-
+  function SaveUserData() {
     const token = localStorage.getItem("token");
-    const data = jwtDecode(token);
-    // console.log("data b3d ma fk t4fer" ,data);
-    // console.log(userInfo);
-    setUser(data);
-    console.log(data);
-    
+    if (token) {
+      try {
+        const data = jwtDecode(token);
+        setUser(data);
+        console.log("Decoded JWT data:", data);
+      } catch (error) {
+        console.error("Invalid token:", error);
+      }
+    } else {
+      console.error("No token found in localStorage.");
+    }
   }
 
   function logOut() {
