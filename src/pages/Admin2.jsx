@@ -905,6 +905,9 @@ export default function Admin2({ logOut }) {
   }
   // -------------------------------------------------------
   const [allOrders, setAllOrders] = useState([]);
+  // const [orderItems, setOrderItems] = useState([]);
+  // console.log(orderItems);
+
   async function getAllOrders() {
     try {
       let { data } = await axios.get(
@@ -912,6 +915,8 @@ export default function Admin2({ logOut }) {
       );
       console.log(data.orders);
       setAllOrders(data.orders);
+      // const items = data.orders.flatMap((order) => order.items || []);
+      // setOrderItems(items);
     } catch (error) {}
   }
   useEffect(() => {
@@ -928,14 +933,81 @@ export default function Admin2({ logOut }) {
         <div className="custom-alert text-center">Done</div>
       </div>
       {/* orders  */}
-      <h3 className="text-center py-3 responsive-font-size-h3 text-[#7E96C4]"> Orders Of The Day </h3>
+      <h3 className="text-center py-3 responsive-font-size-h3 text-[#7E96C4]">
+        {" "}
+        Orders Of The Day{" "}
+      </h3>
       <div className="d-flex justify-content-center gap-3 flex-wrap">
         {allOrders == null || allOrders.length === 0
           ? "No orders Found "
-          : allOrders.map((element , i) => (
-              <div key={i} className="p-2 rounded border border-2 border-danger d-flex flex-column justify-content-end align-items-center w-[30%]">
-                <p className="w-100 text-start"><span className="fw-bold">Name :</span> <span className="text-muted">{element?.customer?.firstName} {element?.customer?.lastName}</span> </p>
-                <p className="w-100 text-start"><span className="fw-bold">Address : </span><span>{element?.customer?.firstName} {element?.customer?.lastName}</span> </p>
+          : allOrders.map((element, i) => (
+              <div
+                key={i}
+                className="p-2 rounded border border-2 border-danger gap-2 d-flex flex-column justify-content-end align-items-center w-[30%] position-relative"
+              >
+                <button className="position-absolute btn btn-primary end-0 top-0  p-1">
+                  {" "}
+                  Done
+                </button>
+                <p className="w-100 text-start">
+                  <span className="fw-bold">Name :</span>{" "}
+                  <span className="text-muted">
+                    {element?.customer[0]?.customerID?.firstName}{" "}
+                    {element?.customer[0]?.customerID?.lastName}
+                  </span>{" "}
+                </p>
+                <p className="w-100 text-start">
+                  <span className="fw-bold">Address : </span>
+                  <span>
+                    {element?.address?.state} {element?.address?.area}
+                  </span>{" "}
+                </p>
+                <p className="w-100 text-start">
+                  <span className="fw-bold">Street : </span>
+                  <span>{element?.address?.street} </span>{" "}
+                </p>
+                <div className="d-flex justify-content-center gap-3 ">
+                  <div className="d-flex justify-content-center flex-column ">
+                    <p className="text-center">Apartment</p>
+                    <span className="text-center">
+                      {" "}
+                      {element?.address?.apartment}{" "}
+                    </span>
+                  </div>
+                  <div className="d-flex justify-content-center flex-column ">
+                    <p className="text-center">Building</p>
+                    <span className="text-center">
+                      {" "}
+                      {element?.address?.building}{" "}
+                    </span>
+                  </div>
+                  <div className="d-flex justify-content-center flex-column ">
+                    <p className="text-center">Floor</p>
+                    <span className="text-center">
+                      {" "}
+                      {element?.address?.floor}{" "}
+                    </span>
+                  </div>
+                </div>
+                <p className="w-100 text-start">
+                  <span className="fw-bold">Date : </span>
+                  <span>{element?.date.slice(0, 10)} </span>{" "}
+                </p>
+                <p className="w-100 text-start">
+                  <span className="fw-bold">Time : </span>
+                  <span>{element?.time} </span>{" "}
+                </p>
+                <p className="w-100 text-start">
+                  <span className="fw-bold">Total Cost : </span>
+                  <span>{element?.totalCost} </span>{" "}
+                </p>
+                <p className="w-100 text-start d-flex  gap-3">
+                  <span className="fw-bold "> Payment: </span>
+                  <span className=" overflow-x-scroll">
+                    {element?.intendID}{" "}
+                  </span>{" "}
+                </p>
+                
               </div>
             ))}
       </div>
@@ -946,7 +1018,7 @@ export default function Admin2({ logOut }) {
       </h3>
 
       {/* add itmes in categories  */}
-      
+
       <div className="d-flex justify-content-center flex-wrap gap-3 mt-5">
         <div className="d-flex border-3 border-secondary rounded pt-3 flex-column gap-3">
           <div className="d-flex justify-content-center gap-3 flex-wrap">
