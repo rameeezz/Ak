@@ -42,6 +42,8 @@ function App() {
     // console.log("data b3d ma fk t4fer" ,data);
     // console.log(userInfo);
     setUser(data);
+    console.log(data);
+    
   }
 
   function logOut() {

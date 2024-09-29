@@ -44,6 +44,8 @@ function LogIn({ saveUser, userRole }) {
           const userData = data.user;
           // Redirect to home page or handle accordingly
           saveUser(userData);
+          console.log(userData);
+          
           navigate("/home");
         })
         .catch((error) => console.error("Error:", error));
