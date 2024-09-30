@@ -973,7 +973,7 @@ export default function Admin2({ logOut }) {
           : currentItemOrders.map((element, i) => (
               <div
                 key={i}
-                className="p-2 rounded border border-2 border-danger gap-2 d-flex flex-column justify-content-end align-items-center w-[30%] position-relative"
+                className="p-2 rounded border border-2 border-danger gap-2 d-flex flex-column justify-content-end align-items-center position-relative"
               >
                 {loadingOrderButton ? (
                   <div className="w-100 justify-content-end d-flex">
