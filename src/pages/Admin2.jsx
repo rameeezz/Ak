@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import image from "../assets/card photo/1.jpeg";
 export default function Admin2({ logOut }) {
   let navigate = useNavigate();
   function GoTOLOgin() {
@@ -905,9 +905,22 @@ export default function Admin2({ logOut }) {
   }
   // -------------------------------------------------------
   const [allOrders, setAllOrders] = useState([]);
-  // const [orderItems, setOrderItems] = useState([]);
-  // console.log(orderItems);
+  const [currentPageOrders, setCurrentPageOrders] = useState(1);
+  const itemsPerPageOrders = 3;
+  const totalPagesOrders = Math.ceil(allOrders.length / itemsPerPageOrders);
+  const indexOfLastItemOrders = currentPageOrders * itemsPerPageOrders;
+  const indexOfFirstItemOrders = indexOfLastItemOrders - itemsPerPageOrders;
+  const currentItemOrders = allOrders.slice(
+    indexOfFirstItemOrders,
+    indexOfLastItemOrders
+  );
+  // console.log(currentItem);
 
+  const paginateOrders = (pageNumber) => {
+    if (pageNumber > 0 && pageNumber <= totalPagesOrders) {
+      setCurrentPageOrders(pageNumber);
+    }
+  };
   async function getAllOrders() {
     try {
       let { data } = await axios.get(
@@ -938,9 +951,9 @@ export default function Admin2({ logOut }) {
         Orders Of The Day{" "}
       </h3>
       <div className="d-flex justify-content-center gap-3 flex-wrap">
-        {allOrders == null || allOrders.length === 0
+        {currentItemOrders == null || currentItemOrders.length === 0
           ? "No orders Found "
-          : allOrders.map((element, i) => (
+          : currentItemOrders.map((element, i) => (
               <div
                 key={i}
                 className="p-2 rounded border border-2 border-danger gap-2 d-flex flex-column justify-content-end align-items-center w-[30%] position-relative"
@@ -1007,10 +1020,64 @@ export default function Admin2({ logOut }) {
                     {element?.intendID}{" "}
                   </span>{" "}
                 </p>
-                
+                <div className="d-flex justify-content-center align-items-center gap-3 flex-column overflow-y-scroll border h-[260px] w-100">
+                  {element.items && element.items.length > 0
+                    ? element.items.map((item, i) => (
+                        <div
+                          key={i}
+                          className="d-flex justify-content-between gap-3 border border-2 rounded p-1 w-100 h-[120px]"
+                        >
+                          <div className="w-[40%]">
+                            {item?.itemID?.images &&
+                            item?.itemID?.images.length > 0 ? (
+                              <img
+                                src={`https://akflorist.s3.eu-north-1.amazonaws.com/${item?.itemID?.images[0]}`}
+                                alt={item?.itemID?.name}
+                                className="w-100 h-100"
+                              />
+                            ) : (
+                              <span>No image available</span>
+                            )}
+                          </div>
+                          <div className="d-flex justify-content-center align-items-center gap-3 flex-column">
+                            <p>card</p>
+                            <button className="btn btn-primary">i</button>
+                          </div>
+                          <div className="d-flex flex-column justify-content-center gap-3 align-items-center  ">
+                            <p className="text-center">
+                              {typeof item?.itemID?.name === "string"
+                                ? item?.itemID?.name.slice(0, 20)
+                                : "No name available"}
+                            </p>
+                            <span>{item?.quantity}</span>
+                          </div>
+                        </div>
+                      ))
+                    : "No items found"}
+                </div>
               </div>
             ))}
+        
       </div>
+      <div className="pagination-controls my-4 d-flex justify-content-center ">
+          <button
+            className="btn btn-secondary mx-2 inSmallScreenButton"
+            onClick={() => paginateOrders(currentPageOrders - 1)}
+            disabled={currentPageOrders === 1}
+          >
+            &laquo; Previous
+          </button>
+          <span className="mx-2 mt-2 ">
+            Page {currentPageOrders} of {totalPagesOrders}
+          </span>
+          <button
+            className="btn btn-secondary mx-2 inSmallScreenButton"
+            onClick={() => paginateOrders(currentPageOrders + 1)}
+            disabled={currentPageOrders === totalPagesOrders}
+          >
+            Next &raquo;
+          </button>
+        </div>
       {/* done */}
       {/* add items in category */}
       <h3 className="responsive-font-size-h3 mt-3 colorForTitles text-center">
