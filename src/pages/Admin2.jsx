@@ -936,7 +936,7 @@ export default function Admin2({ logOut }) {
       // const items = data.orders.flatMap((order) => order.items || []);
       // setOrderItems(items);
     } catch (error) {
-      if (error.response && error.response.state === 404) {
+      if (error.response && error.response.status === 404) {
         setAllOrders([]);
       }
     }
