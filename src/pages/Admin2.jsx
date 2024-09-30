@@ -1045,7 +1045,7 @@ export default function Admin2({ logOut }) {
                 </p>
                 <p className="w-100 text-start d-flex  gap-3">
                   <span className="fw-bold "> Payment: </span>
-                  <span className=" overflow-x-scroll">
+                  <span className=" w-75 overflow-x-scroll">
                     {element?.intendID}{" "}
                   </span>{" "}
                 </p>
