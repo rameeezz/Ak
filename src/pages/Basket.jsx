@@ -57,7 +57,7 @@ export default function Basket({ user, logOut }) {
       console.log(data.items);
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        alert("No Items");
+        // alert("No Items");
       } else {
         console.error("Error fetching cart:", error.message);
       }
@@ -401,6 +401,9 @@ export default function Basket({ user, logOut }) {
         );
         // console.log(data);
         setLoadingButtonCat(false);
+        localStorage.setItem("cartItems", []);
+        setItemsInCart([])
+        navigate("/home")
         // make the array = null and show to the user message with done and navigate to home
       } catch (error) {}
     } else if (numberOfPay == 2) {
