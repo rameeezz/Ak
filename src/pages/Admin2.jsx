@@ -973,7 +973,7 @@ export default function Admin2({ logOut }) {
           : currentItemOrders.map((element, i) => (
               <div
                 key={i}
-                className="p-2 rounded border border-2 border-danger gap-2 d-flex flex-column justify-content-end align-items-center position-relative"
+                className="p-2 rounded border border-2 border-danger gap-2 d-flex flex-column justify-content-end align-items-center position-relative w-[32%]"
               >
                 {loadingOrderButton ? (
                   <div className="w-100 justify-content-end d-flex">
@@ -1045,7 +1045,7 @@ export default function Admin2({ logOut }) {
                 </p>
                 <p className="w-100 text-start d-flex  gap-3">
                   <span className="fw-bold "> Payment: </span>
-                  <span className=" w-75 overflow-x-scroll">
+                  <span className=" w-50 overflow-x-scroll">
                     {element?.intendID}{" "}
                   </span>{" "}
                 </p>
