@@ -26,6 +26,7 @@ function LogIn({ saveUser, userRole }) {
 
   const handleGoogleLoginSuccess = async (credentialResponse) => {
     const token = credentialResponse?.credential;
+    console.log(token);
     
     if (token) {
       try {
