@@ -504,7 +504,7 @@ export default function Basket({ user, logOut }) {
                     {/* Checkmark icon with 360-degree rotation */}
                     <i
                       className="fa fa-check-circle rotate-checkmark"
-                      style={{ fontSize: "80px", color: "greenyellow" }}
+                      style={{ fontSize: "80px", color: "green" }}
                     ></i>
                     <p className=" mt-4 responsive-font-size-h3">Success!</p>
                   </div>

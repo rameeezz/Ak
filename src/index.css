@@ -9,6 +9,9 @@
 .textSTyleForError {
   font-size: 14px;
 }
+.forCartItemUser{
+  width: 350px;
+}
 .phone-input-field {
   width: 100% !important;
 }
@@ -376,5 +379,8 @@ gap: 50px;
  }
  .forCardView{
   height: 200px;
+}
+.forCartItemUser{
+  width: 200px;
 }
 }
