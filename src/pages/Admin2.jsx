@@ -931,7 +931,11 @@ export default function Admin2({ logOut }) {
       setAllOrders(data.orders);
       // const items = data.orders.flatMap((order) => order.items || []);
       // setOrderItems(items);
-    } catch (error) {}
+    } catch (error) {
+      if (error.response && error.response.state === 404) {
+        setAllOrders([]);
+      }
+    }
   }
   useEffect(() => {
     getAllOrders();
@@ -1045,11 +1049,11 @@ export default function Admin2({ logOut }) {
                 </p>
                 <p className="w-100 text-start d-flex  gap-3">
                   <span className="fw-bold "> Payment: </span>
-                  <span className=" w-50 overflow-x-scroll">
+                  <span className=" w-75 overflow-x-scroll">
                     {element?.intendID}{" "}
                   </span>{" "}
                 </p>
-                <div className="d-flex justify-content-center align-items-center gap-3 flex-column overflow-y-scroll border h-[260px] w-100">
+                <div className="d-flex justify-content-start align-items-center gap-3 flex-column overflow-y-scroll border h-[150px] w-100">
                   {element.items && element.items.length > 0
                     ? element.items.map((item, i) => (
                         <div
@@ -1070,7 +1074,11 @@ export default function Admin2({ logOut }) {
                           </div>
                           <div className="d-flex justify-content-center align-items-center gap-3 flex-column">
                             <p>card</p>
-                            <button className="btn btn-primary">i</button>
+                            {element.card == null ? (
+                              ""
+                            ) : (
+                              <button className="btn btn-primary">i</button>
+                            )}
                           </div>
                           <div className="d-flex flex-column justify-content-center gap-3 align-items-center  ">
                             <p className="text-center">

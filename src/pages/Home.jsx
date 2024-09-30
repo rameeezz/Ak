@@ -28,7 +28,7 @@ export default function Home({ user }) {
     const savedItems = localStorage.getItem("cartItems");
     return savedItems ? JSON.parse(savedItems) : [];
   });
-  console.log(itemsArray);
+  // console.log(itemsArray);
 
   const [classForCart, setClassForCart] = useState(false);
   const [loadingButtonCart, setLoadingButtonCat] = useState(false);
@@ -36,7 +36,7 @@ export default function Home({ user }) {
     useState(false);
   // console.log(itemsArray);
   const customerID = user?.role == "customer" ? user?.userId || null : user?.id || null;
-  console.log(customerID);
+  // console.log("customer", customerID);
 
   // Save itemsArray to localStorage whenever it changes
   useEffect(() => {

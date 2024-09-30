@@ -349,35 +349,69 @@ export default function Basket({ user, logOut }) {
   async function sendAddress(e) {
     setLoadingButtonCat(true);
     e.preventDefault();
-    if (
-      addressInfo.apartment == "" ||
-      addressInfo.area == "" ||
-      addressInfo.building == "" ||
-      addressInfo.customerID == "" ||
-      addressInfo.floor == "" ||
-      addressInfo.state == "" ||
-      addressInfo.street == ""
-    ) {
-      alert(
-        "Please ensure all required fields are filled out correctly before proceeding."
-      );
-      setLoadingButtonCat(false);
-    } else {
-      try {
-        let { data } = await axios.post(
-          "https://akflorist-production.up.railway.app/customer/addAddress",
-          addressInfo
+    if (user.role == "customer") {
+      if (
+        addressInfo.apartment == "" ||
+        addressInfo.area == "" ||
+        addressInfo.building == "" ||
+        addressInfo.customer == "" ||
+        addressInfo.floor == "" ||
+        addressInfo.state == "" ||
+        addressInfo.street == "" 
+      ) {
+        alert(
+          "Please ensure all required fields are filled out correctly before proceeding."
         );
-        // console.log(data);
-        setAddressId(data._id);
-        setOrderInfo({ ...orderInfo, address: data._id });
         setLoadingButtonCat(false);
-        setOrderClass("");
-        setFlowerNumber(3);
-        setOrderClass("");
-        putNumber(e);
-      } catch (error) {}
+      } else {
+        try {
+          let { data } = await axios.post(
+            "https://akflorist-production.up.railway.app/customer/addAddress",
+            addressInfo
+          );
+          // console.log(data);
+          setAddressId(data._id);
+          setOrderInfo({ ...orderInfo, address: data._id });
+          setLoadingButtonCat(false);
+          setOrderClass("");
+          setFlowerNumber(3);
+          setOrderClass("");
+          putNumber(e);
+        } catch (error) {}
+      }
+    } else {
+      if (
+        addressInfo.apartment == "" ||
+        addressInfo.area == "" ||
+        addressInfo.building == "" ||
+        addressInfo.customer == "" ||
+        addressInfo.floor == "" ||
+        addressInfo.state == "" ||
+        addressInfo.street == "" ||
+        NumberDetails.mobileNumber == ""
+      ) {
+        alert(
+          "Please ensure all required fields are filled out correctly before proceeding."
+        );
+        setLoadingButtonCat(false);
+      } else {
+        try {
+          let { data } = await axios.post(
+            "https://akflorist-production.up.railway.app/customer/addAddress",
+            addressInfo
+          );
+          // console.log(data);
+          setAddressId(data._id);
+          setOrderInfo({ ...orderInfo, address: data._id });
+          setLoadingButtonCat(false);
+          setOrderClass("");
+          setFlowerNumber(3);
+          setOrderClass("");
+          putNumber(e);
+        } catch (error) {}
+      }
     }
+   
   }
   const [orderInfo, setOrderInfo] = useState({
     cart: "",
