@@ -905,6 +905,7 @@ export default function Admin2({ logOut }) {
   }
   // -------------------------------------------------------
   const [allOrders, setAllOrders] = useState([]);
+  const [loadingOrderButton, setLoadingOrderButton] = useState(false);
   const [currentPageOrders, setCurrentPageOrders] = useState(1);
   const itemsPerPageOrders = 3;
   const totalPagesOrders = Math.ceil(allOrders.length / itemsPerPageOrders);
@@ -935,6 +936,22 @@ export default function Admin2({ logOut }) {
   useEffect(() => {
     getAllOrders();
   }, []);
+  async function removeItemsFinished(e, orderIDs) {
+    e.preventDefault();
+    setLoadingOrderButton(true);
+    const orderID = {
+      orderID: orderIDs,
+    };
+    try {
+      let { data } = await axios.patch(
+        "https://akflorist-production.up.railway.app/admin2/changeOrderStatus",
+        orderID
+      );
+      console.log(data);
+      getAllOrders();
+      setLoadingOrderButton(false);
+    } catch (error) {}
+  }
   return (
     <>
       <div className=" position-fixed end-2 rounded-circle bg-danger top-5">
@@ -958,10 +975,22 @@ export default function Admin2({ logOut }) {
                 key={i}
                 className="p-2 rounded border border-2 border-danger gap-2 d-flex flex-column justify-content-end align-items-center w-[30%] position-relative"
               >
-                <button className="position-absolute btn btn-primary end-0 top-0  p-1">
-                  {" "}
-                  Done
-                </button>
+                {loadingOrderButton ? (
+                  <div className="w-100 justify-content-end d-flex">
+                    <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+                  </div>
+                ) : (
+                  <button
+                    onClick={(e) => {
+                      removeItemsFinished(e, element?._id);
+                    }}
+                    className="position-absolute btn btn-primary end-0 top-0  p-1"
+                  >
+                    {" "}
+                    Done
+                  </button>
+                )}
+
                 <p className="w-100 text-start">
                   <span className="fw-bold">Name :</span>{" "}
                   <span className="text-muted">
@@ -1057,27 +1086,26 @@ export default function Admin2({ logOut }) {
                 </div>
               </div>
             ))}
-        
       </div>
       <div className="pagination-controls my-4 d-flex justify-content-center ">
-          <button
-            className="btn btn-secondary mx-2 inSmallScreenButton"
-            onClick={() => paginateOrders(currentPageOrders - 1)}
-            disabled={currentPageOrders === 1}
-          >
-            &laquo; Previous
-          </button>
-          <span className="mx-2 mt-2 ">
-            Page {currentPageOrders} of {totalPagesOrders}
-          </span>
-          <button
-            className="btn btn-secondary mx-2 inSmallScreenButton"
-            onClick={() => paginateOrders(currentPageOrders + 1)}
-            disabled={currentPageOrders === totalPagesOrders}
-          >
-            Next &raquo;
-          </button>
-        </div>
+        <button
+          className="btn btn-secondary mx-2 inSmallScreenButton"
+          onClick={() => paginateOrders(currentPageOrders - 1)}
+          disabled={currentPageOrders === 1}
+        >
+          &laquo; Previous
+        </button>
+        <span className="mx-2 mt-2 ">
+          Page {currentPageOrders} of {totalPagesOrders}
+        </span>
+        <button
+          className="btn btn-secondary mx-2 inSmallScreenButton"
+          onClick={() => paginateOrders(currentPageOrders + 1)}
+          disabled={currentPageOrders === totalPagesOrders}
+        >
+          Next &raquo;
+        </button>
+      </div>
       {/* done */}
       {/* add items in category */}
       <h3 className="responsive-font-size-h3 mt-3 colorForTitles text-center">
