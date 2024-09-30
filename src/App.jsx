@@ -40,7 +40,7 @@ function App() {
       try {
         const data = jwtDecode(token);
         setUser(data);
-        console.log("Decoded JWT data:", data);
+        // console.log("Decoded JWT data:", data);
       } catch (error) {
         console.error("Invalid token:", error);
       }
