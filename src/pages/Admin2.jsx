@@ -905,6 +905,10 @@ export default function Admin2({ logOut }) {
   }
   // -------------------------------------------------------
   const [allOrders, setAllOrders] = useState([]);
+  const [classOfCard, setClassOfCard] = useState("d-none");
+  const [selectedCardInfo, setSelectedCardInfo] = useState({});
+  // console.log(selectedCardInfo.from);
+
   const [loadingOrderButton, setLoadingOrderButton] = useState(false);
   const [currentPageOrders, setCurrentPageOrders] = useState(1);
   const itemsPerPageOrders = 3;
@@ -927,7 +931,7 @@ export default function Admin2({ logOut }) {
       let { data } = await axios.get(
         "https://akflorist-production.up.railway.app/admin2/getAllOrders"
       );
-      console.log(data.orders);
+      // console.log(data.orders);
       setAllOrders(data.orders);
       // const items = data.orders.flatMap((order) => order.items || []);
       // setOrderItems(items);
@@ -951,10 +955,19 @@ export default function Admin2({ logOut }) {
         "https://akflorist-production.up.railway.app/admin2/changeOrderStatus",
         orderID
       );
-      console.log(data);
+      // console.log(data);
       getAllOrders();
       setLoadingOrderButton(false);
     } catch (error) {}
+  }
+  function showCardinfo(cardInfo) {
+    setClassOfCard(
+      "position-fixed top-50 start-50 translate-middle shadow bg-white p-5 rounded d-flex justify-content-center gap-3 flex-column z-[31353]"
+    );
+    setSelectedCardInfo(cardInfo);
+  }
+  function closeCard() {
+    setClassOfCard("d-none");
   }
   return (
     <>
@@ -1077,8 +1090,34 @@ export default function Admin2({ logOut }) {
                             {element.card == null ? (
                               ""
                             ) : (
-                              <button className="btn btn-primary">i</button>
+                              <button
+                                onClick={() => showCardinfo(element.card)}
+                                className="btn btn-primary"
+                              >
+                                i
+                              </button>
                             )}
+                          </div>
+                          <div className={classOfCard}>
+                            <div className="d-flex justify-content-center gap-3">
+                              <span className="fw-bold">from :</span>
+                              <p> {selectedCardInfo.from} </p>
+                            </div>
+                            <div className="d-flex justify-content-center gap-3">
+                              <span className="fw-bold ">text:</span>
+                              <p> {selectedCardInfo.text} </p>
+                            </div>
+                            <div className="d-flex justify-content-center gap-3">
+                              <span className="fw-bold">to :</span>
+                              <p> {selectedCardInfo.to} </p>
+                            </div>
+                            <button
+                              className="btn btn-primary"
+                              onClick={closeCard}
+                            >
+                              {" "}
+                              close
+                            </button>
                           </div>
                           <div className="d-flex flex-column justify-content-center gap-3 align-items-center  ">
                             <p className="text-center">
