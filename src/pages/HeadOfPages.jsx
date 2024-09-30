@@ -96,6 +96,8 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
           } else {
             editeCart(e);
           }
+        }else if (error.response && error.response.status === 400) {
+          navigate("/cart")
         }
       }
     }

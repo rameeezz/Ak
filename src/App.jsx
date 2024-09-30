@@ -24,6 +24,7 @@ import SubCategoryItems from "./pages/SubCategoryItems";
 import ItemContent from "./pages/ItemContent";
 import SearchItems from "./pages/SearchItems";
 import Basket from "./pages/Basket";
+import CartVeiw from './pages/CartVeiw';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -123,6 +124,7 @@ function App() {
         { path: "all-special-deals", element: <AllSpecialDeals user={user} /> },
         { path: "best-sellers", element: <BestSellerItems user={user} /> },
         { path: "item-content", element: <ItemContent user={user} /> },
+        { path: "cart", element: <CartVeiw user={user} /> },
         {
           path: "login",
           element: <LogIn saveUser={SaveUserData} userRole={user} />,
