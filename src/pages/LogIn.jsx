@@ -26,6 +26,7 @@ function LogIn({ saveUser, userRole }) {
 
   const handleGoogleLoginSuccess = async (credentialResponse) => {
     const token = credentialResponse?.credential;
+    console.log("ssssssssssssssssssssss ::" ,token);
     
     if (token) {
       try {
@@ -43,7 +44,7 @@ function LogIn({ saveUser, userRole }) {
         if (response.data.token) {
           localStorage.setItem("token", response.data.token);
           saveUser(); 
-          navigate("/home") // Call this to decode and save the user data
+          // navigate("/home") // Call this to decode and save the user data
         } else {
           console.error("No token in the response from the server.");
         }
