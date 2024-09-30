@@ -12,6 +12,30 @@
 .phone-input-field {
   width: 100% !important;
 }
+.popup-box {
+  width: 40%; /* 40% width of the screen */
+  height: 40%; /* 40% height of the screen */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Keyframes for rotating 360 degrees */
+@keyframes rotate360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Apply the animation to the checkmark icon */
+.rotate-checkmark {
+  animation: rotate360 1s ease-out; /* Rotate 360 degrees over 1 second */
+}
+
 .hiegt {
   height: 400px;
 }

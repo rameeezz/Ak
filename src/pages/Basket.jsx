@@ -357,7 +357,7 @@ export default function Basket({ user, logOut }) {
         addressInfo.customer == "" ||
         addressInfo.floor == "" ||
         addressInfo.state == "" ||
-        addressInfo.street == "" 
+        addressInfo.street == ""
       ) {
         alert(
           "Please ensure all required fields are filled out correctly before proceeding."
@@ -411,7 +411,6 @@ export default function Basket({ user, logOut }) {
         } catch (error) {}
       }
     }
-   
   }
   const [orderInfo, setOrderInfo] = useState({
     cart: "",
@@ -423,31 +422,39 @@ export default function Basket({ user, logOut }) {
     // mobileNumber:""
   });
   // console.log(orderInfo);
+  const [showPopup, setShowPopup] = useState(false);
+  const [navigateToHome, setNavigateToHome] = useState(false);
   async function sendOrder(e) {
     e.preventDefault();
     setLoadingButtonCat(true);
-
-    if (numberOfPay == 1) {
+  
+    if (numberOfPay === 1) {
       try {
         let { data } = await axios.post(
           "https://akflorist-production.up.railway.app/payment/offlinePayment",
           orderInfo
         );
-        // console.log(data);
         setLoadingButtonCat(false);
         localStorage.setItem("cartItems", []);
-        setItemsInCart([])
-        navigate("/home")
-        // make the array = null and show to the user message with done and navigate to home
-      } catch (error) {}
-    } else if (numberOfPay == 2) {
+        setItemsInCart([]);
+        handleShowPopup();
+        setNavigateToHome(true); // Set this to true to trigger navigation in useEffect
+      } catch (error) {
+        setLoadingButtonCat(false); // Make sure to reset loading state on error
+      }
+    } else if (numberOfPay === 2) {
       try {
         let { data } = await axios.post(
           "https://akflorist-production.up.railway.app/payment/",
           orderInfo
         );
         setLoadingButtonCat(false);
-      } catch (error) {}
+        // Optionally handle the success response
+        handleShowPopup();
+        setNavigateToHome(true);
+      } catch (error) {
+        setLoadingButtonCat(false); // Make sure to reset loading state on error
+      }
     } else {
       alert("Please select a payment method.");
     }
@@ -459,6 +466,27 @@ export default function Basket({ user, logOut }) {
   function setHowPayOnLine() {
     setNumberOfPay(2);
   }
+  // pop up
+  
+  const handleShowPopup = () => {
+    setShowPopup(true);
+  };
+  useEffect(() => {
+    let timer;
+    if (showPopup) {
+      timer = setTimeout(() => {
+        setShowPopup(false);
+        // Only navigate after the popup has been hidden
+        if (navigateToHome) {
+          navigate("/home");
+          setNavigateToHome(false); // Reset the navigation flag
+        }
+      }, 2000); // Show popup for 2 seconds
+  
+      // Clear the timer when component unmounts or popup closes
+      return () => clearTimeout(timer);
+    }
+  }, [showPopup, navigateToHome]);
   return (
     <>
       <NavBar user={user} logOut={logOut} cartID={cartID} />
@@ -467,6 +495,21 @@ export default function Basket({ user, logOut }) {
         <div className="w-100 d-flex justify-content-center">
           <div className="w-[90%] d-flex justify-content-center my-5 gap-4 flex-wrap">
             <div className="">
+              {showPopup && (
+                <div
+                  className="popup-overlay position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center "
+                  style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+                >
+                  <div className="popup-box bg-white p-4 rounded shadow-lg d-flex flex-column justify-content-center align-items-center">
+                    {/* Checkmark icon with 360-degree rotation */}
+                    <i
+                      className="fa fa-check-circle rotate-checkmark"
+                      style={{ fontSize: "80px", color: "greenyellow" }}
+                    ></i>
+                    <p className=" mt-4 responsive-font-size-h3">Success!</p>
+                  </div>
+                </div>
+              )}
               <div className="d-flex justify-content-center gap-2 align-items-center ">
                 <div className="d-flex flex-column align-items-center gap-2">
                   <div className="position-relative">
