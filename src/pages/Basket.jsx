@@ -8,18 +8,20 @@ import cardItemImg from "../assets/card photo/2.jpg";
 import axios from "axios";
 import NavBar from "./../component/NavBar";
 import HeadOfPages from "./HeadOfPages";
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 export default function Basket({ user, logOut }) {
   // console.log(user);
 
   let location = useLocation();
   let navigate = useNavigate();
-  let token = localStorage.getItem("token")
-  let decodeToken = jwtDecode(token)
+  let token = localStorage.getItem("token");
+  let decodeToken = jwtDecode(token);
   let userId =
-  decodeToken?.role == "customer" ? decodeToken?.userId || null : decodeToken?.id || null;
+    decodeToken?.role == "customer"
+      ? decodeToken?.userId || null
+      : decodeToken?.id || null;
   const customerRolee = decodeToken?.role || null;
-  
+
   console.log(userId);
   const [itemsInCart, setItemsInCart] = useState([]);
   // console.log(itemsInCart);
@@ -189,7 +191,12 @@ export default function Basket({ user, logOut }) {
         getCart();
         setClassForAddress("d-none");
         setFlowerNumber(2);
-      } catch (error) {}
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          alert("please add items to the cart ");
+          setLoadingButtonCat(false);
+        }
+      }
     }
   }
   const [flowerNumber, setFlowerNumber] = useState(1);
@@ -433,7 +440,7 @@ export default function Basket({ user, logOut }) {
   async function sendOrder(e) {
     e.preventDefault();
     setLoadingButtonCat(true);
-  
+
     if (numberOfPay === 1) {
       try {
         let { data } = await axios.post(
@@ -463,7 +470,7 @@ export default function Basket({ user, logOut }) {
     //     setLoadingButtonCat(false); // Make sure to reset loading state on error
     //   }
     // }
-     else {
+    else {
       alert("Please select a payment method.");
     }
   }
@@ -475,7 +482,7 @@ export default function Basket({ user, logOut }) {
   //   setNumberOfPay(2);
   // }
   // pop up
-  
+
   const handleShowPopup = () => {
     setShowPopup(true);
   };
@@ -490,7 +497,7 @@ export default function Basket({ user, logOut }) {
           setNavigateToHome(false); // Reset the navigation flag
         }
       }, 2000); // Show popup for 2 seconds
-  
+
       // Clear the timer when component unmounts or popup closes
       return () => clearTimeout(timer);
     }
