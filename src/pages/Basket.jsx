@@ -354,7 +354,8 @@ export default function Basket({ user, logOut }) {
         addressInfo.apartment == "" ||
         addressInfo.area == "" ||
         addressInfo.building == "" ||
-        addressInfo.customer == "" ||
+        addressInfo.customer[0].customerID == "" ||
+        addressInfo.customer[0].customerRole == "" ||
         addressInfo.floor == "" ||
         addressInfo.state == "" ||
         addressInfo.street == ""
@@ -384,7 +385,8 @@ export default function Basket({ user, logOut }) {
         addressInfo.apartment == "" ||
         addressInfo.area == "" ||
         addressInfo.building == "" ||
-        addressInfo.customer == "" ||
+        addressInfo.customer[0].customerID == "" ||
+        addressInfo.customer[0].customerRole == "" ||
         addressInfo.floor == "" ||
         addressInfo.state == "" ||
         addressInfo.street == "" ||
