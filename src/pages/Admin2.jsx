@@ -345,7 +345,7 @@ export default function Admin2({ logOut }) {
       getItems(e, idForOneItem);
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        console.log("leeeh");
+        // console.log("leeeh");
         setStatusLoading(false);
       }
     }
@@ -750,7 +750,7 @@ export default function Admin2({ logOut }) {
     );
   }
   async function putStatusOfItemForOccasion(e, idOfItem) {
-    console.log(idOfItem);
+    // console.log(idOfItem);
 
     e.preventDefault();
     setStatusLoadingForOccasion(true);

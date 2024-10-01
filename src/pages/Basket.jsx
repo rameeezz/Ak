@@ -9,7 +9,7 @@ import axios from "axios";
 import NavBar from "./../component/NavBar";
 import HeadOfPages from "./HeadOfPages";
 export default function Basket({ user, logOut }) {
-  console.log(user);
+  // console.log(user);
 
   let location = useLocation();
   let navigate = useNavigate();
@@ -22,7 +22,7 @@ export default function Basket({ user, logOut }) {
   const [itemsSameHome, setItemsSameHome] = useState([]);
   // console.log(" **************************** ");
 
-  console.log(itemsSameHome);
+  // console.log(itemsSameHome);
 
   const [cartID, setCartId] = useState("");
   const [totalCost, setTotalCost] = useState("");
@@ -100,7 +100,7 @@ export default function Basket({ user, logOut }) {
       (element) => element?.itemID !== itemID
     );
     setItemsSameHome(filteredArrayLikeHome);
-    console.log(filteredArray);
+    // console.log(filteredArray);
   }
   // change quantity
   async function changeQuantity(itemID, operation, itemPrice) {
@@ -248,7 +248,7 @@ export default function Basket({ user, logOut }) {
     street: "",
     area: "",
   });
-  // console.log(addressInfo);
+  console.log(addressInfo);
 
   useEffect(() => {
     setAddressInfo((prevInfo) => ({

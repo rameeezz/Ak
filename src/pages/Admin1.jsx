@@ -51,7 +51,7 @@ export default function Admin1({ logOut }) {
         );
         setLoading(false);
         setErrorMessage("");
-        console.log(data.message);
+        // console.log(data.message);
         setAdminInfo({
           ...AdminInfo,
           username: "",
@@ -605,7 +605,7 @@ export default function Admin1({ logOut }) {
       getItems(e, idForOneItem);
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        console.log("leeeh");
+        // console.log("leeeh");
         setStatusLoading(false);
       }
     }
@@ -1131,7 +1131,7 @@ export default function Admin1({ logOut }) {
     );
   }
   async function putStatusOfItemForOccasion(e, idOfItem) {
-    console.log(idOfItem);
+    // console.log(idOfItem);
 
     e.preventDefault();
     setStatusLoadingForOccasion(true);
