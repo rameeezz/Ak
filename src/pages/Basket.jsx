@@ -16,7 +16,7 @@ export default function Basket({ user, logOut }) {
   let userId =
     user?.role == "customer" ? user?.userId || null : user?.id || null;
   const customerRolee = user?.role || null;
-  // console.log(userId);
+  console.log(userId);
   const [itemsInCart, setItemsInCart] = useState([]);
   // console.log(itemsInCart);
   const [itemsSameHome, setItemsSameHome] = useState([]);
