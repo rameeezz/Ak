@@ -22,7 +22,7 @@ export default function Basket({ user, logOut }) {
       : decodeToken?.id || null;
   const customerRolee = decodeToken?.role || null;
 
-  console.log(userId);
+  // console.log(userId);
   const [itemsInCart, setItemsInCart] = useState([]);
   // console.log(itemsInCart);
   const [itemsSameHome, setItemsSameHome] = useState([]);
@@ -60,7 +60,7 @@ export default function Basket({ user, logOut }) {
       setCartId(data.getThisCart._id);
       setOrderInfo({ ...orderInfo, cart: data?.getThisCart?._id });
       setItemsSameHome(data.items);
-      console.log(data.items);
+      // console.log(data.items);
     } catch (error) {
       if (error.response && error.response.status === 404) {
         // alert("No Items");
@@ -259,7 +259,7 @@ export default function Basket({ user, logOut }) {
     street: "",
     area: "",
   });
-  console.log(addressInfo);
+  // console.log(addressInfo);
 
   useEffect(() => {
     setAddressInfo((prevInfo) => ({
