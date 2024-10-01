@@ -442,20 +442,22 @@ export default function Basket({ user, logOut }) {
       } catch (error) {
         setLoadingButtonCat(false); // Make sure to reset loading state on error
       }
-    } else if (numberOfPay === 2) {
-      try {
-        let { data } = await axios.post(
-          "https://akflorist-production.up.railway.app/payment/",
-          orderInfo
-        );
-        setLoadingButtonCat(false);
-        // Optionally handle the success response
-        handleShowPopup();
-        setNavigateToHome(true);
-      } catch (error) {
-        setLoadingButtonCat(false); // Make sure to reset loading state on error
-      }
-    } else {
+    }
+    //  else if (numberOfPay === 2) {
+    //   try {
+    //     let { data } = await axios.post(
+    //       "https://akflorist-production.up.railway.app/payment/",
+    //       orderInfo
+    //     );
+    //     setLoadingButtonCat(false);
+    //     // Optionally handle the success response
+    //     handleShowPopup();
+    //     setNavigateToHome(true);
+    //   } catch (error) {
+    //     setLoadingButtonCat(false); // Make sure to reset loading state on error
+    //   }
+    // }
+     else {
       alert("Please select a payment method.");
     }
   }
@@ -463,9 +465,9 @@ export default function Basket({ user, logOut }) {
   function setHowPayOnDeliver() {
     setNumberOfPay(1);
   }
-  function setHowPayOnLine() {
-    setNumberOfPay(2);
-  }
+  // function setHowPayOnLine() {
+  //   setNumberOfPay(2);
+  // }
   // pop up
   
   const handleShowPopup = () => {
@@ -692,7 +694,7 @@ export default function Basket({ user, logOut }) {
                       Payment Upon Delivery
                     </button>
                   </div>
-                  <div className="w-100 d-flex justify-content-center mt-3">
+                  {/* <div className="w-100 d-flex justify-content-center mt-3">
                     <button
                       onClick={setHowPayOnLine}
                       className={`p-3 cursorPOinter btn btn-info w-[80%] ${
@@ -703,7 +705,7 @@ export default function Basket({ user, logOut }) {
                     >
                       Visa
                     </button>
-                  </div>
+                  </div> */}
                 </div>
               )}
 
