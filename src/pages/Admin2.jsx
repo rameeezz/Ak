@@ -1016,6 +1016,12 @@ export default function Admin2({ logOut }) {
                   </span>{" "}
                 </p>
                 <p className="w-100 text-start">
+                  <span className="fw-bold">Mobile Number :</span>{" "}
+                  <span className="text-muted">
+                    {element?.customer[0]?.customerID?.mobileNumber}
+                  </span>{" "}
+                </p>
+                <p className="w-100 text-start">
                   <span className="fw-bold">Address : </span>
                   <span>
                     {element?.address?.state} {element?.address?.area}
