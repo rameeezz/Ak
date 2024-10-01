@@ -13,9 +13,22 @@ export default function Basket({ user, logOut }) {
 
   let location = useLocation();
   let navigate = useNavigate();
-  let userId =
-    user?.role == "customer" ? user?.userId || null : user?.id || null;
+  let [userId, setUserId] = useState(
+    user?.role == "customer" ? user?.userId || null : user?.id || null
+  );
+
   const customerRolee = user?.role || null;
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+  }, [user]);
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUserId(JSON.parse(storedUser)); // Assuming `setUser` is the setter for user state
+    }
+  }, []);
   console.log(userId);
   const [itemsInCart, setItemsInCart] = useState([]);
   // console.log(itemsInCart);
@@ -429,7 +442,7 @@ export default function Basket({ user, logOut }) {
   async function sendOrder(e) {
     e.preventDefault();
     setLoadingButtonCat(true);
-  
+
     if (numberOfPay === 1) {
       try {
         let { data } = await axios.post(
@@ -459,7 +472,7 @@ export default function Basket({ user, logOut }) {
     //     setLoadingButtonCat(false); // Make sure to reset loading state on error
     //   }
     // }
-     else {
+    else {
       alert("Please select a payment method.");
     }
   }
@@ -471,7 +484,7 @@ export default function Basket({ user, logOut }) {
   //   setNumberOfPay(2);
   // }
   // pop up
-  
+
   const handleShowPopup = () => {
     setShowPopup(true);
   };
@@ -486,7 +499,7 @@ export default function Basket({ user, logOut }) {
           setNavigateToHome(false); // Reset the navigation flag
         }
       }, 2000); // Show popup for 2 seconds
-  
+
       // Clear the timer when component unmounts or popup closes
       return () => clearTimeout(timer);
     }
