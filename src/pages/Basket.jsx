@@ -363,12 +363,9 @@ export default function Basket({ user, logOut }) {
     e.preventDefault();
     if (user.role == "customer") {
       if (
-        addressInfo.apartment == "" ||
         addressInfo.area == "" ||
-        addressInfo.building == "" ||
         addressInfo.customer[0].customerID == "" ||
         addressInfo.customer[0].customerRole == "" ||
-        addressInfo.floor == "" ||
         addressInfo.state == "" ||
         addressInfo.street == ""
       ) {
@@ -394,12 +391,9 @@ export default function Basket({ user, logOut }) {
       }
     } else {
       if (
-        addressInfo.apartment == "" ||
         addressInfo.area == "" ||
-        addressInfo.building == "" ||
         addressInfo.customer[0].customerID == "" ||
         addressInfo.customer[0].customerRole == "" ||
-        addressInfo.floor == "" ||
         addressInfo.state == "" ||
         addressInfo.street == "" ||
         NumberDetails.mobileNumber == ""
