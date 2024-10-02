@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../css/Home.css";
 import bg from "../assets/bg/imresizer-1724329258313.jpg";
-import PHoto1 from "../assets/card photo/photoCategory.jpg";
+import PHoto1 from "../assets/card photo/photo1.jpg";
+import PHoto2 from "../assets/card photo/photo2.jpg";
 import callSvg from "../assets/card photo/outline-email (1) - Copy.svg";
 import whatsSvg from "../assets/card photo/contact-whatsapp.svg";
 import customerSurviceSvg from "../assets/card photo/customer-service.svg";
@@ -682,7 +683,7 @@ export default function Home({ user }) {
         </div>
         <div className="d-flex justify-content-center gap-2 flex-row">
           <div className="w-25 rounded shadow forSmallScreenCategoryImage">
-            <img src={PHoto1} alt="" className="rounded w-100 h-100" />
+            <img src={PHoto2} alt="" className="rounded w-100 h-100" />
           </div>
           <div className="d-flex flex-row justify-content-left align-items-center gap-3 overflow-x-scroll removeScrollBardFromCAtegroy w-100 cursorPOinter">
             {allOccasion.length === 0 ? (
