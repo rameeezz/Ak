@@ -64,13 +64,8 @@ export default function CartVeiw({ user }) {
                     ? element.items.map((item, i) => (
                         <div
                           key={i}
-                          className="d-flex justify-content-start gap-3 border border-2 rounded p-1 w-100 h-[120px] position-relative"
+                          className="d-flex justify-content-start gap-3 border border-2 rounded p-1 w-100 h-[120px]"
                         >
-                          <div className="position-absolute bottom-3 end-5 responsivePOstitionCard">
-                            <button className="btn btn-primary responsiveForBtn">
-                              cancel order
-                            </button>
-                          </div>
                           <div className="">
                             {item?.itemID?.images &&
                             item?.itemID?.images.length > 0 ? (
