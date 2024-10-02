@@ -722,8 +722,8 @@ export default function Admin1({ logOut }) {
         setSureDeleteItemFromOneCategory("d-none");
         getItems(e, categroryId.categoryId);
       } catch (error) {
-        if (error.response && error.response.status === 404 ) {
-          alert("delete it from X button")
+        if (error.response && error.response.status === 404) {
+          alert("delete it from X button");
         }
       }
     }
@@ -1273,8 +1273,8 @@ export default function Admin1({ logOut }) {
         setSureDeleteItemFromOccasion("d-none");
         getItemsForOccasions(e, categroryIdForOccasion.categoryId);
       } catch (error) {
-        if (error.response && error.response.status === 404 ) {
-          alert("delete it from X button")
+        if (error.response && error.response.status === 404) {
+          alert("delete it from X button");
         }
       }
     }
@@ -1304,6 +1304,43 @@ export default function Admin1({ logOut }) {
     }
   }
   // -------------------------------------------------------
+  // promo code
+  const [promoDetails, setPromoDetails] = useState({
+    code: "",
+    discount: 0,
+    expirationDate: "",
+  });
+  const [loadingForPromo, setLoadingForPromo] = useState(false);
+  // console.log(promoDetails);
+
+  function takePromoDetails(e) {
+    let myPromo = { ...promoDetails };
+    myPromo[e.target.name] = e.target.value;
+    setPromoDetails(myPromo);
+  }
+  async function sendPromoCode(e) {
+    setLoadingForPromo(true);
+    e.preventDefault();
+    try {
+      let { data } = await axios.post(
+        "https://akflorist-production.up.railway.app/admin2/createPromoCode",
+        promoDetails
+      );
+      setPromoDetails({
+        code: "",
+        discount: 0,
+        expirationDate: "",
+      });
+      showAlertMessage();
+      setLoadingForPromo(false);
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        alert("server down")
+        setLoadingForPromo(false);
+      }
+    }
+  }
+  // done
   return (
     <>
       <div>
@@ -1409,7 +1446,7 @@ export default function Admin1({ logOut }) {
                   {ErrorMessageForCategory}
                 </div>
               )}
-             {LoadingAddCategory ? (
+              {LoadingAddCategory ? (
                 <button className=" btn btn-primary px-4">
                   <i className="fa solid fa-spinner fa-spin "></i>
                 </button>
@@ -2026,45 +2063,45 @@ export default function Admin1({ logOut }) {
             Add occasion
           </h3>
           <div className="d-flex justify-content-center align-items-center my-5">
-          <form onSubmit={sendCategoryNameForOccasion} className="w-50">
-      <div className="mb-3">
-        <label className="form-label">Name of Occasion</label>
-        <input
-          type="text"
-          className="form-control"
-          name="name"
-          value={categoryNameForOccasion.name}
-          onChange={getCategoryNameForOccasion}
-        />
-      </div>
-      <div className="mb-3">
-        <label className="form-label" htmlFor="occasionImages">
-          Image
-        </label>
-        <input
-          onChange={getCategoryNameForOccasion}
-          type="file"
-          className="form-control"
-          id="occasionImages"
-          name="image"
-          accept="image/*"
-        />
-      </div>
-      {ErrorMessageForCategoryForOccasion && (
-        <div className="my-3 text-danger text-center">
-          {ErrorMessageForCategoryForOccasion}
-        </div>
-      )}
-      {LoadingAddCategoryForOccasion ? (
-        <button className="btn btn-primary px-4" disabled>
-          <i className="fa solid fa-spinner fa-spin"></i>
-        </button>
-      ) : (
-        <button type="submit" className="btn btn-primary">
-          Add Occasion
-        </button>
-      )}
-    </form>
+            <form onSubmit={sendCategoryNameForOccasion} className="w-50">
+              <div className="mb-3">
+                <label className="form-label">Name of Occasion</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="name"
+                  value={categoryNameForOccasion.name}
+                  onChange={getCategoryNameForOccasion}
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label" htmlFor="occasionImages">
+                  Image
+                </label>
+                <input
+                  onChange={getCategoryNameForOccasion}
+                  type="file"
+                  className="form-control"
+                  id="occasionImages"
+                  name="image"
+                  accept="image/*"
+                />
+              </div>
+              {ErrorMessageForCategoryForOccasion && (
+                <div className="my-3 text-danger text-center">
+                  {ErrorMessageForCategoryForOccasion}
+                </div>
+              )}
+              {LoadingAddCategoryForOccasion ? (
+                <button className="btn btn-primary px-4" disabled>
+                  <i className="fa solid fa-spinner fa-spin"></i>
+                </button>
+              ) : (
+                <button type="submit" className="btn btn-primary">
+                  Add Occasion
+                </button>
+              )}
+            </form>
           </div>
           {/* ---------------------------------------------- */}
           {/* show Occasion and delete from it  */}
@@ -2542,6 +2579,67 @@ export default function Admin1({ logOut }) {
             </button>
           </div>
           {/* end of status  ****************************----*/}
+          {/* promo code  */}
+          <div className="d-flex justify-content-center">
+            <div className="w-50">
+              <h3 className="responsive-font-size-h3 mt-3 colorForTitles text-center">
+                Promo code
+              </h3>
+              <form>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">
+                    write here your promo code
+                  </label>
+                  <input
+                    onChange={takePromoDetails}
+                    type="text"
+                    class="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                    name="code"
+                    value={promoDetails.code}
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputEmail2" class="form-label">
+                    write here percentage
+                  </label>
+                  <input
+                    onChange={takePromoDetails}
+                    type="number"
+                    class="form-control"
+                    id="exampleInputEmail2"
+                    aria-describedby="emailHelp"
+                    name="discount"
+                    value={promoDetails.discount}
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputEmail3" class="form-label">
+                    expired date
+                  </label>
+                  <input
+                    onChange={takePromoDetails}
+                    type="date"
+                    class="form-control"
+                    id="exampleInputEmail3"
+                    aria-describedby="emailHelp"
+                    name="expirationDate"
+                    value={promoDetails.expirationDate}
+                  />
+                </div>
+              </form>
+              {loadingForPromo ? (
+                <div className="w-100 justify-content-center d-flex">
+                  <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+                </div>
+              ) : (
+                <button onClick={sendPromoCode} className="btn btn-primary">
+                  Done
+                </button>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </>

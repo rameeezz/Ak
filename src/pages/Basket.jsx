@@ -59,6 +59,7 @@ export default function Basket({ user, logOut }) {
       setTotalCost(data.getThisCart.totalCost);
       setCartId(data.getThisCart._id);
       setOrderInfo({ ...orderInfo, cart: data?.getThisCart?._id });
+      setUserPromoCode({ ...userPromoCode, cartId: data?.getThisCart?._id });
       setItemsSameHome(data.items);
       // console.log(data.items);
     } catch (error) {
@@ -472,6 +473,7 @@ export default function Basket({ user, logOut }) {
     // }
     else {
       alert("Please select a payment method.");
+      setLoadingButtonCat(false);
     }
   }
   // done
@@ -502,6 +504,50 @@ export default function Basket({ user, logOut }) {
       return () => clearTimeout(timer);
     }
   }, [showPopup, navigateToHome]);
+  // promo code
+  const [userPromoCode, setUserPromoCode] = useState({
+    cartId: "",
+    code: "",
+  });
+  const [errorMessageForPromo, setErrorMessageForPromo] = useState("");
+  // console.log(userPromoCode);
+
+  function getPromoCode(e) {
+    setErrorMessageForPromo("");
+    let myPromo = { ...userPromoCode };
+    myPromo[e.target.name] = e.target.value;
+    setUserPromoCode(myPromo);
+  }
+  async function sendUserPromoCode(e) {
+    setLoadingButtonCat(true);
+    e.preventDefault();
+    if (userPromoCode.code == "" || userPromoCode.code == null) {
+      sendOrder(e);
+    } else if (numberOfPay === 1) {
+      try {
+        let { data } = await axios.post(
+          "https://akflorist-production.up.railway.app/customer/addPromoCode",
+          userPromoCode
+        );
+        console.log(data);
+
+        setErrorMessageForPromo("");
+        sendOrder(e);
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          setErrorMessageForPromo("This Promo Code Doesnt Work.");
+          setLoadingButtonCat(false);
+        }
+        if (error.response && error.response.status === 422) {
+          setErrorMessageForPromo("This Promo Used Before.");
+          setLoadingButtonCat(false);
+        }
+      }
+    } else {
+      alert("Please select a payment method.");
+      setLoadingButtonCat(false);
+    }
+  }
   return (
     <>
       <NavBar user={user} logOut={logOut} cartID={cartID} />
@@ -962,6 +1008,37 @@ export default function Basket({ user, logOut }) {
               ) : (
                 ""
               )}
+              {flowerNumber == 3 ? (
+                itemsInCart === null || itemsInCart.length === 0 ? (
+                  ""
+                ) : (
+                  <div className="w-100 mt-4 d-flex justify-content-between px-4 mb-5">
+                    <form>
+                      <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">
+                          Promo Code
+                        </label>
+                        <input
+                          onChange={getPromoCode}
+                          type="text"
+                          class="form-control w-100"
+                          id="exampleInputEmail1"
+                          aria-describedby="emailHelp"
+                          name="code"
+                          value={userPromoCode.code}
+                        />
+                      </div>
+                      {errorMessageForPromo == "" ? (
+                        ""
+                      ) : (
+                        <p className="text-danger">{errorMessageForPromo}</p>
+                      )}
+                    </form>
+                  </div>
+                )
+              ) : (
+                ""
+              )}
 
               {LoadingButtonCat ? (
                 <div className="w-100 mt-3 justify-content-center d-flex">
@@ -978,7 +1055,7 @@ export default function Basket({ user, logOut }) {
                     </button>
                   ) : flowerNumber === 3 ? (
                     <button
-                      onClick={sendOrder}
+                      onClick={sendUserPromoCode}
                       className="w-[80%] btn btn-primary"
                     >
                       Payment

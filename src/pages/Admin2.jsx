@@ -919,7 +919,7 @@ export default function Admin2({ logOut }) {
     indexOfFirstItemOrders,
     indexOfLastItemOrders
   );
-  // console.log(currentItem);
+  // console.log(currentItemOrders);
 
   const paginateOrders = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPagesOrders) {
