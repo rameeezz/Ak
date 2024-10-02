@@ -54,6 +54,16 @@
 .responsive-For-Card-p {
   font-size: 1rem;
 }
+.responsiveSpinnerForCartView{
+  font-size: 150px;
+}
+.responsiveForOreder{
+  font-size: 12px;
+  width: 100px;
+}
+.CardOFAllOreder{
+  width: 80%;
+}
 .sizeOfI {
   font-weight: 300;
   font-size: 1.6rem;
@@ -382,5 +392,27 @@ gap: 50px;
 }
 .forCartItemUser{
   width: 200px;
+}
+.responsiveSpinnerForCartView{
+  font-size: 50px;
+}
+.responsiveForOreder{
+  font-size: 10px;
+  width: 90px;
+}
+.CardOFAllOreder{
+  width: 100%;
+}
+.responsiveNameInOrder{
+  font-size: 10px;
+}
+.responsiveForBtn{
+  width: 100%;
+  padding: 2px;
+  font-size: 10px;
+}
+.responsivePOstitionCard{
+  right: 8px !important;
+  bottom: 15px !important;
 }
 }
