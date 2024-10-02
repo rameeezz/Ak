@@ -582,6 +582,7 @@ export default function Admin1({ logOut }) {
     setSureDeleteItem("d-none");
   }
   async function deleteItem(e) {
+    setLoadingForDeleteItemInCategory(true);
     e.preventDefault();
     try {
       let { data } = await axios.delete(
@@ -591,6 +592,7 @@ export default function Admin1({ logOut }) {
       setSureDeleteItem("d-none");
       getItems(e, idForOneItem);
       showAlertMessage();
+      setLoadingForDeleteItemInCategory(false);
     } catch (error) {}
   }
   async function putStatusOfItem(e, idOfItem) {
@@ -640,6 +642,8 @@ export default function Admin1({ logOut }) {
   /* end of status and delete ****************************----*/
   // work on sale of item
   const [loadForPercent, setLoadForPercent] = useState(false);
+  const [loadingForDeleteItemInCategory, setLoadingForDeleteItemInCategory] =
+    useState(false);
   // console.log(salePercent);
 
   function putSalePercent(e) {
@@ -709,6 +713,7 @@ export default function Admin1({ logOut }) {
   }
   async function deleteItemFromOneCategory(e) {
     // console.log(itemID);
+    setLoadingForDeleteItemInCategory(true);
     e.preventDefault();
     if (categroryId.itemID == "" || categroryId.categoryId == "") {
       alert("click on delete again please");
@@ -719,11 +724,17 @@ export default function Admin1({ logOut }) {
           categroryId
         );
         showAlertMessage();
+        setLoadingForDeleteItemInCategory(false);
         setSureDeleteItemFromOneCategory("d-none");
         getItems(e, categroryId.categoryId);
       } catch (error) {
         if (error.response && error.response.status === 404) {
           alert("delete it from X button");
+          setLoadingForDeleteItemInCategory(false);
+        }
+        if (error.response && error.response.status === 422) {
+          alert("delete it from X button");
+          setLoadingForDeleteItemInCategory(false);
         }
       }
     }
@@ -1034,6 +1045,7 @@ export default function Admin1({ logOut }) {
 
   // ----------------------
   // show items in occasion and delete and status and discount
+  const [loadingForDelete, setLoadingForDelete] = useState(false);
   const [loadingForItemsForOccasion, setLoadingForItemsForOccasion] =
     useState(false);
   const [classForItemsForOccasion, setClassForItemsForOccasion] =
@@ -1243,7 +1255,9 @@ export default function Admin1({ logOut }) {
   function closeSureBoxForOccasion() {
     setSureDeleteItemForOccasion("d-none");
   }
+
   async function deleteItemForOccasion(e) {
+    setLoadingForDelete(true);
     e.preventDefault();
     try {
       let { data } = await axios.delete(
@@ -1251,18 +1265,21 @@ export default function Admin1({ logOut }) {
       );
       // console.log(data);
       setSureDeleteItemForOccasion("d-none");
+      setLoadingForDelete(false);
       getItemsForOccasions(e, categroryIdForOccasion.categoryId);
       showAlertMessage();
     } catch (error) {}
   }
   async function deleteItemFromOneOccasion(e) {
     // console.log(itemID);
+    setLoadingForDelete(true);
     e.preventDefault();
     if (
       categroryIdForOccasion.itemID == "" ||
       categroryIdForOccasion.categoryId == ""
     ) {
       alert("click on delete again please");
+      setLoadingForDelete(false);
     } else {
       try {
         let { data } = await axios.patch(
@@ -1270,11 +1287,13 @@ export default function Admin1({ logOut }) {
           categroryIdForOccasion
         );
         showAlertMessage();
+        setLoadingForDelete(false);
         setSureDeleteItemFromOccasion("d-none");
         getItemsForOccasions(e, categroryIdForOccasion.categoryId);
       } catch (error) {
         if (error.response && error.response.status === 404) {
           alert("delete it from X button");
+          setLoadingForDelete(false);
         }
       }
     }
@@ -1335,7 +1354,7 @@ export default function Admin1({ logOut }) {
       setLoadingForPromo(false);
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        alert("server down")
+        alert("server down");
         setLoadingForPromo(false);
       }
     }
@@ -1989,9 +2008,15 @@ export default function Admin1({ logOut }) {
                   system.{" "}
                 </p>
                 <div className="d-flex justify-content-center">
-                  <button onClick={deleteItem} className="btn btn-primary ">
-                    delete
-                  </button>
+                  {loadingForDeleteItemInCategory ? (
+                    <div className="w-100 justify-content-center d-flex">
+                      <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+                    </div>
+                  ) : (
+                    <button onClick={deleteItem} className="btn btn-primary ">
+                      delete
+                    </button>
+                  )}
                 </div>
               </div>
               {/* delete item from one category */}
@@ -2006,12 +2031,18 @@ export default function Admin1({ logOut }) {
                   only?{" "}
                 </p>
                 <div className="d-flex justify-content-center">
-                  <button
-                    onClick={deleteItemFromOneCategory}
-                    className="btn btn-primary "
-                  >
-                    delete
-                  </button>
+                  {loadingForDeleteItemInCategory ? (
+                    <div className="w-100 justify-content-center d-flex">
+                      <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={deleteItemFromOneCategory}
+                      className="btn btn-primary "
+                    >
+                      delete
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -2529,12 +2560,18 @@ export default function Admin1({ logOut }) {
                   system.{" "}
                 </p>
                 <div className="d-flex justify-content-center">
-                  <button
-                    onClick={deleteItemForOccasion}
-                    className="btn btn-primary "
-                  >
-                    delete
-                  </button>
+                  {loadingForDelete ? (
+                    <div className="w-100 justify-content-center d-flex">
+                      <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={deleteItemForOccasion}
+                      className="btn btn-primary "
+                    >
+                      delete
+                    </button>
+                  )}
                 </div>
               </div>
               {/* delete item from one category */}
@@ -2549,12 +2586,18 @@ export default function Admin1({ logOut }) {
                   only?{" "}
                 </p>
                 <div className="d-flex justify-content-center">
-                  <button
-                    onClick={deleteItemFromOneOccasion}
-                    className="btn btn-primary "
-                  >
-                    delete
-                  </button>
+                  {loadingForDelete ? (
+                    <div className="w-100 justify-content-center d-flex">
+                      <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={deleteItemFromOneOccasion}
+                      className="btn btn-primary "
+                    >
+                      delete
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
