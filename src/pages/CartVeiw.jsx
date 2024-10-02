@@ -48,7 +48,7 @@ export default function CartVeiw({ user }) {
           </div>
         ) : currentItem == null || currentItem.length == 0 ? (
           <div className="d-flex flex-column align-items-center mt-5 h-vh gap-3">
-            <p className="mt-5 border border-2 p-5 rounded w-50 text-center responsive-font-size-h1">
+            <p className="mt-5 border border-2 p-5 rounded text-center responsive-font-size-h1">
               No Orders Here
             </p>
           </div>
