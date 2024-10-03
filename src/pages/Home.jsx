@@ -432,7 +432,7 @@ export default function Home({ user }) {
           </button>
         </div>
       </div>
-      <img src={bg} alt="Ak Florist" className="classForBg" />
+      <img src={bg} alt="Fresh flowers from AK Florist" className="classForBg"/>
       <div className="container-xxl mb-5">
         {/* Best seller  */}
         <div className="d-flex flex-column align-items-center justify-content-center mt-5 mb-4">
