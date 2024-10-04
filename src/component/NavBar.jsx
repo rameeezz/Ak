@@ -148,15 +148,14 @@ export default function NavBar({ user, logOut, cartID }) {
                       {subCategory && subCategory.length > 0 ? (
                         subCategory.map((subElement, i) => (
                           <Link
-                            key={i}
-                            to={{
-                              pathname: "/show-items-in-sub-category",
-                              state: { id: subElement?._id, cartID: safeCartID } // Pass the id and cartID as state
-                            }}
-                            className="text-[#b38e38] text-center FontSizeForP"
-                          >
-                            {subElement?.name}
-                          </Link>
+                          key={i}
+                          to="/show-items-in-sub-category"
+                          state={{ id: subElement?._id, cartID: safeCartID }} // Correctly pass the state here
+                          className="text-[#b38e38] text-center FontSizeForP"
+                        >
+                          {subElement?.name}
+                        </Link>
+                        
                         ))
                       ) : (
                         <p>No subcategories available.</p>
