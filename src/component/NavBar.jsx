@@ -77,7 +77,8 @@ export default function NavBar({ user, logOut, cartID }) {
       }
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        alert("No subcategories or items found for this category");
+        // alert("No subcategories or items found for this category");
+        navigate("/show-items", { state: { id: idOfCategory, cartID: cartID } });
       }
       console.error("Error fetching subcategories:", error);
     }
@@ -158,7 +159,7 @@ export default function NavBar({ user, logOut, cartID }) {
                         
                         ))
                       ) : (
-                        <p>No subcategories available.</p>
+                        ""
                       )}
                     </div>
                   </div>
