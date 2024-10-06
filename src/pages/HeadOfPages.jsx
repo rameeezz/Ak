@@ -197,7 +197,7 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
             {filteredItems === null || filteredItems.length === 0 ? (
               ""
             ) : (
-              <div className="styleForResultSearch d-flex justify-content-center flex-column align-items-center overflow-y-scroll position-absolute bg-white z-20">
+              <div className="styleForResultSearch d-flex justify-content-start flex-column align-items-center overflow-y-scroll position-absolute bg-white z-20">
                 {filteredItems === null || filteredItems.length === 0
                   ? "Not Found"
                   : filteredItems.map((element, i) => (
