@@ -277,6 +277,7 @@ export default function Admin2({ logOut }) {
       );
       // console.log(data);
       setLoadingForItems(false);
+      setCurrentPage(1);
       setItemInCategory(data);
       setCategoryID({ ...categroryId, categoryId: itemID });
       setGetSubCategorys([]);
@@ -969,6 +970,51 @@ export default function Admin2({ logOut }) {
   function closeCard() {
     setClassOfCard("d-none");
   }
+
+  const [editeStatus, setEditStatus] = useState(false);
+  const [loadingForEdit, setLoadingForedit] = useState(false);
+  const [newPriceInfo, setNewPriceInfo] = useState({
+    itemID: "",
+    newPrice: 0,
+  });
+
+  function turnEditTrue(ItemID) {
+    setNewPriceInfo({ ...newPriceInfo, itemID: ItemID });
+    setEditStatus(true);
+  }
+  function takeNewPrice(e) {
+    let { name, value } = e.target;
+    setNewPriceInfo((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  }
+  async function sendNewValue(e) {
+    e.preventDefault();
+    setLoadingForedit(true);
+    try {
+      let { data } = await axios.patch(
+        "https://akflorist-production.up.railway.app/admin2/editPrice",
+        newPriceInfo
+      );
+      setEditStatus(false);
+      setLoadingForedit(false);
+      getItems(e, idForOneItem);
+    } catch (error) {}
+  }
+  async function sendNewValueOccasion(e) {
+    e.preventDefault();
+    setLoadingForedit(true);
+    try {
+      let { data } = await axios.patch(
+        "https://akflorist-production.up.railway.app/admin2/editPrice",
+        newPriceInfo
+      );
+      setEditStatus(false);
+      setLoadingForedit(false);
+      getItemsForOccasions(e, categroryIdForOccasion.categoryId);
+    } catch (error) {}
+  }
   return (
     <>
       <div className=" position-fixed end-2 rounded-circle bg-danger top-5">
@@ -1407,7 +1453,43 @@ export default function Admin2({ logOut }) {
                     alt=""
                   />
                   <div className="card-body">
-                    <p className="text-muted mb-2">{element?.lastPrice} EGP</p>
+                    <div className="d-flex justify-content-between align-items-center mb-2">
+                      {editeStatus ? (
+                        <input
+                          name="newPrice"
+                          type="number"
+                          className="form-control"
+                          onChange={takeNewPrice}
+                        />
+                      ) : (
+                        <p className="text-muted mb-2">
+                          {element?.lastPrice} EGP
+                        </p>
+                      )}
+                      {editeStatus ? (
+                        loadingForEdit ? (
+                          <div className="w-100 justify-content-center d-flex">
+                            <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={sendNewValue}
+                            className="btn btn-primary"
+                          >
+                            done
+                          </button>
+                        )
+                      ) : (
+                        <button
+                          onClick={() => {
+                            turnEditTrue(element._id);
+                          }}
+                          className="btn btn-primary"
+                        >
+                          edit
+                        </button>
+                      )}
+                    </div>
                     <h5 className="card-title">{element?.name}</h5>
                     <p className="card-text mb-2">{element?.description}</p>
                     <div className="d-flex justify-content-center">
@@ -1798,7 +1880,43 @@ export default function Admin2({ logOut }) {
                     alt=""
                   />
                   <div className="card-body">
-                    <p className="text-muted mb-2">{element?.lastPrice} EGP</p>
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                      {editeStatus ? (
+                        <input
+                          name="newPrice"
+                          type="number"
+                          className="form-control"
+                          onChange={takeNewPrice}
+                        />
+                      ) : (
+                        <p className="text-muted mb-2">
+                          {element?.lastPrice} EGP
+                        </p>
+                      )}
+                      {editeStatus ? (
+                        loadingForEdit ? (
+                          <div className="w-100 justify-content-center d-flex">
+                            <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={sendNewValueOccasion}
+                            className="btn btn-primary"
+                          >
+                            done
+                          </button>
+                        )
+                      ) : (
+                        <button
+                          onClick={() => {
+                            turnEditTrue(element._id);
+                          }}
+                          className="btn btn-primary"
+                        >
+                          edit
+                        </button>
+                      )}
+                    </div>
                     <h5 className="card-title">{element?.name}</h5>
                     <p className="card-text mb-2">{element?.description}</p>
                     <div className="d-flex justify-content-center">

@@ -300,6 +300,7 @@ export default function ShowItems({ user }) {
       // console.log(data);
       setAllItems(data);
       setErrorForAllItems("");
+      setCurrentPage(1)
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setAllItems([]);
