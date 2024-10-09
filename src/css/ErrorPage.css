@@ -1,0 +1,53 @@
+.error-page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    background-color: #f0f0f0;
+    color: #333;
+  }
+  
+  .error-heading {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #ff6b6b;
+    margin-bottom: 20px;
+  }
+  
+  .error-message {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+    color: #444;
+  }
+  
+  .home-button {
+    padding: 10px 25px;
+    font-size: 1.2rem;
+    background-color: #ff6b6b;
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: transform 0.3s, background-color 0.3s;
+  }
+  
+  .home-button:hover {
+    transform: scale(1.05);
+    background-color: #ff4040;
+  }
+  
+  /* Special animation for the error heading */
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+  
+  .error-heading {
+    animation: bounce 2s infinite;
+  }
+  
