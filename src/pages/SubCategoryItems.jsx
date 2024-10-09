@@ -31,7 +31,8 @@ export default function SubCategoryItems({ user }) {
   const [classoFitemIsAlreadyExist, setClassoFitemIsAlreadyExist] =
     useState(false);
   // console.log(itemsArray);
-  const customerID = user?.role == "customer" ? user?.userId || null : user?.id || null;
+  const customerID =
+    user?.role == "customer" ? user?.userId || null : user?.id || null;
   // console.log(customerID);
 
   // Save itemsArray to localStorage whenever it changes
@@ -52,7 +53,8 @@ export default function SubCategoryItems({ user }) {
       ...prevInfo,
       customer: [
         {
-          customerID: user?.role == "customer" ? user?.userId || null : user?.id || null,
+          customerID:
+            user?.role == "customer" ? user?.userId || null : user?.id || null,
           customerRole: customerRolee,
         },
       ], // Ensure customer is always up-to-date
@@ -131,12 +133,11 @@ export default function SubCategoryItems({ user }) {
         }
       );
       // console.log(data);
-      handleSubmitCreateCart(e)
+      handleSubmitCreateCart(e);
     } catch (error) {
       console.error("Error deleting cart:", error);
     }
   }
-
 
   async function editeCart(e) {
     setLoadingButtonCat(true);
@@ -346,7 +347,9 @@ export default function SubCategoryItems({ user }) {
           loadingAllItems ? (
             <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
           ) : (
-            <p>{errorForAllItems}</p>
+            <div className="d-flex justify-content-center w-100">
+              <p className="text-[#D4B11C]">Coming Soon</p>
+            </div>
           )
         ) : (
           currentItem.map((element, i) => (
@@ -408,15 +411,15 @@ export default function SubCategoryItems({ user }) {
                   {element?.description.slice(0, 37)}
                 </p>
                 <div className="d-flex justify-content-center align-items-center position-absolute bottom-0 start-50 translate-middle-x w-[100%]">
-                    <button
-                      onClick={() => {
-                        addToCart(element._id, 1, element?.type);
-                      }}
-                      className="btn text-white ColorButton classForButtonForCard w-100"
-                    >
-                      Add to Cart
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => {
+                      addToCart(element._id, 1, element?.type);
+                    }}
+                    className="btn text-white ColorButton classForButtonForCard w-100"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
               </div>
             </div>
           ))

@@ -341,7 +341,9 @@ export default function ShowItemsInOccasion({ user }) {
                 loadingAllItems ? (
                   <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
                 ) : (
-                  <p>{errorForAllItems}</p>
+                  <div className="d-flex justify-content-center w-100">
+                  <p className="text-[#D4B11C]">Coming Soon</p>
+                </div>
                 )
               ) : (
                 currentItem.map((element, i) => (

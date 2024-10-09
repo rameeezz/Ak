@@ -21,7 +21,8 @@ export default function AllSpecialDeals({ user }) {
   const [classoFitemIsAlreadyExist, setClassoFitemIsAlreadyExist] =
     useState(false);
   // console.log(itemsArray);
-  const customerID = user?.role == "customer" ? user?.userId || null : user?.id || null;
+  const customerID =
+    user?.role == "customer" ? user?.userId || null : user?.id || null;
   // console.log(customerID);
 
   // Save itemsArray to localStorage whenever it changes
@@ -42,7 +43,8 @@ export default function AllSpecialDeals({ user }) {
       ...prevInfo,
       customer: [
         {
-          customerID: user?.role == "customer" ? user?.userId || null : user?.id || null,
+          customerID:
+            user?.role == "customer" ? user?.userId || null : user?.id || null,
           customerRole: customerRolee,
         },
       ], // Ensure customer is always up-to-date
@@ -259,7 +261,9 @@ export default function AllSpecialDeals({ user }) {
             loadingSpecialDeals ? (
               <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
             ) : (
-              <p>{errorMessageForSpecialDeals}</p>
+              <div className="d-flex justify-content-center w-100">
+                <p className="text-[#D4B11C]">Coming Soon</p>
+              </div>
             )
           ) : (
             SpecialDealsCategory.map((element, i) => (

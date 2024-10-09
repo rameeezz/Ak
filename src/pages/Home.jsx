@@ -36,7 +36,8 @@ export default function Home({ user }) {
   const [classoFitemIsAlreadyExist, setClassoFitemIsAlreadyExist] =
     useState(false);
   // console.log(itemsArray);
-  const customerID = user?.role == "customer" ? user?.userId || null : user?.id || null;
+  const customerID =
+    user?.role == "customer" ? user?.userId || null : user?.id || null;
   // console.log("customer", customerID);
 
   // Save itemsArray to localStorage whenever it changes
@@ -78,7 +79,8 @@ export default function Home({ user }) {
       ...prevInfo,
       customer: [
         {
-          customerID: user?.role == "customer" ? user?.userId || null : user?.id || null,
+          customerID:
+            user?.role == "customer" ? user?.userId || null : user?.id || null,
           customerRole: customerRolee,
         },
       ], // Ensure customer is always up-to-date
@@ -432,7 +434,11 @@ export default function Home({ user }) {
           </button>
         </div>
       </div>
-      <img src={bg} alt="Fresh flowers from AK Florist" className="classForBg"/>
+      <img
+        src={bg}
+        alt="Fresh flowers from AK Florist"
+        className="classForBg"
+      />
       <div className="container-xxl mb-5">
         {/* Best seller  */}
         <div className="d-flex flex-column align-items-center justify-content-center mt-5 mb-4">
@@ -454,7 +460,9 @@ export default function Home({ user }) {
                 <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
               </div>
             ) : (
-              <p>{errorMessageForGetCategory}</p>
+              <div className="d-flex justify-content-center w-100">
+                <p className="text-[#D4B11C]">Coming Soon</p>
+              </div>
             )
           ) : (
             bestSellerCategory.slice(0, 4).map((element, i) => (
@@ -636,7 +644,9 @@ export default function Home({ user }) {
                   <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
                 </div>
               ) : (
-                <div>{errorMessageForCategory}</div> // Ensure that this is a string or valid JSX
+                <div className="d-flex justify-content-center w-100">
+                  <p className="text-[#D4B11C]">Coming Soon</p>
+                </div> // Ensure that this is a string or valid JSX
               )
             ) : (
               allCategory.slice(0, 6).map((element, i) => (
@@ -692,7 +702,9 @@ export default function Home({ user }) {
                   <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
                 </div>
               ) : (
-                <div>{errorMessageForOccasion}</div> // Ensure that this is a string or valid JSX
+                <div className="d-flex justify-content-center w-100">
+                  <p className="text-[#D4B11C]">Coming Soon</p>
+                </div> // Ensure that this is a string or valid JSX
               )
             ) : (
               allOccasion.slice(0, 6).map((element, i) => (
@@ -743,7 +755,9 @@ export default function Home({ user }) {
                 <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
               </div>
             ) : (
-              <p>{errorMessageForSpecialDeals}</p>
+              <div className="d-flex justify-content-center w-100">
+                <p className="text-[#D4B11C]">Coming Soon</p>
+              </div>
             )
           ) : (
             specialDeals.slice(0, 4).map((element, i) => (

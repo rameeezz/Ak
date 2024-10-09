@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import HeadOfPages from "./HeadOfPages";
-export default function AllOccasions( {user}) {
+export default function AllOccasions({ user }) {
   let location = useLocation();
   const parsedCartID = localStorage.getItem("cartID");
   const cartID = parsedCartID ? JSON.parse(parsedCartID) : "";
@@ -69,7 +69,9 @@ export default function AllOccasions( {user}) {
                 <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
               </div>
             ) : (
-              <div>{errorMessageForOccasion}</div> // Ensure that this is a string or valid JSX
+              <div className="d-flex justify-content-center w-100">
+                <p className="text-[#D4B11C]">Coming Soon</p>
+              </div> // Ensure that this is a string or valid JSX
             )
           ) : (
             allOccasion.map((element, i) => (

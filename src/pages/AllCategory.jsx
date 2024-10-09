@@ -4,14 +4,14 @@ import axios from "axios";
 import "../css/Home.css";
 import PHoto1 from "../assets/card photo/2.jpeg";
 import HeadOfPages from "./HeadOfPages";
-export default function AllCategory({user}) {
+export default function AllCategory({ user }) {
   let location = useLocation();
   const [itemsArray, setItemsArray] = useState(() => {
     // Retrieve saved items from localStorage (if any)
     const savedItems = localStorage.getItem("cartItems");
     return savedItems ? JSON.parse(savedItems) : [];
   });
-  const  parsedCartID= localStorage.getItem("cartID");
+  const parsedCartID = localStorage.getItem("cartID");
   const cartID = parsedCartID ? JSON.parse(parsedCartID) : "";
   let navigate = useNavigate();
   function goHome() {
@@ -72,7 +72,9 @@ export default function AllCategory({user}) {
                 <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
               </div>
             ) : (
-              <div>{errorMessageForCategory}</div> // Ensure that this is a string or valid JSX
+              <div className="d-flex justify-content-center w-100">
+                <p className="text-[#D4B11C]">Coming Soon</p>
+              </div> // Ensure that this is a string or valid JSX
             )
           ) : (
             allCategory.map((element, i) => (
