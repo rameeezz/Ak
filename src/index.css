@@ -291,7 +291,7 @@
   }
   .classforResponsive{
     width: 100% !important;
-    margin-top: 16%;
+    margin-top: 8%;
   }
   .forSmallScreenButton{
     flex-direction: column !important;
@@ -419,5 +419,17 @@ gap: 50px;
 .inSmallScreenForItemContent{
   width: 90% !important;
   height: auto;
+}
+.inSmallPageHeadPageCart{
+  top: 48% !important;
+  right: 5% !important;
+}
+.inSmallPageHeadPageCartNumber{
+  top: 23% !important;
+  right: 2% !important;
+}
+.inSmallScreenSearchHeadPage{
+  width: 65% !important;
+  margin-left: 10%;
 }
 }

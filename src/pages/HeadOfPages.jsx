@@ -162,16 +162,16 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
         <div className="d-flex justify-content-center position-relative bg-transparent py-3">
           <span
             onClick={handleSubmitCreateCart}
-            className="position-absolute cursorPOinter end-14 top-7 responsive-font-size-p z-1"
+            className="position-absolute cursorPOinter inSmallPageHeadPageCart end-14 top-7 responsive-font-size-p z-1"
           >
             <i className="fa-solid fa-cart-shopping text-muted"></i>
           </span>
-          <div className="position-absolute end-11 top-3 bg-[#ecd9e8] rounded-circle">
+          <div className="position-absolute end-11 top-3 bg-[#ecd9e8] inSmallPageHeadPageCartNumber rounded-circle">
             <p className="p-1">{itemsArrays.length}</p>
           </div>
           {/* search work */}
-          <div className="d-flex flex-column justify-content-center align-items-center w-100 ">
-            <div className="w-50">
+          <div className="d-flex flex-column justify-content-center  align-items-center w-100 ">
+            <div className="w-50 inSmallScreenSearchHeadPage">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
