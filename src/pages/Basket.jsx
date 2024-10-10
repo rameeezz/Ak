@@ -9,9 +9,11 @@ import axios from "axios";
 import NavBar from "./../component/NavBar";
 import HeadOfPages from "./HeadOfPages";
 import { jwtDecode } from "jwt-decode";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function Basket({ user, logOut }) {
   // console.log(user);
-
+  const notify = (text) => toast(text);
   let location = useLocation();
   let navigate = useNavigate();
   let token = localStorage.getItem("token");
@@ -194,7 +196,8 @@ export default function Basket({ user, logOut }) {
         setFlowerNumber(2);
       } catch (error) {
         if (error.response && error.response.status === 400) {
-          alert("please add items to the cart ");
+          // alert("please add items to the cart ");
+          notify("please add items to the cart ");
           setLoadingButtonCat(false);
         }
       }
@@ -367,9 +370,15 @@ export default function Basket({ user, logOut }) {
         addressInfo.customer[0].customerID == "" ||
         addressInfo.customer[0].customerRole == "" ||
         addressInfo.state == "" ||
+        addressInfo.apartment == "" ||
+        addressInfo.building == "" ||
+        addressInfo.floor == "" ||
         addressInfo.street == ""
       ) {
-        alert(
+        // alert(
+        //   "Please ensure all required fields are filled out correctly before proceeding."
+        // );
+        notify(
           "Please ensure all required fields are filled out correctly before proceeding."
         );
         setLoadingButtonCat(false);
@@ -398,7 +407,10 @@ export default function Basket({ user, logOut }) {
         addressInfo.street == "" ||
         NumberDetails.mobileNumber == ""
       ) {
-        alert(
+        // alert(
+        //   "Please ensure all required fields are filled out correctly before proceeding."
+        // );
+        notify(
           "Please ensure all required fields are filled out correctly before proceeding."
         );
         setLoadingButtonCat(false);
@@ -466,7 +478,8 @@ export default function Basket({ user, logOut }) {
     //   }
     // }
     else {
-      alert("Please select a payment method.");
+      // alert("Please select a payment method.");
+      notify("Please select a payment method.");
       setLoadingButtonCat(false);
     }
   }
@@ -538,7 +551,8 @@ export default function Basket({ user, logOut }) {
         }
       }
     } else {
-      alert("Please select a payment method.");
+      // alert("Please select a payment method.");
+      notify("Please select a payment method.");
       setLoadingButtonCat(false);
     }
   }
@@ -546,6 +560,7 @@ export default function Basket({ user, logOut }) {
     <>
       <NavBar user={user} logOut={logOut} cartID={cartID} />
       <HeadOfPages user={user} cartID={cartID} itemsArray={itemsSameHome} />
+      <ToastContainer />
       <div className="container-xxl">
         <div className="w-100 d-flex justify-content-center">
           <div className="w-[90%] d-flex justify-content-center my-5 gap-4 flex-wrap">

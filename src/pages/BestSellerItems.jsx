@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import HeadOfPages from "./HeadOfPages";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function BestSellerItems({ user }) {
   let naviagte = useNavigate();
   const customerRolee = user?.role || null;
   // console.log(user?.userId);
-
+  const notify = (text) => toast(text);
   let location = useLocation();
   const parsedCartID = localStorage.getItem("cartID");
   const cartID = parsedCartID ? JSON.parse(parsedCartID) : "";
@@ -88,7 +89,8 @@ export default function BestSellerItems({ user }) {
 
     e.preventDefault();
     if (createCartInfo.customer == null) {
-      alert("please Login ");
+      // alert("please Login ");
+      notify("please Login ");
     } else {
       try {
         let { data } = await axios.post(
@@ -217,6 +219,7 @@ export default function BestSellerItems({ user }) {
   return (
     <>
       <HeadOfPages user={user} cartID={cartID} itemsArray={itemsArray} />
+      <ToastContainer />
       <div
         className={`shadow classForSureBoxOFCart rounded bg-white p-5 translate-middle ${
           classForCart ? "active" : ""
