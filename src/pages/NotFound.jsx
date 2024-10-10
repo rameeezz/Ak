@@ -1,6 +1,8 @@
 import React from 'react'
 import NavBar from './../component/NavBar';
 import "../css/ErrorPage.css"
+import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
+
 export default function NotFound() {
   return (
     <>
