@@ -300,7 +300,7 @@ export default function ItemContent({ user }) {
       </div>
       <div className="">
         <div className="container-xxl  d-flex justify-content-center gap-2 forSmallScreenItemPage ">
-          <div className="d-flex justify-content-center flex-column w-50 mt-5 mb-3">
+          <div className="d-flex justify-content-center flex-column w-50 inSmallScreenForItemContent mt-5 mb-3">
             {/* Main Image with Arrows */}
             <div
               className="heightOfImageInItems w-100 d-flex justify-content-center align-items-center rounded gap-3"

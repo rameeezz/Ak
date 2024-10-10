@@ -415,4 +415,8 @@ gap: 50px;
   right: 8px !important;
   bottom: 15px !important;
 }
+.inSmallScreenForItemContent{
+  width: 90% !important;
+  height: auto;
+}
 }
