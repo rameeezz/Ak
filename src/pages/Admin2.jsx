@@ -727,6 +727,7 @@ export default function Admin2({ logOut }) {
         ...categroryIdForOccasion,
         categoryId: categoryId,
       });
+      setCurrentPageForOccasion(1)
       setClassForItemsForOccasion(
         "d-flex justify-content-center gap-3 flex-wrap position-relative"
       );
@@ -2105,7 +2106,7 @@ export default function Admin2({ logOut }) {
         </span>
         <button
           className="btn btn-secondary mx-2"
-          onClick={() => paginate(currentPageForOccasion + 1)}
+          onClick={() => paginateForOccasion(currentPageForOccasion + 1)}
           disabled={currentPageForOccasion === totalPagesForOccasion}
         >
           Next &raquo;
