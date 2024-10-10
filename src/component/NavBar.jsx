@@ -171,7 +171,7 @@ export default function NavBar({ user, logOut, cartID }) {
                 <div className="d-flex justify-content-center my-2">
                   <div className="w-50 bg-black rounded-2 shadow HeightOfDivBeforeLogOut"></div>
                 </div>
-                <div className="d-flex justify-content-center text-[#b38e38] mb-3">
+                <div className="d-flex justify-content-center text-[#b38e38] mb-5">
                   <button onClick={logOut}>Log out</button>
                 </div>
               </>
@@ -180,7 +180,7 @@ export default function NavBar({ user, logOut, cartID }) {
                 <div className="d-flex justify-content-center my-2">
                   <div className="w-50 bg-black rounded-2 shadow HeightOfDivBeforeLogOut"></div>
                 </div>
-                <div className="d-flex flex-column justify-content-center align-items-center mb-3">
+                <div className="d-flex flex-column justify-content-center align-items-center mb-5">
                   <NavLink
                     to="/register"
                     className={(isActive) =>
