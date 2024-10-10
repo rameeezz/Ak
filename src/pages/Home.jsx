@@ -15,7 +15,7 @@ import senderPhoto from "../assets/card photo/sender-privacy.svg";
 import axios from "axios";
 import HeadOfPages from "./HeadOfPages";
 export default function Home({ user }) {
-  console.log(user);
+  // console.log(user);
 
   const navigate = useNavigate();
   let location = useLocation();
