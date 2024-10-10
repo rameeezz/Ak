@@ -58,7 +58,6 @@
 .styleForContentDiv {
   display: flex;
   flex-direction: column;
-  position: relative;
   align-items: center;
   width: 256.75px;
   height: 340px;
@@ -126,9 +125,8 @@
   .styleForContentDiv {
     display: flex;
     flex-direction: column;
-    position: relative;
     align-items: center;
-    width: 138.887px;
+    min-width: 135px;
     height: 218.887px;
   }
   .lowerCard {
