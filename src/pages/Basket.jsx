@@ -196,8 +196,8 @@ export default function Basket({ user, logOut }) {
         setFlowerNumber(2);
       } catch (error) {
         if (error.response && error.response.status === 400) {
-          // alert("please add items to the cart ");
-          notify("please add items to the cart ");
+          alert("please add items to the cart ");
+          // notify("please add items to the cart ");
           setLoadingButtonCat(false);
         }
       }
@@ -375,12 +375,12 @@ export default function Basket({ user, logOut }) {
         addressInfo.floor == "" ||
         addressInfo.street == ""
       ) {
-        // alert(
-        //   "Please ensure all required fields are filled out correctly before proceeding."
-        // );
-        notify(
+        alert(
           "Please ensure all required fields are filled out correctly before proceeding."
         );
+        // notify(
+        //   "Please ensure all required fields are filled out correctly before proceeding."
+        // );
         setLoadingButtonCat(false);
       } else {
         try {
@@ -407,12 +407,12 @@ export default function Basket({ user, logOut }) {
         addressInfo.street == "" ||
         NumberDetails.mobileNumber == ""
       ) {
-        // alert(
-        //   "Please ensure all required fields are filled out correctly before proceeding."
-        // );
-        notify(
+        alert(
           "Please ensure all required fields are filled out correctly before proceeding."
         );
+        // notify(
+        //   "Please ensure all required fields are filled out correctly before proceeding."
+        // );
         setLoadingButtonCat(false);
       } else {
         try {
@@ -478,8 +478,8 @@ export default function Basket({ user, logOut }) {
     //   }
     // }
     else {
-      // alert("Please select a payment method.");
-      notify("Please select a payment method.");
+      alert("Please select a payment method.");
+      // notify("Please select a payment method.");
       setLoadingButtonCat(false);
     }
   }
@@ -551,8 +551,8 @@ export default function Basket({ user, logOut }) {
         }
       }
     } else {
-      // alert("Please select a payment method.");
-      notify("Please select a payment method.");
+      alert("Please select a payment method.");
+      // notify("Please select a payment method.");
       setLoadingButtonCat(false);
     }
   }
