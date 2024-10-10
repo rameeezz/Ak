@@ -295,6 +295,7 @@
   }
   .forSmallScreenButton{
     flex-direction: column !important;
+    width: 50% !important;
   }
   .responsive-font-size-p-items{
     font-size: 0.9rem;

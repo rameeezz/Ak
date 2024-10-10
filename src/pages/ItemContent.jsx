@@ -361,14 +361,14 @@ export default function ItemContent({ user }) {
             </div>
           </div>
 
-          <div className="d-flex flex-column justify-content-start align-items-center w-50 my-5 cardOfContentInSmallScreen gap-3">
+          <div className="d-flex flex-column justify-content-start align-items-center w-50 inSmallScreenForItemContent  my-5 cardOfContentInSmallScreen gap-3">
             <div className="mb-3 mt-5 forSmallScreenDiv">
               <h2 className="responsive-font-size-h1 text-center">
                 {items?.name}
               </h2>
             </div>
             <div className="mb-3">
-              <h4 className="responsive-font-size-p-items">
+              <h4 className="responsive-font-size-p-items text-center ">
                 {items?.description}
               </h4>
             </div>
