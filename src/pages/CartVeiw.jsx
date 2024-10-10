@@ -70,8 +70,8 @@ export default function CartVeiw({ user }) {
                             {item?.itemID?.images &&
                             item?.itemID?.images.length > 0 ? (
                               <img
-                                // src={`https://akflorist.s3.eu-north-1.amazonaws.com/${item?.itemID?.images[0]}`}
-                                src={image}
+                                src={`https://akflorist.s3.eu-north-1.amazonaws.com/${item?.itemID?.images[0]}`}
+                                // src={image}
                                 alt={item?.itemID?.name}
                                 className="w-100 h-100"
                               />
