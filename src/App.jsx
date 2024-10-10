@@ -81,7 +81,7 @@ function App() {
     {
       path: "/",
       element: <MasterLayout user={user} logOut={logOut} />,
-      errorElement: <NotFound />,
+      errorElement: <NotFound/>,
       children: [
         {
           path: "/",
