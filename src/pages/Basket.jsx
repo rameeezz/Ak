@@ -323,13 +323,13 @@ export default function Basket({ user, logOut }) {
     } else if (value === "Cairo") {
       shippingCost = 250;
     } else if (value === "Giza") {
-      shippingCost = 350;
+      shippingCost = 275;
     } else if (value === "October") {
-      shippingCost = 300;
+      shippingCost = 275;
     } else if (value === "Helwan") {
-      shippingCost = 400;
+      shippingCost = 275;
     } else if (value === "Alexandria") {
-      shippingCost = 400;
+      shippingCost = 275;
     }
 
     setOrderInfo({ ...orderInfo, shippingCost });
@@ -544,7 +544,7 @@ export default function Basket({ user, logOut }) {
           "https://akflorist-production.up.railway.app/customer/addPromoCode",
           userPromoCode
         );
-        console.log(data);
+        // console.log(data);
 
         setErrorMessageForPromo("");
         sendOrder(e);
