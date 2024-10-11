@@ -278,7 +278,12 @@ export default function Basket({ user, logOut }) {
 
     let shippingCost = 0;
 
-    if (value === "منوف" || value === "الباجور") {
+    if (value === "") {
+      // Reset or do nothing when the default option is selected
+      shippingCost = 0;
+    } else if (value == "منوف") {
+      shippingCost = 120;
+    } else if (value === "الباجور") {
       shippingCost = 120;
     } else if (value === "كوم الضبع") {
       shippingCost = 80;
@@ -332,6 +337,7 @@ export default function Basket({ user, logOut }) {
 
   function selectState(value) {
     setTakeState(value);
+    setTakeArea("");
   }
   const [NumberDetails, setNumberDetails] = useState({
     userID: user?.role == "customer" ? user?.userId || null : user?.id || null,
@@ -649,14 +655,18 @@ export default function Basket({ user, logOut }) {
                           <option value="Alexandria">Alexandria </option>
                           <option value="Elmonofia">Elmonofia</option>
                         </select>
+
                         <select
                           required
                           className="form-control"
+                          key={takeState} // Key resets the dropdown when takeState changes
+                          value={takeArea || ""} // Ensure the default value is selected when no area is picked
                           onChange={(e) => selectArea(e.target.value)}
                         >
-                          <option value="" disabled selected>
-                            Select Area
+                          <option value="" disabled>
+                            Select area
                           </option>
+
                           {takeState === "Cairo" && (
                             <>
                               <option value="Cairo">Cairo</option>
@@ -665,9 +675,10 @@ export default function Basket({ user, logOut }) {
                               <option value="October">October</option>
                             </>
                           )}
+
                           {takeState === "Elmonofia" && (
                             <>
-                              <option value="منوف ">منوف </option>
+                              <option value="منوف">منوف </option>
                               <option value="الباجور">الباجور </option>
                               <option value="كوم الضبع">كوم الضبع</option>
                               <option value="سرس الليان">سرس الليان</option>
@@ -684,9 +695,7 @@ export default function Basket({ user, logOut }) {
                               <option value="البتانون">البتانون</option>
                               <option value="ميت خلف">ميت خلف</option>
                               <option value="اصطباري">اصطباري</option>
-                              <option value="كفر البتانون">
-                                كفر البتانون{" "}
-                              </option>
+                              <option value="كفر البتانون">كفر البتانون</option>
                               <option value="الدلاتون">الدلاتون</option>
                               <option value="الشهداء">الشهداء</option>
                               <option value="تلا">تلا </option>
@@ -696,6 +705,7 @@ export default function Basket({ user, logOut }) {
                               <option value="شبين الكوم">شبين الكوم</option>
                             </>
                           )}
+
                           {takeState === "Alexandria" && (
                             <>
                               <option value="Alexandria">Alexandria</option>
@@ -1010,9 +1020,13 @@ export default function Basket({ user, logOut }) {
                 ) : (
                   <div>
                     <p className="ms-4 mb-3 mt-4"> Summary</p>
-                    <div className="w-100 d-flex justify-content-between px-4 mb-5">
+                    <div className="w-100 d-flex justify-content-between px-4 mb-2">
                       <p>Total</p>
                       <p>EGP {totalCost}</p>
+                    </div>
+                    <div className="w-100 d-flex justify-content-between px-4 mb-5">
+                      <p>Shipping </p>
+                      <p>EGP {orderInfo.shippingCost}</p>
                     </div>
                   </div>
                 )

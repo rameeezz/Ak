@@ -176,6 +176,14 @@
 .forCardView{
   height: 280px;
 }
+.hoverBtnCartVeiw:hover{
+color: #f68b1e;
+background-color: rgba(255, 166, 0, 0.327);
+}
+.positionOfCartVeiw{
+  top: 0;
+  right:0;
+}
 @media (max-width: 576px) {
   /* Small screens (sm) and below */
   .responsive-font-size-p {
@@ -434,5 +442,9 @@ gap: 50px;
 }
 .inSmallscreenWidthOFCArds{
   width: 80% !important;
+}
+.inSmallScreenCartVeiwPhoto{
+  min-width: 30%;
+  max-width: 30%;
 }
 }

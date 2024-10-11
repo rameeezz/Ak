@@ -5,6 +5,8 @@ export default function CartVeiw({ user }) {
   const customerID =
     user?.role == "customer" ? user?.userId || null : user?.id || null;
   const [userCart, setuserCart] = useState([]);
+  // console.log(userCart);
+  
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -66,7 +68,7 @@ export default function CartVeiw({ user }) {
                           key={i}
                           className="d-flex justify-content-start gap-3 border border-2 rounded p-1 w-100 h-[120px]"
                         >
-                          <div className="">
+                          <div className="inSmallScreenCartVeiwPhoto">
                             {item?.itemID?.images &&
                             item?.itemID?.images.length > 0 ? (
                               <img
