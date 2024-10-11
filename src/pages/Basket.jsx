@@ -578,7 +578,7 @@ export default function Basket({ user, logOut }) {
                   className="popup-overlay position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center "
                   style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
                 >
-                  <div className="popup-box bg-white p-4 rounded shadow-lg d-flex flex-column justify-content-center align-items-center">
+                  <div className="popup-box bg-white p-4 rounded shadow-lg d-flex flex-column justify-content-center align-items-center inSmallscreenWidthOFCArds">
                     {/* Checkmark icon with 360-degree rotation */}
                     <i
                       className="fa fa-check-circle rotate-checkmark"
