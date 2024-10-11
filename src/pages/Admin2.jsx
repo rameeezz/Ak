@@ -964,7 +964,7 @@ export default function Admin2({ logOut }) {
   }
   function showCardinfo(cardInfo) {
     setClassOfCard(
-      "position-fixed top-50 start-50 translate-middle shadow bg-white p-5 rounded d-flex justify-content-center gap-3 flex-column z-[31353]"
+      "position-fixed top-50 start-50 widthOfCardDetails translate-middle shadow bg-white p-5 rounded d-flex justify-content-center gap-3 flex-column z-[31353]"
     );
     setSelectedCardInfo(cardInfo);
   }

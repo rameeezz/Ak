@@ -447,4 +447,7 @@ gap: 50px;
   min-width: 30%;
   max-width: 30%;
 }
+.widthOfCardDetails{
+  width: 80%;
+}
 }
