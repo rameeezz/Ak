@@ -1027,11 +1027,11 @@ export default function Admin2({ logOut }) {
         <div className="custom-alert text-center">Done</div>
       </div>
       {/* orders  */}
-      <h3 className="text-center py-3 responsive-font-size-h3 text-[#7E96C4]">
+      <h3 className="text-center py-3  responsive-font-size-h3 text-[#7E96C4]">
         {" "}
         Orders Of The Day{" "}
       </h3>
-      <div className="d-flex justify-content-center gap-3 flex-wrap">
+      <div className="d-flex justify-content-center mt-5 gap-3 flex-wrap">
         {currentItemOrders == null || currentItemOrders.length === 0
           ? "No orders Found "
           : currentItemOrders.map((element, i) => (

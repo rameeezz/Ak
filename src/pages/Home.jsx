@@ -14,9 +14,11 @@ import securePhoto from "../assets/card photo/secure-payment.svg";
 import senderPhoto from "../assets/card photo/sender-privacy.svg";
 import axios from "axios";
 import HeadOfPages from "./HeadOfPages";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function Home({ user }) {
   // console.log(user);
-
+  const notify = (text) => toast(text);
   const navigate = useNavigate();
   let location = useLocation();
   const customerRolee = user?.role || null;
@@ -122,7 +124,8 @@ export default function Home({ user }) {
 
     e.preventDefault();
     if (createCartInfo.customer == null) {
-      alert("please Login ");
+      // alert("please Login ");
+      notify("please Login")
     } else {
       try {
         let { data } = await axios.post(
@@ -174,7 +177,8 @@ export default function Home({ user }) {
       cart: cartID,
     };
     if (cartInfo.cart === null || cartInfo.cart === "") {
-      alert("wait");
+      // alert("wait");
+      notify("Wait")
       setLoadingButtonCat(false);
     } else {
       try {
@@ -375,7 +379,8 @@ export default function Home({ user }) {
       formInfo.subject == "" ||
       formInfo.text == ""
     ) {
-      alert("Please Fill All Form");
+      // alert("Please Fill All Form");
+      notify("Please Fill All Form")
     } else {
       setLoadingFormData(true);
       try {
@@ -383,7 +388,8 @@ export default function Home({ user }) {
           "https://akflorist-production.up.railway.app/customer/sendReport",
           formInfo
         );
-        alert("Done.");
+        // alert("Done.");
+        notify("Done.")
         setFormInfo({
           email: "",
           subject: "",
@@ -398,6 +404,7 @@ export default function Home({ user }) {
   return (
     <>
       <HeadOfPages user={user} cartID={cartID} itemsArray={itemsArray} />
+      <ToastContainer />
       <div
         className={`shadow classForSureBoxOFCart rounded bg-white p-5 translate-middle ${
           classForCart ? "active" : ""
