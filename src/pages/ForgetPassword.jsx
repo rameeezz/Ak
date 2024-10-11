@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import joi from "joi";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function ForgetPassword() {
-  let navigate = useNavigate()
+  const notify = (text) => toast(text);
+  let navigate = useNavigate();
   const [email, setEmail] = useState({
     email: "",
   });
@@ -46,7 +49,8 @@ export default function ForgetPassword() {
   async function sendEmail(e) {
     e.preventDefault();
     if (email.email === "") {
-      alert("Please put an email.");
+      // alert("Please put an email.");
+      notify("Please put an email.");
     } else {
       setLoading(true);
       try {
@@ -62,10 +66,12 @@ export default function ForgetPassword() {
       } catch (error) {
         if (error.response && error.response.status === 404) {
           setLoading(false);
-          alert("Not Found");
+          // alert("Not Found");
+          notify("Not Found");
         }
         if (error.response && error.response.status === 400) {
-          alert("this email not found.")
+          // alert("this email not found.")
+          notify("this email not found.");
           setLoading(false);
         }
       }
@@ -89,7 +95,10 @@ export default function ForgetPassword() {
         }),
     });
 
-    const result = scheme.validate({ newPassword: resetPasswordInfo.newPassword }, { abortEarly: false });
+    const result = scheme.validate(
+      { newPassword: resetPasswordInfo.newPassword },
+      { abortEarly: false }
+    );
     return result || { error: null }; // Ensure result is never undefined
   }
   async function sendInfoToResetPass(e) {
@@ -104,10 +113,11 @@ export default function ForgetPassword() {
           resetPasswordInfo
         );
         setLoadingForResetForm(false);
-        navigate("/login")
+        navigate("/login");
       } catch (error) {
         if (error.response && error.response.status === 400) {
-          alert("this email not found.")
+          // alert("this email not found.")
+          notify("this email not found.");
           setLoadingForResetForm(false);
         }
       }
@@ -115,9 +125,10 @@ export default function ForgetPassword() {
       setErrorList(valid.error.details || []);
     }
   }
-  
+
   return (
     <>
+      <ToastContainer />
       <div className="background">
         <div className="d-flex justify-content-center align-items-center">
           <div className={classOfEmail}>
@@ -159,7 +170,7 @@ export default function ForgetPassword() {
                 name="resetToken"
                 onChange={takeResetPass}
               />
-               <div className="input-group">
+              <div className="input-group">
                 <input
                   type={isPasswordVisible ? "text" : "password"} // Toggle between text and password
                   className="form-control ps-3 mb-4"
@@ -172,12 +183,16 @@ export default function ForgetPassword() {
                   className="btn btn-outline-secondary h-50"
                   onClick={togglePasswordVisibility}
                 >
-                  <i className={`fa ${isPasswordVisible ? "fa-eye-slash" : "fa-eye"}`}></i>
+                  <i
+                    className={`fa ${
+                      isPasswordVisible ? "fa-eye-slash" : "fa-eye"
+                    }`}
+                  ></i>
                 </button>
               </div>
             </form>
             {errorList.length > 0
-              ? errorList.map((element,i) => (
+              ? errorList.map((element, i) => (
                   <div key={i} className="my-2 text-danger textSTyleForError">
                     {element.message}
                   </div>
@@ -189,7 +204,12 @@ export default function ForgetPassword() {
                   <i className="fa solid fa-spinner fa-spin"></i>
                 </button>
               ) : (
-                <button onClick={sendInfoToResetPass} className="btn btn-primary w-75">Save</button>
+                <button
+                  onClick={sendInfoToResetPass}
+                  className="btn btn-primary w-75"
+                >
+                  Save
+                </button>
               )}
             </div>
           </div>

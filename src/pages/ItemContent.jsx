@@ -2,8 +2,10 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import HeadOfPages from "./HeadOfPages";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function ItemContent({ user }) {
+  const notify = (text) => toast(text);
   const location = useLocation();
   const { items } = location.state || {};
   const customerRolee = user?.role || null;
@@ -88,7 +90,8 @@ export default function ItemContent({ user }) {
 
     e.preventDefault();
     if (createCartInfo.customer == null) {
-      alert("please Login ");
+      // alert("please Login ");
+      notify("please Login")
     } else {
       try {
         let { data } = await axios.post(
@@ -247,6 +250,7 @@ export default function ItemContent({ user }) {
   return (
     <>
       <HeadOfPages user={user} cartID={cartID} itemsArray={itemsArray} />
+      <ToastContainer />
       <div
         className={`shadow classForSureBoxOFCart rounded bg-white p-5 translate-middle ${
           classForCart ? "active" : ""

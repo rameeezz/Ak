@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function HeadOfPages({ user, cartID, itemsArray }) {
+  const notify = (text) => toast(text);
   let navigate = useNavigate();
   const customerID = user?.userId || null;
   const customerRolee = user?.role || null;
@@ -57,7 +59,8 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
     setSearchTerm("");
   }
   // cart work
-  const userID = user?.role == "customer" ? user?.userId || null : user?.id || null;
+  const userID =
+    user?.role == "customer" ? user?.userId || null : user?.id || null;
   const cartIds = cartID;
   const itemsArrays = itemsArray;
   const [createCartInfo, setCreateCartInfo] = useState({
@@ -75,7 +78,8 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
 
     e.preventDefault();
     if (createCartInfo.customer == null) {
-      alert("please Login ");
+      // alert("please Login ");
+      notify("please Login");
     } else {
       try {
         let { data } = await axios.post(
@@ -91,22 +95,23 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
               customerID: customerID,
             };
             deleteCartUser(e, deleteCartId);
-            handleSubmitCreateCart(e)
+            handleSubmitCreateCart(e);
             setLoadingButtonCat(false);
           } else {
             editeCart(e);
           }
-        }else if (error.response && error.response.status === 400) {
-          navigate("/cart")
+        } else if (error.response && error.response.status === 400) {
+          navigate("/cart");
         }
       }
     }
   }
   async function deleteCartUser(e, userID) {
-    e.preventDefault()
+    e.preventDefault();
     try {
       let { data } = await axios.delete(
-        "https://akflorist-production.up.railway.app/customer/deleteCart",userID
+        "https://akflorist-production.up.railway.app/customer/deleteCart",
+        userID
         // {
         //   data: , // Pass customerID in the body of the request
         //   headers: {
@@ -149,11 +154,12 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
   function goToBasket() {
     navigate("/basket", {
       state: { userId: userID },
-    })
+    });
   }
   // done
   return (
     <>
+      <ToastContainer />
       {user?.role === "admin1" || user?.role === "admin2" ? (
         ""
       ) : isLoginPage ? (

@@ -5,8 +5,10 @@ import "react-phone-input-2/lib/style.css";
 import "../css/Register.css";
 import { useNavigate } from "react-router-dom";
 import joi from "joi";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function Register() {
+  const notify = (text) => toast(text);
   let navigate = useNavigate();
   const [RegisterInfo, setRegisterInfo] = useState({
     firstName: "",
@@ -100,7 +102,8 @@ export default function Register() {
       handleSubmit(e);
     } catch (error) {
       if (error.response && error.response.status === 422) {
-        alert("The (OTP) number is wrong try again.");
+        // alert("The (OTP) number is wrong try again.");
+        notify("The (OTP) number is wrong try again.");
         setLoadingForVerify(false);
       }
     }
@@ -210,6 +213,7 @@ export default function Register() {
   return (
     <>
       <div className="backgroundBg">
+        <ToastContainer />
         <div className="login-form p-4">
           <h2 className="mb-2">Register</h2>
           <form onSubmit={sendOpt}>
@@ -307,7 +311,10 @@ export default function Register() {
                       <i className="fa solid fa-spinner fa-spin"></i>
                     </button>
                   ) : (
-                    <button className="btn btn-primary px-4" onClick={sendVerifyOtp}>
+                    <button
+                      className="btn btn-primary px-4"
+                      onClick={sendVerifyOtp}
+                    >
                       Verify
                     </button>
                   )}
