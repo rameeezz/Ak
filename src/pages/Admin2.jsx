@@ -1018,7 +1018,7 @@ export default function Admin2({ logOut }) {
   }
   return (
     <>
-      <div className=" position-fixed end-2 rounded-circle bg-danger top-5">
+      <div className=" position-fixed end-2 rounded-circle bg-danger top-5 z-[123131]">
         <button className=" p-3  text-white" onClick={GoTOLOgin}>
           <i className="fa-solid fa-right-from-bracket"></i>
         </button>
