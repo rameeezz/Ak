@@ -224,8 +224,12 @@ export default function SearchItems({ user }) {
   const paginate = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
+      window.scrollTo(0,0);
     }
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
   function ShowItemContent(itemDetails) {
     navigate("/item-content", {
       state: { items: itemDetails, cartID: cartID },

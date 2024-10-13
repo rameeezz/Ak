@@ -20,8 +20,12 @@ export default function CartVeiw({ user }) {
   const paginate = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
+      window.scrollTo(0,0);
     }
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
   const [loadingCart, setLoadingCart] = useState(false);
   async function getOrders() {
     setLoadingCart(true);

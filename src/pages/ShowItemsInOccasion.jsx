@@ -194,9 +194,13 @@ export default function ShowItemsInOccasion({ user }) {
   const paginate = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
+      window.scrollTo(0, 0);
     }
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
   const [loadingAllItems, setLoadingAllItems] = useState(false);
   const [errorForAllItems, setErrorForAllItems] = useState("");
   async function getAllItems() {
