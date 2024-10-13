@@ -469,4 +469,7 @@
   .forClassforBtnInCartView{
     right: 5px !important;
   }
+  .classForCardPreview{
+    width: 80% !important;
+  }
 }

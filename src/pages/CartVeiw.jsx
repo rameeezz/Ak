@@ -127,7 +127,7 @@ export default function CartVeiw({ user }) {
                               ></i>
                             </div>
                             {classOfCard ? (
-                              <div className="w-50 position-fixed top-50 start-50 translate-middle shadow bg-white p-5 rounded">
+                              <div className="w-50 classForCardPreview position-fixed top-50 start-50 translate-middle shadow bg-white p-5 rounded">
                                 <div onClick={hideCard} className="position-absolute end-3 top-2 btn btn-close"></div>
                                 <div className="d-flex flex-column">
                                   {/* <p>{element.}</p> */}
