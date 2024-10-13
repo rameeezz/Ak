@@ -15,7 +15,7 @@ export default function CartVeiw({ user }) {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItem = userCart.slice(indexOfFirstItem, indexOfLastItem);
 
-  // console.log(currentItem);
+  console.log(currentItem);
 
   const paginate = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
@@ -82,7 +82,7 @@ export default function CartVeiw({ user }) {
                           <div className="position-absolute bottom-2 end-3 forClassforBtnInCartView">
                             {/* <button className="btn bg-[#f68b1e] text-white forBtnInCartView ">More details</button> */}
                             <p className="bg-[#f68b1e] text-white p-2 rounded forBtnInCartView">
-                              {element.totalCost} EGP
+                            {item?.itemID?.lastPrice || "N/A"} EGP
                             </p>
                           </div>
                           <div className="inSmallScreenCartVeiwPhoto">
