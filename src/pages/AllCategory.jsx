@@ -83,8 +83,8 @@ export default function AllCategory({ user }) {
                   goToItems(element._id);
                 }}
                 key={i}
-                className="rounded w-80 position-relative forAllCategoryItems"
-                // style={{ minWidth: "250px" }}
+                className="rounded w-56 position-relative forAllCategoryItems"
+                // style={{ minHeight: "250px" }}
               >
                 <img
                   src={`https://akflorist.s3.eu-north-1.amazonaws.com/${element?.image}`}
@@ -92,8 +92,10 @@ export default function AllCategory({ user }) {
                   className="w-100 h-100 rounded"
                 />
                 <div className="position-absolute top-0 h-100 w-100 bg-black opacity-25 z-1 rounded"></div>
-                <div className="d-flex justify-content-center align-items-center position-absolute w-100 h-100 z-3 top-0 responsiveTextForCategory styleForCategories z-2">
-                  <h2 className="text-white text-center">{element?.name}</h2>
+                <div className="position-absolute w-100 h-100 top-0 bottom-0 d-flex justify-content-center align-items-center rounded z-3">
+                  <h2 className="text-white text-center responsiveTextForCategory">
+                    {element?.name}
+                  </h2>
                 </div>
               </div>
             ))
