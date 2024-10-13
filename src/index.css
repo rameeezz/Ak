@@ -9,7 +9,7 @@
 .textSTyleForError {
   font-size: 14px;
 }
-.forCartItemUser{
+.forCartItemUser {
   width: 350px;
 }
 .phone-input-field {
@@ -54,14 +54,14 @@
 .responsive-For-Card-p {
   font-size: 1rem;
 }
-.responsiveSpinnerForCartView{
+.responsiveSpinnerForCartView {
   font-size: 150px;
 }
-.responsiveForOreder{
+.responsiveForOreder {
   font-size: 12px;
   width: 100px;
 }
-.CardOFAllOreder{
+.CardOFAllOreder {
   width: 80%;
 }
 .sizeOfI {
@@ -94,23 +94,23 @@
 .responsive-font-size-h2-Home {
   font-size: 2.0625rem;
 }
-.responsive-For-I{
+.responsive-For-I {
   /* font-size: 0.7rem; */
   position: fixed;
   top: 92%;
   right: 1%;
   cursor: pointer;
 }
-.responsive-for-i-head-page{
+.responsive-for-i-head-page {
   font-size: 1.5rem;
 }
-.responsive-font-size-p-items{
+.responsive-font-size-p-items {
   font-size: 1.2rem;
 }
-.heightOfImageInItems{
+.heightOfImageInItems {
   height: 450px;
 }
-.firstButtonInSmallScreen{
+.firstButtonInSmallScreen {
   width: 35%;
 }
 .cursor-pointer {
@@ -118,7 +118,7 @@
 }
 
 .active-thumbnail {
-  border: 2px solid #D4B11C; /* Example for highlighting the active thumbnail */
+  border: 2px solid #d4b11c; /* Example for highlighting the active thumbnail */
 }
 .widthOfPhotosForSmallPages {
   overflow-x: auto; /* Enable horizontal scrolling */
@@ -131,14 +131,14 @@
   display: none; /* Safari and Chrome */
 }
 
-.responsive-font-size-p-form{
+.responsive-font-size-p-form {
   font-size: 1.5rem;
 }
-.responsive-font-size-h1-form{
+.responsive-font-size-h1-form {
   font-size: 1.7rem;
 }
 /* search work  */
-.styleForResultSearch{
+.styleForResultSearch {
   width: 39%;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -152,11 +152,11 @@
   width: 50%;
   top: 50%;
   left: -100%;
-  transition: all 0.3s ease ;
-  -webkit-transition: all 0.3s ease ;
-  -moz-transition: all 0.3s ease ;
-  -ms-transition: all 0.3s ease ;
-  -o-transition: all 0.3s ease ;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
 }
 .classForSureBoxOFCart.active {
   position: fixed;
@@ -164,7 +164,7 @@
   top: 50%;
   left: 50%;
 }
-.styleOfImageInCart{
+.styleOfImageInCart {
   width: 100px;
   height: 100%;
   /* background-color: #D4B11C; */
@@ -173,16 +173,20 @@
 /* .styleOftextInCart{
   width: 70%;
 } */
-.forCardView{
+.forCardView {
   height: 280px;
 }
-.hoverBtnCartVeiw:hover{
-color: #f68b1e;
-background-color: rgba(255, 166, 0, 0.327);
+.hoverBtnCartVeiw:hover {
+  color: #f68b1e;
+  background-color: rgba(255, 166, 0, 0.327);
 }
-.positionOfCartVeiw{
+.positionOfCartVeiw {
   top: 0;
-  right:0;
+  right: 0;
+}
+.forBtnInCartView:hover {
+  background-color: white;
+  color: #f68a1e !important;
 }
 @media (max-width: 576px) {
   /* Small screens (sm) and below */
@@ -277,183 +281,192 @@ background-color: rgba(255, 166, 0, 0.327);
     right: 25%;
   }
   .styleForStock {
-  white-space: nowrap;
-  width: 25% !important;
-  padding: 0px !important;
-  font-size: 0.6rem;
-  top: 4%;
-  left: 3%;
-  }.responsive-For-I{
+    white-space: nowrap;
+    width: 25% !important;
+    padding: 0px !important;
+    font-size: 0.6rem;
+    top: 4%;
+    left: 3%;
+  }
+  .responsive-For-I {
     display: none;
   }
-  .inSmallScreen{
+  .inSmallScreen {
     display: none;
   }
-  .inSmallScreenButton{
-    width: 25% ;
+  .inSmallScreenButton {
+    width: 25%;
     text-wrap: nowrap;
     font-size: 0.7rem !important;
     padding: 0px !important;
-  }.responsive-for-i-head-page{
+  }
+  .responsive-for-i-head-page {
     font-size: 1.2rem;
   }
-  .classforResponsive{
+  .classforResponsive {
     width: 100% !important;
     margin-top: 8%;
   }
-  .forSmallScreenButton{
+  .forSmallScreenButton {
     flex-direction: column !important;
     width: 50% !important;
   }
-  .responsive-font-size-p-items{
+  .responsive-font-size-p-items {
     font-size: 0.9rem;
   }
-  .heightOfImageInItems{
+  .heightOfImageInItems {
     height: 200px !important;
   }
-  .smallPhotosStyleItemPage{
+  .smallPhotosStyleItemPage {
     height: 2px;
     min-width: 20px !important;
     max-width: 20px !important;
   }
-  .widthOfPhotosForSmallPages{
+  .widthOfPhotosForSmallPages {
     padding: 0 15px 0 15px;
   }
-  .forSmallScreenItemPage{
+  .forSmallScreenItemPage {
     flex-direction: column !important;
     align-items: center;
   }
-  .cardOfContentInSmallScreen{
+  .cardOfContentInSmallScreen {
     margin-top: 0px !important;
     margin-bottom: 0px !important;
   }
-  .firstButtonInSmallScreen{
+  .firstButtonInSmallScreen {
     width: 100%;
   }
-  .forSmallScreenDiv{
+  .forSmallScreenDiv {
     margin: 0px !important;
   }
-  .buttonForSmallScreen{
+  .buttonForSmallScreen {
     border-radius: 6%;
     -webkit-border-radius: 6%;
     -moz-border-radius: 6%;
     -ms-border-radius: 6%;
     -o-border-radius: 6%;
-}
-.inSmallScreenWindowImage{
-  width: 100% !important;
-  height: 60% !important;
-}
-.inSmallScreenInsideWindowImage{
-  width: 75% !important;
-}
-.responsive-font-size-p-form{
-  font-size: 1rem;
-}
-.responsive-font-size-h1-form{
-  font-size: 1.3rem;
-}
-.inSmallscreenForForm{
-  flex-direction: column;
-gap: 50px;
-}
-.forWidthSectionOfForm{
-  width: 100% !important;
-}
-.styleForResultSearch{
-  width: 81%;
-}
-.imgForFooter{
-  width: 30%;
-  height: 26%;
-}
-.p-for-image-for-footer{
-  font-size:  0.875rem;
-  text-align: center;
-  margin-top: 5px;
-}
-.classForSureBoxOFCart{
-  width: 90%;
- }
- .inSmallScreenBasket{
-  margin-top: 5%;
-  /* height: 20%; */
-}
-.styleOfImageInCart{
-  width: 100px;
-  height: 100%;
-}
-.textForPInCart{
-  font-size: 0.75rem;
-  white-space: nowrap;
- }
- .textForPInCartWithImage{
-  font-size: 0.75rem;
- }
- .forSmallScreenDivBasket{
-  width: 100% !important;
- }
- .classForButtonBasket{
-  width: 10% !important;
- }
- .forCardView{
-  height: 200px;
-}
-.forCartItemUser{
-  width: 200px;
-}
-.responsiveSpinnerForCartView{
-  font-size: 50px;
-}
-.responsiveForOreder{
-  font-size: 10px;
-  width: 90px;
-}
-.CardOFAllOreder{
-  width: 100%;
-}
-.responsiveNameInOrder{
-  font-size: 10px;
-}
-.responsiveForBtn{
-  width: 100%;
-  padding: 2px;
-  font-size: 10px;
-}
-.responsivePOstitionCard{
-  right: 8px !important;
-  bottom: 15px !important;
-}
-.inSmallScreenForItemContent{
-  width: 90% !important;
-  height: auto;
-}
-.inSmallPageHeadPageCart{
-  top: 48% !important;
-  right: 5% !important;
-}
-.inSmallPageHeadPageCartNumber{
-  top: 23% !important;
-  right: 2% !important;
-}
-.inSmallScreenSearchHeadPage{
-  width: 65% !important;
-  margin-left: 10%;
-}
-.inSmallscreenWidthOFCArds{
-  width: 80% !important;
-}
-.inSmallScreenCartVeiwPhoto{
-  min-width: 30%;
-  max-width: 30%;
-}
-.widthOfCardDetails{
-  width: 80%;
-}
-.inSscreenForOtp{
-  width: 80% !important;
-}
-.inSmallScreenOfCart{
-  width: 80% !important;
-}
+  }
+  .inSmallScreenWindowImage {
+    width: 100% !important;
+    height: 60% !important;
+  }
+  .inSmallScreenInsideWindowImage {
+    width: 75% !important;
+  }
+  .responsive-font-size-p-form {
+    font-size: 1rem;
+  }
+  .responsive-font-size-h1-form {
+    font-size: 1.3rem;
+  }
+  .inSmallscreenForForm {
+    flex-direction: column;
+    gap: 50px;
+  }
+  .forWidthSectionOfForm {
+    width: 100% !important;
+  }
+  .styleForResultSearch {
+    width: 81%;
+  }
+  .imgForFooter {
+    width: 30%;
+    height: 26%;
+  }
+  .p-for-image-for-footer {
+    font-size: 0.875rem;
+    text-align: center;
+    margin-top: 5px;
+  }
+  .classForSureBoxOFCart {
+    width: 90%;
+  }
+  .inSmallScreenBasket {
+    margin-top: 5%;
+    /* height: 20%; */
+  }
+  .styleOfImageInCart {
+    width: 100px;
+    height: 100%;
+  }
+  .textForPInCart {
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+  .textForPInCartWithImage {
+    font-size: 0.75rem;
+  }
+  .forSmallScreenDivBasket {
+    width: 100% !important;
+  }
+  .classForButtonBasket {
+    width: 10% !important;
+  }
+  .forCardView {
+    height: 200px;
+  }
+  .forCartItemUser {
+    width: 200px;
+  }
+  .responsiveSpinnerForCartView {
+    font-size: 50px;
+  }
+  .responsiveForOreder {
+    font-size: 10px;
+    width: 90px;
+  }
+  .CardOFAllOreder {
+    width: 100%;
+  }
+  .responsiveNameInOrder {
+    font-size: 10px;
+  }
+  .responsiveForBtn {
+    width: 100%;
+    padding: 2px;
+    font-size: 10px;
+  }
+  .responsivePOstitionCard {
+    right: 8px !important;
+    bottom: 15px !important;
+  }
+  .inSmallScreenForItemContent {
+    width: 90% !important;
+    height: auto;
+  }
+  .inSmallPageHeadPageCart {
+    top: 48% !important;
+    right: 5% !important;
+  }
+  .inSmallPageHeadPageCartNumber {
+    top: 23% !important;
+    right: 2% !important;
+  }
+  .inSmallScreenSearchHeadPage {
+    width: 65% !important;
+    margin-left: 10%;
+  }
+  .inSmallscreenWidthOFCArds {
+    width: 80% !important;
+  }
+  .inSmallScreenCartVeiwPhoto {
+    min-width: 30%;
+    max-width: 30%;
+  }
+  .widthOfCardDetails {
+    width: 80%;
+  }
+  .inSscreenForOtp {
+    width: 80% !important;
+  }
+  .inSmallScreenOfCart {
+    width: 80% !important;
+  }
+  .forBtnInCartView{
+    font-size: 10px;
+    padding: 3px;
+  }
+  .forClassforBtnInCartView{
+    right: 5px !important;
+  }
 }

@@ -2,11 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import "../css/NavBar.css";
 import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-
+import orderImage from "../assets/card photo/orderImage.svg";
 export default function NavBar({ user, logOut, cartID }) {
   let navigate = useNavigate();
-  // console.log(cartID);
-  
+  // console.log(user);
+
   const location = useLocation();
   const isLoginPage = location.pathname === "/item-content";
 
@@ -14,7 +14,9 @@ export default function NavBar({ user, logOut, cartID }) {
   const [category, setCategory] = useState([]);
   const [expandedCategory, setExpandedCategory] = useState(null);
   const [subCategory, setSubCategory] = useState([]);
-  const [categoryWithSubCategories, setCategoryWithSubCategories] = useState({});
+  const [categoryWithSubCategories, setCategoryWithSubCategories] = useState(
+    {}
+  );
 
   const navRef = useRef(null);
 
@@ -58,11 +60,11 @@ export default function NavBar({ user, logOut, cartID }) {
     try {
       // Reset subCategory when a new category is clicked
       setSubCategory([]);
-  
+
       let { data } = await axios.get(
         `https://akflorist-production.up.railway.app/admin1/getCategoryContent/${idOfCategory}`
       );
-  
+
       if (data.subcategories && data.subcategories.length > 0) {
         setCategoryWithSubCategories((prev) => ({
           ...prev,
@@ -73,20 +75,22 @@ export default function NavBar({ user, logOut, cartID }) {
         );
         setSubCategory(data.subcategories);
       } else {
-        navigate("/show-items", { state: { id: idOfCategory, cartID: cartID } });
+        navigate("/show-items", {
+          state: { id: idOfCategory, cartID: cartID },
+        });
       }
     } catch (error) {
       if (error.response && error.response.status === 404) {
         // alert("No subcategories or items found for this category");
-        navigate("/show-items", { state: { id: idOfCategory, cartID: cartID } });
+        navigate("/show-items", {
+          state: { id: idOfCategory, cartID: cartID },
+        });
       }
       console.error("Error fetching subcategories:", error);
     }
   }
-  
 
-
-  const safeCartID = cartID || "defaultCartID"; 
+  const safeCartID = cartID || "defaultCartID";
 
   return (
     <>
@@ -114,8 +118,22 @@ export default function NavBar({ user, logOut, cartID }) {
               onClick={closeNav}
               className="btn btn-close position-absolute end-5 top-5"
             ></div>
-            <div className="text-[#b38e38] d-flex justify-content-center mt-5">
-              <Link to="/home" state={{ cartID: safeCartID }}>Home</Link>
+            <div className="text-[#b38e38] d-flex justify-content-center mt-5 d-flex flex-column align-items-center ">
+              <div className="image-container mb-1">
+                <img src={orderImage} alt="" className="rounded-image" />
+              </div>
+
+              <Link to="/cart" state={{ user: user }}>
+                Orders
+              </Link>
+            </div>
+            <div className="d-flex justify-content-center my-2">
+                  <div className="w-50 bg-black rounded-2 shadow HeightOfDivBeforeLogOut"></div>
+                </div>
+            <div className="text-[#b38e38] d-flex justify-content-center mt-3">
+              <Link to="/home" state={{ cartID: safeCartID }}>
+                Home
+              </Link>
             </div>
             {category.length === 0 ? (
               <p className="my-3 text-center text-black p-2">
@@ -146,21 +164,21 @@ export default function NavBar({ user, logOut, cartID }) {
                     }`}
                   >
                     <div className="d-flex justify-content-center flex-column align-items-center">
-                      {subCategory && subCategory.length > 0 ? (
-                        subCategory.map((subElement, i) => (
-                          <Link
-                          key={i}
-                          to="/show-items-in-sub-category"
-                          state={{ id: subElement?._id, cartID: safeCartID }} // Correctly pass the state here
-                          className="text-[#b38e38] text-center FontSizeForP"
-                        >
-                          {subElement?.name}
-                        </Link>
-                        
-                        ))
-                      ) : (
-                        ""
-                      )}
+                      {subCategory && subCategory.length > 0
+                        ? subCategory.map((subElement, i) => (
+                            <Link
+                              key={i}
+                              to="/show-items-in-sub-category"
+                              state={{
+                                id: subElement?._id,
+                                cartID: safeCartID,
+                              }} // Correctly pass the state here
+                              className="text-[#b38e38] text-center FontSizeForP"
+                            >
+                              {subElement?.name}
+                            </Link>
+                          ))
+                        : ""}
                     </div>
                   </div>
                 </div>

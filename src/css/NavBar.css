@@ -55,4 +55,32 @@
   .subcategories-container.expanded {
     max-height: 200px; /* Adjust based on content size */
   }
+  .image-container {
+    display: flex;               /* Center the image if needed */
+    justify-content: center;     /* Center horizontally */
+    align-items: center;         /* Center vertically */
+    width: 100%;                 /* Allow full width */
+  }
+  
+  .rounded-image {
+    border-radius: 50%;          /* Create a circular shape */
+    width: 50px;                 /* Set a base width (smaller) */
+    height: 50px;                /* Set a base height (smaller) */
+    object-fit: cover;           /* Cover the entire area */
+  }
+  
+  /* Make it responsive */
+  @media (max-width: 768px) {
+    .rounded-image {
+      width: 40px;               /* Adjust size on smaller screens (smaller) */
+      height: 40px;              /* Adjust size on smaller screens (smaller) */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .rounded-image {
+      width: 30px;               /* Adjust size on mobile (smaller) */
+      height: 30px;              /* Adjust size on mobile (smaller) */
+    }
+  }
   

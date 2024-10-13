@@ -49,7 +49,7 @@ export default function CartVeiw({ user }) {
         {loadingCart ? (
           <div className="w-100 h-vh bg-white d-flex justify-content-center align-items-center">
             <div className="w-100 justify-content-center d-flex">
-              <i className="fa fa-spinner fa-spin responsiveSpinnerForCartView"></i>
+              <i className="fa fa-spinner fa-spin responsiveSpinnerForCartView text-[#D4B11C]"></i>
             </div>
           </div>
         ) : currentItem == null || currentItem.length == 0 ? (
@@ -70,8 +70,11 @@ export default function CartVeiw({ user }) {
                     ? element.items.map((item, i) => (
                         <div
                           key={i}
-                          className="d-flex justify-content-start gap-3 border border-2 rounded p-1 w-100 h-[120px]"
+                          className="d-flex position-relative justify-content-start gap-3 border border-2 rounded p-1 w-100 h-[120px]"
                         >
+                          <div className="position-absolute bottom-2 end-3 forClassforBtnInCartView">
+                          <button className="btn bg-[#f68b1e] text-white forBtnInCartView ">More details</button>
+                          </div>
                           <div className="inSmallScreenCartVeiwPhoto">
                             {item?.itemID?.images &&
                             item?.itemID?.images.length > 0 ? (
@@ -85,7 +88,7 @@ export default function CartVeiw({ user }) {
                               <span>No image available</span>
                             )}
                           </div>
-                          <div className="d-flex flex-column justify-content-center gap-2 responsiveNameInOrder">
+                          <div className=" d-flex flex-column justify-content-center gap-2 responsiveNameInOrder">
                             <p className="text-start">
                               {typeof item?.itemID?.name === "string"
                                 ? item?.itemID?.name.slice(0, 42)
