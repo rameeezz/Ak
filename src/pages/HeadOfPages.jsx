@@ -28,7 +28,8 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
       setAllItems(data);
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        alert("Not Found");
+        // alert("Not Found");
+        notify("Not found");
       }
     }
   }
@@ -159,7 +160,7 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
   // done
   return (
     <>
-      <ToastContainer />
+      
       {user?.role === "admin1" || user?.role === "admin2" ? (
         ""
       ) : isLoginPage ? (
@@ -222,6 +223,7 @@ export default function HeadOfPages({ user, cartID, itemsArray }) {
           </div>
         </div>
       )}
+      <ToastContainer />
     </>
   );
 }

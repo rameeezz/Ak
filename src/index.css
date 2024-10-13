@@ -450,4 +450,10 @@ gap: 50px;
 .widthOfCardDetails{
   width: 80%;
 }
+.inSscreenForOtp{
+  width: 80% !important;
+}
+.inSmallScreenOfCart{
+  width: 80% !important;
+}
 }

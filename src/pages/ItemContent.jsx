@@ -250,7 +250,7 @@ export default function ItemContent({ user }) {
   return (
     <>
       <HeadOfPages user={user} cartID={cartID} itemsArray={itemsArray} />
-      <ToastContainer />
+    
       <div
         className={`shadow classForSureBoxOFCart rounded bg-white p-5 translate-middle ${
           classForCart ? "active" : ""
@@ -411,6 +411,7 @@ export default function ItemContent({ user }) {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }

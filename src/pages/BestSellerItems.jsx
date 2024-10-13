@@ -219,7 +219,7 @@ export default function BestSellerItems({ user }) {
   return (
     <>
       <HeadOfPages user={user} cartID={cartID} itemsArray={itemsArray} />
-      <ToastContainer />
+      
       <div
         className={`shadow classForSureBoxOFCart rounded bg-white p-5 translate-middle ${
           classForCart ? "active" : ""
@@ -431,6 +431,7 @@ export default function BestSellerItems({ user }) {
         </div>
         {/* DOne Best Sellet  */}
       </div>
+      <ToastContainer />
     </>
   );
 }

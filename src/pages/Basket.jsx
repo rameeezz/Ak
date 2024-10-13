@@ -172,6 +172,7 @@ export default function Basket({ user, logOut }) {
       setLoadingCardDetails(false);
       serCardID(data?._id);
       setOrderInfo({ ...orderInfo, card: data?._id });
+      notify("card added successfully");
     } catch (error) {}
   }
   // done
@@ -370,73 +371,33 @@ export default function Basket({ user, logOut }) {
   async function sendAddress(e) {
     setLoadingButtonCat(true);
     e.preventDefault();
-    if (user.role == "customer") {
-      if (
-        addressInfo.area == "" ||
-        addressInfo.customer[0].customerID == "" ||
-        addressInfo.customer[0].customerRole == "" ||
-        addressInfo.state == "" ||
-        addressInfo.apartment == "" ||
-        addressInfo.building == "" ||
-        addressInfo.floor == "" ||
-        addressInfo.street == ""
-      ) {
-        // alert(
-        //   "Please ensure all required fields are filled out correctly before proceeding."
-        // );
-        notify(
-          "Please ensure all required fields are filled out correctly before proceeding."
+    if (orderInfo.time == "" || orderInfo.date == "") {
+      notify("please put date and time");
+      setLoadingButtonCat(false);
+    }else {
+      try {
+        let { data } = await axios.post(
+          "https://akflorist-production.up.railway.app/customer/addAddress",
+          addressInfo
         );
+        // console.log(data);
+        setAddressId(data._id);
+        setOrderInfo({ ...orderInfo, address: data._id });
         setLoadingButtonCat(false);
-      } else {
-        try {
-          let { data } = await axios.post(
-            "https://akflorist-production.up.railway.app/customer/addAddress",
-            addressInfo
+        setOrderClass("");
+        setFlowerNumber(3);
+        setOrderClass("");
+        putNumber(e);
+      } catch (error) {
+        if (error.response && error.response.status === 422) {
+          notify(
+            "Please ensure all required fields are filled out correctly before proceeding."
           );
-          // console.log(data);
-          setAddressId(data._id);
-          setOrderInfo({ ...orderInfo, address: data._id });
+          // alert(
+          //   "Please ensure all required fields are filled out correctly before proceeding"
+          // );
           setLoadingButtonCat(false);
-          setOrderClass("");
-          setFlowerNumber(3);
-          setOrderClass("");
-          putNumber(e);
-        } catch (error) {}
-      }
-    } else {
-      if (
-        addressInfo.area == "" ||
-        addressInfo.customer[0].customerID == "" ||
-        addressInfo.customer[0].customerRole == "" ||
-        addressInfo.state == "" ||
-        addressInfo.apartment == "" ||
-        addressInfo.building == "" ||
-        addressInfo.floor == "" ||
-        addressInfo.street == ""
-      ) {
-        // alert(
-        //   "Please ensure all required fields are filled out correctly before proceeding."
-        // );
-        notify(
-          "Please ensure all required fields are filled out correctly before proceeding."
-        );
-        setLoadingButtonCat(false);
-      } else {
-        try {
-          let { data } = await axios.post(
-            "https://akflorist-production.up.railway.app/customer/addAddress",
-            addressInfo
-          );
-          // console.log(data);
-          setAddressId(data._id);
-          setOrderInfo({ ...orderInfo, address: data._id });
-          setLoadingButtonCat(false);
-          setOrderClass("");
-          setFlowerNumber(3);
-          setOrderClass("");
-          putNumber(e);
-        } catch (error) {}
+        }
       }
     }
   }
@@ -450,11 +411,20 @@ export default function Basket({ user, logOut }) {
     // mobileNumber:""
   });
   // console.log(orderInfo);
+  const [responseOfOrder, setResponseOfOrder] = useState({});
+  const [classOfReset, setClassOfReset] = useState("d-none");
+  function CloseReset() {
+    setClassOfReset("d-none");
+    handleShowPopup();
+    setNavigateToHome(true);
+  }
+  // console.log(responseOfOrder);
+
   const [showPopup, setShowPopup] = useState(false);
   const [navigateToHome, setNavigateToHome] = useState(false);
   async function sendOrder(e) {
-    e.preventDefault();
     setLoadingButtonCat(true);
+    e.preventDefault();
 
     if (numberOfPay === 1) {
       try {
@@ -462,42 +432,58 @@ export default function Basket({ user, logOut }) {
           "https://akflorist-production.up.railway.app/payment/offlinePayment",
           orderInfo
         );
+        // console.log(data.order);
+        setResponseOfOrder(data.order);
         setLoadingButtonCat(false);
-        localStorage.setItem("cartItems", []);
-        setItemsInCart([]);
-        handleShowPopup();
-        setNavigateToHome(true); // Set this to true to trigger navigation in useEffect
+        localStorage.setItem("cartItems", []); // Clear cart items
+        setItemsInCart([]); // Reset cart state
+        setClassOfReset(
+          "w-50 position-fixed bg-white shadow top-50 start-50 translate-middle p-3 rounded inSmallScreenOfCart"
+        );
       } catch (error) {
-        setLoadingButtonCat(false); // Make sure to reset loading state on error
+        setLoadingButtonCat(false); // Reset loading on error
       }
-    }
-    //  else if (numberOfPay === 2) {
-    //   try {
-    //     let { data } = await axios.post(
-    //       "https://akflorist-production.up.railway.app/payment/",
-    //       orderInfo
-    //     );
-    //     setLoadingButtonCat(false);
-    //     // Optionally handle the success response
-    //     handleShowPopup();
-    //     setNavigateToHome(true);
-    //   } catch (error) {
-    //     setLoadingButtonCat(false); // Make sure to reset loading state on error
-    //   }
-    // }
-    else {
+    } else if (numberOfPay === 2) {
+      // First, update orderInfo state
+      setOrderInfo((prevOrderInfo) => ({
+        ...prevOrderInfo,
+        shippingCost: 0,
+      }));
+
+      // Now, send the API request after state update
+      try {
+        let { data } = await axios.post(
+          "https://akflorist-production.up.railway.app/payment/offlinePayment",
+          {
+            ...orderInfo,
+            shippingCost: 0, // Ensure the correct state is sent
+          }
+        );
+        setResponseOfOrder(data.order);
+        setLoadingButtonCat(false);
+        localStorage.setItem("cartItems", []); // Clear cart
+        setItemsInCart([]); // Reset cart state
+        setClassOfReset(
+          "w-50 position-fixed bg-white shadow top-50 start-50 translate-middle p-3 rounded inSmallScreenOfCart"
+        );
+      } catch (error) {
+        setLoadingButtonCat(false); // Reset loading on error
+        // console.error(error);
+      }
+    } else {
       // alert("Please select a payment method.");
       notify("Please select a payment method.");
       setLoadingButtonCat(false);
     }
   }
+
   // done
   function setHowPayOnDeliver() {
     setNumberOfPay(1);
   }
-  // function setHowPayOnLine() {
-  //   setNumberOfPay(2);
-  // }
+  function setHowPayOnLine() {
+    setNumberOfPay(2);
+  }
   // pop up
 
   const handleShowPopup = () => {
@@ -558,6 +544,26 @@ export default function Basket({ user, logOut }) {
           setLoadingButtonCat(false);
         }
       }
+    } else if (numberOfPay === 2) {
+      try {
+        let { data } = await axios.post(
+          "https://akflorist-production.up.railway.app/customer/addPromoCode",
+          userPromoCode
+        );
+        // console.log(data);
+
+        setErrorMessageForPromo("");
+        sendOrder(e);
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          setErrorMessageForPromo("This Promo Code Doesnt Work.");
+          setLoadingButtonCat(false);
+        }
+        if (error.response && error.response.status === 422) {
+          setErrorMessageForPromo("This Promo Used Before.");
+          setLoadingButtonCat(false);
+        }
+      }
     } else {
       // alert("Please select a payment method.");
       notify("Please select a payment method.");
@@ -568,7 +574,22 @@ export default function Basket({ user, logOut }) {
     <>
       <NavBar user={user} logOut={logOut} cartID={cartID} />
       <HeadOfPages user={user} cartID={cartID} itemsArray={itemsSameHome} />
-      <ToastContainer />
+      <div className={classOfReset}>
+        <p className="w-100 text-start">total cost : <span className="text-muted"> {responseOfOrder.totalCost || "N/A"}</span></p>
+        <p className="w-100 text-start mt-3">time : <span className="text-muted">{responseOfOrder.time || "N/A"}</span></p>
+        <p className="w-100 text-start mt-3">
+          {" "}
+          date :{" "}
+         <span className="text-muted"> {responseOfOrder.submitDate
+            ? responseOfOrder.submitDate.slice(0, 10)
+            : "N/A"}</span>
+        </p>
+        <div className="w-100 d-flex justify-content-center mt-4">
+          <button onClick={CloseReset} className="btn btn-primary">
+            Ok
+          </button>
+        </div>
+      </div>
       <div className="container-xxl">
         <div className="w-100 d-flex justify-content-center">
           <div className="w-[90%] d-flex justify-content-center my-5 gap-4 flex-wrap">
@@ -774,7 +795,7 @@ export default function Basket({ user, logOut }) {
                       Payment Upon Delivery
                     </button>
                   </div>
-                  {/* <div className="w-100 d-flex justify-content-center mt-3">
+                  <div className="w-100 d-flex justify-content-center mt-3">
                     <button
                       onClick={setHowPayOnLine}
                       className={`p-3 cursorPOinter btn btn-info w-[80%] ${
@@ -783,9 +804,9 @@ export default function Basket({ user, logOut }) {
                           : ""
                       }`}
                     >
-                      Visa
+                      Pickup
                     </button>
-                  </div> */}
+                  </div>
                 </div>
               )}
 
@@ -1099,6 +1120,7 @@ export default function Basket({ user, logOut }) {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }

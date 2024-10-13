@@ -128,7 +128,7 @@ export default function ForgetPassword() {
 
   return (
     <>
-      <ToastContainer />
+     
       <div className="background">
         <div className="d-flex justify-content-center align-items-center">
           <div className={classOfEmail}>
@@ -215,6 +215,7 @@ export default function ForgetPassword() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }

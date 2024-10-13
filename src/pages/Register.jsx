@@ -79,7 +79,7 @@ export default function Register() {
           { email: RegisterInfo.email }
         );
         setClassOfOtp(
-          "w-100 h-vh bg-white d-flex justify-content-center align-items-center position-fixed z-10 top-0 end-0"
+          "w-100 h-vh bg-white d-flex justify-content-center align-items-center position-fixed z-10 top-0 end-0 inSscreenForOtp"
         );
         setLoading(false);
         setVerifyOtp({ ...verifyOtp, email: RegisterInfo.email });
@@ -213,7 +213,7 @@ export default function Register() {
   return (
     <>
       <div className="backgroundBg">
-        <ToastContainer />
+        
         <div className="login-form p-4">
           <h2 className="mb-2">Register</h2>
           <form onSubmit={sendOpt}>
@@ -324,6 +324,7 @@ export default function Register() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }
