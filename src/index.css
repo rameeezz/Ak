@@ -184,10 +184,10 @@
   top: 0;
   right: 0;
 }
-.forBtnInCartView:hover {
+/* .forBtnInCartView:hover {
   background-color: white;
   color: #f68a1e !important;
-}
+} */
 @media (max-width: 576px) {
   /* Small screens (sm) and below */
   .responsive-font-size-p {

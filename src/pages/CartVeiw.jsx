@@ -6,7 +6,7 @@ export default function CartVeiw({ user }) {
     user?.role == "customer" ? user?.userId || null : user?.id || null;
   const [userCart, setuserCart] = useState([]);
   // console.log(userCart);
-  
+
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -15,12 +15,12 @@ export default function CartVeiw({ user }) {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItem = userCart.slice(indexOfFirstItem, indexOfLastItem);
 
-  // console.log(currentItem);  
+  // console.log(currentItem);
 
   const paginate = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
-      window.scrollTo(0,0);
+      window.scrollTo(0, 0);
     }
   };
   useEffect(() => {
@@ -43,6 +43,13 @@ export default function CartVeiw({ user }) {
       getOrders();
     }
   }, [customerID]);
+  const [classOfCard, setClassOfCard] = useState(false);
+  function showCard() {
+    setClassOfCard(true);
+  }
+  function hideCard() {
+    setClassOfCard(false);
+  }
   return (
     <>
       <div className="d-flex justify-content-center">
@@ -73,7 +80,10 @@ export default function CartVeiw({ user }) {
                           className="d-flex position-relative justify-content-start gap-3 border border-2 rounded p-1 w-100 h-[120px]"
                         >
                           <div className="position-absolute bottom-2 end-3 forClassforBtnInCartView">
-                          <button className="btn bg-[#f68b1e] text-white forBtnInCartView ">More details</button>
+                            {/* <button className="btn bg-[#f68b1e] text-white forBtnInCartView ">More details</button> */}
+                            <p className="bg-[#f68b1e] text-white p-2 rounded forBtnInCartView">
+                              {element.totalCost} EGP
+                            </p>
                           </div>
                           <div className="inSmallScreenCartVeiwPhoto">
                             {item?.itemID?.images &&
@@ -109,6 +119,24 @@ export default function CartVeiw({ user }) {
                               <span>Arrival date </span>
                               <span>{element?.date.slice(0, 10)}</span>
                             </div>
+                            <div className="d-flex justify-content-start gap-2 align-items-center">
+                              <span>Card </span>
+                              <i
+                                onClick={showCard}
+                                className="fa-solid fa-info text-primary cursorPOinter mb-1"
+                              ></i>
+                            </div>
+                            {classOfCard ? (
+                              <div className="w-50 position-fixed top-50 start-50 translate-middle shadow bg-white p-5 rounded">
+                                <div onClick={hideCard} className="position-absolute end-3 top-2 btn btn-close"></div>
+                                <div className="d-flex flex-column">
+                                  {/* <p>{element.}</p> */}
+                                  <p className="text-center">This feature coming soon</p>
+                                </div>
+                              </div>
+                            ) : (
+                              ""
+                            )}
                           </div>
                         </div>
                       ))
