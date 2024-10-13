@@ -274,6 +274,7 @@ export default function Basket({ user, logOut }) {
     }));
   }, [takeState, takeArea]);
   function selectArea(value) {
+    setAlertAddressWrongArea(false);
     setTakeArea(value);
     // console.log(value);
 
@@ -337,6 +338,7 @@ export default function Basket({ user, logOut }) {
   }
 
   function selectState(value) {
+    setAlertAddressWrongState(false);
     setTakeState(value);
     setTakeArea("");
   }
@@ -364,13 +366,24 @@ export default function Basket({ user, logOut }) {
     setOrderInfo({ ...orderInfo, time: value });
   }
   function takeContentOFAddress(e) {
+    setAlertAddressWrongStreet(false);
     let myAddress = { ...addressInfo };
     myAddress[e.target.name] = e.target.value;
     setAddressInfo(myAddress);
   }
+  const [alertAddressWrongArea, setAlertAddressWrongArea] = useState(false);
+  const [alertAddressWrongState, setAlertAddressWrongState] = useState(false);
+  const [alertAddressWrongStreet, setAlertAddressWrongStreet] = useState(false);
   async function sendAddress(e) {
     setLoadingButtonCat(true);
     e.preventDefault();
+    if (addressInfo.state == "") {
+      setAlertAddressWrongState(true);
+    } else if (addressInfo.area == "") {
+      setAlertAddressWrongArea(true);
+    } else if (addressInfo.street == "") {
+      setAlertAddressWrongStreet(true);
+    }
     if (orderInfo.time == "" || orderInfo.date == "") {
       notify("please put date and time");
       setLoadingButtonCat(false);
@@ -387,6 +400,9 @@ export default function Basket({ user, logOut }) {
         setOrderClass("");
         setFlowerNumber(3);
         setOrderClass("");
+        setAlertAddressWrongArea(false);
+        setAlertAddressWrongState(false);
+        setAlertAddressWrongStreet(false);
         putNumber(e);
       } catch (error) {
         if (error.response && error.response.status === 422) {
@@ -679,86 +695,179 @@ export default function Basket({ user, logOut }) {
                   <div>
                     <form>
                       <div className="d-flex justify-content-center gap-2 my-3">
-                        <select
-                          required
-                          className="form-control"
-                          onChange={(e) => selectState(e.target.value)}
-                        >
-                          <option value="" disabled selected>
-                            Select State
-                          </option>
-                          <option value="Cairo">Cairo </option>
-                          <option value="Alexandria">Alexandria </option>
-                          <option value="Elmonofia">Elmonofia</option>
-                        </select>
+                        {alertAddressWrongState ? (
+                          <select
+                            required
+                            className="form-control border border-2 border-danger"
+                            onChange={(e) => selectState(e.target.value)}
+                          >
+                            <option value="" disabled selected>
+                              Select State
+                            </option>
+                            <option value="Cairo">Cairo </option>
+                            <option value="Alexandria">Alexandria </option>
+                            <option value="Elmonofia">Elmonofia</option>
+                          </select>
+                        ) : (
+                          <select
+                            required
+                            className="form-control"
+                            onChange={(e) => selectState(e.target.value)}
+                          >
+                            <option value="" disabled selected>
+                              Select State
+                            </option>
+                            <option value="Cairo">Cairo </option>
+                            <option value="Alexandria">Alexandria </option>
+                            <option value="Elmonofia">Elmonofia</option>
+                          </select>
+                        )}
+                        {alertAddressWrongArea ? (
+                          <select
+                            required
+                            className="form-control border border-2 border-danger"
+                            key={takeState} // Key resets the dropdown when takeState changes
+                            value={takeArea || ""} // Ensure the default value is selected when no area is picked
+                            onChange={(e) => selectArea(e.target.value)}
+                          >
+                            <option value="" disabled>
+                              Select area
+                            </option>
 
-                        <select
-                          required
-                          className="form-control"
-                          key={takeState} // Key resets the dropdown when takeState changes
-                          value={takeArea || ""} // Ensure the default value is selected when no area is picked
-                          onChange={(e) => selectArea(e.target.value)}
-                        >
-                          <option value="" disabled>
-                            Select area
-                          </option>
+                            {takeState === "Cairo" && (
+                              <>
+                                <option value="Cairo">Cairo</option>
+                                <option value="Giza">Giza</option>
+                                <option value="Helwan">Helwan</option>
+                                <option value="October">October</option>
+                              </>
+                            )}
 
-                          {takeState === "Cairo" && (
-                            <>
-                              <option value="Cairo">Cairo</option>
-                              <option value="Giza">Giza</option>
-                              <option value="Helwan">Helwan</option>
-                              <option value="October">October</option>
-                            </>
-                          )}
+                            {takeState === "Elmonofia" && (
+                              <>
+                                <option value="منوف">منوف </option>
+                                <option value="الباجور">الباجور </option>
+                                <option value="كوم الضبع">كوم الضبع</option>
+                                <option value="سرس الليان">سرس الليان</option>
+                                <option value="بئر العرب">بئر العرب</option>
+                                <option value="قويسنا">قويسنا</option>
+                                <option value="بركه السبع">بركه السبع</option>
+                                <option value="مليج">مليج</option>
+                                <option value="الراهب">الراهب</option>
+                                <option value="الماي">الماي</option>
+                                <option value="شنوان">شنوان</option>
+                                <option value="شبراباص">شبراباص</option>
+                                <option value="كفر طنبدي">كفر طنبدي</option>
+                                <option value="الكوم الاخضر">
+                                  الكوم الاخضر
+                                </option>
+                                <option value="البتانون">البتانون</option>
+                                <option value="ميت خلف">ميت خلف</option>
+                                <option value="اصطباري">اصطباري</option>
+                                <option value="كفر البتانون">
+                                  كفر البتانون
+                                </option>
+                                <option value="الدلاتون">الدلاتون</option>
+                                <option value="الشهداء">الشهداء</option>
+                                <option value="تلا">تلا </option>
+                                <option value="منشاء عصام">منشاء عصام</option>
+                                <option value="اشمون">اشمون</option>
+                                <option value="السادات">السادات</option>
+                                <option value="شبين الكوم">شبين الكوم</option>
+                              </>
+                            )}
 
-                          {takeState === "Elmonofia" && (
-                            <>
-                              <option value="منوف">منوف </option>
-                              <option value="الباجور">الباجور </option>
-                              <option value="كوم الضبع">كوم الضبع</option>
-                              <option value="سرس الليان">سرس الليان</option>
-                              <option value="بئر العرب">بئر العرب</option>
-                              <option value="قويسنا">قويسنا</option>
-                              <option value="بركه السبع">بركه السبع</option>
-                              <option value="مليج">مليج</option>
-                              <option value="الراهب">الراهب</option>
-                              <option value="الماي">الماي</option>
-                              <option value="شنوان">شنوان</option>
-                              <option value="شبراباص">شبراباص</option>
-                              <option value="كفر طنبدي">كفر طنبدي</option>
-                              <option value="الكوم الاخضر">الكوم الاخضر</option>
-                              <option value="البتانون">البتانون</option>
-                              <option value="ميت خلف">ميت خلف</option>
-                              <option value="اصطباري">اصطباري</option>
-                              <option value="كفر البتانون">كفر البتانون</option>
-                              <option value="الدلاتون">الدلاتون</option>
-                              <option value="الشهداء">الشهداء</option>
-                              <option value="تلا">تلا </option>
-                              <option value="منشاء عصام">منشاء عصام</option>
-                              <option value="اشمون">اشمون</option>
-                              <option value="السادات">السادات</option>
-                              <option value="شبين الكوم">شبين الكوم</option>
-                            </>
-                          )}
+                            {takeState === "Alexandria" && (
+                              <>
+                                <option value="Alexandria">Alexandria</option>
+                              </>
+                            )}
+                          </select>
+                        ) : (
+                          <select
+                            required
+                            className="form-control"
+                            key={takeState} // Key resets the dropdown when takeState changes
+                            value={takeArea || ""} // Ensure the default value is selected when no area is picked
+                            onChange={(e) => selectArea(e.target.value)}
+                          >
+                            <option value="" disabled>
+                              Select area
+                            </option>
 
-                          {takeState === "Alexandria" && (
-                            <>
-                              <option value="Alexandria">Alexandria</option>
-                            </>
-                          )}
-                        </select>
+                            {takeState === "Cairo" && (
+                              <>
+                                <option value="Cairo">Cairo</option>
+                                <option value="Giza">Giza</option>
+                                <option value="Helwan">Helwan</option>
+                                <option value="October">October</option>
+                              </>
+                            )}
+
+                            {takeState === "Elmonofia" && (
+                              <>
+                                <option value="منوف">منوف </option>
+                                <option value="الباجور">الباجور </option>
+                                <option value="كوم الضبع">كوم الضبع</option>
+                                <option value="سرس الليان">سرس الليان</option>
+                                <option value="بئر العرب">بئر العرب</option>
+                                <option value="قويسنا">قويسنا</option>
+                                <option value="بركه السبع">بركه السبع</option>
+                                <option value="مليج">مليج</option>
+                                <option value="الراهب">الراهب</option>
+                                <option value="الماي">الماي</option>
+                                <option value="شنوان">شنوان</option>
+                                <option value="شبراباص">شبراباص</option>
+                                <option value="كفر طنبدي">كفر طنبدي</option>
+                                <option value="الكوم الاخضر">
+                                  الكوم الاخضر
+                                </option>
+                                <option value="البتانون">البتانون</option>
+                                <option value="ميت خلف">ميت خلف</option>
+                                <option value="اصطباري">اصطباري</option>
+                                <option value="كفر البتانون">
+                                  كفر البتانون
+                                </option>
+                                <option value="الدلاتون">الدلاتون</option>
+                                <option value="الشهداء">الشهداء</option>
+                                <option value="تلا">تلا </option>
+                                <option value="منشاء عصام">منشاء عصام</option>
+                                <option value="اشمون">اشمون</option>
+                                <option value="السادات">السادات</option>
+                                <option value="شبين الكوم">شبين الكوم</option>
+                              </>
+                            )}
+
+                            {takeState === "Alexandria" && (
+                              <>
+                                <option value="Alexandria">Alexandria</option>
+                              </>
+                            )}
+                          </select>
+                        )}
                       </div>
                       <div className="w-100">
-                        <input
-                          required
-                          type="text"
-                          className="w-100 form-control"
-                          placeholder="Street *"
-                          name="street"
-                          onChange={takeContentOFAddress}
-                          value={addressInfo.street}
-                        />
+                        {alertAddressWrongStreet ? (
+                          <input
+                            required
+                            type="text"
+                            className="w-100 form-control border border-2 border-danger"
+                            placeholder="Street *"
+                            name="street"
+                            onChange={takeContentOFAddress}
+                            value={addressInfo.street}
+                          />
+                        ) : (
+                          <input
+                            required
+                            type="text"
+                            className="w-100 form-control"
+                            placeholder="Street *"
+                            name="street"
+                            onChange={takeContentOFAddress}
+                            value={addressInfo.street}
+                          />
+                        )}
                       </div>
                       <div className="d-flex justify-content-center gap-2 my-3">
                         <input
@@ -853,8 +962,8 @@ export default function Basket({ user, logOut }) {
                   />
                   <div className="d-flex justify-content-center mt-3">
                     <button
-                      onClick={()=>{
-                        goToItems("66fdee5ff8cb186d0962e7d0")
+                      onClick={() => {
+                        goToItems("66fdee5ff8cb186d0962e7d0");
                       }}
                       className="btn btn-primary w-100"
                     >
