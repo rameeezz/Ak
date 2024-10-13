@@ -374,7 +374,7 @@ export default function Basket({ user, logOut }) {
     if (orderInfo.time == "" || orderInfo.date == "") {
       notify("please put date and time");
       setLoadingButtonCat(false);
-    }else {
+    } else {
       try {
         let { data } = await axios.post(
           "https://akflorist-production.up.railway.app/customer/addAddress",
@@ -570,19 +570,34 @@ export default function Basket({ user, logOut }) {
       setLoadingButtonCat(false);
     }
   }
+  function goToItems(idOfCategory) {
+    navigate("/show-items", { state: { id: idOfCategory, cartID: cartID } });
+  }
   return (
     <>
       <NavBar user={user} logOut={logOut} cartID={cartID} />
       <HeadOfPages user={user} cartID={cartID} itemsArray={itemsSameHome} />
       <div className={classOfReset}>
-        <p className="w-100 text-start">total cost : <span className="text-muted"> {responseOfOrder.totalCost || "N/A"}</span></p>
-        <p className="w-100 text-start mt-3">time : <span className="text-muted">{responseOfOrder.time || "N/A"}</span></p>
+        <p className="w-100 text-start">
+          total cost :{" "}
+          <span className="text-muted">
+            {" "}
+            {responseOfOrder.totalCost || "N/A"}
+          </span>
+        </p>
+        <p className="w-100 text-start mt-3">
+          time :{" "}
+          <span className="text-muted">{responseOfOrder.time || "N/A"}</span>
+        </p>
         <p className="w-100 text-start mt-3">
           {" "}
           date :{" "}
-         <span className="text-muted"> {responseOfOrder.submitDate
-            ? responseOfOrder.submitDate.slice(0, 10)
-            : "N/A"}</span>
+          <span className="text-muted">
+            {" "}
+            {responseOfOrder.submitDate
+              ? responseOfOrder.submitDate.slice(0, 10)
+              : "N/A"}
+          </span>
         </p>
         <div className="w-100 d-flex justify-content-center mt-4">
           <button onClick={CloseReset} className="btn btn-primary">
@@ -836,6 +851,16 @@ export default function Basket({ user, logOut }) {
                     name="from"
                     value={cardDetails.from}
                   />
+                  <div className="d-flex justify-content-center mt-3">
+                    <button
+                      onClick={()=>{
+                        goToItems("66fdee5ff8cb186d0962e7d0")
+                      }}
+                      className="btn btn-primary w-100"
+                    >
+                      Choose your card
+                    </button>
+                  </div>
                   {loadingCardDetaisl ? (
                     <div className="w-100 justify-content-center d-flex">
                       <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
