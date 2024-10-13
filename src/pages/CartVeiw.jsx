@@ -15,7 +15,7 @@ export default function CartVeiw({ user }) {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItem = userCart.slice(indexOfFirstItem, indexOfLastItem);
 
-  console.log(currentItem);
+  // console.log(currentItem);
 
   const paginate = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
