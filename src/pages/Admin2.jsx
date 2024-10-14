@@ -727,7 +727,7 @@ export default function Admin2({ logOut }) {
         ...categroryIdForOccasion,
         categoryId: categoryId,
       });
-      setCurrentPageForOccasion(1)
+      setCurrentPageForOccasion(1);
       setClassForItemsForOccasion(
         "d-flex justify-content-center gap-3 flex-wrap position-relative"
       );
@@ -1016,6 +1016,29 @@ export default function Admin2({ logOut }) {
       getItemsForOccasions(e, categroryIdForOccasion.categoryId);
     } catch (error) {}
   }
+  const [olderData, setOlderData] = useState([]);
+  console.log(olderData);
+  
+  const [classOlderOrder, setClassOlderOrder] = useState(false);
+  const [loadingOlderOrders, setLoadingOlderOrders] = useState(false);
+  async function getOlderOrders() {
+    setClassOlderOrder(true);
+    setLoadingOlderOrders(true);
+    try {
+      let { data } = await axios.get(
+        "https://akflorist-production.up.railway.app/admin2/getDoneOrders"
+      );
+      setOlderData(data.orders);
+      setLoadingOlderOrders(false);
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        alert("no orders found");
+      }
+    }
+  }
+  function closeOlderOrders() {
+    setClassOlderOrder(false);
+  }
   return (
     <>
       <div className=" position-fixed end-2 rounded-circle bg-danger top-5 z-[123131]">
@@ -1031,6 +1054,165 @@ export default function Admin2({ logOut }) {
         {" "}
         Orders Of The Day{" "}
       </h3>
+      <div className="w-100 d-flex justify-content-start ">
+        <button onClick={getOlderOrders} className="btn btn-primary">
+          show older orders
+        </button>
+      </div>
+      {classOlderOrder ? (
+        <div className="position-fixed h-vh overflow-y-scroll bg-white shadow w-100 z-[21212] d-flex  flex-wrap gap-3 justify-content-center pb-72">
+          <div
+            onClick={closeOlderOrders}
+            className="position-absolute  top-0 end-0"
+          > <button className="btn btn-close "></button></div>
+          {loadingOlderOrders ? (
+            <div className="w-100 justify-content-center align-items-center d-flex">
+              <i className="fa fa-spinner fa-spin responsive-font-size-h1"></i>
+            </div>
+          ) : olderData == null || olderData.length === 0 ? (
+            "No orders Found "
+          ) : (
+            olderData.map((element, i) => (
+              <div
+                key={i}
+                className="p-2 rounded border border-2 border-danger gap-2 d-flex flex-column justify-content-end align-items-center position-relative w-80"
+              >
+                <p className="w-100 text-start">
+                  <span className="fw-bold">Name :</span>{" "}
+                  <span className="text-muted">
+                    {element?.customer[0]?.customerID?.firstName}{" "}
+                    {element?.customer[0]?.customerID?.lastName}
+                  </span>{" "}
+                </p>
+                <p className="w-100 text-start">
+                  <span className="fw-bold">Mobile Number :</span>{" "}
+                  <span className="text-muted">
+                    {element?.customer[0]?.customerID?.mobileNumber}
+                  </span>{" "}
+                </p>
+                <p className="w-100 text-start">
+                  <span className="fw-bold">Address : </span>
+                  <span>
+                    {element?.address?.state} {element?.address?.area}
+                  </span>{" "}
+                </p>
+                <p className="w-100 text-start">
+                  <span className="fw-bold">Street : </span>
+                  <span>{element?.address?.street} </span>{" "}
+                </p>
+                <div className="d-flex justify-content-center gap-3 ">
+                  <div className="d-flex justify-content-center flex-column ">
+                    <p className="text-center">Apartment</p>
+                    <span className="text-center">
+                      {" "}
+                      {element?.address?.apartment}{" "}
+                    </span>
+                  </div>
+                  <div className="d-flex justify-content-center flex-column ">
+                    <p className="text-center">Building</p>
+                    <span className="text-center">
+                      {" "}
+                      {element?.address?.building}{" "}
+                    </span>
+                  </div>
+                  <div className="d-flex justify-content-center flex-column ">
+                    <p className="text-center">Floor</p>
+                    <span className="text-center">
+                      {" "}
+                      {element?.address?.floor}{" "}
+                    </span>
+                  </div>
+                </div>
+                <p className="w-100 text-start">
+                  <span className="fw-bold">Date : </span>
+                  <span>{element?.date.slice(0, 10)} </span>{" "}
+                </p>
+                <p className="w-100 text-start">
+                  <span className="fw-bold">Time : </span>
+                  <span>{element?.time} </span>{" "}
+                </p>
+                <p className="w-100 text-start">
+                  <span className="fw-bold">Total Cost : </span>
+                  <span>{element?.totalCost} </span>{" "}
+                </p>
+                <p className="w-100 text-start d-flex  gap-3">
+                  <span className="fw-bold "> Payment: </span>
+                  <span className=" w-75 overflow-x-scroll">
+                    {element?.intendID}{" "}
+                  </span>{" "}
+                </p>
+                <div className="d-flex justify-content-start align-items-center gap-3 flex-column overflow-y-scroll border h-[150px] w-100">
+                  {element.items && element.items.length > 0
+                    ? element.items.map((item, i) => (
+                        <div
+                          key={i}
+                          className="d-flex justify-content-between gap-3 border border-2 rounded p-1 w-100 h-[120px]"
+                        >
+                          <div className="w-[40%]">
+                            {item?.itemID?.images &&
+                            item?.itemID?.images.length > 0 ? (
+                              <img
+                                src={`https://akflorist.s3.eu-north-1.amazonaws.com/${item?.itemID?.images[0]}`}
+                                alt={item?.itemID?.name}
+                                className="w-100 h-100"
+                              />
+                            ) : (
+                              <span>No image available</span>
+                            )}
+                          </div>
+                          <div className="d-flex justify-content-center align-items-center gap-3 flex-column">
+                            <p>card</p>
+                            {element.card == null ? (
+                              ""
+                            ) : (
+                              <button
+                                onClick={() => showCardinfo(element.card)}
+                                className="btn btn-primary"
+                              >
+                                i
+                              </button>
+                            )}
+                          </div>
+                          <div className={classOfCard}>
+                            <div className="d-flex justify-content-center gap-3">
+                              <span className="fw-bold">from :</span>
+                              <p> {selectedCardInfo.from} </p>
+                            </div>
+                            <div className="d-flex justify-content-center gap-3">
+                              <span className="fw-bold ">text:</span>
+                              <p> {selectedCardInfo.text} </p>
+                            </div>
+                            <div className="d-flex justify-content-center gap-3">
+                              <span className="fw-bold">to :</span>
+                              <p> {selectedCardInfo.to} </p>
+                            </div>
+                            <button
+                              className="btn btn-primary"
+                              onClick={closeCard}
+                            >
+                              {" "}
+                              close
+                            </button>
+                          </div>
+                          <div className="d-flex flex-column justify-content-center gap-3 align-items-center  ">
+                            <p className="text-center">
+                              {typeof item?.itemID?.name === "string"
+                                ? item?.itemID?.name.slice(0, 20)
+                                : "No name available"}
+                            </p>
+                            <span>{item?.quantity}</span>
+                          </div>
+                        </div>
+                      ))
+                    : "No items found"}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      ) : (
+        ""
+      )}
       <div className="d-flex justify-content-center mt-5 gap-3 flex-wrap">
         {currentItemOrders == null || currentItemOrders.length === 0
           ? "No orders Found "
@@ -1881,7 +2063,7 @@ export default function Admin2({ logOut }) {
                     alt=""
                   />
                   <div className="card-body">
-                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <div className="d-flex justify-content-between align-items-center mb-2">
                       {editeStatus ? (
                         <input
                           name="newPrice"
