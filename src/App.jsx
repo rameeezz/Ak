@@ -24,7 +24,7 @@ import SubCategoryItems from "./pages/SubCategoryItems";
 import ItemContent from "./pages/ItemContent";
 import SearchItems from "./pages/SearchItems";
 import Basket from "./pages/Basket";
-import CartVeiw from './pages/CartVeiw';
+import CartVeiw from "./pages/CartVeiw";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -81,7 +81,7 @@ function App() {
     {
       path: "/",
       element: <MasterLayout user={user} logOut={logOut} />,
-      errorElement: <NotFound/>,
+      errorElement: <NotFound />,
       children: [
         {
           path: "/",
@@ -135,7 +135,136 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    // htt3dl tany lma nege n48lo 
+    <>
+  <style>
+    {`
+      body {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        // background-color: #b38e38;
+        font-family: Arial, sans-serif;
+      }
+      .wreath-container {
+        position: relative;
+        width: 400px;
+        height: 400px;
+      }
+      .circle-of-flowers {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        animation: rotateFlowers 10s linear infinite;
+      }
+      .flower {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .petal {
+        position: absolute;
+        width: 25px;
+        height: 40px;
+        background-color: #b38e38;
+        border-radius: 50%;
+        // transform-origin: bottom center;
+      }
+      .petal:nth-child(1) {
+        transform: rotate(0deg) translateY(-15px);
+      }
+      .petal:nth-child(2) {
+        transform: rotate(45deg) translateY(-15px);
+      }
+      .petal:nth-child(3) {
+        transform: rotate(90deg) translateY(-15px);
+      }
+      .petal:nth-child(4) {
+        transform: rotate(135deg) translateY(-15px);
+      }
+      .petal:nth-child(5) {
+        transform: rotate(180deg) translateY(-15px);
+      }
+      .petal:nth-child(6) {
+        transform: rotate(225deg) translateY(-15px);
+      }
+      .petal:nth-child(7) {
+        transform: rotate(270deg) translateY(-15px);
+      }
+      .petal:nth-child(8) {
+        transform: rotate(315deg) translateY(-15px);
+      }
+      .center {
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        border-radius: 50%;
+        z-index: 1;
+      }
+      .text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color:dark;
+        font-size: 16px;
+        font-weight: bold;
+        width: 150px;
+        line-height: 1.4;
+        z-index: 2;
+        margin-top: 10px; /* Added margin between flowers and text */
+      }
+      @keyframes rotateFlowers {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    `}
+  </style>
+  <div className="wreath-container">
+    <div className="circle-of-flowers">
+      {Array.from({ length: 10 }).map((_, index) => {
+        const angle = (index * 360) / 10; // Divide the circle into 10 equal parts
+        const radius = 170; // Increased radius for more spacing
+        const x = 200 + radius * Math.cos((angle * Math.PI) / 180); // X-coordinate
+        const y = 200 + radius * Math.sin((angle * Math.PI) / 180); // Y-coordinate
+        return (
+          <div
+            key={index}
+            className="flower"
+            style={{
+              top: `${y}px`,
+              left: `${x}px`,
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            {/* Petals */}
+            {Array.from({ length: 8 }).map((_, petalIndex) => (
+              <div key={petalIndex} className="petal"></div>
+            ))}
+            {/* Flower Center */}
+            <div className="center"></div>
+          </div>
+        );
+      })}
+    </div>
+    <div className="text">We Are Working On Something</div>
+  </div>
+</>
+
+
+    // <RouterProvider router={router} />
+  );
 }
 
 export default App;
